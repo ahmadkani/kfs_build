@@ -1,4 +1,4 @@
-define(['./../isomorphicgit129', './baseFunctions', './../workerUtils/Logger', './../../configAMD'], 
+define(['./../isomorphicgit129', './baseFunctions', './../workerUtils/Logger', './../configAMD'], 
     function(git, baseFunctions, Logger, config) {
 
     const logger = new Logger(config.logging.dotGit);

@@ -1,4 +1,4 @@
-define(["./Logger", "./../../configAMD"], function (Logger, config) {
+define(["./Logger", "./../configAMD"], function (Logger, config) {
     const logger = new Logger(config.logging.memoryBackendAMD);
   
     function consoleDotLog(...args) {

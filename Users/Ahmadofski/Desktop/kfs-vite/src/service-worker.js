@@ -53,12 +53,6 @@ function consoleDotError(...parameters) {
 const CACHE_NAME = 'cache-v1';
 //const OFFLINE_URL = '/offline.html';
 const URLS_TO_CACHE = [
-  '/src/js/libs/GitHttp.js',
-  '/src/js/libs/isomorphicgit.js',
-  '/src/js/libs/LightningFS.js',
-  '/src/js/libs/MagicPortal.js',
-  '/src/js/require.js',
-  '/src/js/workers/gitWorker.js',
 ];
 
 const basePath = new URL(self.registration.scope).pathname.split('/')[1];

@@ -26,8 +26,9 @@ class WorkerPool {
     }
 
     if (!this.workers.has(mountPath)) {
-      const worker = new Worker("/gitWorker.js");
-      
+      const worker = new Worker(new URL('./gitWorker.js', import.meta.url));
+      console.log('worker created for: ', worker);
+
       const portal = new MagicPortal(worker);
       const thread = await portal.get("workerThread");
       

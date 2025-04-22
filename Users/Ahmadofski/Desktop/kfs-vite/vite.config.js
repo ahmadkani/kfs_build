@@ -1,35 +1,32 @@
-// vite.config.js
 import { defineConfig } from 'vite'
-import { VitePWA } from 'vite-plugin-pwa'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import path from 'path'
 
 export default defineConfig({
   plugins: [
-    VitePWA({
-      srcDir: 'src',
-      filename: 'service-worker.js',
-      strategies: 'generateSW', // Changed from injectManifest to generateSW
-      manifest: false,
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        globIgnores: ['**/node_modules/**/*'],
-        navigateFallback: 'index.html',
-        runtimeCaching: [
-          {
-            urlPattern: /\.(js|css|html)$/,
-            handler: 'StaleWhileRevalidate'
-          }
-        ]
-      },
-      devOptions: {
-        enabled: false
-      }
+    viteStaticCopy({
+      targets: [
+        { src: 'src/libs', dest: '.' },
+        { src: 'src/require.js', dest: '.' },
+        { src: 'src/gitWorker.js', dest: 'assets' },
+        { src: 'src/service-worker.js', dest: '.' },
+      ]
     })
   ],
   build: {
+    lib: {
+      entry: path.resolve(__dirname, 'src/kfs.js'),
+      name: 'KFS',
+      fileName: 'kfs',
+      formats: ['es']
+    },
+    outDir: 'dist',
+    emptyOutDir: true,
     sourcemap: true,
+    assetsInlineLimit: 0, // Prevent inlining of worker file
     rollupOptions: {
-      input: {
-        main: './index.html'
+      output: {
+        assetFileNames: 'assets/[name].[ext]' // Consistent asset naming
       }
     }
   }

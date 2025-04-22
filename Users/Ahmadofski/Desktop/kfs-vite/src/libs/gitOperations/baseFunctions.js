@@ -1,5 +1,5 @@
 
-define(['./../isomorphicgit129', './../../configAMD'], function(git, config) {
+define(['./../isomorphicgit129', './../configAMD'], function(git, config) {
         
     return {
         async resolveRef(fs, dir, _ref = 'HEAD') {

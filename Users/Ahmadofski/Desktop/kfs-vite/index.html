@@ -5,13 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module">
         import { register } from './src/serviceWorkerRegistration.js';
-        if (window.location.href.includes('localhost')) {
-            console.log('Skipping SW registration in development');
-        } else {
-            (async () => {
+        (async () => {
                 await register();
-            })();        
-        }
+            })(); 
     </script>
     <title>Git Filesystem Manager</title>
     <style>
@@ -35,7 +31,7 @@
     <p id="output"></p>
 
     <script type="module">
-        import { KFS } from "./src/index.js";
+        import { KFS } from "./src/kfs.js";
         
         const kfs = new KFS();
         

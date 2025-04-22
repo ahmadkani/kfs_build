@@ -1,18 +1,18 @@
 importScripts(
-  './require.js',
+  '/require.js',
 );
 
 
 require({
-  baseUrl: "./libs"
+  baseUrl: "/libs"
 },
 ["require", "MagicPortal", "isomorphicgit129", "GitHttp",
   "./workerUtils/Logger", "./workerUtils/fsManager", "./workerUtils/swUtils",
-"./gitOperations/dotGit", './../configAMD'],
+"./gitOperations/dotGit", './configAMD'],
 function(require, MagicPortal, git, GitHttp, 
   Logger, fsManager, swUtils, dotGit, config) {
 
-const portal = new MagicPortal(this);
+const portal = new MagicPortal(self);
 const logger = new Logger(config.logging.dotGit);
 const FSManager = new fsManager();
 const swUtilsInstance = new swUtils();

@@ -1,4 +1,4 @@
-define(["./memoryBackendAMD", "./../LightningFS", './../workerUtils/Logger', './../../configAMD'],
+define(["./memoryBackendAMD", "./../LightningFS", './../workerUtils/Logger', './../configAMD'],
    function(memoryBackend, LightningFS, Logger, config) {
 
     const logger = new Logger(config.logging.fsManager);
