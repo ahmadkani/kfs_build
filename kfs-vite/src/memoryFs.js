@@ -1,6 +1,3 @@
-import "./libs/LightningFS.js";
-import "./libs/isomorphicgit129.js";
-import "./libs/GitHttp.js";
 import { workerPool } from "./WorkerPool.js";
 import { Logger } from "./libs/LoggerES6.js";
 import { config } from './configES6.js';

@@ -1,5 +1,3 @@
-import "../isomorphicgit129.js";
-import "../GitHttp.js";
 import { Logger } from "../LoggerES6.js";
 import { workerPool } from '../../WorkerPool.js';
 import { config } from '../../configES6.js';

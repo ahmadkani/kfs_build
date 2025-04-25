@@ -1,7 +1,7 @@
 
-import './../isomorphicgit129.js';
-        
-    export default {
+import git from 'isomorphic-git'
+
+export default {
         async resolveRef(fs, dir, _ref = 'HEAD') {
             try {
                 return await git.resolveRef({

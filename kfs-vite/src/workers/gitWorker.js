@@ -1,6 +1,6 @@
 import MagicPortal from '../libs/MagicPortalES6.js';
-import '../libs/isomorphicgit129.js';
-import '../libs/GitHttp.js';
+import git from 'isomorphic-git'
+import http from 'isomorphic-git/http/web';
 import {Logger} from '../libs/LoggerES6.js';
 import fsManager from '../libs/workerUtils/fsManagerES6.js';
 import swUtils from '../libs/workerUtils/swUtilsES6.js';
@@ -32,7 +32,6 @@ let username;
 let password;
 let ref = 'main';
 let url = '';
-let http = GitHttp;
 let remote = 'origin';
 let depth = 10;
 let name = 'testUser';
@@ -1937,9 +1936,6 @@ async function statusMapper(statusMatrix) {
     consoleDotError('Error getting changed files list:', error);
   }
 }
-// gitWorker.js
-
-// [Keep all your existing imports and setup code]
 
 // ==============================================
 // Serialization Helpers
