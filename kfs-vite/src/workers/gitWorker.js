@@ -547,13 +547,15 @@ async function listServerRefs(args) {
     try {
       if (supportsServiceWorker && useSW) {
         try {
-          const refs = await fetchWithServiceWorker('listServerRefs', args);
-          return { success: true, refs };
+          const result = await fetchWithServiceWorker('listServerRefs', {...args, url});
+          consoleDotLog('listServerRefs result with sw:', result);
+          return result;
         } catch (swError) {
           consoleDotLog('Service Worker listServerRefs failed, falling back to Web Worker', swError);
           const refs = await git.listServerRefs({
             ...args,
             fs,
+            url,
             http,
             dir,
             corsProxy,
@@ -566,6 +568,7 @@ async function listServerRefs(args) {
               return authenticate.rejected();
             },
           });
+          consoleDotLog('listServerRefs result:', refs);
           return { success: true, refs };
         }
       } else {
@@ -586,6 +589,7 @@ async function listServerRefs(args) {
             return authenticate.rejected();
           },
         });
+        consoleDotLog('listServerRefs result:', refs);
         return { success: true, refs };
       }
     } catch (error) {
@@ -600,9 +604,12 @@ async function listServerRefs(args) {
 
 // usage: await getLatestRemoteCommit({ url: remoteRepoUrl, ref: 'main' });
 async function getLatestRemoteCommit(args) {
-  const result = await listServerRefs(args);
+  consoleDotLog('getLatestRemoteCommit args:', args);
+  const url = args?.url || url;
+  const result = await listServerRefs({...args, url});
+  consoleDotLog('getLatestRemoteCommit result:', result);
   const _ref = args?.ref || ref || 'HEAD';
-
+  consoleDotLog('getLatestRemoteCommit _ref:', _ref);
   if (!result.success) {
     consoleDotError('Failed to fetch server refs', result.error);
     return { success: false, error: result.error };
@@ -621,7 +628,7 @@ async function getLatestRemoteCommit(args) {
     consoleDotError('Could not determine latest remote commit.');
     return { success: false, error: `No HEAD or ${ref} main/master ref found` };
   }
-
+  consoleDotLog('headOid', headOid);
   return {
     success: true,
     commit: headOid,
@@ -2004,7 +2011,7 @@ const operationHandlers = {
   getRemote: ({remote}) => getRemote(remote),
   getRemoteCommitInLocalRepo: ({ remote }) => getRemoteCommitInLocalRepo(remote),
   getChangedFilesList: getChangedFilesList,
-  getLatestRemoteCommit: ({ url, remote }) => getLatestRemoteCommit([url, remote]),
+  getLatestRemoteCommit: ({ url, remote }) => getLatestRemoteCommit({url, remote}),
   getLastLocalCommit: ({ ref }) => getLastLocalCommit (ref),
   isSync: ({ url }) => isSync(url),
   hardReset: hardReset,
@@ -2107,3 +2114,5 @@ const workerAPI = {
 resolveReady();
 portal.set("workerThread", workerAPI);
 consoleDotLog('Worker initialized and ready');
+
+//# sourceMappingURL=gitWorker.js.map

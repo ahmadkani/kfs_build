@@ -185,24 +185,32 @@ export class VFSutils {
 
   async updateFsTable(action, path, type = "file", size = 0) {
     try {
+        // Normalize the path (remove leading/trailing slashes)
+        const normalizedPath = path.replace(/^\/+|\/+$/g, '');
+        
         // Ensure root exists
         if (!this.fsTable['/']) {
             this.fsTable['/'] = this.createRootEntry();
         }
 
-        const pathParts = path.replace(/^\/+|\/+$/g, '').split('/');
+        const pathParts = normalizedPath.split('/');
         let current = this.fsTable['/'];
 
+        // Special case: removing root (should never happen)
+        if (action === 'remove' && pathParts.length === 0) {
+            throw new Error('Cannot remove root directory');
+        }
+
+        // Traverse the path
         for (let i = 0; i < pathParts.length - 1; i++) {
             const part = pathParts[i];
             
-            // Ensure current has children object
-            if (!current.children) {
-                current.children = {};
-            }
-            
-            // Create directory if it doesn't exist
-            if (!current.children[part]) {
+            if (!current.children || !current.children[part]) {
+                if (action === 'remove') {
+                    // For removal, parent must exist
+                    throw new Error(`Parent path not found: ${pathParts.slice(0, i+1).join('/')}`);
+                }
+                // For creation, create intermediate directories
                 current.children[part] = this.createFsTableEntry(
                     part, 
                     'directory', 
@@ -211,12 +219,10 @@ export class VFSutils {
                 );
             }
             
-            // Move to next level
             current = current.children[part];
             
-            // Ensure the new current has children object if it's a directory
-            if (current.type === 'directory' && !current.children) {
-                current.children = {};
+            if (current.type !== 'directory') {
+                throw new Error(`Path component is not a directory: ${pathParts.slice(0, i+1).join('/')}`);
             }
         }
 
@@ -224,9 +230,13 @@ export class VFSutils {
 
         switch (action) {
             case 'create':
-                // Ensure current has children object
                 if (!current.children) {
                     current.children = {};
+                }
+                
+                // Check if already exists
+                if (current.children[name]) {
+                    throw new Error(`Path already exists: ${path}`);
                 }
                 
                 current.children[name] = this.createFsTableEntry(
@@ -239,8 +249,16 @@ export class VFSutils {
                 
             case 'remove':
                 if (!current.children || !current.children[name]) {
-                    throw new Error(`Path not found: ${path}`);
+                    // Return false instead of throwing error for non-existent paths
+                    return { success: false, message: `Path not found: ${path}` };
                 }
+                
+                // Check if trying to remove non-empty directory
+                if (current.children[name].type === 'directory' && 
+                    Object.keys(current.children[name].children || {}).length > 0) {
+                    throw new Error(`Cannot remove non-empty directory: ${path}`);
+                }
+                
                 delete current.children[name];
                 break;
                 

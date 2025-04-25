@@ -555,25 +555,20 @@ function buildHeaders(username, password) {
 
 
 async function listServerRefs(args) {
-  consoleDotLog('listServerRefs args', args);
   return await retryOperation(async (args) => {
     noMainErrorCounts.listServerRefsCount++;
     await mutex.lock();
     try {
       consoleDotLog('Entering listServerRefs function with arguments:', args);
 
-      // Validate URL - critical difference from your original
-      if (!args.url) {
-        throw new Error('URL parameter is required for listServerRefs');
-      }
-
       const result = await git.listServerRefs({
         ...args,
         fs,
+        url,
         http,
         dir,
         corsProxy,
-        remote: args.remote || remote, // Fallback to global remote
+        remote,
         headers: buildHeaders(username, password),
         onAuth() {
           return authenticate.fill();
@@ -584,8 +579,7 @@ async function listServerRefs(args) {
       });
 
       consoleDotLog('ListServerRefs successful. Result:', result);
-      // Changed from 'result' to 'refs' to match git worker
-      return { success: true, refs: result };
+      return { success: true, data: result };
     } catch (error) {
       if (error?.message?.includes('Could not find') && error?.code === 'NotFoundError') {
         let isHandled = await handleNoMainError(listServerRefs, args, noMainErrorCounts.listServerRefsCount);
@@ -596,8 +590,7 @@ async function listServerRefs(args) {
         return { success: true, message: 'listServerRefs was successful' };
       }
       consoleDotError('Error occurred during listServerRefs operation:', error);
-      // Return structured error like git worker does
-      return { success: false, error: error.message };
+      throw new Error(`listServerRefs failed: ${error}`);
     } finally {
       consoleDotLog('Exiting listServerRefs function.');
       mutex.unlock();

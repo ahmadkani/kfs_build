@@ -4,22 +4,24 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 export default defineConfig({
   plugins: [
-    // Add Node.js polyfills
     nodePolyfills({
-      // Specific polyfills you need
-      globals: {
-        Buffer: true,
-        global: true,
-        process: true,
-      },
+      globals: { Buffer: true, global: true, process: true },
     }),
   ],
 
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/kfs.js'),
+      sourcemap: true,
+      entry: {
+        // Main library entry
+        kfs: path.resolve(__dirname, 'src/kfs.js'),
+        // Service worker registration entry
+        'sw-register': path.resolve(__dirname, 'src/libs/sw-register.js'),
+      },
       name: 'KFS',
-      fileName: 'kfs',
+      fileName: (format, entryName) => {
+        return format === 'es' ? `${entryName}.js` : `${entryName}.${format}.js`;
+      },
       formats: ['es'],
     },
     outDir: 'dist',
@@ -42,43 +44,36 @@ export default defineConfig({
 
   optimizeDeps: {
     include: ['isomorphic-git', 'isomorphic-git/http/web'],
-    // Add buffer to optimized dependencies
-    esbuildOptions: {
-      define: {
-        global: 'globalThis',
-      },
+    esbuildOptions: { define: { global: 'globalThis' } },
+  },
+
+server: {
+  headers: {
+    'Service-Worker-Allowed': '/',
+  },
+  fs: {
+    strict: false
+  }
+},
+
+worker: {
+  format: 'es',
+  rollupOptions: {
+    input: {
+      gitWorker: path.resolve(__dirname, 'src/workers/gitWorker.js'),
+    },
+    output: {
+      entryFileNames: '[name].js',
+      format: 'es',
+      sourcemap: true,
+      sourcemapPathTransform: (relativeSourcePath) => {
+        // Ensure correct paths in source maps
+        return path.resolve(__dirname, 'src', relativeSourcePath);
+      }
     },
   },
+  plugins: [nodePolyfills({ globals: { Buffer: true } })],
+},
 
-  server: {
-    headers: {
-      'Service-Worker-Allowed': '/'
-    }
-  },
-
-  worker: {
-    format: 'es',
-    rollupOptions: {
-      input: {
-        gitWorker: path.resolve(__dirname, 'src/workers/gitWorker.js'),
-      },
-      output: {
-        entryFileNames: '[name].js',
-        format: 'es',
-        sourcemap: true
-      },
-    },
-    // Add plugins to workers
-    plugins: [
-      nodePolyfills({
-        globals: {
-          Buffer: true,
-        },
-      }),
-    ],
-  },
-
-  define: {
-    'global': 'globalThis',
-  },
+  define: { global: 'globalThis' },
 });

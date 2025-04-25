@@ -242,3 +242,5 @@ export class KFS {
     return path.startsWith('/') ? path : `/${path}`;
   }
 }
+
+export { serviceWorker } from './libs/sw-register.js';
