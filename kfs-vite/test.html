@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git Filesystem Manager</title>
+  <style>
+    button { margin: 5px; padding: 8px 12px; cursor: pointer; }
+    input { margin: 5px; padding: 5px; }
+    #output { margin-top: 20px; padding: 10px; border: 1px solid #ddd; min-height: 20px; font-family: monospace; }
+  </style>
+      <script type="module">
+        import { register } from './src/serviceWorkerRegistration.js';
+        (async () => {
+                await register();
+            })(); 
+    </script>
+</head>
+<body>
+  <h1>Git Filesystem Manager</h1>
+
+  <input type="text" id="mountPath" placeholder="Mount Path (e.g. /repo1)">
+  <button onclick="mountFS()">Mount</button>
+  <button onclick="unmountFS()">Unmount</button>
+  <br>
+  <input type="text" id="filePath" placeholder="File Path (e.g. /repo1/file.txt)">
+  <button onclick="writeFile()">Write File</button>
+  <button onclick="readFile()">Read File</button>
+  <button onclick="removeFile()">Remove File</button>
+  <br>
+  <p id="output"></p>
+
+  <script type="module">
+    import { KFS } from './dist/kfs.js';
+
+    const kfs = new KFS();
+
+    window.mountFS = async function () {
+      const path = document.getElementById("mountPath").value.trim();
+      if (!path) return alert("Please enter a mount path");
+      try {
+        await kfs.mount(path, "memory", "1", "git", {
+          fetchInfo: {
+            url: 'https://github.com/ahmadkani/ahmadkani',
+            username: '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',
+            password: '',
+            name: 'ahmad',
+            email: 'ahmad@kani.com',
+          },
+          useSW: false,
+          merging: {
+            strategy: 'immediate',
+            interval: 60,
+          },
+          versioning: {
+            strategy: 'immediate',
+            interval: 10,
+            number: 5
+          },
+        });
+        await kfs.setUserConfigs({
+          username: 'your_username',
+          password: '',
+          name: 'ahmad',
+          email: 'ahmad@kani.com',
+        });
+        document.getElementById("output").innerText = `✅ Mounted at ${path}`;
+      } catch (error) {
+        document.getElementById("output").innerText = `❌ ${error.message}`;
+      }
+    };
+
+    window.unmountFS = async function () {
+      const path = document.getElementById("mountPath").value.trim();
+      if (!path) return alert("Please enter a mount path");
+      try {
+        await kfs.unmount(path, "1");
+        document.getElementById("output").innerText = `✅ Unmounted ${path}`;
+      } catch (error) {
+        document.getElementById("output").innerText = `❌ ${error.message}`;
+      }
+    };
+
+    window.writeFile = async function() {
+      const filePath = document.getElementById("filePath").value.trim();
+      if (!filePath) return alert("Please enter a file path");
+      try {
+        document.getElementById("output").innerText = "Creating file...";
+        await kfs.create(filePath, "file", "Hello from KFS!");
+        document.getElementById("output").innerText = `✅ File created at ${filePath}`;
+      } catch (error) {
+        console.error("Write error:", error);
+        document.getElementById("output").innerText = `❌ Error: ${error.message}`;
+      }
+    };
+
+    window.readFile = async function () {
+      const filePath = document.getElementById("filePath").value.trim();
+      if (!filePath) return alert("Please enter a file path");
+      try {
+        document.getElementById("output").innerText = "Reading file...";
+        const content = await kfs.read(filePath);
+        if (content) {
+          document.getElementById("output").innerText = `📄 Content: ${content}`;
+        } else {
+          document.getElementById("output").innerText = "❌ File empty or not found";
+        }
+      } catch (error) {
+        console.error("Read error:", error);
+        document.getElementById("output").innerText = `❌ Error: ${error.message}`;
+      }
+    };
+
+    window.removeFile = async function () {
+            const filePath = document.getElementById("filePath").value.trim();
+            if (!filePath) return alert("Please enter a file path");
+            try {
+                await kfs.remove(filePath);
+                document.getElementById("output").innerText = `✅ Removed ${filePath}`;
+            } catch (error) {
+                document.getElementById("output").innerText = `❌ ${error.message}`;
+            }
+        };
+    </script>   
+</body>
+</html>
