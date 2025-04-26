@@ -11,17 +11,17 @@ var Dh = Sl((xe, ze) => {
         var u = g[n] = { i: n, l: !1, exports: {} };
         return N[n].call(u.exports, u, u.exports, t), u.l = !0, u.exports;
       }
-      return t.m = N, t.c = g, t.d = function(n, u, S) {
-        t.o(n, u) || Object.defineProperty(n, u, { enumerable: !0, get: S });
+      return t.m = N, t.c = g, t.d = function(n, u, O) {
+        t.o(n, u) || Object.defineProperty(n, u, { enumerable: !0, get: O });
       }, t.r = function(n) {
         typeof Symbol < "u" && Symbol.toStringTag && Object.defineProperty(n, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(n, "__esModule", { value: !0 });
       }, t.t = function(n, u) {
         if (1 & u && (n = t(n)), 8 & u || 4 & u && typeof n == "object" && n && n.__esModule) return n;
-        var S = /* @__PURE__ */ Object.create(null);
-        if (t.r(S), Object.defineProperty(S, "default", { enumerable: !0, value: n }), 2 & u && typeof n != "string") for (var c in n) t.d(S, c, function(i) {
+        var O = /* @__PURE__ */ Object.create(null);
+        if (t.r(O), Object.defineProperty(O, "default", { enumerable: !0, value: n }), 2 & u && typeof n != "string") for (var l in n) t.d(O, l, function(i) {
           return n[i];
-        }.bind(null, c));
-        return S;
+        }.bind(null, l));
+        return O;
       }, t.n = function(n) {
         var u = n && n.__esModule ? function() {
           return n.default;
@@ -37,23 +37,23 @@ var Dh = Sl((xe, ze) => {
         return u;
       });
       var n = t(24);
-      function u(S, c) {
-        if (c === void 0) throw new n.a(S);
+      function u(O, l) {
+        if (l === void 0) throw new n.a(O);
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return n;
       });
       class n extends Error {
-        constructor(S) {
-          super(S), this.caller = "";
+        constructor(O) {
+          super(O), this.caller = "";
         }
         toJSON() {
           return { code: this.code, data: this.data, caller: this.caller, message: this.message, stack: this.stack };
         }
-        fromJSON(S) {
-          const c = new n(S.message);
-          return c.code = S.code, c.data = S.data, c.caller = S.caller, c.stack = S.stack, c;
+        fromJSON(O) {
+          const l = new n(O.message);
+          return l.code = O.code, l.data = O.data, l.caller = O.caller, l.stack = O.stack, l;
         }
         get isIsomorphicGitError() {
           return !0;
@@ -64,44 +64,44 @@ var Dh = Sl((xe, ze) => {
         t.d(g, "a", function() {
           return h;
         });
-        var u = t(91), S = t.n(u), c = t(38), i = t(27), s = t(116), o = t(136);
-        function e(P, x, R, f, E, w, I) {
+        var u = t(91), O = t.n(u), l = t(38), i = t(27), s = t(116), o = t(136);
+        function e(S, x, R, c, P, w, I) {
           try {
-            var T = P[w](I), M = T.value;
+            var T = S[w](I), M = T.value;
           } catch (A) {
             return void R(A);
           }
-          T.done ? x(M) : Promise.resolve(M).then(f, E);
+          T.done ? x(M) : Promise.resolve(M).then(c, P);
         }
-        function j(P) {
+        function j(S) {
           return function() {
             var x = this, R = arguments;
-            return new Promise(function(f, E) {
-              var w = P.apply(x, R);
+            return new Promise(function(c, P) {
+              var w = S.apply(x, R);
               function I(M) {
-                e(w, f, E, I, T, "next", M);
+                e(w, c, P, I, T, "next", M);
               }
               function T(M) {
-                e(w, f, E, I, T, "throw", M);
+                e(w, c, P, I, T, "throw", M);
               }
               I(void 0);
             });
           };
         }
-        function O(P) {
+        function E(S) {
           return Object(o.a)(((x) => {
             try {
               return x.readFile().catch((R) => R);
             } catch (R) {
               return R;
             }
-          })(P));
+          })(S));
         }
         const m = ["readFile", "writeFile", "mkdir", "rmdir", "unlink", "stat", "lstat", "readdir", "readlink", "symlink"];
-        function _(P, x) {
-          if (O(x)) for (const R of m) P[`_${R}`] = x[R].bind(x);
-          else for (const R of m) P[`_${R}`] = S()(x[R].bind(x));
-          O(x) ? x.rm ? P._rm = x.rm.bind(x) : x.rmdir.length > 1 ? P._rm = x.rmdir.bind(x) : P._rm = s.a.bind(null, P) : x.rm ? P._rm = S()(x.rm.bind(x)) : x.rmdir.length > 2 ? P._rm = S()(x.rmdir.bind(x)) : P._rm = s.a.bind(null, P);
+        function _(S, x) {
+          if (E(x)) for (const R of m) S[`_${R}`] = x[R].bind(x);
+          else for (const R of m) S[`_${R}`] = O()(x[R].bind(x));
+          E(x) ? x.rm ? S._rm = x.rm.bind(x) : x.rmdir.length > 1 ? S._rm = x.rmdir.bind(x) : S._rm = s.a.bind(null, S) : x.rm ? S._rm = O()(x.rm.bind(x)) : x.rmdir.length > 2 ? S._rm = O()(x.rmdir.bind(x)) : S._rm = s.a.bind(null, S);
         }
         class h {
           constructor(x) {
@@ -110,54 +110,54 @@ var Dh = Sl((xe, ze) => {
             R && R.enumerable ? _(this, x.promises) : _(this, x), this._original_unwrapped_fs = x;
           }
           exists(x, R = {}) {
-            var f = this;
+            var c = this;
             return j(function* () {
               try {
-                return yield f._stat(x), !0;
-              } catch (E) {
-                if (E.code === "ENOENT" || E.code === "ENOTDIR" || (E.code || "").includes("ENS")) return !1;
-                throw console.log('Unhandled error in "FileSystem.exists()" function', E), E;
+                return yield c._stat(x), !0;
+              } catch (P) {
+                if (P.code === "ENOENT" || P.code === "ENOTDIR" || (P.code || "").includes("ENS")) return !1;
+                throw console.log('Unhandled error in "FileSystem.exists()" function', P), P;
               }
             })();
           }
           read(x, R = {}) {
-            var f = this;
+            var c = this;
             return j(function* () {
               try {
-                let E = yield f._readFile(x, R);
+                let P = yield c._readFile(x, R);
                 if (R.autocrlf === "true") try {
-                  E = new TextDecoder("utf8", { fatal: !0 }).decode(E), E = E.replace(/\r\n/g, `
-`), E = new TextEncoder().encode(E);
+                  P = new TextDecoder("utf8", { fatal: !0 }).decode(P), P = P.replace(/\r\n/g, `
+`), P = new TextEncoder().encode(P);
                 } catch {
                 }
-                return typeof E != "string" && (E = n.from(E)), E;
+                return typeof P != "string" && (P = n.from(P)), P;
               } catch {
                 return null;
               }
             })();
           }
-          write(x, R, f = {}) {
-            var E = this;
+          write(x, R, c = {}) {
+            var P = this;
             return j(function* () {
               try {
-                return void (yield E._writeFile(x, R, f));
+                return void (yield P._writeFile(x, R, c));
               } catch {
-                yield E.mkdir(Object(i.a)(x)), yield E._writeFile(x, R, f);
+                yield P.mkdir(Object(i.a)(x)), yield P._writeFile(x, R, c);
               }
             })();
           }
           mkdir(x, R = !1) {
-            var f = this;
+            var c = this;
             return j(function* () {
               try {
-                return void (yield f._mkdir(x));
-              } catch (E) {
-                if (E === null || E.code === "EEXIST") return;
-                if (R) throw E;
-                if (E.code === "ENOENT") {
+                return void (yield c._mkdir(x));
+              } catch (P) {
+                if (P === null || P.code === "EEXIST") return;
+                if (R) throw P;
+                if (P.code === "ENOENT") {
                   const w = Object(i.a)(x);
-                  if (w === "." || w === "/" || w === x) throw E;
-                  yield f.mkdir(w), yield f.mkdir(x, !0);
+                  if (w === "." || w === "/" || w === x) throw P;
+                  yield c.mkdir(w), yield c.mkdir(x, !0);
                 }
               }
             })();
@@ -167,18 +167,18 @@ var Dh = Sl((xe, ze) => {
             return j(function* () {
               try {
                 yield R._unlink(x);
-              } catch (f) {
-                if (f.code !== "ENOENT") throw f;
+              } catch (c) {
+                if (c.code !== "ENOENT") throw c;
               }
             })();
           }
           rmdir(x, R) {
-            var f = this;
+            var c = this;
             return j(function* () {
               try {
-                R && R.recursive ? yield f._rm(x, R) : yield f._rmdir(x);
-              } catch (E) {
-                if (E.code !== "ENOENT") throw E;
+                R && R.recursive ? yield c._rm(x, R) : yield c._rmdir(x);
+              } catch (P) {
+                if (P.code !== "ENOENT") throw P;
               }
             })();
           }
@@ -186,26 +186,26 @@ var Dh = Sl((xe, ze) => {
             var R = this;
             return j(function* () {
               try {
-                const f = yield R._readdir(x);
-                return f.sort(c.a), f;
-              } catch (f) {
-                return f.code === "ENOTDIR" ? null : [];
+                const c = yield R._readdir(x);
+                return c.sort(l.a), c;
+              } catch (c) {
+                return c.code === "ENOTDIR" ? null : [];
               }
             })();
           }
           readdirDeep(x) {
             var R = this;
             return j(function* () {
-              const f = yield R._readdir(x);
-              return (yield Promise.all(f.map(function() {
-                var E = j(function* (w) {
+              const c = yield R._readdir(x);
+              return (yield Promise.all(c.map(function() {
+                var P = j(function* (w) {
                   const I = x + "/" + w;
                   return (yield R._stat(I)).isDirectory() ? R.readdirDeep(I) : I;
                 });
                 return function(w) {
-                  return E.apply(this, arguments);
+                  return P.apply(this, arguments);
                 };
-              }()))).reduce((E, w) => E.concat(w), []);
+              }()))).reduce((P, w) => P.concat(w), []);
             })();
           }
           lstat(x) {
@@ -213,34 +213,34 @@ var Dh = Sl((xe, ze) => {
             return j(function* () {
               try {
                 return yield R._lstat(x);
-              } catch (f) {
-                if (f.code === "ENOENT" || (f.code || "").includes("ENS")) return null;
-                throw f;
+              } catch (c) {
+                if (c.code === "ENOENT" || (c.code || "").includes("ENS")) return null;
+                throw c;
               }
             })();
           }
           readlink(x, R = { encoding: "buffer" }) {
-            var f = this;
+            var c = this;
             return j(function* () {
               try {
-                const E = yield f._readlink(x, R);
-                return n.isBuffer(E) ? E : n.from(E);
-              } catch (E) {
-                if (E.code === "ENOENT" || (E.code || "").includes("ENS")) return null;
-                throw E;
+                const P = yield c._readlink(x, R);
+                return n.isBuffer(P) ? P : n.from(P);
+              } catch (P) {
+                if (P.code === "ENOENT" || (P.code || "").includes("ENS")) return null;
+                throw P;
               }
             })();
           }
           writelink(x, R) {
-            var f = this;
+            var c = this;
             return j(function* () {
-              return f._symlink(R.toString("utf8"), x);
+              return c._symlink(R.toString("utf8"), x);
             })();
           }
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
-      var n = t(33), u = t.n(n), S = t(32), c = t(72), i = t(8);
+      var n = t(33), u = t.n(n), O = t(32), l = t(72), i = t(8);
       class s {
         constructor(I) {
           if (this.refs = /* @__PURE__ */ new Map(), this.parsedConfig = [], I) {
@@ -278,7 +278,7 @@ var Dh = Sl((xe, ze) => {
         const T = w.replace(/\^\{\}$/, ""), M = I.replace(/\^\{\}$/, ""), A = -(T < M) || +(T > M);
         return A === 0 ? w.endsWith("^{}") ? 1 : -1 : A;
       }
-      var j = t(16), O = t(11);
+      var j = t(16), E = t(11);
       function m(w, I, T, M, A, F, z) {
         try {
           var $ = w[F](z), H = $.value;
@@ -303,34 +303,34 @@ var Dh = Sl((xe, ze) => {
         };
       }
       t.d(g, "a", function() {
-        return E;
+        return P;
       });
-      const h = (w) => [`${w}`, `refs/${w}`, `refs/tags/${w}`, `refs/heads/${w}`, `refs/remotes/${w}`, `refs/remotes/${w}/HEAD`], P = ["config", "description", "index", "shallow", "commondir"];
+      const h = (w) => [`${w}`, `refs/${w}`, `refs/tags/${w}`, `refs/heads/${w}`, `refs/remotes/${w}`, `refs/remotes/${w}/HEAD`], S = ["config", "description", "index", "shallow", "commondir"];
       let x;
       function R(w, I) {
-        return f.apply(this, arguments);
+        return c.apply(this, arguments);
       }
-      function f() {
-        return (f = _(function* (w, I) {
+      function c() {
+        return (c = _(function* (w, I) {
           return x === void 0 && (x = new u.a()), x.acquire(w, I);
         })).apply(this, arguments);
       }
-      class E {
+      class P {
         static updateRemoteRefs({ fs: I, gitdir: T, remote: M, refs: A, symrefs: F, tags: z, refspecs: $, prune: H = !1, pruneTags: nt = !1 }) {
           return _(function* () {
-            for (const Z of A.values()) if (!Z.match(/[0-9a-f]{40}/)) throw new S.a(Z);
-            const ot = yield O.a.get({ fs: I, gitdir: T });
+            for (const Z of A.values()) if (!Z.match(/[0-9a-f]{40}/)) throw new O.a(Z);
+            const ot = yield E.a.get({ fs: I, gitdir: T });
             if (!$) {
-              if (($ = yield ot.getall(`remote.${M}.fetch`)).length === 0) throw new c.a(M);
+              if (($ = yield ot.getall(`remote.${M}.fetch`)).length === 0) throw new l.a(M);
               $.unshift(`+HEAD:refs/remotes/${M}/HEAD`);
             }
             const V = o.a.from($), it = /* @__PURE__ */ new Map();
             if (nt) {
-              const Z = yield E.listRefs({ fs: I, gitdir: T, filepath: "refs/tags" });
-              yield E.deleteRefs({ fs: I, gitdir: T, refs: Z.map((ut) => `refs/tags/${ut}`) });
+              const Z = yield P.listRefs({ fs: I, gitdir: T, filepath: "refs/tags" });
+              yield P.deleteRefs({ fs: I, gitdir: T, refs: Z.map((ut) => `refs/tags/${ut}`) });
             }
             if (z) {
-              for (const Z of A.keys()) if (Z.startsWith("refs/tags") && !Z.endsWith("^{}") && !(yield E.exists({ fs: I, gitdir: T, ref: Z }))) {
+              for (const Z of A.keys()) if (Z.startsWith("refs/tags") && !Z.endsWith("^{}") && !(yield P.exists({ fs: I, gitdir: T, ref: Z }))) {
                 const ut = A.get(Z);
                 it.set(Z, ut);
               }
@@ -348,10 +348,10 @@ var Dh = Sl((xe, ze) => {
             const G = [];
             if (H) {
               for (const Z of V.localNamespaces()) {
-                const ut = (yield E.listRefs({ fs: I, gitdir: T, filepath: Z })).map((pt) => `${Z}/${pt}`);
+                const ut = (yield P.listRefs({ fs: I, gitdir: T, filepath: Z })).map((pt) => `${Z}/${pt}`);
                 for (const pt of ut) it.has(pt) || G.push(pt);
               }
-              G.length > 0 && (yield E.deleteRefs({ fs: I, gitdir: T, refs: G }));
+              G.length > 0 && (yield P.deleteRefs({ fs: I, gitdir: T, refs: G }));
             }
             for (const [Z, ut] of it) yield R(Z, _(function* () {
               return I.write(Object(j.join)(T, Z), `${ut.trim()}
@@ -362,7 +362,7 @@ var Dh = Sl((xe, ze) => {
         }
         static writeRef({ fs: I, gitdir: T, ref: M, value: A }) {
           return _(function* () {
-            if (!A.match(/[0-9a-f]{40}/)) throw new S.a(A);
+            if (!A.match(/[0-9a-f]{40}/)) throw new O.a(A);
             yield R(M, _(function* () {
               return I.write(Object(j.join)(T, M), `${A.trim()}
 `, "utf8");
@@ -379,7 +379,7 @@ var Dh = Sl((xe, ze) => {
         }
         static deleteRef({ fs: I, gitdir: T, ref: M }) {
           return _(function* () {
-            return E.deleteRefs({ fs: I, gitdir: T, refs: [M] });
+            return P.deleteRefs({ fs: I, gitdir: T, refs: [M] });
           })();
         }
         static deleteRefs({ fs: I, gitdir: T, refs: M }) {
@@ -398,14 +398,14 @@ var Dh = Sl((xe, ze) => {
         static resolve({ fs: I, gitdir: T, ref: M, depth: A }) {
           return _(function* () {
             if (A !== void 0 && --A === -1) return M;
-            if (M.startsWith("ref: ")) return M = M.slice(5), E.resolve({ fs: I, gitdir: T, ref: M, depth: A });
+            if (M.startsWith("ref: ")) return M = M.slice(5), P.resolve({ fs: I, gitdir: T, ref: M, depth: A });
             if (M.length === 40 && /[0-9a-f]{40}/.test(M)) return M;
-            const F = yield E.packedRefs({ fs: I, gitdir: T }), z = h(M).filter(($) => !P.includes($));
+            const F = yield P.packedRefs({ fs: I, gitdir: T }), z = h(M).filter(($) => !S.includes($));
             for (const $ of z) {
               const H = yield R($, _(function* () {
                 return (yield I.read(`${T}/${$}`, { encoding: "utf8" })) || F.get($);
               }));
-              if (H) return E.resolve({ fs: I, gitdir: T, ref: H.trim(), depth: A });
+              if (H) return P.resolve({ fs: I, gitdir: T, ref: H.trim(), depth: A });
             }
             throw new i.a(M);
           })();
@@ -413,7 +413,7 @@ var Dh = Sl((xe, ze) => {
         static exists({ fs: I, gitdir: T, ref: M }) {
           return _(function* () {
             try {
-              return yield E.expand({ fs: I, gitdir: T, ref: M }), !0;
+              return yield P.expand({ fs: I, gitdir: T, ref: M }), !0;
             } catch {
               return !1;
             }
@@ -422,7 +422,7 @@ var Dh = Sl((xe, ze) => {
         static expand({ fs: I, gitdir: T, ref: M }) {
           return _(function* () {
             if (M.length === 40 && /[0-9a-f]{40}/.test(M)) return M;
-            const A = yield E.packedRefs({ fs: I, gitdir: T }), F = h(M);
+            const A = yield P.packedRefs({ fs: I, gitdir: T }), F = h(M);
             for (const z of F)
               if ((yield R(z, _(function* () {
                 return I.exists(`${T}/${z}`);
@@ -439,12 +439,12 @@ var Dh = Sl((xe, ze) => {
         }
         static resolveAgainstMap({ ref: I, fullref: T = I, depth: M, map: A }) {
           if (M !== void 0 && --M === -1) return { fullref: T, oid: I };
-          if (I.startsWith("ref: ")) return I = I.slice(5), E.resolveAgainstMap({ ref: I, fullref: T, depth: M, map: A });
+          if (I.startsWith("ref: ")) return I = I.slice(5), P.resolveAgainstMap({ ref: I, fullref: T, depth: M, map: A });
           if (I.length === 40 && /[0-9a-f]{40}/.test(I)) return { fullref: T, oid: I };
           const F = h(I);
           for (const z of F) {
             const $ = A.get(z);
-            if ($) return E.resolveAgainstMap({ ref: $.trim(), fullref: z, depth: M, map: A });
+            if ($) return P.resolveAgainstMap({ ref: $.trim(), fullref: z, depth: M, map: A });
           }
           throw new i.a(I);
         }
@@ -458,7 +458,7 @@ var Dh = Sl((xe, ze) => {
         }
         static listRefs({ fs: I, gitdir: T, filepath: M }) {
           return _(function* () {
-            const A = E.packedRefs({ fs: I, gitdir: T });
+            const A = P.packedRefs({ fs: I, gitdir: T });
             let F = null;
             try {
               F = yield I.readdirDeep(`${T}/${M}`), F = F.map((z) => z.replace(`${T}/${M}/`, ""));
@@ -471,12 +471,12 @@ var Dh = Sl((xe, ze) => {
         }
         static listBranches({ fs: I, gitdir: T, remote: M }) {
           return _(function* () {
-            return M ? E.listRefs({ fs: I, gitdir: T, filepath: `refs/remotes/${M}` }) : E.listRefs({ fs: I, gitdir: T, filepath: "refs/heads" });
+            return M ? P.listRefs({ fs: I, gitdir: T, filepath: `refs/remotes/${M}` }) : P.listRefs({ fs: I, gitdir: T, filepath: "refs/heads" });
           })();
         }
         static listTags({ fs: I, gitdir: T }) {
           return _(function* () {
-            return (yield E.listRefs({ fs: I, gitdir: T, filepath: "refs/tags" })).filter((M) => !M.endsWith("^{}"));
+            return (yield P.listRefs({ fs: I, gitdir: T, filepath: "refs/tags" })).filter((M) => !M.endsWith("^{}"));
           })();
         }
       }
@@ -486,8 +486,8 @@ var Dh = Sl((xe, ze) => {
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`An internal error caused this command to fail. Please file a bug report at https://github.com/isomorphic-git/isomorphic-git/issues with this error message: ${c}`), this.code = this.name = u.code, this.data = { message: c };
+        constructor(l) {
+          super(`An internal error caused this command to fail. Please file a bug report at https://github.com/isomorphic-git/isomorphic-git/issues with this error message: ${l}`), this.code = this.name = u.code, this.data = { message: l };
         }
       }
       u.code = "InternalError";
@@ -496,25 +496,25 @@ var Dh = Sl((xe, ze) => {
         t.d(g, "a", function() {
           return m;
         });
-        var u = t(4), S = t(8), c = t(25), i = t(113), s = t(110), o = t(83), e = t(19);
-        function j(h, P, x, R, f, E, w) {
+        var u = t(4), O = t(8), l = t(25), i = t(113), s = t(110), o = t(83), e = t(19);
+        function j(h, S, x, R, c, P, w) {
           try {
-            var I = h[E](w), T = I.value;
+            var I = h[P](w), T = I.value;
           } catch (M) {
             return void x(M);
           }
-          I.done ? P(T) : Promise.resolve(T).then(R, f);
+          I.done ? S(T) : Promise.resolve(T).then(R, c);
         }
-        function O(h) {
+        function E(h) {
           return function() {
-            var P = this, x = arguments;
-            return new Promise(function(R, f) {
-              var E = h.apply(P, x);
+            var S = this, x = arguments;
+            return new Promise(function(R, c) {
+              var P = h.apply(S, x);
               function w(T) {
-                j(E, R, f, w, I, "next", T);
+                j(P, R, c, w, I, "next", T);
               }
               function I(T) {
-                j(E, R, f, w, I, "throw", T);
+                j(P, R, c, w, I, "throw", T);
               }
               w(void 0);
             });
@@ -524,19 +524,19 @@ var Dh = Sl((xe, ze) => {
           return _.apply(this, arguments);
         }
         function _() {
-          return (_ = O(function* ({ fs: h, cache: P, gitdir: x, oid: R, format: f = "content" }) {
-            const E = (A) => m({ fs: h, cache: P, gitdir: x, oid: A });
+          return (_ = E(function* ({ fs: h, cache: S, gitdir: x, oid: R, format: c = "content" }) {
+            const P = (A) => m({ fs: h, cache: S, gitdir: x, oid: A });
             let w;
             if (R === "4b825dc642cb6eb9a060e54bf8d69288fbee4904" && (w = { format: "wrapped", object: n.from("tree 0\0") }), w || (w = yield Object(i.a)({ fs: h, gitdir: x, oid: R })), !w) {
-              if (w = yield Object(s.a)({ fs: h, cache: P, gitdir: x, oid: R, getExternalRefDelta: E }), !w) throw new S.a(R);
+              if (w = yield Object(s.a)({ fs: h, cache: S, gitdir: x, oid: R, getExternalRefDelta: P }), !w) throw new O.a(R);
               return w;
             }
-            if (f === "deflated" || (w.format === "deflated" && (w.object = n.from(yield Object(o.a)(w.object)), w.format = "wrapped"), f === "wrapped")) return w;
+            if (c === "deflated" || (w.format === "deflated" && (w.object = n.from(yield Object(o.a)(w.object)), w.format = "wrapped"), c === "wrapped")) return w;
             const I = yield Object(e.a)(w.object);
             if (I !== R) throw new u.a(`SHA check failed! Expected ${R}, computed ${I}`);
-            const { object: T, type: M } = c.a.unwrap(w.object);
-            if (w.type = M, w.object = T, w.format = "content", f === "content") return w;
-            throw new u.a(`invalid requested format "${f}"`);
+            const { object: T, type: M } = l.a.unwrap(w.object);
+            if (w.type = M, w.object = T, w.format = "content", c === "content") return w;
+            throw new u.a(`invalid requested format "${c}"`);
           })).apply(this, arguments);
         }
       }).call(this, t(10).Buffer);
@@ -546,8 +546,8 @@ var Dh = Sl((xe, ze) => {
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Could not find ${c}.`), this.code = this.name = u.code, this.data = { what: c };
+        constructor(l) {
+          super(`Could not find ${l}.`), this.code = this.name = u.code, this.data = { what: l };
         }
       }
       u.code = "NotFoundError";
@@ -556,14 +556,14 @@ var Dh = Sl((xe, ze) => {
         t.d(g, "a", function() {
           return i;
         });
-        var u = t(82), S = t(50);
-        function c(s, o, e, j, O, m, _) {
+        var u = t(82), O = t(50);
+        function l(s, o, e, j, E, m, _) {
           try {
-            var h = s[m](_), P = h.value;
+            var h = s[m](_), S = h.value;
           } catch (x) {
             return void e(x);
           }
-          h.done ? o(P) : Promise.resolve(P).then(j, O);
+          h.done ? o(S) : Promise.resolve(S).then(j, E);
         }
         class i {
           static flush() {
@@ -574,13 +574,13 @@ var Dh = Sl((xe, ze) => {
           }
           static encode(o) {
             typeof o == "string" && (o = n.from(o));
-            const e = o.length + 4, j = Object(S.a)(4, e);
+            const e = o.length + 4, j = Object(O.a)(4, e);
             return n.concat([n.from(j, "utf8"), o]);
           }
           static streamReader(o) {
             const e = new u.a(o);
             return function() {
-              var j, O = (j = function* () {
+              var j, E = (j = function* () {
                 try {
                   let m = yield e.read(4);
                   if (m == null) return !0;
@@ -592,19 +592,19 @@ var Dh = Sl((xe, ze) => {
                 }
               }, function() {
                 var m = this, _ = arguments;
-                return new Promise(function(h, P) {
+                return new Promise(function(h, S) {
                   var x = j.apply(m, _);
-                  function R(E) {
-                    c(x, h, P, R, f, "next", E);
+                  function R(P) {
+                    l(x, h, S, R, c, "next", P);
                   }
-                  function f(E) {
-                    c(x, h, P, R, f, "throw", E);
+                  function c(P) {
+                    l(x, h, S, R, c, "throw", P);
                   }
                   R(void 0);
                 });
               });
               return function() {
-                return O.apply(this, arguments);
+                return E.apply(this, arguments);
               };
             }();
           }
@@ -618,7 +618,7 @@ var Dh = Sl((xe, ze) => {
          * @author   Feross Aboukhadijeh <http://feross.org>
          * @license  MIT
          */
-        var u = t(145), S = t(146), c = t(147);
+        var u = t(145), O = t(146), l = t(147);
         function i() {
           return o.TYPED_ARRAY_SUPPORT ? 2147483647 : 1073741823;
         }
@@ -630,7 +630,7 @@ var Dh = Sl((xe, ze) => {
           if (!(o.TYPED_ARRAY_SUPPORT || this instanceof o)) return new o(C, U, L);
           if (typeof C == "number") {
             if (typeof U == "string") throw new Error("If encoding is specified then the first argument must be a string");
-            return O(this, C);
+            return E(this, C);
           }
           return e(this, C, U, L);
         }
@@ -651,7 +651,7 @@ var Dh = Sl((xe, ze) => {
             }
             if (rt) {
               if (typeof ArrayBuffer < "u" && rt.buffer instanceof ArrayBuffer || "length" in rt) return typeof rt.length != "number" || (jt = rt.length) != jt ? s(X, 0) : m(X, rt);
-              if (rt.type === "Buffer" && c(rt.data)) return m(X, rt.data);
+              if (rt.type === "Buffer" && l(rt.data)) return m(X, rt.data);
             }
             var jt;
             throw new TypeError("First argument must be a string, Buffer, ArrayBuffer, Array, or array-like object.");
@@ -661,7 +661,7 @@ var Dh = Sl((xe, ze) => {
           if (typeof C != "number") throw new TypeError('"size" argument must be a number');
           if (C < 0) throw new RangeError('"size" argument must not be negative');
         }
-        function O(C, U) {
+        function E(C, U) {
           if (j(U), C = s(C, U < 0 ? 0 : 0 | _(U)), !o.TYPED_ARRAY_SUPPORT) for (var L = 0; L < U; ++L) C[L] = 0;
           return C;
         }
@@ -704,7 +704,7 @@ var Dh = Sl((xe, ze) => {
               U = ("" + U).toLowerCase(), K = !0;
           }
         }
-        function P(C, U, L) {
+        function S(C, U, L) {
           var K = !1;
           if ((U === void 0 || U < 0) && (U = 0), U > this.length || ((L === void 0 || L > this.length) && (L = this.length), L <= 0) || (L >>>= 0) <= (U >>>= 0)) return "";
           for (C || (C = "utf8"); ; ) switch (C) {
@@ -743,11 +743,11 @@ var Dh = Sl((xe, ze) => {
             if (!X) return -1;
             L = 0;
           }
-          if (typeof U == "string" && (U = o.from(U, K)), o.isBuffer(U)) return U.length === 0 ? -1 : f(C, U, L, K, X);
-          if (typeof U == "number") return U &= 255, o.TYPED_ARRAY_SUPPORT && typeof Uint8Array.prototype.indexOf == "function" ? X ? Uint8Array.prototype.indexOf.call(C, U, L) : Uint8Array.prototype.lastIndexOf.call(C, U, L) : f(C, [U], L, K, X);
+          if (typeof U == "string" && (U = o.from(U, K)), o.isBuffer(U)) return U.length === 0 ? -1 : c(C, U, L, K, X);
+          if (typeof U == "number") return U &= 255, o.TYPED_ARRAY_SUPPORT && typeof Uint8Array.prototype.indexOf == "function" ? X ? Uint8Array.prototype.indexOf.call(C, U, L) : Uint8Array.prototype.lastIndexOf.call(C, U, L) : c(C, [U], L, K, X);
           throw new TypeError("val must be string, number or Buffer");
         }
-        function f(C, U, L, K, X) {
+        function c(C, U, L, K, X) {
           var rt, yt = 1, jt = C.length, Rt = U.length;
           if (K !== void 0 && ((K = String(K).toLowerCase()) === "ucs2" || K === "ucs-2" || K === "utf16le" || K === "utf-16le")) {
             if (C.length < 2 || U.length < 2) return -1;
@@ -770,7 +770,7 @@ var Dh = Sl((xe, ze) => {
           }
           return -1;
         }
-        function E(C, U, L, K) {
+        function P(C, U, L, K) {
           L = Number(L) || 0;
           var X = C.length - L;
           K ? (K = Number(K)) > X && (K = X) : K = X;
@@ -854,9 +854,9 @@ var Dh = Sl((xe, ze) => {
             return j(X), X <= 0 ? s(K, X) : rt !== void 0 ? typeof yt == "string" ? s(K, X).fill(rt, yt) : s(K, X).fill(rt) : s(K, X);
           }(null, C, U, L);
         }, o.allocUnsafe = function(C) {
-          return O(null, C);
+          return E(null, C);
         }, o.allocUnsafeSlow = function(C) {
-          return O(null, C);
+          return E(null, C);
         }, o.isBuffer = function(C) {
           return !(C == null || !C._isBuffer);
         }, o.compare = function(C, U) {
@@ -885,7 +885,7 @@ var Dh = Sl((xe, ze) => {
               return !1;
           }
         }, o.concat = function(C, U) {
-          if (!c(C)) throw new TypeError('"list" argument must be an Array of Buffers');
+          if (!l(C)) throw new TypeError('"list" argument must be an Array of Buffers');
           if (C.length === 0) return o.alloc(0);
           var L;
           if (U === void 0) for (U = 0, L = 0; L < C.length; ++L) U += C[L].length;
@@ -913,7 +913,7 @@ var Dh = Sl((xe, ze) => {
           return this;
         }, o.prototype.toString = function() {
           var C = 0 | this.length;
-          return C === 0 ? "" : arguments.length === 0 ? z(this, 0, C) : P.apply(this, arguments);
+          return C === 0 ? "" : arguments.length === 0 ? z(this, 0, C) : S.apply(this, arguments);
         }, o.prototype.equals = function(C) {
           if (!o.isBuffer(C)) throw new TypeError("Argument must be a Buffer");
           return this === C || o.compare(this, C) === 0;
@@ -950,7 +950,7 @@ var Dh = Sl((xe, ze) => {
           K || (K = "utf8");
           for (var rt = !1; ; ) switch (K) {
             case "hex":
-              return E(this, C, U, L);
+              return P(this, C, U, L);
             case "utf8":
             case "utf-8":
               return w(this, C, U, L);
@@ -1017,10 +1017,10 @@ var Dh = Sl((xe, ze) => {
           if (L < 0) throw new RangeError("Index out of range");
         }
         function Z(C, U, L, K, X) {
-          return X || G(C, 0, L, 4), S.write(C, U, L, K, 23, 4), L + 4;
+          return X || G(C, 0, L, 4), O.write(C, U, L, K, 23, 4), L + 4;
         }
         function ut(C, U, L, K, X) {
-          return X || G(C, 0, L, 8), S.write(C, U, L, K, 52, 8), L + 8;
+          return X || G(C, 0, L, 8), O.write(C, U, L, K, 52, 8), L + 8;
         }
         o.prototype.slice = function(C, U) {
           var L, K = this.length;
@@ -1072,13 +1072,13 @@ var Dh = Sl((xe, ze) => {
         }, o.prototype.readInt32BE = function(C, U) {
           return U || V(C, 4, this.length), this[C] << 24 | this[C + 1] << 16 | this[C + 2] << 8 | this[C + 3];
         }, o.prototype.readFloatLE = function(C, U) {
-          return U || V(C, 4, this.length), S.read(this, C, !0, 23, 4);
+          return U || V(C, 4, this.length), O.read(this, C, !0, 23, 4);
         }, o.prototype.readFloatBE = function(C, U) {
-          return U || V(C, 4, this.length), S.read(this, C, !1, 23, 4);
+          return U || V(C, 4, this.length), O.read(this, C, !1, 23, 4);
         }, o.prototype.readDoubleLE = function(C, U) {
-          return U || V(C, 8, this.length), S.read(this, C, !0, 52, 8);
+          return U || V(C, 8, this.length), O.read(this, C, !0, 52, 8);
         }, o.prototype.readDoubleBE = function(C, U) {
-          return U || V(C, 8, this.length), S.read(this, C, !1, 52, 8);
+          return U || V(C, 8, this.length), O.read(this, C, !1, 52, 8);
         }, o.prototype.writeUIntLE = function(C, U, L, K) {
           C = +C, U |= 0, L |= 0, K || it(this, C, U, L, Math.pow(2, 8 * L) - 1, 0);
           var X = 1, rt = 0;
@@ -1223,41 +1223,41 @@ var Dh = Sl((xe, ze) => {
       }).call(this, t(144));
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(108);
-      function u(i, s, o, e, j, O, m) {
+      function u(i, s, o, e, j, E, m) {
         try {
-          var _ = i[O](m), h = _.value;
-        } catch (P) {
-          return void o(P);
+          var _ = i[E](m), h = _.value;
+        } catch (S) {
+          return void o(S);
         }
         _.done ? s(h) : Promise.resolve(h).then(e, j);
       }
-      function S(i) {
+      function O(i) {
         return function() {
           var s = this, o = arguments;
           return new Promise(function(e, j) {
-            var O = i.apply(s, o);
+            var E = i.apply(s, o);
             function m(h) {
-              u(O, e, j, m, _, "next", h);
+              u(E, e, j, m, _, "next", h);
             }
             function _(h) {
-              u(O, e, j, m, _, "throw", h);
+              u(E, e, j, m, _, "throw", h);
             }
             m(void 0);
           });
         };
       }
-      class c {
+      class l {
         static get({ fs: s, gitdir: o }) {
-          return S(function* () {
+          return O(function* () {
             const e = yield s.read(`${o}/config`, { encoding: "utf8" });
             return n.a.from(e);
           })();
         }
         static save({ fs: s, gitdir: o, config: e }) {
-          return S(function* () {
+          return O(function* () {
             yield s.write(`${o}/config`, e.toString(), { encoding: "utf8" });
           })();
         }
@@ -1267,7 +1267,7 @@ var Dh = Sl((xe, ze) => {
         t.d(g, "a", function() {
           return e;
         });
-        var u = t(4), S = t(46), c = t(61), i = t(131);
+        var u = t(4), O = t(46), l = t(61), i = t(131);
         function s(j) {
           switch (j) {
             case "040000":
@@ -1282,59 +1282,59 @@ var Dh = Sl((xe, ze) => {
           throw new u.a(`Unexpected GitTree entry mode: ${j}`);
         }
         function o(j) {
-          return !j.oid && j.sha && (j.oid = j.sha), j.mode = function(O) {
-            if (typeof O == "number" && (O = O.toString(8)), O.match(/^0?4.*/)) return "040000";
-            if (O.match(/^1006.*/)) return "100644";
-            if (O.match(/^1007.*/)) return "100755";
-            if (O.match(/^120.*/)) return "120000";
-            if (O.match(/^160.*/)) return "160000";
-            throw new u.a(`Could not understand file mode: ${O}`);
+          return !j.oid && j.sha && (j.oid = j.sha), j.mode = function(E) {
+            if (typeof E == "number" && (E = E.toString(8)), E.match(/^0?4.*/)) return "040000";
+            if (E.match(/^1006.*/)) return "100644";
+            if (E.match(/^1007.*/)) return "100755";
+            if (E.match(/^120.*/)) return "120000";
+            if (E.match(/^160.*/)) return "160000";
+            throw new u.a(`Could not understand file mode: ${E}`);
           }(j.mode), j.type || (j.type = s(j.mode)), j;
         }
         class e {
-          constructor(O) {
-            if (n.isBuffer(O)) this._entries = function(m) {
+          constructor(E) {
+            if (n.isBuffer(E)) this._entries = function(m) {
               const _ = [];
               let h = 0;
               for (; h < m.length; ) {
-                const P = m.indexOf(32, h);
-                if (P === -1) throw new u.a(`GitTree: Error parsing buffer at byte location ${h}: Could not find the next space character.`);
+                const S = m.indexOf(32, h);
+                if (S === -1) throw new u.a(`GitTree: Error parsing buffer at byte location ${h}: Could not find the next space character.`);
                 const x = m.indexOf(0, h);
                 if (x === -1) throw new u.a(`GitTree: Error parsing buffer at byte location ${h}: Could not find the next null character.`);
-                let R = m.slice(h, P).toString("utf8");
+                let R = m.slice(h, S).toString("utf8");
                 R === "40000" && (R = "040000");
-                const f = s(R), E = m.slice(P + 1, x).toString("utf8");
-                if (E.includes("\\") || E.includes("/")) throw new S.a(E);
+                const c = s(R), P = m.slice(S + 1, x).toString("utf8");
+                if (P.includes("\\") || P.includes("/")) throw new O.a(P);
                 const w = m.slice(x + 1, x + 21).toString("hex");
-                h = x + 21, _.push({ mode: R, path: E, oid: w, type: f });
+                h = x + 21, _.push({ mode: R, path: P, oid: w, type: c });
               }
               return _;
-            }(O);
+            }(E);
             else {
-              if (!Array.isArray(O)) throw new u.a("invalid type passed to GitTree constructor");
-              this._entries = O.map(o);
+              if (!Array.isArray(E)) throw new u.a("invalid type passed to GitTree constructor");
+              this._entries = E.map(o);
             }
-            this._entries.sort(c.a);
+            this._entries.sort(l.a);
           }
-          static from(O) {
-            return new e(O);
+          static from(E) {
+            return new e(E);
           }
           render() {
-            return this._entries.map((O) => `${O.mode} ${O.type} ${O.oid}    ${O.path}`).join(`
+            return this._entries.map((E) => `${E.mode} ${E.type} ${E.oid}    ${E.path}`).join(`
 `);
           }
           toObject() {
-            const O = [...this._entries];
-            return O.sort(i.a), n.concat(O.map((m) => {
-              const _ = n.from(m.mode.replace(/^0/, "")), h = n.from(" "), P = n.from(m.path, "utf8"), x = n.from([0]), R = n.from(m.oid, "hex");
-              return n.concat([_, h, P, x, R]);
+            const E = [...this._entries];
+            return E.sort(i.a), n.concat(E.map((m) => {
+              const _ = n.from(m.mode.replace(/^0/, "")), h = n.from(" "), S = n.from(m.path, "utf8"), x = n.from([0]), R = n.from(m.oid, "hex");
+              return n.concat([_, h, S, x, R]);
             }));
           }
           entries() {
             return this._entries;
           }
           *[Symbol.iterator]() {
-            for (const O of this._entries) yield O;
+            for (const E of this._entries) yield E;
           }
         }
       }).call(this, t(10).Buffer);
@@ -1342,25 +1342,25 @@ var Dh = Sl((xe, ze) => {
       t.d(g, "a", function() {
         return _;
       });
-      var n = t(33), u = t.n(n), S = t(76), c = t(106), i = t(69);
-      function s(h, P, x, R, f, E, w) {
+      var n = t(33), u = t.n(n), O = t(76), l = t(106), i = t(69);
+      function s(h, S, x, R, c, P, w) {
         try {
-          var I = h[E](w), T = I.value;
+          var I = h[P](w), T = I.value;
         } catch (M) {
           return void x(M);
         }
-        I.done ? P(T) : Promise.resolve(T).then(R, f);
+        I.done ? S(T) : Promise.resolve(T).then(R, c);
       }
       function o(h) {
         return function() {
-          var P = this, x = arguments;
-          return new Promise(function(R, f) {
-            var E = h.apply(P, x);
+          var S = this, x = arguments;
+          return new Promise(function(R, c) {
+            var P = h.apply(S, x);
             function w(T) {
-              s(E, R, f, w, I, "next", T);
+              s(P, R, c, w, I, "next", T);
             }
             function I(T) {
-              s(E, R, f, w, I, "throw", T);
+              s(P, R, c, w, I, "throw", T);
             }
             w(void 0);
           });
@@ -1368,22 +1368,22 @@ var Dh = Sl((xe, ze) => {
       }
       let e = null;
       const j = Symbol("IndexCache");
-      function O() {
-        return (O = o(function* (h, P, x) {
-          const R = yield h.lstat(P), f = yield h.read(P), E = yield c.a.from(f);
-          x.map.set(P, E), x.stats.set(P, R);
+      function E() {
+        return (E = o(function* (h, S, x) {
+          const R = yield h.lstat(S), c = yield h.read(S), P = yield l.a.from(c);
+          x.map.set(S, P), x.stats.set(S, R);
         })).apply(this, arguments);
       }
       function m() {
-        return (m = o(function* (h, P, x) {
-          const R = x.stats.get(P);
+        return (m = o(function* (h, S, x) {
+          const R = x.stats.get(S);
           if (R === void 0) return !0;
-          const f = yield h.lstat(P);
-          return R !== null && f !== null && Object(i.a)(R, f);
+          const c = yield h.lstat(S);
+          return R !== null && c !== null && Object(i.a)(R, c);
         })).apply(this, arguments);
       }
       class _ {
-        static acquire({ fs: P, gitdir: x, cache: R, allowUnmerged: f = !0 }, E) {
+        static acquire({ fs: S, gitdir: x, cache: R, allowUnmerged: c = !0 }, P) {
           return o(function* () {
             R[j] || (R[j] = { map: /* @__PURE__ */ new Map(), stats: /* @__PURE__ */ new Map() });
             const w = `${x}/index`;
@@ -1393,14 +1393,14 @@ var Dh = Sl((xe, ze) => {
             return yield e.acquire(w, o(function* () {
               (yield function(A, F, z) {
                 return m.apply(this, arguments);
-              }(P, w, R[j])) && (yield function(A, F, z) {
-                return O.apply(this, arguments);
-              }(P, w, R[j]));
+              }(S, w, R[j])) && (yield function(A, F, z) {
+                return E.apply(this, arguments);
+              }(S, w, R[j]));
               const M = R[j].map.get(w);
-              if (T = M.unmergedPaths, T.length && !f) throw new S.a(T);
-              if (I = yield E(M), M._dirty) {
+              if (T = M.unmergedPaths, T.length && !c) throw new O.a(T);
+              if (I = yield P(M), M._dirty) {
                 const A = yield M.toObject();
-                yield P.write(w, A), R[j].stats.set(w, yield P.lstat(w)), M._dirty = !1;
+                yield S.write(w, A), R[j].stats.set(w, yield S.lstat(w)), M._dirty = !1;
               }
             })), I;
           })();
@@ -1411,14 +1411,14 @@ var Dh = Sl((xe, ze) => {
         t.d(g, "a", function() {
           return j;
         });
-        var u = t(4), S = t(64), c = t(90), i = t(23), s = t(135), o = t(51);
-        function e(O, m, _, h, P, x, R) {
+        var u = t(4), O = t(64), l = t(90), i = t(23), s = t(135), o = t(51);
+        function e(E, m, _, h, S, x, R) {
           try {
-            var f = O[x](R), E = f.value;
+            var c = E[x](R), P = c.value;
           } catch (w) {
             return void _(w);
           }
-          f.done ? m(E) : Promise.resolve(E).then(h, P);
+          c.done ? m(P) : Promise.resolve(P).then(h, S);
         }
         class j {
           constructor(m) {
@@ -1430,9 +1430,9 @@ var Dh = Sl((xe, ze) => {
             }
           }
           static fromPayloadSignature({ payload: m, signature: _ }) {
-            const h = j.justHeaders(m), P = j.justMessage(m), x = Object(i.a)(h + `
-gpgsig` + Object(c.a)(_) + `
-` + P);
+            const h = j.justHeaders(m), S = j.justMessage(m), x = Object(i.a)(h + `
+gpgsig` + Object(l.a)(_) + `
+` + S);
             return new j(x);
           }
           static from(m) {
@@ -1463,11 +1463,11 @@ gpgsig` + Object(c.a)(_) + `
           parseHeaders() {
             const m = j.justHeaders(this._commit).split(`
 `), _ = [];
-            for (const P of m) P[0] === " " ? _[_.length - 1] += `
-` + P.slice(1) : _.push(P);
+            for (const S of m) S[0] === " " ? _[_.length - 1] += `
+` + S.slice(1) : _.push(S);
             const h = { parent: [] };
-            for (const P of _) {
-              const x = P.slice(0, P.indexOf(" ")), R = P.slice(P.indexOf(" ") + 1);
+            for (const S of _) {
+              const x = S.slice(0, S.indexOf(" ")), R = S.slice(S.indexOf(" ") + 1);
               Array.isArray(h[x]) ? h[x].push(R) : h[x] = R;
             }
             return h.author && (h.author = Object(o.a)(h.author)), h.committer && (h.committer = Object(o.a)(h.committer)), h;
@@ -1482,11 +1482,11 @@ gpgsig` + Object(c.a)(_) + `
 `;
             }
             const h = m.author;
-            _ += `author ${Object(S.a)(h)}
+            _ += `author ${Object(O.a)(h)}
 `;
-            const P = m.committer || m.author;
-            return _ += `committer ${Object(S.a)(P)}
-`, m.gpgsig && (_ += "gpgsig" + Object(c.a)(m.gpgsig)), _;
+            const S = m.committer || m.author;
+            return _ += `committer ${Object(O.a)(S)}
+`, m.gpgsig && (_ += "gpgsig" + Object(l.a)(m.gpgsig)), _;
           }
           static render(m) {
             return j.renderHeaders(m) + `
@@ -1510,28 +1510,28 @@ gpgsig`)), h = m.slice(m.indexOf(`-----END PGP SIGNATURE-----
             return Object(s.a)(m);
           }
           static sign(m, _, h) {
-            return (P = function* () {
+            return (S = function* () {
               const x = m.withoutSignature(), R = j.justMessage(m._commit);
-              let { signature: f } = yield _({ payload: x, secretKey: h });
-              f = Object(i.a)(f);
-              const E = j.justHeaders(m._commit) + `
-gpgsig` + Object(c.a)(f) + `
+              let { signature: c } = yield _({ payload: x, secretKey: h });
+              c = Object(i.a)(c);
+              const P = j.justHeaders(m._commit) + `
+gpgsig` + Object(l.a)(c) + `
 ` + R;
-              return j.from(E);
+              return j.from(P);
             }, function() {
               var x = this, R = arguments;
-              return new Promise(function(f, E) {
-                var w = P.apply(x, R);
+              return new Promise(function(c, P) {
+                var w = S.apply(x, R);
                 function I(M) {
-                  e(w, f, E, I, T, "next", M);
+                  e(w, c, P, I, T, "next", M);
                 }
                 function T(M) {
-                  e(w, f, E, I, T, "throw", M);
+                  e(w, c, P, I, T, "throw", M);
                 }
                 I(void 0);
               });
             })();
-            var P;
+            var S;
           }
         }
       }).call(this, t(10).Buffer);
@@ -1540,36 +1540,36 @@ gpgsig` + Object(c.a)(f) + `
         t.d(g, "a", function() {
           return e;
         });
-        var u = t(25), S = t(138), c = t(84), i = t(19);
-        function s(O, m, _, h, P, x, R) {
+        var u = t(25), O = t(138), l = t(84), i = t(19);
+        function s(E, m, _, h, S, x, R) {
           try {
-            var f = O[x](R), E = f.value;
+            var c = E[x](R), P = c.value;
           } catch (w) {
             return void _(w);
           }
-          f.done ? m(E) : Promise.resolve(E).then(h, P);
+          c.done ? m(P) : Promise.resolve(P).then(h, S);
         }
-        function o(O) {
+        function o(E) {
           return function() {
             var m = this, _ = arguments;
-            return new Promise(function(h, P) {
-              var x = O.apply(m, _);
-              function R(E) {
-                s(x, h, P, R, f, "next", E);
+            return new Promise(function(h, S) {
+              var x = E.apply(m, _);
+              function R(P) {
+                s(x, h, S, R, c, "next", P);
               }
-              function f(E) {
-                s(x, h, P, R, f, "throw", E);
+              function c(P) {
+                s(x, h, S, R, c, "throw", P);
               }
               R(void 0);
             });
           };
         }
-        function e(O) {
+        function e(E) {
           return j.apply(this, arguments);
         }
         function j() {
-          return (j = o(function* ({ fs: O, gitdir: m, type: _, object: h, format: P = "content", oid: x, dryRun: R = !1 }) {
-            return P !== "deflated" && (P !== "wrapped" && (h = u.a.wrap({ type: _, object: h })), x = yield Object(i.a)(h), h = n.from(yield Object(c.a)(h))), R || (yield Object(S.a)({ fs: O, gitdir: m, object: h, format: "deflated", oid: x })), x;
+          return (j = o(function* ({ fs: E, gitdir: m, type: _, object: h, format: S = "content", oid: x, dryRun: R = !1 }) {
+            return S !== "deflated" && (S !== "wrapped" && (h = u.a.wrap({ type: _, object: h })), x = yield Object(i.a)(h), h = n.from(yield Object(l.a)(h))), R || (yield Object(O.a)({ fs: E, gitdir: m, object: h, format: "deflated", oid: x })), x;
           })).apply(this, arguments);
         }
       }).call(this, t(10).Buffer);
@@ -1578,44 +1578,44 @@ gpgsig` + Object(c.a)(f) + `
         function u(i) {
           if (typeof i != "string") throw new TypeError("Path must be a string. Received " + JSON.stringify(i));
         }
-        function S(i, s) {
-          for (var o, e = "", j = 0, O = -1, m = 0, _ = 0; _ <= i.length; ++_) {
+        function O(i, s) {
+          for (var o, e = "", j = 0, E = -1, m = 0, _ = 0; _ <= i.length; ++_) {
             if (_ < i.length) o = i.charCodeAt(_);
             else {
               if (o === 47) break;
               o = 47;
             }
             if (o === 47) {
-              if (!(O === _ - 1 || m === 1)) if (O !== _ - 1 && m === 2) {
+              if (!(E === _ - 1 || m === 1)) if (E !== _ - 1 && m === 2) {
                 if (e.length < 2 || j !== 2 || e.charCodeAt(e.length - 1) !== 46 || e.charCodeAt(e.length - 2) !== 46) {
                   if (e.length > 2) {
                     var h = e.lastIndexOf("/");
                     if (h !== e.length - 1) {
-                      h === -1 ? (e = "", j = 0) : j = (e = e.slice(0, h)).length - 1 - e.lastIndexOf("/"), O = _, m = 0;
+                      h === -1 ? (e = "", j = 0) : j = (e = e.slice(0, h)).length - 1 - e.lastIndexOf("/"), E = _, m = 0;
                       continue;
                     }
                   } else if (e.length === 2 || e.length === 1) {
-                    e = "", j = 0, O = _, m = 0;
+                    e = "", j = 0, E = _, m = 0;
                     continue;
                   }
                 }
                 s && (e.length > 0 ? e += "/.." : e = "..", j = 2);
-              } else e.length > 0 ? e += "/" + i.slice(O + 1, _) : e = i.slice(O + 1, _), j = _ - O - 1;
-              O = _, m = 0;
+              } else e.length > 0 ? e += "/" + i.slice(E + 1, _) : e = i.slice(E + 1, _), j = _ - E - 1;
+              E = _, m = 0;
             } else o === 46 && m !== -1 ? ++m : m = -1;
           }
           return e;
         }
-        var c = { resolve: function() {
+        var l = { resolve: function() {
           for (var i, s = "", o = !1, e = arguments.length - 1; e >= -1 && !o; e--) {
             var j;
             e >= 0 ? j = arguments[e] : (i === void 0 && (i = n.cwd()), j = i), u(j), j.length !== 0 && (s = j + "/" + s, o = j.charCodeAt(0) === 47);
           }
-          return s = S(s, !o), o ? s.length > 0 ? "/" + s : "/" : s.length > 0 ? s : ".";
+          return s = O(s, !o), o ? s.length > 0 ? "/" + s : "/" : s.length > 0 ? s : ".";
         }, normalize: function(i) {
           if (u(i), i.length === 0) return ".";
           var s = i.charCodeAt(0) === 47, o = i.charCodeAt(i.length - 1) === 47;
-          return (i = S(i, !s)).length !== 0 || s || (i = "."), i.length > 0 && o && (i += "/"), s ? "/" + i : i;
+          return (i = O(i, !s)).length !== 0 || s || (i = "."), i.length > 0 && o && (i += "/"), s ? "/" + i : i;
         }, isAbsolute: function(i) {
           return u(i), i.length > 0 && i.charCodeAt(0) === 47;
         }, join: function() {
@@ -1624,33 +1624,33 @@ gpgsig` + Object(c.a)(f) + `
             var o = arguments[s];
             u(o), o.length > 0 && (i === void 0 ? i = o : i += "/" + o);
           }
-          return i === void 0 ? "." : c.normalize(i);
+          return i === void 0 ? "." : l.normalize(i);
         }, relative: function(i, s) {
-          if (u(i), u(s), i === s || (i = c.resolve(i)) === (s = c.resolve(s))) return "";
+          if (u(i), u(s), i === s || (i = l.resolve(i)) === (s = l.resolve(s))) return "";
           for (var o = 1; o < i.length && i.charCodeAt(o) === 47; ++o) ;
-          for (var e = i.length, j = e - o, O = 1; O < s.length && s.charCodeAt(O) === 47; ++O) ;
-          for (var m = s.length - O, _ = j < m ? j : m, h = -1, P = 0; P <= _; ++P) {
-            if (P === _) {
+          for (var e = i.length, j = e - o, E = 1; E < s.length && s.charCodeAt(E) === 47; ++E) ;
+          for (var m = s.length - E, _ = j < m ? j : m, h = -1, S = 0; S <= _; ++S) {
+            if (S === _) {
               if (m > _) {
-                if (s.charCodeAt(O + P) === 47) return s.slice(O + P + 1);
-                if (P === 0) return s.slice(O + P);
-              } else j > _ && (i.charCodeAt(o + P) === 47 ? h = P : P === 0 && (h = 0));
+                if (s.charCodeAt(E + S) === 47) return s.slice(E + S + 1);
+                if (S === 0) return s.slice(E + S);
+              } else j > _ && (i.charCodeAt(o + S) === 47 ? h = S : S === 0 && (h = 0));
               break;
             }
-            var x = i.charCodeAt(o + P);
-            if (x !== s.charCodeAt(O + P)) break;
-            x === 47 && (h = P);
+            var x = i.charCodeAt(o + S);
+            if (x !== s.charCodeAt(E + S)) break;
+            x === 47 && (h = S);
           }
           var R = "";
-          for (P = o + h + 1; P <= e; ++P) P !== e && i.charCodeAt(P) !== 47 || (R.length === 0 ? R += ".." : R += "/..");
-          return R.length > 0 ? R + s.slice(O + h) : (O += h, s.charCodeAt(O) === 47 && ++O, s.slice(O));
+          for (S = o + h + 1; S <= e; ++S) S !== e && i.charCodeAt(S) !== 47 || (R.length === 0 ? R += ".." : R += "/..");
+          return R.length > 0 ? R + s.slice(E + h) : (E += h, s.charCodeAt(E) === 47 && ++E, s.slice(E));
         }, _makeLong: function(i) {
           return i;
         }, dirname: function(i) {
           if (u(i), i.length === 0) return ".";
-          for (var s = i.charCodeAt(0), o = s === 47, e = -1, j = !0, O = i.length - 1; O >= 1; --O) if ((s = i.charCodeAt(O)) === 47) {
+          for (var s = i.charCodeAt(0), o = s === 47, e = -1, j = !0, E = i.length - 1; E >= 1; --E) if ((s = i.charCodeAt(E)) === 47) {
             if (!j) {
-              e = O;
+              e = E;
               break;
             }
           } else j = !1;
@@ -1658,39 +1658,39 @@ gpgsig` + Object(c.a)(f) + `
         }, basename: function(i, s) {
           if (s !== void 0 && typeof s != "string") throw new TypeError('"ext" argument must be a string');
           u(i);
-          var o, e = 0, j = -1, O = !0;
+          var o, e = 0, j = -1, E = !0;
           if (s !== void 0 && s.length > 0 && s.length <= i.length) {
             if (s.length === i.length && s === i) return "";
             var m = s.length - 1, _ = -1;
             for (o = i.length - 1; o >= 0; --o) {
               var h = i.charCodeAt(o);
               if (h === 47) {
-                if (!O) {
+                if (!E) {
                   e = o + 1;
                   break;
                 }
-              } else _ === -1 && (O = !1, _ = o + 1), m >= 0 && (h === s.charCodeAt(m) ? --m == -1 && (j = o) : (m = -1, j = _));
+              } else _ === -1 && (E = !1, _ = o + 1), m >= 0 && (h === s.charCodeAt(m) ? --m == -1 && (j = o) : (m = -1, j = _));
             }
             return e === j ? j = _ : j === -1 && (j = i.length), i.slice(e, j);
           }
           for (o = i.length - 1; o >= 0; --o) if (i.charCodeAt(o) === 47) {
-            if (!O) {
+            if (!E) {
               e = o + 1;
               break;
             }
-          } else j === -1 && (O = !1, j = o + 1);
+          } else j === -1 && (E = !1, j = o + 1);
           return j === -1 ? "" : i.slice(e, j);
         }, extname: function(i) {
           u(i);
-          for (var s = -1, o = 0, e = -1, j = !0, O = 0, m = i.length - 1; m >= 0; --m) {
+          for (var s = -1, o = 0, e = -1, j = !0, E = 0, m = i.length - 1; m >= 0; --m) {
             var _ = i.charCodeAt(m);
-            if (_ !== 47) e === -1 && (j = !1, e = m + 1), _ === 46 ? s === -1 ? s = m : O !== 1 && (O = 1) : s !== -1 && (O = -1);
+            if (_ !== 47) e === -1 && (j = !1, e = m + 1), _ === 46 ? s === -1 ? s = m : E !== 1 && (E = 1) : s !== -1 && (E = -1);
             else if (!j) {
               o = m + 1;
               break;
             }
           }
-          return s === -1 || e === -1 || O === 0 || O === 1 && s === e - 1 && s === o + 1 ? "" : i.slice(s, e);
+          return s === -1 || e === -1 || E === 0 || E === 1 && s === e - 1 && s === o + 1 ? "" : i.slice(s, e);
         }, format: function(i) {
           if (i === null || typeof i != "object") throw new TypeError('The "pathObject" argument must be of type Object. Received type ' + typeof i);
           return function(s, o) {
@@ -1703,14 +1703,14 @@ gpgsig` + Object(c.a)(f) + `
           if (i.length === 0) return s;
           var o, e = i.charCodeAt(0), j = e === 47;
           j ? (s.root = "/", o = 1) : o = 0;
-          for (var O = -1, m = 0, _ = -1, h = !0, P = i.length - 1, x = 0; P >= o; --P) if ((e = i.charCodeAt(P)) !== 47) _ === -1 && (h = !1, _ = P + 1), e === 46 ? O === -1 ? O = P : x !== 1 && (x = 1) : O !== -1 && (x = -1);
+          for (var E = -1, m = 0, _ = -1, h = !0, S = i.length - 1, x = 0; S >= o; --S) if ((e = i.charCodeAt(S)) !== 47) _ === -1 && (h = !1, _ = S + 1), e === 46 ? E === -1 ? E = S : x !== 1 && (x = 1) : E !== -1 && (x = -1);
           else if (!h) {
-            m = P + 1;
+            m = S + 1;
             break;
           }
-          return O === -1 || _ === -1 || x === 0 || x === 1 && O === _ - 1 && O === m + 1 ? _ !== -1 && (s.base = s.name = m === 0 && j ? i.slice(1, _) : i.slice(m, _)) : (m === 0 && j ? (s.name = i.slice(1, O), s.base = i.slice(1, _)) : (s.name = i.slice(m, O), s.base = i.slice(m, _)), s.ext = i.slice(O, _)), m > 0 ? s.dir = i.slice(0, m - 1) : j && (s.dir = "/"), s;
+          return E === -1 || _ === -1 || x === 0 || x === 1 && E === _ - 1 && E === m + 1 ? _ !== -1 && (s.base = s.name = m === 0 && j ? i.slice(1, _) : i.slice(m, _)) : (m === 0 && j ? (s.name = i.slice(1, E), s.base = i.slice(1, _)) : (s.name = i.slice(m, E), s.base = i.slice(m, _)), s.ext = i.slice(E, _)), m > 0 ? s.dir = i.slice(0, m - 1) : j && (s.dir = "/"), s;
         }, sep: "/", delimiter: ":", win32: null, posix: null };
-        c.posix = c, N.exports = c;
+        l.posix = l, N.exports = l;
       }).call(this, t(92));
     }, function(N, g, t) {
       t.d(g, "a", function() {
@@ -1718,8 +1718,8 @@ gpgsig` + Object(c.a)(f) + `
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i, s, o) {
-          super(`Object ${c} ${o ? `at ${o}` : ""}was anticipated to be a ${s} but it is a ${i}.`), this.code = this.name = u.code, this.data = { oid: c, actual: i, expected: s, filepath: o };
+        constructor(l, i, s, o) {
+          super(`Object ${l} ${o ? `at ${o}` : ""}was anticipated to be a ${s} but it is a ${i}.`), this.code = this.name = u.code, this.data = { oid: l, actual: i, expected: s, filepath: o };
         }
       }
       u.code = "ObjectTypeError";
@@ -1728,12 +1728,12 @@ gpgsig` + Object(c.a)(f) + `
         t.d(g, "a", function() {
           return o;
         });
-        var u = t(4), S = t(64), c = t(23), i = t(51);
-        function s(e, j, O, m, _, h, P) {
+        var u = t(4), O = t(64), l = t(23), i = t(51);
+        function s(e, j, E, m, _, h, S) {
           try {
-            var x = e[h](P), R = x.value;
-          } catch (f) {
-            return void O(f);
+            var x = e[h](S), R = x.value;
+          } catch (c) {
+            return void E(c);
           }
           x.done ? j(R) : Promise.resolve(R).then(m, _);
         }
@@ -1753,7 +1753,7 @@ gpgsig` + Object(c.a)(f) + `
             return `object ${j.object}
 type ${j.type}
 tag ${j.tag}
-tagger ${Object(S.a)(j.tagger)}
+tagger ${Object(O.a)(j.tagger)}
 
 ${j.message}
 ${j.gpgsig ? j.gpgsig : ""}`;
@@ -1777,18 +1777,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           headers() {
             const j = this.justHeaders().split(`
-`), O = [];
-            for (const _ of j) _[0] === " " ? O[O.length - 1] += `
-` + _.slice(1) : O.push(_);
+`), E = [];
+            for (const _ of j) _[0] === " " ? E[E.length - 1] += `
+` + _.slice(1) : E.push(_);
             const m = {};
-            for (const _ of O) {
-              const h = _.slice(0, _.indexOf(" ")), P = _.slice(_.indexOf(" ") + 1);
-              Array.isArray(m[h]) ? m[h].push(P) : m[h] = P;
+            for (const _ of E) {
+              const h = _.slice(0, _.indexOf(" ")), S = _.slice(_.indexOf(" ") + 1);
+              Array.isArray(m[h]) ? m[h].push(S) : m[h] = S;
             }
             return m.tagger && (m.tagger = Object(i.a)(m.tagger)), m.committer && (m.committer = Object(i.a)(m.committer)), m;
           }
           withoutSignature() {
-            const j = Object(c.a)(this._tag);
+            const j = Object(l.a)(this._tag);
             return j.indexOf(`
 -----BEGIN PGP SIGNATURE-----`) === -1 ? j : j.slice(0, j.lastIndexOf(`
 -----BEGIN PGP SIGNATURE-----`));
@@ -1797,7 +1797,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             if (this._tag.indexOf(`
 -----BEGIN PGP SIGNATURE-----`) === -1) return;
             const j = this._tag.slice(this._tag.indexOf("-----BEGIN PGP SIGNATURE-----"), this._tag.indexOf("-----END PGP SIGNATURE-----") + 27);
-            return Object(c.a)(j);
+            return Object(l.a)(j);
           }
           payload() {
             return this.withoutSignature() + `
@@ -1806,24 +1806,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           toObject() {
             return n.from(this._tag, "utf8");
           }
-          static sign(j, O, m) {
+          static sign(j, E, m) {
             return (_ = function* () {
               const h = j.payload();
-              let { signature: P } = yield O({ payload: h, secretKey: m });
-              P = Object(c.a)(P);
-              const x = h + P;
+              let { signature: S } = yield E({ payload: h, secretKey: m });
+              S = Object(l.a)(S);
+              const x = h + S;
               return o.from(x);
             }, function() {
-              var h = this, P = arguments;
+              var h = this, S = arguments;
               return new Promise(function(x, R) {
-                var f = _.apply(h, P);
-                function E(I) {
-                  s(f, x, R, E, w, "next", I);
+                var c = _.apply(h, S);
+                function P(I) {
+                  s(c, x, R, P, w, "next", I);
                 }
                 function w(I) {
-                  s(f, x, R, E, w, "throw", I);
+                  s(c, x, R, P, w, "throw", I);
                 }
-                E(void 0);
+                P(void 0);
               });
             })();
             var _;
@@ -1832,29 +1832,29 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
       var n = t(78), u = t.n(n);
-      function S(P) {
+      function O(S) {
         let x = "";
-        for (const R of new Uint8Array(P)) R < 16 && (x += "0"), x += R.toString(16);
+        for (const R of new Uint8Array(S)) R < 16 && (x += "0"), x += R.toString(16);
         return x;
       }
-      function c(P, x, R, f, E, w, I) {
+      function l(S, x, R, c, P, w, I) {
         try {
-          var T = P[w](I), M = T.value;
+          var T = S[w](I), M = T.value;
         } catch (A) {
           return void R(A);
         }
-        T.done ? x(M) : Promise.resolve(M).then(f, E);
+        T.done ? x(M) : Promise.resolve(M).then(c, P);
       }
-      function i(P) {
+      function i(S) {
         return function() {
           var x = this, R = arguments;
-          return new Promise(function(f, E) {
-            var w = P.apply(x, R);
+          return new Promise(function(c, P) {
+            var w = S.apply(x, R);
             function I(M) {
-              c(w, f, E, I, T, "next", M);
+              l(w, c, P, I, T, "next", M);
             }
             function T(M) {
-              c(w, f, E, I, T, "throw", M);
+              l(w, c, P, I, T, "throw", M);
             }
             I(void 0);
           });
@@ -1864,23 +1864,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return o;
       });
       let s = null;
-      function o(P) {
+      function o(S) {
         return e.apply(this, arguments);
       }
       function e() {
-        return (e = i(function* (P) {
-          return s === null && (s = yield _()), s ? O(P) : j(P);
+        return (e = i(function* (S) {
+          return s === null && (s = yield _()), s ? E(S) : j(S);
         })).apply(this, arguments);
       }
-      function j(P) {
-        return new u.a().update(P).digest("hex");
+      function j(S) {
+        return new u.a().update(S).digest("hex");
       }
-      function O(P) {
+      function E(S) {
         return m.apply(this, arguments);
       }
       function m() {
-        return (m = i(function* (P) {
-          return S(yield crypto.subtle.digest("SHA-1", P));
+        return (m = i(function* (S) {
+          return O(yield crypto.subtle.digest("SHA-1", S));
         })).apply(this, arguments);
       }
       function _() {
@@ -1889,7 +1889,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function h() {
         return (h = i(function* () {
           try {
-            if ((yield O(new Uint8Array([]))) === "da39a3ee5e6b4b0d3255bfef95601890afd80709") return !0;
+            if ((yield E(new Uint8Array([]))) === "da39a3ee5e6b4b0d3255bfef95601890afd80709") return !0;
           } catch {
           }
           return !1;
@@ -1900,8 +1900,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return n;
       });
       class n {
-        constructor(S) {
-          this.buffer = S, this._start = 0;
+        constructor(O) {
+          this.buffer = O, this._start = 0;
         }
         eof() {
           return this._start >= this.buffer.length;
@@ -1909,48 +1909,48 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         tell() {
           return this._start;
         }
-        seek(S) {
-          this._start = S;
+        seek(O) {
+          this._start = O;
         }
-        slice(S) {
-          const c = this.buffer.slice(this._start, this._start + S);
-          return this._start += S, c;
+        slice(O) {
+          const l = this.buffer.slice(this._start, this._start + O);
+          return this._start += O, l;
         }
-        toString(S, c) {
-          const i = this.buffer.toString(S, this._start, this._start + c);
-          return this._start += c, i;
+        toString(O, l) {
+          const i = this.buffer.toString(O, this._start, this._start + l);
+          return this._start += l, i;
         }
-        write(S, c, i) {
-          const s = this.buffer.write(S, this._start, c, i);
-          return this._start += c, s;
+        write(O, l, i) {
+          const s = this.buffer.write(O, this._start, l, i);
+          return this._start += l, s;
         }
-        copy(S, c, i) {
-          const s = S.copy(this.buffer, this._start, c, i);
+        copy(O, l, i) {
+          const s = O.copy(this.buffer, this._start, l, i);
           return this._start += s, s;
         }
         readUInt8() {
-          const S = this.buffer.readUInt8(this._start);
-          return this._start += 1, S;
+          const O = this.buffer.readUInt8(this._start);
+          return this._start += 1, O;
         }
-        writeUInt8(S) {
-          const c = this.buffer.writeUInt8(S, this._start);
-          return this._start += 1, c;
+        writeUInt8(O) {
+          const l = this.buffer.writeUInt8(O, this._start);
+          return this._start += 1, l;
         }
         readUInt16BE() {
-          const S = this.buffer.readUInt16BE(this._start);
-          return this._start += 2, S;
+          const O = this.buffer.readUInt16BE(this._start);
+          return this._start += 2, O;
         }
-        writeUInt16BE(S) {
-          const c = this.buffer.writeUInt16BE(S, this._start);
-          return this._start += 2, c;
+        writeUInt16BE(O) {
+          const l = this.buffer.writeUInt16BE(O, this._start);
+          return this._start += 2, l;
         }
         readUInt32BE() {
-          const S = this.buffer.readUInt32BE(this._start);
-          return this._start += 4, S;
+          const O = this.buffer.readUInt32BE(this._start);
+          return this._start += 4, O;
         }
-        writeUInt32BE(S) {
-          const c = this.buffer.writeUInt32BE(S, this._start);
-          return this._start += 4, c;
+        writeUInt32BE(O) {
+          const l = this.buffer.writeUInt32BE(O, this._start);
+          return this._start += 4, l;
         }
       }
     }, function(N, g, t) {
@@ -1959,44 +1959,44 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`No name was provided for ${c} in the argument or in the .git/config file.`), this.code = this.name = u.code, this.data = { role: c };
+        constructor(l) {
+          super(`No name was provided for ${l} in the argument or in the .git/config file.`), this.code = this.name = u.code, this.data = { role: l };
         }
       }
       u.code = "MissingNameError";
     }, function(N, g, t) {
-      var n = t(8), u = t(17), S = t(3), c = t(12), i = t(7), s = t(16), o = t(79), e = t(47);
-      function j(P, x, R, f, E, w, I) {
+      var n = t(8), u = t(17), O = t(3), l = t(12), i = t(7), s = t(16), o = t(79), e = t(47);
+      function j(S, x, R, c, P, w, I) {
         try {
-          var T = P[w](I), M = T.value;
+          var T = S[w](I), M = T.value;
         } catch (A) {
           return void R(A);
         }
-        T.done ? x(M) : Promise.resolve(M).then(f, E);
+        T.done ? x(M) : Promise.resolve(M).then(c, P);
       }
-      function O(P) {
+      function E(S) {
         return function() {
           var x = this, R = arguments;
-          return new Promise(function(f, E) {
-            var w = P.apply(x, R);
+          return new Promise(function(c, P) {
+            var w = S.apply(x, R);
             function I(M) {
-              j(w, f, E, I, T, "next", M);
+              j(w, c, P, I, T, "next", M);
             }
             function T(M) {
-              j(w, f, E, I, T, "throw", M);
+              j(w, c, P, I, T, "throw", M);
             }
             I(void 0);
           });
         };
       }
       class m {
-        constructor({ fs: x, gitdir: R, ref: f, cache: E }) {
+        constructor({ fs: x, gitdir: R, ref: c, cache: P }) {
           var w = this;
-          this.fs = x, this.cache = E, this.gitdir = R, this.mapPromise = O(function* () {
+          this.fs = x, this.cache = P, this.gitdir = R, this.mapPromise = E(function* () {
             const T = /* @__PURE__ */ new Map();
             let M;
             try {
-              M = yield S.a.resolve({ fs: x, gitdir: R, ref: f });
+              M = yield O.a.resolve({ fs: x, gitdir: R, ref: c });
             } catch (F) {
               F instanceof n.a && (M = "4b825dc642cb6eb9a060e54bf8d69288fbee4904");
             }
@@ -2010,31 +2010,31 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
             type() {
               var T = this;
-              return O(function* () {
+              return E(function* () {
                 return I.type(T);
               })();
             }
             mode() {
               var T = this;
-              return O(function* () {
+              return E(function* () {
                 return I.mode(T);
               })();
             }
             stat() {
               var T = this;
-              return O(function* () {
+              return E(function* () {
                 return I.stat(T);
               })();
             }
             content() {
               var T = this;
-              return O(function* () {
+              return E(function* () {
                 return I.content(T);
               })();
             }
             oid() {
               var T = this;
-              return O(function* () {
+              return E(function* () {
                 return I.oid(T);
               })();
             }
@@ -2042,48 +2042,48 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         readdir(x) {
           var R = this;
-          return O(function* () {
-            const f = x._fullpath, { fs: E, cache: w, gitdir: I } = R, T = yield R.mapPromise, M = T.get(f);
-            if (!M) throw new Error(`No obj for ${f}`);
+          return E(function* () {
+            const c = x._fullpath, { fs: P, cache: w, gitdir: I } = R, T = yield R.mapPromise, M = T.get(c);
+            if (!M) throw new Error(`No obj for ${c}`);
             const A = M.oid;
             if (!A) throw new Error(`No oid for obj ${JSON.stringify(M)}`);
             if (M.type !== "tree") return null;
-            const { type: F, object: z } = yield Object(i.a)({ fs: E, cache: w, gitdir: I, oid: A });
+            const { type: F, object: z } = yield Object(i.a)({ fs: P, cache: w, gitdir: I, oid: A });
             if (F !== M.type) throw new u.a(A, F, M.type);
-            const $ = c.a.from(z);
-            for (const H of $) T.set(Object(s.join)(f, H.path), H);
-            return $.entries().map((H) => Object(s.join)(f, H.path));
+            const $ = l.a.from(z);
+            for (const H of $) T.set(Object(s.join)(c, H.path), H);
+            return $.entries().map((H) => Object(s.join)(c, H.path));
           })();
         }
         type(x) {
           var R = this;
-          return O(function* () {
+          return E(function* () {
             if (x._type === !1) {
-              const f = yield R.mapPromise, { type: E } = f.get(x._fullpath);
-              x._type = E;
+              const c = yield R.mapPromise, { type: P } = c.get(x._fullpath);
+              x._type = P;
             }
             return x._type;
           })();
         }
         mode(x) {
           var R = this;
-          return O(function* () {
+          return E(function* () {
             if (x._mode === !1) {
-              const f = yield R.mapPromise, { mode: E } = f.get(x._fullpath);
-              x._mode = Object(o.a)(parseInt(E, 8));
+              const c = yield R.mapPromise, { mode: P } = c.get(x._fullpath);
+              x._mode = Object(o.a)(parseInt(P, 8));
             }
             return x._mode;
           })();
         }
         stat(x) {
-          return O(function* () {
+          return E(function* () {
           })();
         }
         content(x) {
           var R = this;
-          return O(function* () {
+          return E(function* () {
             if (x._content === !1) {
-              const f = yield R.mapPromise, { fs: E, cache: w, gitdir: I } = R, T = f.get(x._fullpath).oid, { type: M, object: A } = yield Object(i.a)({ fs: E, cache: w, gitdir: I, oid: T });
+              const c = yield R.mapPromise, { fs: P, cache: w, gitdir: I } = R, T = c.get(x._fullpath).oid, { type: M, object: A } = yield Object(i.a)({ fs: P, cache: w, gitdir: I, oid: T });
               x._content = M !== "blob" ? void 0 : new Uint8Array(A);
             }
             return x._content;
@@ -2091,20 +2091,20 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         oid(x) {
           var R = this;
-          return O(function* () {
+          return E(function* () {
             if (x._oid === !1) {
-              const f = (yield R.mapPromise).get(x._fullpath);
-              x._oid = f.oid;
+              const c = (yield R.mapPromise).get(x._fullpath);
+              x._oid = c.oid;
             }
             return x._oid;
           })();
         }
       }
       var _ = t(37);
-      function h({ ref: P = "HEAD" } = {}) {
+      function h({ ref: S = "HEAD" } = {}) {
         const x = /* @__PURE__ */ Object.create(null);
-        return Object.defineProperty(x, _.a, { value: function({ fs: R, gitdir: f, cache: E }) {
-          return new m({ fs: R, gitdir: f, ref: P, cache: E });
+        return Object.defineProperty(x, _.a, { value: function({ fs: R, gitdir: c, cache: P }) {
+          return new m({ fs: R, gitdir: c, ref: S, cache: P });
         } }), Object.freeze(x), x;
       }
       t.d(g, "a", function() {
@@ -2124,24 +2124,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`The function requires a "${c}" parameter but none was provided.`), this.code = this.name = u.code, this.data = { parameter: c };
+        constructor(l) {
+          super(`The function requires a "${l}" parameter but none was provided.`), this.code = this.name = u.code, this.data = { parameter: l };
         }
       }
       u.code = "MissingParameterError";
     }, function(N, g, t) {
       (function(n) {
         t.d(g, "a", function() {
-          return S;
+          return O;
         });
         var u = t(4);
-        class S {
+        class O {
           static wrap({ type: i, object: s }) {
             return n.concat([n.from(`${i} ${s.byteLength.toString()}\0`), n.from(s)]);
           }
           static unwrap(i) {
-            const s = i.indexOf(32), o = i.indexOf(0), e = i.slice(0, s).toString("utf8"), j = i.slice(s + 1, o).toString("utf8"), O = i.length - (o + 1);
-            if (parseInt(j) !== O) throw new u.a(`Length mismatch: expected ${j} bytes but got ${O} instead.`);
+            const s = i.indexOf(32), o = i.indexOf(0), e = i.slice(0, s).toString("utf8"), j = i.slice(s + 1, o).toString("utf8"), E = i.length - (o + 1);
+            if (parseInt(j) !== E) throw new u.a(`Length mismatch: expected ${j} bytes but got ${E} instead.`);
             return { type: e, object: n.from(i.slice(o + 1)) };
           }
         }
@@ -2152,15 +2152,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i, s = !0) {
-          super(`Failed to create ${c} at ${i} because it already exists.${s ? ` (Hint: use 'force: true' parameter to overwrite existing ${c}.)` : ""}`), this.code = this.name = u.code, this.data = { noun: c, where: i, canForce: s };
+        constructor(l, i, s = !0) {
+          super(`Failed to create ${l} at ${i} because it already exists.${s ? ` (Hint: use 'force: true' parameter to overwrite existing ${l}.)` : ""}`), this.code = this.name = u.code, this.data = { noun: l, where: i, canForce: s };
         }
       }
       u.code = "AlreadyExistsError";
     }, function(N, g, t) {
       function n(u) {
-        const S = Math.max(u.lastIndexOf("/"), u.lastIndexOf("\\"));
-        return S === -1 ? "." : S === 0 ? "/" : u.slice(0, S);
+        const O = Math.max(u.lastIndexOf("/"), u.lastIndexOf("\\"));
+        return O === -1 ? "." : O === 0 ? "/" : u.slice(0, O);
       }
       t.d(g, "a", function() {
         return n;
@@ -2171,8 +2171,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i) {
-          super(`"${c}" would be an invalid git reference. (Hint: a valid alternative would be "${i}".)`), this.code = this.name = u.code, this.data = { ref: c, suggestion: i };
+        constructor(l, i) {
+          super(`"${l}" would be an invalid git reference. (Hint: a valid alternative would be "${i}".)`), this.code = this.name = u.code, this.data = { ref: l, suggestion: i };
         }
       }
       u.code = "InvalidRefNameError";
@@ -2181,24 +2181,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return i;
       });
       var n = t(41), u = t(85);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -2208,18 +2208,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* ({ fs: o, gitdir: e, author: j, commit: O }) {
-          const m = Math.floor(Date.now() / 1e3), _ = { name: yield Object(n.a)({ fs: o, gitdir: e, path: "user.name" }), email: (yield Object(n.a)({ fs: o, gitdir: e, path: "user.email" })) || "", timestamp: m, timezoneOffset: new Date(1e3 * m).getTimezoneOffset() }, h = Object(u.a)({}, _, O ? O.author : void 0, j);
+        return (s = l(function* ({ fs: o, gitdir: e, author: j, commit: E }) {
+          const m = Math.floor(Date.now() / 1e3), _ = { name: yield Object(n.a)({ fs: o, gitdir: e, path: "user.name" }), email: (yield Object(n.a)({ fs: o, gitdir: e, path: "user.email" })) || "", timestamp: m, timezoneOffset: new Date(1e3 * m).getTimezoneOffset() }, h = Object(u.a)({}, _, E ? E.author : void 0, j);
           if (h.name !== void 0) return h;
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
-      function n(O, m) {
-        const _ = m - O;
-        return Array.from({ length: _ }, (h, P) => O + P);
+      function n(E, m) {
+        const _ = m - E;
+        return Array.from({ length: _ }, (h, S) => E + S);
       }
-      var u = t(114), S = t(37);
-      class c {
+      var u = t(114), O = t(37);
+      class l {
         constructor() {
           this.value = null;
         }
@@ -2230,67 +2230,67 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           this.value = null;
         }
       }
-      function* i(O) {
-        const m = new c();
+      function* i(E) {
+        const m = new l();
         let _;
-        const h = [], P = O.length;
-        for (let x = 0; x < P; x++) h[x] = O[x].next().value, h[x] !== void 0 && m.consider(h[x]);
+        const h = [], S = E.length;
+        for (let x = 0; x < S; x++) h[x] = E[x].next().value, h[x] !== void 0 && m.consider(h[x]);
         if (m.value !== null) for (; ; ) {
           const x = [];
           _ = m.value, m.reset();
-          for (let R = 0; R < P; R++) h[R] !== void 0 && h[R] === _ ? (x[R] = h[R], h[R] = O[R].next().value) : x[R] = null, h[R] !== void 0 && m.consider(h[R]);
+          for (let R = 0; R < S; R++) h[R] !== void 0 && h[R] === _ ? (x[R] = h[R], h[R] = E[R].next().value) : x[R] = null, h[R] !== void 0 && m.consider(h[R]);
           if (yield x, m.value === null) return;
         }
       }
-      function s(O, m, _, h, P, x, R) {
+      function s(E, m, _, h, S, x, R) {
         try {
-          var f = O[x](R), E = f.value;
+          var c = E[x](R), P = c.value;
         } catch (w) {
           return void _(w);
         }
-        f.done ? m(E) : Promise.resolve(E).then(h, P);
+        c.done ? m(P) : Promise.resolve(P).then(h, S);
       }
-      function o(O) {
+      function o(E) {
         return function() {
           var m = this, _ = arguments;
-          return new Promise(function(h, P) {
-            var x = O.apply(m, _);
-            function R(E) {
-              s(x, h, P, R, f, "next", E);
+          return new Promise(function(h, S) {
+            var x = E.apply(m, _);
+            function R(P) {
+              s(x, h, S, R, c, "next", P);
             }
-            function f(E) {
-              s(x, h, P, R, f, "throw", E);
+            function c(P) {
+              s(x, h, S, R, c, "throw", P);
             }
             R(void 0);
           });
         };
       }
-      function e(O) {
+      function e(E) {
         return j.apply(this, arguments);
       }
       function j() {
-        return (j = o(function* ({ fs: O, cache: m, dir: _, gitdir: h, trees: P, map: x = function() {
-          var E = o(function* (w, I) {
+        return (j = o(function* ({ fs: E, cache: m, dir: _, gitdir: h, trees: S, map: x = function() {
+          var P = o(function* (w, I) {
             return I;
           });
           return function(w, I) {
-            return E.apply(this, arguments);
+            return P.apply(this, arguments);
           };
         }(), reduce: R = function() {
-          var E = o(function* (w, I) {
+          var P = o(function* (w, I) {
             const T = Object(u.a)(I);
             return w !== void 0 && T.unshift(w), T;
           });
           return function(w, I) {
-            return E.apply(this, arguments);
+            return P.apply(this, arguments);
           };
-        }(), iterate: f = (E, w) => Promise.all([...w].map(E)) }) {
-          const E = P.map((A) => A[S.a]({ fs: O, dir: _, gitdir: h, cache: m })), w = new Array(E.length).fill("."), I = n(0, E.length), T = function() {
+        }(), iterate: c = (P, w) => Promise.all([...w].map(P)) }) {
+          const P = S.map((A) => A[O.a]({ fs: E, dir: _, gitdir: h, cache: m })), w = new Array(P.length).fill("."), I = n(0, P.length), T = function() {
             var A = o(function* (F) {
               I.map(($) => {
-                F[$] = F[$] && new E[$].ConstructEntry(F[$]);
+                F[$] = F[$] && new P[$].ConstructEntry(F[$]);
               });
-              const z = (yield Promise.all(I.map(($) => F[$] ? E[$].readdir(F[$]) : []))).map(($) => $ === null ? [] : $).map(($) => $[Symbol.iterator]());
+              const z = (yield Promise.all(I.map(($) => F[$] ? P[$].readdir(F[$]) : []))).map(($) => $ === null ? [] : $).map(($) => $[Symbol.iterator]());
               return { entries: F, children: i(z) };
             });
             return function(F) {
@@ -2300,7 +2300,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             var A = o(function* (F) {
               const { entries: z, children: $ } = yield T(F), H = z.find((ot) => ot && ot._fullpath)._fullpath, nt = yield x(H, z);
               if (nt !== null) {
-                let ot = yield f(M, $);
+                let ot = yield c(M, $);
                 return ot = ot.filter((V) => V !== void 0), R(nt, ot);
               }
             });
@@ -2331,21 +2331,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }, g.shrinkBuf = function(i, s) {
         return i.length === s ? i : i.subarray ? i.subarray(0, s) : (i.length = s, i);
       };
-      var S = { arraySet: function(i, s, o, e, j) {
+      var O = { arraySet: function(i, s, o, e, j) {
         if (s.subarray && i.subarray) i.set(s.subarray(o, o + e), j);
-        else for (var O = 0; O < e; O++) i[j + O] = s[o + O];
+        else for (var E = 0; E < e; E++) i[j + E] = s[o + E];
       }, flattenChunks: function(i) {
-        var s, o, e, j, O, m;
+        var s, o, e, j, E, m;
         for (e = 0, s = 0, o = i.length; s < o; s++) e += i[s].length;
-        for (m = new Uint8Array(e), j = 0, s = 0, o = i.length; s < o; s++) O = i[s], m.set(O, j), j += O.length;
+        for (m = new Uint8Array(e), j = 0, s = 0, o = i.length; s < o; s++) E = i[s], m.set(E, j), j += E.length;
         return m;
-      } }, c = { arraySet: function(i, s, o, e, j) {
-        for (var O = 0; O < e; O++) i[j + O] = s[o + O];
+      } }, l = { arraySet: function(i, s, o, e, j) {
+        for (var E = 0; E < e; E++) i[j + E] = s[o + E];
       }, flattenChunks: function(i) {
         return [].concat.apply([], i);
       } };
       g.setTyped = function(i) {
-        i ? (g.Buf8 = Uint8Array, g.Buf16 = Uint16Array, g.Buf32 = Int32Array, g.assign(g, S)) : (g.Buf8 = Array, g.Buf16 = Array, g.Buf32 = Array, g.assign(g, c));
+        i ? (g.Buf8 = Uint8Array, g.Buf16 = Uint16Array, g.Buf32 = Int32Array, g.assign(g, O)) : (g.Buf8 = Array, g.Buf16 = Array, g.Buf32 = Array, g.assign(g, l));
       }, g.setTyped(n);
     }, function(N, g, t) {
       t.d(g, "a", function() {
@@ -2353,8 +2353,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Expected a 40-char hex object id but saw "${c}".`), this.code = this.name = u.code, this.data = { value: c };
+        constructor(l) {
+          super(`Expected a 40-char hex object id but saw "${l}".`), this.code = this.name = u.code, this.data = { value: l };
         }
       }
       u.code = "InvalidOidError";
@@ -2362,42 +2362,42 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       N.exports = t(143);
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return S;
+        return O;
       });
       var n = t(79);
-      function u(c, i, s, o) {
-        if (c !== void 0 && i !== void 0) return [c, i];
+      function u(l, i, s, o) {
+        if (l !== void 0 && i !== void 0) return [l, i];
         s === void 0 && (s = o.valueOf());
         const e = Math.floor(s / 1e3);
         return [e, 1e6 * (s - 1e3 * e)];
       }
-      function S(c) {
-        const [i, s] = u(c.ctimeSeconds, c.ctimeNanoseconds, c.ctimeMs, c.ctime), [o, e] = u(c.mtimeSeconds, c.mtimeNanoseconds, c.mtimeMs, c.mtime);
-        return { ctimeSeconds: i % 2 ** 32, ctimeNanoseconds: s % 2 ** 32, mtimeSeconds: o % 2 ** 32, mtimeNanoseconds: e % 2 ** 32, dev: c.dev % 2 ** 32, ino: c.ino % 2 ** 32, mode: Object(n.a)(c.mode % 2 ** 32), uid: c.uid % 2 ** 32, gid: c.gid % 2 ** 32, size: c.size > -1 ? c.size % 2 ** 32 : 0 };
+      function O(l) {
+        const [i, s] = u(l.ctimeSeconds, l.ctimeNanoseconds, l.ctimeMs, l.ctime), [o, e] = u(l.mtimeSeconds, l.mtimeNanoseconds, l.mtimeMs, l.mtime);
+        return { ctimeSeconds: i % 2 ** 32, ctimeNanoseconds: s % 2 ** 32, mtimeSeconds: o % 2 ** 32, mtimeNanoseconds: e % 2 ** 32, dev: l.dev % 2 ** 32, ino: l.ino % 2 ** 32, mode: Object(n.a)(l.mode % 2 ** 32), uid: l.uid % 2 ** 32, gid: l.gid % 2 ** 32, size: l.size > -1 ? l.size % 2 ** 32 : 0 };
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return i;
       });
       var n = t(3), u = t(66);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -2407,9 +2407,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* ({ fs: o, gitdir: e, fullname: j = !1, test: O = !1 }) {
+        return (s = l(function* ({ fs: o, gitdir: e, fullname: j = !1, test: E = !1 }) {
           const m = yield n.a.resolve({ fs: o, gitdir: e, ref: "HEAD", depth: 2 });
-          if (O) try {
+          if (E) try {
             yield n.a.resolve({ fs: o, gitdir: e, ref: m });
           } catch {
             return;
@@ -2423,8 +2423,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i) {
-          super(`Expected "${c}" but received "${i}".`), this.code = this.name = u.code, this.data = { expected: c, actual: i };
+        constructor(l, i) {
+          super(`Expected "${l}" but received "${i}".`), this.code = this.name = u.code, this.data = { expected: l, actual: i };
         }
       }
       u.code = "ParseError";
@@ -2434,94 +2434,94 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       const n = Symbol("GitWalkSymbol");
     }, function(N, g, t) {
-      function n(u, S) {
-        return -(u < S) || +(u > S);
+      function n(u, O) {
+        return -(u < O) || +(u > O);
       }
       t.d(g, "a", function() {
         return n;
       });
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(88);
-      function u(s, o, e, j, O, m, _) {
+      function u(s, o, e, j, E, m, _) {
         try {
-          var h = s[m](_), P = h.value;
+          var h = s[m](_), S = h.value;
         } catch (x) {
           return void e(x);
         }
-        h.done ? o(P) : Promise.resolve(P).then(j, O);
+        h.done ? o(S) : Promise.resolve(S).then(j, E);
       }
-      function S(s) {
+      function O(s) {
         return function() {
           var o = this, e = arguments;
-          return new Promise(function(j, O) {
+          return new Promise(function(j, E) {
             var m = s.apply(o, e);
-            function _(P) {
-              u(m, j, O, _, h, "next", P);
+            function _(S) {
+              u(m, j, E, _, h, "next", S);
             }
-            function h(P) {
-              u(m, j, O, _, h, "throw", P);
+            function h(S) {
+              u(m, j, E, _, h, "throw", S);
             }
             _(void 0);
           });
         };
       }
-      function c(s, o) {
+      function l(s, o) {
         return i.apply(this, arguments);
       }
       function i() {
-        return (i = S(function* (s, o) {
+        return (i = O(function* (s, o) {
           const e = Object(n.a)(s);
           for (; ; ) {
-            const { value: j, done: O } = yield e.next();
-            if (j && (yield o(j)), O) break;
+            const { value: j, done: E } = yield e.next();
+            if (j && (yield o(j)), E) break;
           }
           e.return && e.return();
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
       function n(u) {
-        const S = Math.max(u.lastIndexOf("/"), u.lastIndexOf("\\"));
-        return S > -1 && (u = u.slice(S + 1)), u;
+        const O = Math.max(u.lastIndexOf("/"), u.lastIndexOf("\\"));
+        return O > -1 && (u = u.slice(O + 1)), u;
       }
       t.d(g, "a", function() {
         return n;
       });
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(11);
-      function u(s, o, e, j, O, m, _) {
+      function u(s, o, e, j, E, m, _) {
         try {
-          var h = s[m](_), P = h.value;
+          var h = s[m](_), S = h.value;
         } catch (x) {
           return void e(x);
         }
-        h.done ? o(P) : Promise.resolve(P).then(j, O);
+        h.done ? o(S) : Promise.resolve(S).then(j, E);
       }
-      function S(s) {
+      function O(s) {
         return function() {
           var o = this, e = arguments;
-          return new Promise(function(j, O) {
+          return new Promise(function(j, E) {
             var m = s.apply(o, e);
-            function _(P) {
-              u(m, j, O, _, h, "next", P);
+            function _(S) {
+              u(m, j, E, _, h, "next", S);
             }
-            function h(P) {
-              u(m, j, O, _, h, "throw", P);
+            function h(S) {
+              u(m, j, E, _, h, "throw", S);
             }
             _(void 0);
           });
         };
       }
-      function c(s) {
+      function l(s) {
         return i.apply(this, arguments);
       }
       function i() {
-        return (i = S(function* ({ fs: s, gitdir: o, path: e }) {
+        return (i = O(function* ({ fs: s, gitdir: o, path: e }) {
           return (yield n.a.get({ fs: s, gitdir: o })).get(e);
         })).apply(this, arguments);
       }
@@ -2529,29 +2529,29 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "a", function() {
         return o;
       });
-      var n = t(137), u = t.n(n), S = t(40), c = t(27), i = t(16);
-      function s(e, j, O, m, _, h, P) {
+      var n = t(137), u = t.n(n), O = t(40), l = t(27), i = t(16);
+      function s(e, j, E, m, _, h, S) {
         try {
-          var x = e[h](P), R = x.value;
-        } catch (f) {
-          return void O(f);
+          var x = e[h](S), R = x.value;
+        } catch (c) {
+          return void E(c);
         }
         x.done ? j(R) : Promise.resolve(R).then(m, _);
       }
       class o {
-        static isIgnored({ fs: j, dir: O, gitdir: m = Object(i.join)(O, ".git"), filepath: _ }) {
+        static isIgnored({ fs: j, dir: E, gitdir: m = Object(i.join)(E, ".git"), filepath: _ }) {
           return (h = function* () {
-            if (Object(S.a)(_) === ".git") return !0;
+            if (Object(O.a)(_) === ".git") return !0;
             if (_ === ".") return !1;
-            let P = "";
+            let S = "";
             const x = Object(i.join)(m, "info", "exclude");
-            (yield j.exists(x)) && (P = yield j.read(x, "utf8"));
-            const R = [{ gitignore: Object(i.join)(O, ".gitignore"), filepath: _ }], f = _.split("/").filter(Boolean);
-            for (let w = 1; w < f.length; w++) {
-              const I = f.slice(0, w).join("/"), T = f.slice(w).join("/");
-              R.push({ gitignore: Object(i.join)(O, I, ".gitignore"), filepath: T });
+            (yield j.exists(x)) && (S = yield j.read(x, "utf8"));
+            const R = [{ gitignore: Object(i.join)(E, ".gitignore"), filepath: _ }], c = _.split("/").filter(Boolean);
+            for (let w = 1; w < c.length; w++) {
+              const I = c.slice(0, w).join("/"), T = c.slice(w).join("/");
+              R.push({ gitignore: Object(i.join)(E, I, ".gitignore"), filepath: T });
             }
-            let E = !1;
+            let P = !1;
             for (const w of R) {
               let I;
               try {
@@ -2559,22 +2559,22 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               } catch (A) {
                 if (A.code === "NOENT") continue;
               }
-              const T = u()().add(P);
+              const T = u()().add(S);
               T.add(I);
-              const M = Object(c.a)(w.filepath);
+              const M = Object(l.a)(w.filepath);
               if (M !== "." && T.ignores(M)) return !0;
-              E = E ? !T.test(w.filepath).unignored : T.test(w.filepath).ignored;
+              P = P ? !T.test(w.filepath).unignored : T.test(w.filepath).ignored;
             }
-            return E;
+            return P;
           }, function() {
-            var P = this, x = arguments;
-            return new Promise(function(R, f) {
-              var E = h.apply(P, x);
+            var S = this, x = arguments;
+            return new Promise(function(R, c) {
+              var P = h.apply(S, x);
               function w(T) {
-                s(E, R, f, w, I, "next", T);
+                s(P, R, c, w, I, "next", T);
               }
               function I(T) {
-                s(E, R, f, w, I, "throw", T);
+                s(P, R, c, w, I, "throw", T);
               }
               w(void 0);
             });
@@ -2587,24 +2587,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return i;
       });
       var n = t(41), u = t(85);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -2614,56 +2614,56 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* ({ fs: o, gitdir: e, author: j, committer: O, commit: m }) {
-          const _ = Math.floor(Date.now() / 1e3), h = { name: yield Object(n.a)({ fs: o, gitdir: e, path: "user.name" }), email: (yield Object(n.a)({ fs: o, gitdir: e, path: "user.email" })) || "", timestamp: _, timezoneOffset: new Date(1e3 * _).getTimezoneOffset() }, P = Object(u.a)({}, h, m ? m.committer : void 0, j, O);
-          if (P.name !== void 0) return P;
+        return (s = l(function* ({ fs: o, gitdir: e, author: j, committer: E, commit: m }) {
+          const _ = Math.floor(Date.now() / 1e3), h = { name: yield Object(n.a)({ fs: o, gitdir: e, path: "user.name" }), email: (yield Object(n.a)({ fs: o, gitdir: e, path: "user.email" })) || "", timestamp: _, timezoneOffset: new Date(1e3 * _).getTimezoneOffset() }, S = Object(u.a)({}, h, m ? m.committer : void 0, j, E);
+          if (S.name !== void 0) return S;
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return o;
       });
-      var n = t(33), u = t.n(n), S = t(16);
-      function c(e, j, O, m, _, h, P) {
+      var n = t(33), u = t.n(n), O = t(16);
+      function l(e, j, E, m, _, h, S) {
         try {
-          var x = e[h](P), R = x.value;
-        } catch (f) {
-          return void O(f);
+          var x = e[h](S), R = x.value;
+        } catch (c) {
+          return void E(c);
         }
         x.done ? j(R) : Promise.resolve(R).then(m, _);
       }
       function i(e) {
         return function() {
-          var j = this, O = arguments;
+          var j = this, E = arguments;
           return new Promise(function(m, _) {
-            var h = e.apply(j, O);
-            function P(R) {
-              c(h, m, _, P, x, "next", R);
+            var h = e.apply(j, E);
+            function S(R) {
+              l(h, m, _, S, x, "next", R);
             }
             function x(R) {
-              c(h, m, _, P, x, "throw", R);
+              l(h, m, _, S, x, "throw", R);
             }
-            P(void 0);
+            S(void 0);
           });
         };
       }
       let s = null;
       class o {
-        static read({ fs: j, gitdir: O }) {
+        static read({ fs: j, gitdir: E }) {
           return i(function* () {
             s === null && (s = new u.a());
-            const m = Object(S.join)(O, "shallow"), _ = /* @__PURE__ */ new Set();
+            const m = Object(O.join)(E, "shallow"), _ = /* @__PURE__ */ new Set();
             return yield s.acquire(m, i(function* () {
               const h = yield j.read(m, { encoding: "utf8" });
               return h === null || h.trim() === "" ? _ : void h.trim().split(`
-`).map((P) => _.add(P));
+`).map((S) => _.add(S));
             })), _;
           })();
         }
-        static write({ fs: j, gitdir: O, oids: m }) {
+        static write({ fs: j, gitdir: E, oids: m }) {
           return i(function* () {
             s === null && (s = new u.a());
-            const _ = Object(S.join)(O, "shallow");
+            const _ = Object(O.join)(E, "shallow");
             if (m.size > 0) {
               const h = [...m].join(`
 `) + `
@@ -2678,12 +2678,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       }
     }, function(N, g, t) {
-      function n(S, c, i) {
-        return c = c instanceof RegExp ? c : new RegExp(c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), S.replace(c, i);
+      function n(O, l, i) {
+        return l = l instanceof RegExp ? l : new RegExp(l.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), O.replace(l, i);
       }
-      var u = { clean: function(S) {
-        if (typeof S != "string") throw new Error("Expected a string, received: " + S);
-        return S = n(S, "./", "/"), S = n(S, "..", "."), S = n(S, " ", "-"), S = n(S, /^[~^:?*\\\-]/g, ""), S = n(S, /[~^:?*\\]/g, "-"), S = n(S, /[~^:?*\\\-]$/g, ""), S = n(S, "@{", "-"), S = n(S, /\.$/g, ""), S = n(S, /\/$/g, ""), S = n(S, /\.lock$/g, "");
+      var u = { clean: function(O) {
+        if (typeof O != "string") throw new Error("Expected a string, received: " + O);
+        return O = n(O, "./", "/"), O = n(O, "..", "."), O = n(O, " ", "-"), O = n(O, /^[~^:?*\\\-]/g, ""), O = n(O, /[~^:?*\\]/g, "-"), O = n(O, /[~^:?*\\\-]$/g, ""), O = n(O, "@{", "-"), O = n(O, /\.$/g, ""), O = n(O, /\/$/g, ""), O = n(O, /\.lock$/g, "");
       } };
       N.exports = u;
     }, function(N, g, t) {
@@ -2692,8 +2692,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`The filepath "${c}" contains unsafe character sequences`), this.code = this.name = u.code, this.data = { filepath: c };
+        constructor(l) {
+          super(`The filepath "${l}" contains unsafe character sequences`), this.code = this.name = u.code, this.data = { filepath: l };
         }
       }
       u.code = "UnsafeFilepathError";
@@ -2701,41 +2701,41 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "a", function() {
         return e;
       });
-      var n = t(17), u = t(18), S = t(14), c = t(12), i = t(7);
-      function s(O, m, _, h, P, x, R) {
+      var n = t(17), u = t(18), O = t(14), l = t(12), i = t(7);
+      function s(E, m, _, h, S, x, R) {
         try {
-          var f = O[x](R), E = f.value;
+          var c = E[x](R), P = c.value;
         } catch (w) {
           return void _(w);
         }
-        f.done ? m(E) : Promise.resolve(E).then(h, P);
+        c.done ? m(P) : Promise.resolve(P).then(h, S);
       }
-      function o(O) {
+      function o(E) {
         return function() {
           var m = this, _ = arguments;
-          return new Promise(function(h, P) {
-            var x = O.apply(m, _);
-            function R(E) {
-              s(x, h, P, R, f, "next", E);
+          return new Promise(function(h, S) {
+            var x = E.apply(m, _);
+            function R(P) {
+              s(x, h, S, R, c, "next", P);
             }
-            function f(E) {
-              s(x, h, P, R, f, "throw", E);
+            function c(P) {
+              s(x, h, S, R, c, "throw", P);
             }
             R(void 0);
           });
         };
       }
-      function e(O) {
+      function e(E) {
         return j.apply(this, arguments);
       }
       function j() {
-        return (j = o(function* ({ fs: O, cache: m, gitdir: _, oid: h }) {
-          if (h === "4b825dc642cb6eb9a060e54bf8d69288fbee4904") return { tree: c.a.from([]), oid: h };
-          const { type: P, object: x } = yield Object(i.a)({ fs: O, cache: m, gitdir: _, oid: h });
-          if (P === "tag") return e({ fs: O, cache: m, gitdir: _, oid: h = u.a.from(x).parse().object });
-          if (P === "commit") return e({ fs: O, cache: m, gitdir: _, oid: h = S.a.from(x).parse().tree });
-          if (P !== "tree") throw new n.a(h, P, "tree");
-          return { tree: c.a.from(x), oid: h };
+        return (j = o(function* ({ fs: E, cache: m, gitdir: _, oid: h }) {
+          if (h === "4b825dc642cb6eb9a060e54bf8d69288fbee4904") return { tree: l.a.from([]), oid: h };
+          const { type: S, object: x } = yield Object(i.a)({ fs: E, cache: m, gitdir: _, oid: h });
+          if (S === "tag") return e({ fs: E, cache: m, gitdir: _, oid: h = u.a.from(x).parse().object });
+          if (S === "commit") return e({ fs: E, cache: m, gitdir: _, oid: h = O.a.from(x).parse().tree });
+          if (S !== "tree") throw new n.a(h, S, "tree");
+          return { tree: l.a.from(x), oid: h };
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
@@ -2747,21 +2747,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       var n = {};
       (0, t(31).assign)(n, t(150), t(153), t(124)), N.exports = n;
     }, function(N, g, t) {
-      function n(u, S) {
-        const c = S.toString(16);
-        return "0".repeat(u - c.length) + c;
+      function n(u, O) {
+        const l = O.toString(16);
+        return "0".repeat(u - l.length) + l;
       }
       t.d(g, "a", function() {
         return n;
       });
     }, function(N, g, t) {
-      function n(S) {
-        const [, c, i, s, o] = S.match(/^(.*) <(.*)> (.*) (.*)$/);
-        return { name: c, email: i, timestamp: Number(s), timezoneOffset: u(o) };
+      function n(O) {
+        const [, l, i, s, o] = O.match(/^(.*) <(.*)> (.*) (.*)$/);
+        return { name: l, email: i, timestamp: Number(s), timezoneOffset: u(o) };
       }
-      function u(S) {
-        let [, c, i, s] = S.match(/(\+|-)(\d\d)(\d\d)/);
-        return s = (c === "+" ? 1 : -1) * (60 * Number(i) + Number(s)), (o = s) === 0 ? o : -o;
+      function u(O) {
+        let [, l, i, s] = O.match(/(\+|-)(\d\d)(\d\d)/);
+        return s = (l === "+" ? 1 : -1) * (60 * Number(i) + Number(s)), (o = s) === 0 ? o : -o;
         var o;
       }
       t.d(g, "a", function() {
@@ -2769,54 +2769,54 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(39);
-      function u(s, o, e, j, O, m, _) {
+      function u(s, o, e, j, E, m, _) {
         try {
-          var h = s[m](_), P = h.value;
+          var h = s[m](_), S = h.value;
         } catch (x) {
           return void e(x);
         }
-        h.done ? o(P) : Promise.resolve(P).then(j, O);
+        h.done ? o(S) : Promise.resolve(S).then(j, E);
       }
-      function S(s) {
+      function O(s) {
         return function() {
           var o = this, e = arguments;
-          return new Promise(function(j, O) {
+          return new Promise(function(j, E) {
             var m = s.apply(o, e);
-            function _(P) {
-              u(m, j, O, _, h, "next", P);
+            function _(S) {
+              u(m, j, E, _, h, "next", S);
             }
-            function h(P) {
-              u(m, j, O, _, h, "throw", P);
+            function h(S) {
+              u(m, j, E, _, h, "throw", S);
             }
             _(void 0);
           });
         };
       }
-      function c(s) {
+      function l(s) {
         return i.apply(this, arguments);
       }
       function i() {
-        return (i = S(function* (s) {
+        return (i = O(function* (s) {
           let o = 0;
           const e = [];
           yield Object(n.a)(s, (m) => {
             e.push(m), o += m.byteLength;
           });
           const j = new Uint8Array(o);
-          let O = 0;
-          for (const m of e) j.set(m, O), O += m.byteLength;
+          let E = 0;
+          for (const m of e) j.set(m, E), E += m.byteLength;
           return j;
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
-      function n(i, s, o, e, j, O, m) {
+      function n(i, s, o, e, j, E, m) {
         try {
-          var _ = i[O](m), h = _.value;
-        } catch (P) {
-          return void o(P);
+          var _ = i[E](m), h = _.value;
+        } catch (S) {
+          return void o(S);
         }
         _.done ? s(h) : Promise.resolve(h).then(e, j);
       }
@@ -2824,51 +2824,51 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return function() {
           var s = this, o = arguments;
           return new Promise(function(e, j) {
-            var O = i.apply(s, o);
+            var E = i.apply(s, o);
             function m(h) {
-              n(O, e, j, m, _, "next", h);
+              n(E, e, j, m, _, "next", h);
             }
             function _(h) {
-              n(O, e, j, m, _, "throw", h);
+              n(E, e, j, m, _, "throw", h);
             }
             m(void 0);
           });
         };
       }
-      function S(i, s) {
-        return c.apply(this, arguments);
+      function O(i, s) {
+        return l.apply(this, arguments);
       }
-      function c() {
-        return (c = u(function* (i, s) {
+      function l() {
+        return (l = u(function* (i, s) {
           return !(!i && !s) && (!(!i || s) || !(i || !s) || ((yield i.type()) !== "tree" || (yield s.type()) !== "tree") && ((yield i.type()) !== (yield s.type()) || (yield i.mode()) !== (yield s.mode()) || (yield i.oid()) !== (yield s.oid())));
         })).apply(this, arguments);
       }
       t.d(g, "a", function() {
-        return S;
+        return O;
       });
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return i;
       });
       var n = t(70), u = t(47);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -2878,55 +2878,55 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* ({ fs: o, cache: e, gitdir: j, oid: O, filepath: m }) {
-          m !== void 0 && (O = yield Object(n.a)({ fs: o, cache: e, gitdir: j, oid: O, filepath: m }));
-          const { tree: _, oid: h } = yield Object(u.a)({ fs: o, cache: e, gitdir: j, oid: O });
+        return (s = l(function* ({ fs: o, cache: e, gitdir: j, oid: E, filepath: m }) {
+          m !== void 0 && (E = yield Object(n.a)({ fs: o, cache: e, gitdir: j, oid: E, filepath: m }));
+          const { tree: _, oid: h } = yield Object(u.a)({ fs: o, cache: e, gitdir: j, oid: E });
           return { oid: h, tree: _.entries() };
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
       (function(n) {
         t.d(g, "a", function() {
-          return f;
+          return c;
         });
-        var u = t(59), S = t(73), c = t(58), i = t(86), s = t(52), o = t(117), e = t(87);
-        function j(E, w) {
-          var I = Object.keys(E);
+        var u = t(59), O = t(73), l = t(58), i = t(86), s = t(52), o = t(117), e = t(87);
+        function j(P, w) {
+          var I = Object.keys(P);
           if (Object.getOwnPropertySymbols) {
-            var T = Object.getOwnPropertySymbols(E);
+            var T = Object.getOwnPropertySymbols(P);
             w && (T = T.filter(function(M) {
-              return Object.getOwnPropertyDescriptor(E, M).enumerable;
+              return Object.getOwnPropertyDescriptor(P, M).enumerable;
             })), I.push.apply(I, T);
           }
           return I;
         }
-        function O(E) {
+        function E(P) {
           for (var w = 1; w < arguments.length; w++) {
             var I = arguments[w] != null ? arguments[w] : {};
             w % 2 ? j(Object(I), !0).forEach(function(T) {
-              m(E, T, I[T]);
-            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(E, Object.getOwnPropertyDescriptors(I)) : j(Object(I)).forEach(function(T) {
-              Object.defineProperty(E, T, Object.getOwnPropertyDescriptor(I, T));
+              m(P, T, I[T]);
+            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(P, Object.getOwnPropertyDescriptors(I)) : j(Object(I)).forEach(function(T) {
+              Object.defineProperty(P, T, Object.getOwnPropertyDescriptor(I, T));
             });
           }
-          return E;
+          return P;
         }
-        function m(E, w, I) {
-          return w in E ? Object.defineProperty(E, w, { value: I, enumerable: !0, configurable: !0, writable: !0 }) : E[w] = I, E;
+        function m(P, w, I) {
+          return w in P ? Object.defineProperty(P, w, { value: I, enumerable: !0, configurable: !0, writable: !0 }) : P[w] = I, P;
         }
-        function _(E, w, I, T, M, A, F) {
+        function _(P, w, I, T, M, A, F) {
           try {
-            var z = E[A](F), $ = z.value;
+            var z = P[A](F), $ = z.value;
           } catch (H) {
             return void I(H);
           }
           z.done ? w($) : Promise.resolve($).then(T, M);
         }
-        function h(E) {
+        function h(P) {
           return function() {
             var w = this, I = arguments;
             return new Promise(function(T, M) {
-              var A = E.apply(w, I);
+              var A = P.apply(w, I);
               function F($) {
                 _(A, T, M, F, z, "next", $);
               }
@@ -2937,10 +2937,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             });
           };
         }
-        const P = (E, w) => E.endsWith("?") ? `${E}${w}` : `${E}/${w.replace(/^https?:\/\//, "")}`, x = (E, w) => {
-          (w.username || w.password) && (E.Authorization = Object(i.a)(w)), w.headers && Object.assign(E, w.headers);
+        const S = (P, w) => P.endsWith("?") ? `${P}${w}` : `${P}/${w.replace(/^https?:\/\//, "")}`, x = (P, w) => {
+          (w.username || w.password) && (P.Authorization = Object(i.a)(w)), w.headers && Object.assign(P, w.headers);
         }, R = function() {
-          var E = h(function* (w) {
+          var P = h(function* (w) {
             try {
               const I = n.from(yield Object(s.a)(w.body)), T = I.toString("utf8");
               return { preview: T.length < 256 ? T : T.slice(0, 256) + "...", response: T, data: I };
@@ -2949,10 +2949,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
           });
           return function(w) {
-            return E.apply(this, arguments);
+            return P.apply(this, arguments);
           };
         }();
-        class f {
+        class c {
           static capabilities() {
             return h(function* () {
               return ["discover", "connect"];
@@ -2961,7 +2961,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           static discover({ http: w, onProgress: I, onAuth: T, onAuthSuccess: M, onAuthFailure: A, corsProxy: F, service: z, url: $, headers: H, protocolVersion: nt }) {
             return h(function* () {
               let { url: ot, auth: V } = Object(o.a)($);
-              const it = F ? P(F, ot) : ot;
+              const it = F ? S(F, ot) : ot;
               let lt, dt;
               (V.username || V.password) && (H.Authorization = Object(i.a)(V)), nt === 2 && (H["Git-Protocol"] = "version=2");
               let G = !1;
@@ -2969,7 +2969,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 if (lt = yield w.request({ onProgress: I, method: "GET", url: `${it}/info/refs?service=${z}`, headers: H }), dt = !1, lt.statusCode === 401 || lt.statusCode === 203) {
                   const Z = G ? A : T;
                   if (Z) {
-                    if (V = yield Z(ot, O({}, V, { headers: O({}, H) })), V && V.cancel) throw new c.a();
+                    if (V = yield Z(ot, E({}, V, { headers: E({}, H) })), V && V.cancel) throw new l.a();
                     V && (x(H, V), G = !0, dt = !0);
                   }
                 } else lt.statusCode === 200 && G && M && (yield M(ot, V));
@@ -2988,7 +2988,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                   const st = yield Object(e.a)([pt], { service: z });
                   return st.auth = V, st;
                 } catch {
-                  throw new S.a(Z, ut);
+                  throw new O.a(Z, ut);
                 }
               }
             })();
@@ -2996,7 +2996,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           static connect({ http: w, onProgress: I, corsProxy: T, service: M, url: A, auth: F, body: z, headers: $ }) {
             return h(function* () {
               const H = Object(o.a)(A);
-              H && (A = H.url), T && (A = P(T, A)), $["content-type"] = `application/x-${M}-request`, $.accept = `application/x-${M}-result`, x($, F);
+              H && (A = H.url), T && (A = S(T, A)), $["content-type"] = `application/x-${M}-request`, $.accept = `application/x-${M}-result`, x($, F);
               const nt = yield w.request({ onProgress: I, method: "POST", url: `${A}/${M}`, body: z, headers: $ });
               if (nt.statusCode !== 200) {
                 const { response: ot } = R(nt);
@@ -3024,8 +3024,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i, s, o) {
-          super(`Automatic merge failed with one or more merge conflicts in the following files: ${c.toString()}. Fix conflicts then commit the result.`), this.code = this.name = u.code, this.data = { filepaths: c, bothModified: i, deleteByUs: s, deleteByTheirs: o };
+        constructor(l, i, s, o) {
+          super(`Automatic merge failed with one or more merge conflicts in the following files: ${l.toString()}. Fix conflicts then commit the result.`), this.code = this.name = u.code, this.data = { filepaths: l, bothModified: i, deleteByUs: s, deleteByTheirs: o };
         }
       }
       u.code = "MergeConflictError";
@@ -3046,8 +3046,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i, s) {
-          super(`HTTP Error: ${c} ${i}`), this.code = this.name = u.code, this.data = { statusCode: c, statusMessage: i, response: s };
+        constructor(l, i, s) {
+          super(`HTTP Error: ${l} ${i}`), this.code = this.name = u.code, this.data = { statusCode: l, statusMessage: i, response: s };
         }
       }
       u.code = "HttpError";
@@ -3057,9 +3057,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
+        constructor(l) {
           let i = "invalid filepath";
-          c === "leading-slash" || c === "trailing-slash" ? i = '"filepath" parameter should not include leading or trailing directory separators because these can cause problems on some platforms.' : c === "directory" && (i = '"filepath" should not be a directory.'), super(i), this.code = this.name = u.code, this.data = { reason: c };
+          l === "leading-slash" || l === "trailing-slash" ? i = '"filepath" parameter should not include leading or trailing directory separators because these can cause problems on some platforms.' : l === "directory" && (i = '"filepath" should not be a directory.'), super(i), this.code = this.name = u.code, this.data = { reason: l };
         }
       }
       u.code = "InvalidFilepathError";
@@ -3068,33 +3068,33 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return u;
       });
       var n = t(38);
-      function u(S, c) {
-        return Object(n.a)(S.path, c.path);
+      function u(O, l) {
+        return Object(n.a)(O.path, l.path);
       }
     }, function(N, g, t) {
       (function(n) {
         t.d(g, "a", function() {
           return h;
         });
-        var u = t(132), S = t.n(u), c = t(4), i = t(25), s = t(20), o = t(134), e = t(133), j = t(83), O = t(19);
-        function m(P, x, R, f, E, w, I) {
+        var u = t(132), O = t.n(u), l = t(4), i = t(25), s = t(20), o = t(134), e = t(133), j = t(83), E = t(19);
+        function m(S, x, R, c, P, w, I) {
           try {
-            var T = P[w](I), M = T.value;
+            var T = S[w](I), M = T.value;
           } catch (A) {
             return void R(A);
           }
-          T.done ? x(M) : Promise.resolve(M).then(f, E);
+          T.done ? x(M) : Promise.resolve(M).then(c, P);
         }
-        function _(P) {
+        function _(S) {
           return function() {
             var x = this, R = arguments;
-            return new Promise(function(f, E) {
-              var w = P.apply(x, R);
+            return new Promise(function(c, P) {
+              var w = S.apply(x, R);
               function I(M) {
-                m(w, f, E, I, T, "next", M);
+                m(w, c, P, I, T, "next", M);
               }
               function T(M) {
-                m(w, f, E, I, T, "throw", M);
+                m(w, c, P, I, T, "throw", M);
               }
               I(void 0);
             });
@@ -3106,33 +3106,33 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           static fromIdx({ idx: x, getExternalRefDelta: R }) {
             return _(function* () {
-              const f = new s.a(x);
-              if (f.slice(4).toString("hex") !== "ff744f63") return;
-              const E = f.readUInt32BE();
-              if (E !== 2) throw new c.a(`Unable to read version ${E} packfile IDX. (Only version 2 supported)`);
-              if (x.byteLength > 2147483648) throw new c.a("To keep implementation simple, I haven't implemented the layer 5 feature needed to support packfiles > 2GB in size.");
-              f.seek(f.tell() + 1020);
-              const w = f.readUInt32BE(), I = [];
+              const c = new s.a(x);
+              if (c.slice(4).toString("hex") !== "ff744f63") return;
+              const P = c.readUInt32BE();
+              if (P !== 2) throw new l.a(`Unable to read version ${P} packfile IDX. (Only version 2 supported)`);
+              if (x.byteLength > 2147483648) throw new l.a("To keep implementation simple, I haven't implemented the layer 5 feature needed to support packfiles > 2GB in size.");
+              c.seek(c.tell() + 1020);
+              const w = c.readUInt32BE(), I = [];
               for (let A = 0; A < w; A++) {
-                const F = f.slice(20).toString("hex");
+                const F = c.slice(20).toString("hex");
                 I[A] = F;
               }
-              f.seek(f.tell() + 4 * w);
+              c.seek(c.tell() + 4 * w);
               const T = /* @__PURE__ */ new Map();
-              for (let A = 0; A < w; A++) T.set(I[A], f.readUInt32BE());
-              const M = f.slice(20).toString("hex");
+              for (let A = 0; A < w; A++) T.set(I[A], c.readUInt32BE());
+              const M = c.slice(20).toString("hex");
               return new h({ hashes: I, crcs: {}, offsets: T, packfileSha: M, getExternalRefDelta: R });
             })();
           }
-          static fromPack({ pack: x, getExternalRefDelta: R, onProgress: f }) {
+          static fromPack({ pack: x, getExternalRefDelta: R, onProgress: c }) {
             return _(function* () {
-              const E = { 1: "commit", 2: "tree", 3: "blob", 4: "tag", 6: "ofs-delta", 7: "ref-delta" }, w = {}, I = x.slice(-20).toString("hex"), T = [], M = {}, A = /* @__PURE__ */ new Map();
+              const P = { 1: "commit", 2: "tree", 3: "blob", 4: "tag", 6: "ofs-delta", 7: "ref-delta" }, w = {}, I = x.slice(-20).toString("hex"), T = [], M = {}, A = /* @__PURE__ */ new Map();
               let F = null, z = null;
               yield Object(e.a)([x], function() {
                 var V = _(function* ({ data: it, type: lt, reference: dt, offset: G, num: Z }) {
                   F === null && (F = Z);
                   const ut = Math.floor(100 * (F - Z) / F);
-                  ut !== z && f && (yield f({ phase: "Receiving objects", loaded: F - Z, total: F })), z = ut, ["commit", "tree", "blob", "tag"].includes(lt = E[lt]) ? w[G] = { type: lt, offset: G } : lt === "ofs-delta" ? w[G] = { type: lt, offset: G } : lt === "ref-delta" && (w[G] = { type: lt, offset: G });
+                  ut !== z && c && (yield c({ phase: "Receiving objects", loaded: F - Z, total: F })), z = ut, ["commit", "tree", "blob", "tag"].includes(lt = P[lt]) ? w[G] = { type: lt, offset: G } : lt === "ofs-delta" ? w[G] = { type: lt, offset: G } : lt === "ref-delta" && (w[G] = { type: lt, offset: G });
                 });
                 return function(it) {
                   return V.apply(this, arguments);
@@ -3140,7 +3140,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               }());
               const $ = Object.keys(w).map(Number);
               for (const [V, it] of $.entries()) {
-                const lt = V + 1 === $.length ? x.byteLength - 20 : $[V + 1], dt = w[it], G = S.a.buf(x.slice(it, lt)) >>> 0;
+                const lt = V + 1 === $.length ? x.byteLength - 20 : $[V + 1], dt = w[it], G = O.a.buf(x.slice(it, lt)) >>> 0;
                 dt.end = lt, dt.crc = G;
               }
               const H = new h({ pack: Promise.resolve(x), packfileSha: I, crcs: M, hashes: T, offsets: A, getExternalRefDelta: R });
@@ -3150,13 +3150,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               for (let V in w) {
                 V = Number(V);
                 const it = Math.floor(100 * nt / F);
-                it !== z && f && (yield f({ phase: "Resolving deltas", loaded: nt, total: F })), nt++, z = it;
+                it !== z && c && (yield c({ phase: "Resolving deltas", loaded: nt, total: F })), nt++, z = it;
                 const lt = w[V];
                 if (!lt.oid) try {
                   H.readDepth = 0, H.externalReadDepth = 0;
                   const { type: dt, object: G } = yield H.readSlice({ start: V });
                   ot[H.readDepth] += 1;
-                  const Z = yield Object(O.a)(i.a.wrap({ type: dt, object: G }));
+                  const Z = yield Object(E.a)(i.a.wrap({ type: dt, object: G }));
                   lt.oid = Z, T.push(Z), A.set(Z, V), M[Z] = lt.crc;
                 } catch {
                   continue;
@@ -3168,25 +3168,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           toBuffer() {
             var x = this;
             return _(function* () {
-              const R = [], f = (F, z) => {
+              const R = [], c = (F, z) => {
                 R.push(n.from(F, z));
               };
-              f("ff744f63", "hex"), f("00000002", "hex");
-              const E = new s.a(n.alloc(1024));
+              c("ff744f63", "hex"), c("00000002", "hex");
+              const P = new s.a(n.alloc(1024));
               for (let F = 0; F < 256; F++) {
                 let z = 0;
                 for (const $ of x.hashes) parseInt($.slice(0, 2), 16) <= F && z++;
-                E.writeUInt32BE(z);
+                P.writeUInt32BE(z);
               }
-              R.push(E.buffer);
-              for (const F of x.hashes) f(F, "hex");
+              R.push(P.buffer);
+              for (const F of x.hashes) c(F, "hex");
               const w = new s.a(n.alloc(4 * x.hashes.length));
               for (const F of x.hashes) w.writeUInt32BE(x.crcs[F]);
               R.push(w.buffer);
               const I = new s.a(n.alloc(4 * x.hashes.length));
               for (const F of x.hashes) I.writeUInt32BE(x.offsets.get(F));
-              R.push(I.buffer), f(x.packfileSha, "hex");
-              const T = n.concat(R), M = yield Object(O.a)(T), A = n.alloc(20);
+              R.push(I.buffer), c(x.packfileSha, "hex");
+              const T = n.concat(R), M = yield Object(E.a)(T), A = n.alloc(20);
               return A.write(M, "hex"), n.concat([T, A]);
             })();
           }
@@ -3207,20 +3207,20 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             return _(function* () {
               if (!R.offsets.get(x)) {
                 if (R.getExternalRefDelta) return R.externalReadDepth++, R.getExternalRefDelta(x);
-                throw new c.a(`Could not read object ${x} from packfile`);
+                throw new l.a(`Could not read object ${x} from packfile`);
               }
-              const f = R.offsets.get(x);
-              return R.readSlice({ start: f });
+              const c = R.offsets.get(x);
+              return R.readSlice({ start: c });
             })();
           }
           readSlice({ start: x }) {
             var R = this;
             return _(function* () {
               if (R.offsetCache[x]) return Object.assign({}, R.offsetCache[x]);
-              if (R.readDepth++, !R.pack) throw new c.a("Tried to read from a GitPackIndex with no packfile loaded into memory");
-              const f = (yield R.pack).slice(x), E = new s.a(f), w = E.readUInt8(), I = 112 & w;
+              if (R.readDepth++, !R.pack) throw new l.a("Tried to read from a GitPackIndex with no packfile loaded into memory");
+              const c = (yield R.pack).slice(x), P = new s.a(c), w = P.readUInt8(), I = 112 & w;
               let T = { 16: "commit", 32: "tree", 48: "blob", 64: "tag", 96: "ofs_delta", 112: "ref_delta" }[I];
-              if (T === void 0) throw new c.a("Unrecognized type: 0b" + I.toString(2));
+              if (T === void 0) throw new l.a("Unrecognized type: 0b" + I.toString(2));
               const M = 15 & w;
               let A = M;
               128 & w && (A = function(H, nt) {
@@ -3229,7 +3229,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                   it = H.readUInt8(), ot |= (127 & it) << V, V += 7;
                 while (128 & it);
                 return ot;
-              }(E, M));
+              }(P, M));
               let F = null, z = null;
               if (T === "ofs_delta") {
                 const H = function(ot) {
@@ -3241,33 +3241,33 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                     V.push(dt), lt = 128 & it;
                   } while (lt);
                   return V.reduce((dt, G) => dt + 1 << 7 | G, -1);
-                }(E), nt = x - H;
+                }(P), nt = x - H;
                 ({ object: F, type: T } = yield R.readSlice({ start: nt }));
               }
               if (T === "ref_delta") {
-                const H = E.slice(20).toString("hex");
+                const H = P.slice(20).toString("hex");
                 ({ object: F, type: T } = yield R.read({ oid: H }));
               }
-              const $ = f.slice(E.tell());
-              if (z = n.from(yield Object(j.a)($)), z.byteLength !== A) throw new c.a(`Packfile told us object would have length ${A} but it had length ${z.byteLength}`);
+              const $ = c.slice(P.tell());
+              if (z = n.from(yield Object(j.a)($)), z.byteLength !== A) throw new l.a(`Packfile told us object would have length ${A} but it had length ${z.byteLength}`);
               return F && (z = n.from(Object(o.a)(z, F))), R.readDepth > 3 && (R.offsetCache[x] = { type: T, object: z }), { type: T, format: "content", object: z };
             })();
           }
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
-      var n = t(74), u = t(75), S = t(55);
+      var n = t(74), u = t(75), O = t(55);
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
-      class c {
+      class l {
         static getRemoteHelperFor({ url: s }) {
           const o = /* @__PURE__ */ new Map();
-          o.set("http", S.a), o.set("https", S.a);
+          o.set("http", O.a), o.set("https", O.a);
           const e = function({ url: j }) {
             if (j.startsWith("git@")) return { transport: "ssh", address: j };
-            const O = j.match(/(\w+)(:\/\/|::)(.*)/);
-            return O !== null ? O[2] === "://" ? { transport: O[1], address: O[0] } : O[2] === "::" ? { transport: O[1], address: O[3] } : void 0 : void 0;
+            const E = j.match(/(\w+)(:\/\/|::)(.*)/);
+            return E !== null ? E[2] === "://" ? { transport: E[1], address: E[0] } : E[2] === "::" ? { transport: E[1], address: E[3] } : void 0 : void 0;
           }({ url: s });
           if (!e) throw new u.a(s);
           if (o.has(e.transport)) return o.get(e.transport);
@@ -3277,8 +3277,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       }
     }, function(N, g, t) {
-      function n({ name: u, email: S, timestamp: c, timezoneOffset: i }) {
-        return `${u} <${S}> ${c} ${i = function(s) {
+      function n({ name: u, email: O, timestamp: l, timezoneOffset: i }) {
+        return `${u} <${O}> ${l} ${i = function(s) {
           const o = function(_) {
             return Math.sign(_) || (Object.is(_, -0) ? -1 : 1);
           }((e = s, e === 0 ? e : -e));
@@ -3286,33 +3286,33 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           s = Math.abs(s);
           const j = Math.floor(s / 60);
           s -= 60 * j;
-          let O = String(j), m = String(s);
-          return O.length < 2 && (O = "0" + O), m.length < 2 && (m = "0" + m), (o === -1 ? "-" : "+") + O + m;
+          let E = String(j), m = String(s);
+          return E.length < 2 && (E = "0" + E), m.length < 2 && (m = "0" + m), (o === -1 ? "-" : "+") + E + m;
         }(i)}`;
       }
       t.d(g, "a", function() {
         return n;
       });
     }, function(N, g, t) {
-      var n = t(17), u = t(18), S = t(14), c = t(7);
-      function i(h, P, x, R, f, E, w) {
+      var n = t(17), u = t(18), O = t(14), l = t(7);
+      function i(h, S, x, R, c, P, w) {
         try {
-          var I = h[E](w), T = I.value;
+          var I = h[P](w), T = I.value;
         } catch (M) {
           return void x(M);
         }
-        I.done ? P(T) : Promise.resolve(T).then(R, f);
+        I.done ? S(T) : Promise.resolve(T).then(R, c);
       }
       function s(h) {
         return function() {
-          var P = this, x = arguments;
-          return new Promise(function(R, f) {
-            var E = h.apply(P, x);
+          var S = this, x = arguments;
+          return new Promise(function(R, c) {
+            var P = h.apply(S, x);
             function w(T) {
-              i(E, R, f, w, I, "next", T);
+              i(P, R, c, w, I, "next", T);
             }
             function I(T) {
-              i(E, R, f, w, I, "throw", T);
+              i(P, R, c, w, I, "throw", T);
             }
             w(void 0);
           });
@@ -3322,31 +3322,31 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return e.apply(this, arguments);
       }
       function e() {
-        return (e = s(function* ({ fs: h, cache: P, gitdir: x, oid: R }) {
-          const { type: f, object: E } = yield Object(c.a)({ fs: h, cache: P, gitdir: x, oid: R });
-          if (f === "tag") return o({ fs: h, cache: P, gitdir: x, oid: R = u.a.from(E).parse().object });
-          if (f !== "commit") throw new n.a(R, f, "commit");
-          return { commit: S.a.from(E), oid: R };
+        return (e = s(function* ({ fs: h, cache: S, gitdir: x, oid: R }) {
+          const { type: c, object: P } = yield Object(l.a)({ fs: h, cache: S, gitdir: x, oid: R });
+          if (c === "tag") return o({ fs: h, cache: S, gitdir: x, oid: R = u.a.from(P).parse().object });
+          if (c !== "commit") throw new n.a(R, c, "commit");
+          return { commit: O.a.from(P), oid: R };
         })).apply(this, arguments);
       }
-      function j(h, P, x, R, f, E, w) {
+      function j(h, S, x, R, c, P, w) {
         try {
-          var I = h[E](w), T = I.value;
+          var I = h[P](w), T = I.value;
         } catch (M) {
           return void x(M);
         }
-        I.done ? P(T) : Promise.resolve(T).then(R, f);
+        I.done ? S(T) : Promise.resolve(T).then(R, c);
       }
-      function O(h) {
+      function E(h) {
         return function() {
-          var P = this, x = arguments;
-          return new Promise(function(R, f) {
-            var E = h.apply(P, x);
+          var S = this, x = arguments;
+          return new Promise(function(R, c) {
+            var P = h.apply(S, x);
             function w(T) {
-              j(E, R, f, w, I, "next", T);
+              j(P, R, c, w, I, "next", T);
             }
             function I(T) {
-              j(E, R, f, w, I, "throw", T);
+              j(P, R, c, w, I, "throw", T);
             }
             w(void 0);
           });
@@ -3356,9 +3356,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return _.apply(this, arguments);
       }
       function _() {
-        return (_ = O(function* ({ fs: h, cache: P, gitdir: x, oid: R }) {
-          const { commit: f, oid: E } = yield o({ fs: h, cache: P, gitdir: x, oid: R });
-          return { oid: E, commit: f.parse(), payload: f.withoutSignature() };
+        return (_ = E(function* ({ fs: h, cache: S, gitdir: x, oid: R }) {
+          const { commit: c, oid: P } = yield o({ fs: h, cache: S, gitdir: x, oid: R });
+          return { oid: P, commit: c.parse(), payload: c.withoutSignature() };
         })).apply(this, arguments);
       }
       t.d(g, "a", function() {
@@ -3369,18 +3369,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return u;
       });
       const n = new RegExp("^refs/(heads/|tags/|remotes/)?(.*)");
-      function u(S) {
-        const c = n.exec(S);
-        return c ? c[1] === "remotes/" && S.endsWith("/HEAD") ? c[2].slice(0, -5) : c[2] : S;
+      function u(O) {
+        const l = n.exec(O);
+        return l ? l[1] === "remotes/" && O.endsWith("/HEAD") ? l[2].slice(0, -5) : l[2] : O;
       }
     }, function(N, g, t) {
-      function n(S, c, i, s, o, e, j) {
+      function n(O, l, i, s, o, e, j) {
         try {
-          var O = S[e](j), m = O.value;
+          var E = O[e](j), m = E.value;
         } catch (_) {
           return void i(_);
         }
-        O.done ? c(m) : Promise.resolve(m).then(s, o);
+        E.done ? l(m) : Promise.resolve(m).then(s, o);
       }
       t.d(g, "a", function() {
         return u;
@@ -3389,25 +3389,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         constructor() {
           this._queue = [];
         }
-        write(c) {
+        write(l) {
           if (this._ended) throw Error("You cannot write to a FIFO that has already been ended!");
           if (this._waiting) {
             const i = this._waiting;
-            this._waiting = null, i({ value: c });
-          } else this._queue.push(c);
+            this._waiting = null, i({ value: l });
+          } else this._queue.push(l);
         }
         end() {
           if (this._ended = !0, this._waiting) {
-            const c = this._waiting;
-            this._waiting = null, c({ done: !0 });
+            const l = this._waiting;
+            this._waiting = null, l({ done: !0 });
           }
         }
-        destroy(c) {
-          this.error = c, this.end();
+        destroy(l) {
+          this.error = l, this.end();
         }
         next() {
-          var c, i = this;
-          return (c = function* () {
+          var l, i = this;
+          return (l = function* () {
             if (i._queue.length > 0) return { value: i._queue.shift() };
             if (i._ended) return { done: !0 };
             if (i._waiting) throw Error("You cannot call read until the previous call to read has returned!");
@@ -3417,12 +3417,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }, function() {
             var s = this, o = arguments;
             return new Promise(function(e, j) {
-              var O = c.apply(s, o);
+              var E = l.apply(s, o);
               function m(h) {
-                n(O, e, j, m, _, "next", h);
+                n(E, e, j, m, _, "next", h);
               }
               function _(h) {
-                n(O, e, j, m, _, "throw", h);
+                n(E, e, j, m, _, "throw", h);
               }
               m(void 0);
             });
@@ -3435,8 +3435,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i) {
-          super(`Remote does not support the "${c}" so the "${i}" parameter cannot be used.`), this.code = this.name = u.code, this.data = { capability: c, parameter: i };
+        constructor(l, i) {
+          super(`Remote does not support the "${l}" so the "${i}" parameter cannot be used.`), this.code = this.name = u.code, this.data = { capability: l, parameter: i };
         }
       }
       u.code = "RemoteCapabilityError";
@@ -3445,50 +3445,50 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return u;
       });
       var n = t(34);
-      function u(S, c, i = !0, s = !0) {
-        const o = Object(n.a)(S), e = Object(n.a)(c);
+      function u(O, l, i = !0, s = !0) {
+        const o = Object(n.a)(O), e = Object(n.a)(l);
         return i && o.mode !== e.mode || o.mtimeSeconds !== e.mtimeSeconds || o.ctimeSeconds !== e.ctimeSeconds || o.uid !== e.uid || o.gid !== e.gid || s && o.ino !== e.ino || o.size !== e.size;
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return j;
       });
-      var n = t(60), u = t(8), S = t(17), c = t(12), i = t(7), s = t(47);
-      function o(h, P, x, R, f, E, w) {
+      var n = t(60), u = t(8), O = t(17), l = t(12), i = t(7), s = t(47);
+      function o(h, S, x, R, c, P, w) {
         try {
-          var I = h[E](w), T = I.value;
+          var I = h[P](w), T = I.value;
         } catch (M) {
           return void x(M);
         }
-        I.done ? P(T) : Promise.resolve(T).then(R, f);
+        I.done ? S(T) : Promise.resolve(T).then(R, c);
       }
       function e(h) {
         return function() {
-          var P = this, x = arguments;
-          return new Promise(function(R, f) {
-            var E = h.apply(P, x);
+          var S = this, x = arguments;
+          return new Promise(function(R, c) {
+            var P = h.apply(S, x);
             function w(T) {
-              o(E, R, f, w, I, "next", T);
+              o(P, R, c, w, I, "next", T);
             }
             function I(T) {
-              o(E, R, f, w, I, "throw", T);
+              o(P, R, c, w, I, "throw", T);
             }
             w(void 0);
           });
         };
       }
       function j(h) {
-        return O.apply(this, arguments);
+        return E.apply(this, arguments);
       }
-      function O() {
-        return (O = e(function* ({ fs: h, cache: P, gitdir: x, oid: R, filepath: f }) {
-          if (f.startsWith("/")) throw new n.a("leading-slash");
-          if (f.endsWith("/")) throw new n.a("trailing-slash");
-          const E = R, w = yield Object(s.a)({ fs: h, cache: P, gitdir: x, oid: R }), I = w.tree;
-          if (f === "") R = w.oid;
+      function E() {
+        return (E = e(function* ({ fs: h, cache: S, gitdir: x, oid: R, filepath: c }) {
+          if (c.startsWith("/")) throw new n.a("leading-slash");
+          if (c.endsWith("/")) throw new n.a("trailing-slash");
+          const P = R, w = yield Object(s.a)({ fs: h, cache: S, gitdir: x, oid: R }), I = w.tree;
+          if (c === "") R = w.oid;
           else {
-            const T = f.split("/");
-            R = yield m({ fs: h, cache: P, gitdir: x, tree: I, pathArray: T, oid: E, filepath: f });
+            const T = c.split("/");
+            R = yield m({ fs: h, cache: S, gitdir: x, tree: I, pathArray: T, oid: P, filepath: c });
           }
           return R;
         })).apply(this, arguments);
@@ -3497,17 +3497,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return _.apply(this, arguments);
       }
       function _() {
-        return (_ = e(function* ({ fs: h, cache: P, gitdir: x, tree: R, pathArray: f, oid: E, filepath: w }) {
-          const I = f.shift();
+        return (_ = e(function* ({ fs: h, cache: S, gitdir: x, tree: R, pathArray: c, oid: P, filepath: w }) {
+          const I = c.shift();
           for (const T of R) if (T.path === I) {
-            if (f.length === 0) return T.oid;
+            if (c.length === 0) return T.oid;
             {
-              const { type: M, object: A } = yield Object(i.a)({ fs: h, cache: P, gitdir: x, oid: T.oid });
-              if (M !== "tree") throw new S.a(E, M, "tree", w);
-              return m({ fs: h, cache: P, gitdir: x, tree: R = c.a.from(A), pathArray: f, oid: E, filepath: w });
+              const { type: M, object: A } = yield Object(i.a)({ fs: h, cache: S, gitdir: x, oid: T.oid });
+              if (M !== "tree") throw new O.a(P, M, "tree", w);
+              return m({ fs: h, cache: S, gitdir: x, tree: R = l.a.from(A), pathArray: c, oid: P, filepath: w });
             }
           }
-          throw new u.a(`file or directory found at "${E}:${w}"`);
+          throw new u.a(`file or directory found at "${P}:${w}"`);
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
@@ -3527,11 +3527,11 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Could not find a fetch refspec for remote "${c}". Make sure the config file has an entry like the following:
-[remote "${c}"]
+        constructor(l) {
+          super(`Could not find a fetch refspec for remote "${l}". Make sure the config file has an entry like the following:
+[remote "${l}"]
 	fetch = +refs/heads/*:refs/remotes/origin/*
-`), this.code = this.name = u.code, this.data = { remote: c };
+`), this.code = this.name = u.code, this.data = { remote: l };
         }
       }
       u.code = "NoRefspecError";
@@ -3541,8 +3541,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i) {
-          super(`Remote did not reply using the "smart" HTTP protocol. Expected "001e# service=git-upload-pack" but received: ${c}`), this.code = this.name = u.code, this.data = { preview: c, response: i };
+        constructor(l, i) {
+          super(`Remote did not reply using the "smart" HTTP protocol. Expected "001e# service=git-upload-pack" but received: ${l}`), this.code = this.name = u.code, this.data = { preview: l, response: i };
         }
       }
       u.code = "SmartHttpError";
@@ -3552,8 +3552,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i, s) {
-          super(`Git remote "${c}" uses an unrecognized transport protocol: "${i}"`), this.code = this.name = u.code, this.data = { url: c, transport: i, suggestion: s };
+        constructor(l, i, s) {
+          super(`Git remote "${l}" uses an unrecognized transport protocol: "${i}"`), this.code = this.name = u.code, this.data = { url: l, transport: i, suggestion: s };
         }
       }
       u.code = "UnknownTransportError";
@@ -3563,8 +3563,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Cannot parse remote URL: "${c}"`), this.code = this.name = u.code, this.data = { url: c };
+        constructor(l) {
+          super(`Cannot parse remote URL: "${l}"`), this.code = this.name = u.code, this.data = { url: l };
         }
       }
       u.code = "UrlParseError";
@@ -3574,55 +3574,55 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Modifying the index is not possible because you have unmerged files: ${c.toString}. Fix them up in the work tree, and then use 'git add/rm as appropriate to mark resolution and make a commit.`), this.code = this.name = u.code, this.data = { filepaths: c };
+        constructor(l) {
+          super(`Modifying the index is not possible because you have unmerged files: ${l.toString}. Fix them up in the work tree, and then use 'git add/rm as appropriate to mark resolution and make a commit.`), this.code = this.name = u.code, this.data = { filepaths: l };
         }
       }
       u.code = "UnmergedPathsError";
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(67), u = t(9);
-      function S(i, s, o, e, j, O, m) {
+      function O(i, s, o, e, j, E, m) {
         try {
-          var _ = i[O](m), h = _.value;
-        } catch (P) {
-          return void o(P);
+          var _ = i[E](m), h = _.value;
+        } catch (S) {
+          return void o(S);
         }
         _.done ? s(h) : Promise.resolve(h).then(e, j);
       }
-      class c {
+      class l {
         static demux(s) {
-          const o = u.a.streamReader(s), e = new n.a(), j = new n.a(), O = new n.a(), m = function() {
+          const o = u.a.streamReader(s), e = new n.a(), j = new n.a(), E = new n.a(), m = function() {
             var _, h = (_ = function* () {
-              const P = yield o();
-              if (P === null) return m();
-              if (P === !0) return e.end(), O.end(), void (s.error ? j.destroy(s.error) : j.end());
-              switch (P[0]) {
+              const S = yield o();
+              if (S === null) return m();
+              if (S === !0) return e.end(), E.end(), void (s.error ? j.destroy(s.error) : j.end());
+              switch (S[0]) {
                 case 1:
-                  j.write(P.slice(1));
+                  j.write(S.slice(1));
                   break;
                 case 2:
-                  O.write(P.slice(1));
+                  E.write(S.slice(1));
                   break;
                 case 3: {
-                  const x = P.slice(1);
-                  return O.write(x), e.end(), O.end(), void j.destroy(new Error(x.toString("utf8")));
+                  const x = S.slice(1);
+                  return E.write(x), e.end(), E.end(), void j.destroy(new Error(x.toString("utf8")));
                 }
                 default:
-                  e.write(P);
+                  e.write(S);
               }
               m();
             }, function() {
-              var P = this, x = arguments;
-              return new Promise(function(R, f) {
-                var E = _.apply(P, x);
+              var S = this, x = arguments;
+              return new Promise(function(R, c) {
+                var P = _.apply(S, x);
                 function w(T) {
-                  S(E, R, f, w, I, "next", T);
+                  O(P, R, c, w, I, "next", T);
                 }
                 function I(T) {
-                  S(E, R, f, w, I, "throw", T);
+                  O(P, R, c, w, I, "throw", T);
                 }
                 w(void 0);
               });
@@ -3631,43 +3631,43 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               return h.apply(this, arguments);
             };
           }();
-          return m(), { packetlines: e, packfile: j, progress: O };
+          return m(), { packetlines: e, packfile: j, progress: E };
         }
       }
     }, function(N, g, t) {
-      var n = t(148), u = t(149), S = t(119).Buffer, c = [1518500249, 1859775393, -1894007588, -899497514], i = new Array(80);
+      var n = t(148), u = t(149), O = t(119).Buffer, l = [1518500249, 1859775393, -1894007588, -899497514], i = new Array(80);
       function s() {
         this.init(), this._w = i, u.call(this, 64, 56);
       }
-      function o(O) {
-        return O << 5 | O >>> 27;
+      function o(E) {
+        return E << 5 | E >>> 27;
       }
-      function e(O) {
-        return O << 30 | O >>> 2;
+      function e(E) {
+        return E << 30 | E >>> 2;
       }
-      function j(O, m, _, h) {
-        return O === 0 ? m & _ | ~m & h : O === 2 ? m & _ | m & h | _ & h : m ^ _ ^ h;
+      function j(E, m, _, h) {
+        return E === 0 ? m & _ | ~m & h : E === 2 ? m & _ | m & h | _ & h : m ^ _ ^ h;
       }
       n(s, u), s.prototype.init = function() {
         return this._a = 1732584193, this._b = 4023233417, this._c = 2562383102, this._d = 271733878, this._e = 3285377520, this;
-      }, s.prototype._update = function(O) {
-        for (var m, _ = this._w, h = 0 | this._a, P = 0 | this._b, x = 0 | this._c, R = 0 | this._d, f = 0 | this._e, E = 0; E < 16; ++E) _[E] = O.readInt32BE(4 * E);
-        for (; E < 80; ++E) _[E] = (m = _[E - 3] ^ _[E - 8] ^ _[E - 14] ^ _[E - 16]) << 1 | m >>> 31;
+      }, s.prototype._update = function(E) {
+        for (var m, _ = this._w, h = 0 | this._a, S = 0 | this._b, x = 0 | this._c, R = 0 | this._d, c = 0 | this._e, P = 0; P < 16; ++P) _[P] = E.readInt32BE(4 * P);
+        for (; P < 80; ++P) _[P] = (m = _[P - 3] ^ _[P - 8] ^ _[P - 14] ^ _[P - 16]) << 1 | m >>> 31;
         for (var w = 0; w < 80; ++w) {
-          var I = ~~(w / 20), T = o(h) + j(I, P, x, R) + f + _[w] + c[I] | 0;
-          f = R, R = x, x = e(P), P = h, h = T;
+          var I = ~~(w / 20), T = o(h) + j(I, S, x, R) + c + _[w] + l[I] | 0;
+          c = R, R = x, x = e(S), S = h, h = T;
         }
-        this._a = h + this._a | 0, this._b = P + this._b | 0, this._c = x + this._c | 0, this._d = R + this._d | 0, this._e = f + this._e | 0;
+        this._a = h + this._a | 0, this._b = S + this._b | 0, this._c = x + this._c | 0, this._d = R + this._d | 0, this._e = c + this._e | 0;
       }, s.prototype._hash = function() {
-        var O = S.allocUnsafe(20);
-        return O.writeInt32BE(0 | this._a, 0), O.writeInt32BE(0 | this._b, 4), O.writeInt32BE(0 | this._c, 8), O.writeInt32BE(0 | this._d, 12), O.writeInt32BE(0 | this._e, 16), O;
+        var E = O.allocUnsafe(20);
+        return E.writeInt32BE(0 | this._a, 0), E.writeInt32BE(0 | this._b, 4), E.writeInt32BE(0 | this._c, 8), E.writeInt32BE(0 | this._d, 12), E.writeInt32BE(0 | this._e, 16), E;
       }, N.exports = s;
     }, function(N, g, t) {
       function n(u) {
-        let S = u > 0 ? u >> 12 : 0;
-        S !== 4 && S !== 8 && S !== 10 && S !== 14 && (S = 8);
-        let c = 511 & u;
-        return c = 73 & c ? 493 : 420, S !== 8 && (c = 0), (S << 12) + c;
+        let O = u > 0 ? u >> 12 : 0;
+        O !== 4 && O !== 8 && O !== 10 && O !== 14 && (O = 8);
+        let l = 511 & u;
+        return l = 73 & l ? 493 : 420, O !== 8 && (l = 0), (O << 12) + l;
       }
       t.d(g, "a", function() {
         return n;
@@ -3678,24 +3678,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(4);
       class u {
-        constructor({ remotePath: c, localPath: i, force: s, matchPrefix: o }) {
-          Object.assign(this, { remotePath: c, localPath: i, force: s, matchPrefix: o });
+        constructor({ remotePath: l, localPath: i, force: s, matchPrefix: o }) {
+          Object.assign(this, { remotePath: l, localPath: i, force: s, matchPrefix: o });
         }
-        static from(c) {
-          const [i, s, o, e, j] = c.match(/^(\+?)(.*?)(\*?):(.*?)(\*?)$/).slice(1), O = i === "+", m = o === "*";
+        static from(l) {
+          const [i, s, o, e, j] = l.match(/^(\+?)(.*?)(\*?):(.*?)(\*?)$/).slice(1), E = i === "+", m = o === "*";
           if (m !== (j === "*")) throw new n.a("Invalid refspec");
-          return new u({ remotePath: s, localPath: e, force: O, matchPrefix: m });
+          return new u({ remotePath: s, localPath: e, force: E, matchPrefix: m });
         }
-        translate(c) {
+        translate(l) {
           if (this.matchPrefix) {
-            if (c.startsWith(this.remotePath)) return this.localPath + c.replace(this.remotePath, "");
-          } else if (c === this.remotePath) return this.localPath;
+            if (l.startsWith(this.remotePath)) return this.localPath + l.replace(this.remotePath, "");
+          } else if (l === this.remotePath) return this.localPath;
           return null;
         }
-        reverseTranslate(c) {
+        reverseTranslate(l) {
           if (this.matchPrefix) {
-            if (c.startsWith(this.localPath)) return this.remotePath + c.replace(this.localPath, "");
-          } else if (c === this.localPath) return this.remotePath;
+            if (l.startsWith(this.localPath)) return this.remotePath + l.replace(this.localPath, "");
+          } else if (l === this.localPath) return this.remotePath;
           return null;
         }
       }
@@ -3704,42 +3704,42 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s;
       });
       var n = t(62);
-      function u(o, e, j, O, m, _, h) {
+      function u(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function S(o) {
+      function O(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              u(_, O, m, h, P, "next", x);
+              u(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              u(_, O, m, h, P, "throw", x);
+            function S(x) {
+              u(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
         };
       }
-      const c = Symbol("PackfileCache");
+      const l = Symbol("PackfileCache");
       function i() {
-        return (i = S(function* ({ fs: o, filename: e, getExternalRefDelta: j, emitter: O, emitterPrefix: m }) {
+        return (i = O(function* ({ fs: o, filename: e, getExternalRefDelta: j, emitter: E, emitterPrefix: m }) {
           const _ = yield o.read(e);
           return n.a.fromIdx({ idx: _, getExternalRefDelta: j });
         })).apply(this, arguments);
       }
-      function s({ fs: o, cache: e, filename: j, getExternalRefDelta: O, emitter: m, emitterPrefix: _ }) {
-        e[c] || (e[c] = /* @__PURE__ */ new Map());
-        let h = e[c].get(j);
-        return h || (h = function(P) {
+      function s({ fs: o, cache: e, filename: j, getExternalRefDelta: E, emitter: m, emitterPrefix: _ }) {
+        e[l] || (e[l] = /* @__PURE__ */ new Map());
+        let h = e[l].get(j);
+        return h || (h = function(S) {
           return i.apply(this, arguments);
-        }({ fs: o, filename: j, getExternalRefDelta: O, emitter: m, emitterPrefix: _ }), e[c].set(j, h)), h;
+        }({ fs: o, filename: j, getExternalRefDelta: E, emitter: m, emitterPrefix: _ }), e[l].set(j, h)), h;
       }
     }, function(N, g, t) {
       (function(n) {
@@ -3747,24 +3747,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return i;
         });
         var u = t(88);
-        function S(o, e, j, O, m, _, h) {
+        function O(o, e, j, E, m, _, h) {
           try {
-            var P = o[_](h), x = P.value;
+            var S = o[_](h), x = S.value;
           } catch (R) {
             return void j(R);
           }
-          P.done ? e(x) : Promise.resolve(x).then(O, m);
+          S.done ? e(x) : Promise.resolve(x).then(E, m);
         }
-        function c(o) {
+        function l(o) {
           return function() {
             var e = this, j = arguments;
-            return new Promise(function(O, m) {
+            return new Promise(function(E, m) {
               var _ = o.apply(e, j);
               function h(x) {
-                S(_, O, m, h, P, "next", x);
+                O(_, E, m, h, S, "next", x);
               }
-              function P(x) {
-                S(_, O, m, h, P, "throw", x);
+              function S(x) {
+                O(_, E, m, h, S, "throw", x);
               }
               h(void 0);
             });
@@ -3783,40 +3783,40 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           byte() {
             var e = this;
-            return c(function* () {
+            return l(function* () {
               if (!e.eof() && (e.started || (yield e._init()), e.cursor !== e.buffer.length || (yield e._loadnext(), !e._ended))) return e._moveCursor(1), e.buffer[e.undoCursor];
             })();
           }
           chunk() {
             var e = this;
-            return c(function* () {
+            return l(function* () {
               if (!e.eof() && (e.started || (yield e._init()), e.cursor !== e.buffer.length || (yield e._loadnext(), !e._ended))) return e._moveCursor(e.buffer.length), e.buffer.slice(e.undoCursor, e.cursor);
             })();
           }
           read(e) {
             var j = this;
-            return c(function* () {
+            return l(function* () {
               if (!j.eof()) return j.started || (yield j._init()), j.cursor + e > j.buffer.length && (j._trim(), yield j._accumulate(e)), j._moveCursor(e), j.buffer.slice(j.undoCursor, j.cursor);
             })();
           }
           skip(e) {
             var j = this;
-            return c(function* () {
+            return l(function* () {
               j.eof() || (j.started || (yield j._init()), j.cursor + e > j.buffer.length && (j._trim(), yield j._accumulate(e)), j._moveCursor(e));
             })();
           }
           undo() {
             var e = this;
-            return c(function* () {
+            return l(function* () {
               e.cursor = e.undoCursor;
             })();
           }
           _next() {
             var e = this;
-            return c(function* () {
+            return l(function* () {
               e.started = !0;
-              let { done: j, value: O } = yield e.stream.next();
-              return j && (e._ended = !0, !O) ? n.alloc(0) : (O && (O = n.from(O)), O);
+              let { done: j, value: E } = yield e.stream.next();
+              return j && (e._ended = !0, !E) ? n.alloc(0) : (E && (E = n.from(E)), E);
             })();
           }
           _trim() {
@@ -3827,26 +3827,26 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           _accumulate(e) {
             var j = this;
-            return c(function* () {
+            return l(function* () {
               if (j._ended) return;
-              const O = [j.buffer];
-              for (; j.cursor + e > s(O); ) {
+              const E = [j.buffer];
+              for (; j.cursor + e > s(E); ) {
                 const m = yield j._next();
                 if (j._ended) break;
-                O.push(m);
+                E.push(m);
               }
-              j.buffer = n.concat(O);
+              j.buffer = n.concat(E);
             })();
           }
           _loadnext() {
             var e = this;
-            return c(function* () {
+            return l(function* () {
               e._discardedBytes += e.buffer.length, e.undoCursor = 0, e.cursor = 0, e.buffer = yield e._next();
             })();
           }
           _init() {
             var e = this;
-            return c(function* () {
+            return l(function* () {
               e.buffer = yield e._next();
             })();
           }
@@ -3860,24 +3860,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return i;
       });
       var n = t(49), u = t.n(n);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -3887,7 +3887,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* (o) {
+        return (s = l(function* (o) {
           return u.a.inflate(o);
         })).apply(this, arguments);
       }
@@ -3896,26 +3896,26 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s;
       });
       var n = t(49), u = t.n(n);
-      function S(m, _, h, P, x, R, f) {
+      function O(m, _, h, S, x, R, c) {
         try {
-          var E = m[R](f), w = E.value;
+          var P = m[R](c), w = P.value;
         } catch (I) {
           return void h(I);
         }
-        E.done ? _(w) : Promise.resolve(w).then(P, x);
+        P.done ? _(w) : Promise.resolve(w).then(S, x);
       }
-      function c(m) {
+      function l(m) {
         return function() {
           var _ = this, h = arguments;
-          return new Promise(function(P, x) {
+          return new Promise(function(S, x) {
             var R = m.apply(_, h);
-            function f(w) {
-              S(R, P, x, f, E, "next", w);
+            function c(w) {
+              O(R, S, x, c, P, "next", w);
             }
-            function E(w) {
-              S(R, P, x, f, E, "throw", w);
+            function P(w) {
+              O(R, S, x, c, P, "throw", w);
             }
-            f(void 0);
+            c(void 0);
           });
         };
       }
@@ -3924,20 +3924,20 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return o.apply(this, arguments);
       }
       function o() {
-        return (o = c(function* (m) {
-          return i === null && (i = O()), i ? e(m) : u.a.deflate(m);
+        return (o = l(function* (m) {
+          return i === null && (i = E()), i ? e(m) : u.a.deflate(m);
         })).apply(this, arguments);
       }
       function e(m) {
         return j.apply(this, arguments);
       }
       function j() {
-        return (j = c(function* (m) {
+        return (j = l(function* (m) {
           const _ = new CompressionStream("deflate"), h = new Blob([m]).stream().pipeThrough(_);
           return new Uint8Array(yield new Response(h).arrayBuffer());
         })).apply(this, arguments);
       }
-      function O() {
+      function E() {
         try {
           return new CompressionStream("deflate").writable.close(), new Blob([]).stream().cancel(), !0;
         } catch {
@@ -3945,9 +3945,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       }
     }, function(N, g, t) {
-      function n(u, ...S) {
-        for (const c of S) if (c) for (const i of Object.keys(c)) {
-          const s = c[i];
+      function n(u, ...O) {
+        for (const l of O) if (l) for (const i of Object.keys(l)) {
+          const s = l[i];
           s !== void 0 && (u[i] = s);
         }
         return u;
@@ -3957,33 +3957,33 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
     }, function(N, g, t) {
       (function(n) {
-        function u({ username: S = "", password: c = "" }) {
-          return `Basic ${n.from(`${S}:${c}`).toString("base64")}`;
+        function u({ username: O = "", password: l = "" }) {
+          return `Basic ${n.from(`${O}:${l}`).toString("base64")}`;
         }
         t.d(g, "a", function() {
           return u;
         });
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
-      var n = t(71), u = t(36), S = t(9);
-      function c(h, P, x, R, f, E, w) {
+      var n = t(71), u = t(36), O = t(9);
+      function l(h, S, x, R, c, P, w) {
         try {
-          var I = h[E](w), T = I.value;
+          var I = h[P](w), T = I.value;
         } catch (M) {
           return void x(M);
         }
-        I.done ? P(T) : Promise.resolve(T).then(R, f);
+        I.done ? S(T) : Promise.resolve(T).then(R, c);
       }
       function i(h) {
         return function() {
-          var P = this, x = arguments;
-          return new Promise(function(R, f) {
-            var E = h.apply(P, x);
+          var S = this, x = arguments;
+          return new Promise(function(R, c) {
+            var P = h.apply(S, x);
             function w(T) {
-              c(E, R, f, w, I, "next", T);
+              l(P, R, c, w, I, "next", T);
             }
             function I(T) {
-              c(E, R, f, w, I, "throw", T);
+              l(P, R, c, w, I, "throw", T);
             }
             w(void 0);
           });
@@ -3994,63 +3994,63 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function o() {
         return (o = i(function* (h) {
-          const P = {};
+          const S = {};
           let x;
           for (; x = yield h(), x !== !0; ) {
             if (x === null) continue;
             x = x.toString("utf8").replace(/\n$/, "");
             const R = x.indexOf("=");
             if (R > -1) {
-              const f = x.slice(0, R), E = x.slice(R + 1);
-              P[f] = E;
-            } else P[x] = !0;
+              const c = x.slice(0, R), P = x.slice(R + 1);
+              S[c] = P;
+            } else S[x] = !0;
           }
-          return { protocolVersion: 2, capabilities2: P };
+          return { protocolVersion: 2, capabilities2: S };
         })).apply(this, arguments);
       }
-      function e(h, P, x, R, f, E, w) {
+      function e(h, S, x, R, c, P, w) {
         try {
-          var I = h[E](w), T = I.value;
+          var I = h[P](w), T = I.value;
         } catch (M) {
           return void x(M);
         }
-        I.done ? P(T) : Promise.resolve(T).then(R, f);
+        I.done ? S(T) : Promise.resolve(T).then(R, c);
       }
       function j(h) {
         return function() {
-          var P = this, x = arguments;
-          return new Promise(function(R, f) {
-            var E = h.apply(P, x);
+          var S = this, x = arguments;
+          return new Promise(function(R, c) {
+            var P = h.apply(S, x);
             function w(T) {
-              e(E, R, f, w, I, "next", T);
+              e(P, R, c, w, I, "next", T);
             }
             function I(T) {
-              e(E, R, f, w, I, "throw", T);
+              e(P, R, c, w, I, "throw", T);
             }
             w(void 0);
           });
         };
       }
-      function O(h, P) {
+      function E(h, S) {
         return m.apply(this, arguments);
       }
       function m() {
-        return (m = j(function* (h, { service: P }) {
-          const x = /* @__PURE__ */ new Set(), R = /* @__PURE__ */ new Map(), f = /* @__PURE__ */ new Map(), E = S.a.streamReader(h);
-          let w = yield E();
-          for (; w === null; ) w = yield E();
+        return (m = j(function* (h, { service: S }) {
+          const x = /* @__PURE__ */ new Set(), R = /* @__PURE__ */ new Map(), c = /* @__PURE__ */ new Map(), P = O.a.streamReader(h);
+          let w = yield P();
+          for (; w === null; ) w = yield P();
           if (w === !0) throw new n.a();
-          if (w.includes("version 2")) return s(E);
-          if (w.toString("utf8").replace(/\n$/, "") !== `# service=${P}`) throw new u.a(`# service=${P}\\n`, w.toString("utf8"));
-          let I = yield E();
-          for (; I === null; ) I = yield E();
-          if (I === !0) return { capabilities: x, refs: R, symrefs: f };
-          if (I = I.toString("utf8"), I.includes("version 2")) return s(E);
+          if (w.includes("version 2")) return s(P);
+          if (w.toString("utf8").replace(/\n$/, "") !== `# service=${S}`) throw new u.a(`# service=${S}\\n`, w.toString("utf8"));
+          let I = yield P();
+          for (; I === null; ) I = yield P();
+          if (I === !0) return { capabilities: x, refs: R, symrefs: c };
+          if (I = I.toString("utf8"), I.includes("version 2")) return s(P);
           const [T, M] = _(I, "\0", "\\x00");
           if (M.split(" ").map((A) => x.add(A)), T !== "0000000000000000000000000000000000000000 capabilities^{}") {
             const [A, F] = _(T, " ", " ");
             for (R.set(F, A); ; ) {
-              const z = yield E();
+              const z = yield P();
               if (z === !0) break;
               if (z !== null) {
                 const [$, H] = _(z.toString("utf8"), " ", " ");
@@ -4060,24 +4060,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           for (const A of x) if (A.startsWith("symref=")) {
             const F = A.match(/symref=([^:]+):(.*)/);
-            F.length === 3 && f.set(F[1], F[2]);
+            F.length === 3 && c.set(F[1], F[2]);
           }
-          return { protocolVersion: 1, capabilities: x, refs: R, symrefs: f };
+          return { protocolVersion: 1, capabilities: x, refs: R, symrefs: c };
         })).apply(this, arguments);
       }
-      function _(h, P, x) {
-        const R = h.trim().split(P);
+      function _(h, S, x) {
+        const R = h.trim().split(S);
         if (R.length !== 2) throw new u.a(`Two strings separated by '${x}'`, h.toString("utf8"));
         return R;
       }
       t.d(g, "a", function() {
-        return O;
+        return E;
       });
     }, function(N, g, t) {
       function n(u) {
-        return u[Symbol.asyncIterator] ? u[Symbol.asyncIterator]() : u[Symbol.iterator] ? u[Symbol.iterator]() : u.next ? u : /* @__PURE__ */ function(S) {
-          let c = [S];
-          return { next: () => Promise.resolve({ done: c.length === 0, value: c.pop() }), return: () => (c = [], {}), [Symbol.asyncIterator]() {
+        return u[Symbol.asyncIterator] ? u[Symbol.asyncIterator]() : u[Symbol.iterator] ? u[Symbol.iterator]() : u.next ? u : /* @__PURE__ */ function(O) {
+          let l = [O];
+          return { next: () => Promise.resolve({ done: l.length === 0, value: l.pop() }), return: () => (l = [], {}), [Symbol.asyncIterator]() {
             return this;
           } };
         }(u);
@@ -4090,24 +4090,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return i;
       });
       var n = t(12), u = t(15);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -4117,15 +4117,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* ({ fs: o, gitdir: e, tree: j }) {
-          const O = n.a.from(j).toObject();
-          return yield Object(u.a)({ fs: o, gitdir: e, type: "tree", object: O, format: "content" });
+        return (s = l(function* ({ fs: o, gitdir: e, tree: j }) {
+          const E = n.a.from(j).toObject();
+          return yield Object(u.a)({ fs: o, gitdir: e, type: "tree", object: E, format: "content" });
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
       function n(u) {
         return u.trim().split(`
-`).map((S) => " " + S).join(`
+`).map((O) => " " + O).join(`
 `) + `
 `;
       }
@@ -4133,73 +4133,73 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return n;
       });
     }, function(N, g, t) {
-      const n = (u, S) => function(...c) {
-        return new S.promiseModule((i, s) => {
-          S.multiArgs ? c.push((...o) => {
-            S.errorFirst ? o[0] ? s(o) : (o.shift(), i(o)) : i(o);
-          }) : S.errorFirst ? c.push((o, e) => {
+      const n = (u, O) => function(...l) {
+        return new O.promiseModule((i, s) => {
+          O.multiArgs ? l.push((...o) => {
+            O.errorFirst ? o[0] ? s(o) : (o.shift(), i(o)) : i(o);
+          }) : O.errorFirst ? l.push((o, e) => {
             o ? s(o) : i(e);
-          }) : c.push(i), u.apply(this, c);
+          }) : l.push(i), u.apply(this, l);
         });
       };
-      N.exports = (u, S) => {
-        S = Object.assign({ exclude: [/.+(Sync|Stream)$/], errorFirst: !0, promiseModule: Promise }, S);
-        const c = typeof u;
-        if (u === null || c !== "object" && c !== "function") throw new TypeError(`Expected \`input\` to be a \`Function\` or \`Object\`, got \`${u === null ? "null" : c}\``);
+      N.exports = (u, O) => {
+        O = Object.assign({ exclude: [/.+(Sync|Stream)$/], errorFirst: !0, promiseModule: Promise }, O);
+        const l = typeof u;
+        if (u === null || l !== "object" && l !== "function") throw new TypeError(`Expected \`input\` to be a \`Function\` or \`Object\`, got \`${u === null ? "null" : l}\``);
         const i = (o) => {
           const e = (j) => typeof j == "string" ? o === j : j.test(o);
-          return S.include ? S.include.some(e) : !S.exclude.some(e);
+          return O.include ? O.include.some(e) : !O.exclude.some(e);
         };
         let s;
-        s = c === "function" ? function(...o) {
-          return S.excludeMain ? u(...o) : n(u, S).apply(this, o);
+        s = l === "function" ? function(...o) {
+          return O.excludeMain ? u(...o) : n(u, O).apply(this, o);
         } : Object.create(Object.getPrototypeOf(u));
         for (const o in u) {
           const e = u[o];
-          s[o] = typeof e == "function" && i(o) ? n(e, S) : e;
+          s[o] = typeof e == "function" && i(o) ? n(e, O) : e;
         }
         return s;
       };
     }, function(N, g) {
       var t, n, u = N.exports = {};
-      function S() {
+      function O() {
         throw new Error("setTimeout has not been defined");
       }
-      function c() {
+      function l() {
         throw new Error("clearTimeout has not been defined");
       }
-      function i(P) {
-        if (t === setTimeout) return setTimeout(P, 0);
-        if ((t === S || !t) && setTimeout) return t = setTimeout, setTimeout(P, 0);
+      function i(S) {
+        if (t === setTimeout) return setTimeout(S, 0);
+        if ((t === O || !t) && setTimeout) return t = setTimeout, setTimeout(S, 0);
         try {
-          return t(P, 0);
+          return t(S, 0);
         } catch {
           try {
-            return t.call(null, P, 0);
+            return t.call(null, S, 0);
           } catch {
-            return t.call(this, P, 0);
+            return t.call(this, S, 0);
           }
         }
       }
       (function() {
         try {
-          t = typeof setTimeout == "function" ? setTimeout : S;
+          t = typeof setTimeout == "function" ? setTimeout : O;
         } catch {
-          t = S;
+          t = O;
         }
         try {
-          n = typeof clearTimeout == "function" ? clearTimeout : c;
+          n = typeof clearTimeout == "function" ? clearTimeout : l;
         } catch {
-          n = c;
+          n = l;
         }
       })();
       var s, o = [], e = !1, j = -1;
-      function O() {
+      function E() {
         e && s && (e = !1, s.length ? o = s.concat(o) : j = -1, o.length && m());
       }
       function m() {
         if (!e) {
-          var P = i(O);
+          var S = i(E);
           e = !0;
           for (var x = o.length; x; ) {
             for (s = o, o = []; ++j < x; ) s && s[j].run();
@@ -4207,7 +4207,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           s = null, e = !1, function(R) {
             if (n === clearTimeout) return clearTimeout(R);
-            if ((n === c || !n) && clearTimeout) return n = clearTimeout, clearTimeout(R);
+            if ((n === l || !n) && clearTimeout) return n = clearTimeout, clearTimeout(R);
             try {
               n(R);
             } catch {
@@ -4217,27 +4217,27 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 return n.call(this, R);
               }
             }
-          }(P);
+          }(S);
         }
       }
-      function _(P, x) {
-        this.fun = P, this.array = x;
+      function _(S, x) {
+        this.fun = S, this.array = x;
       }
       function h() {
       }
-      u.nextTick = function(P) {
+      u.nextTick = function(S) {
         var x = new Array(arguments.length - 1);
         if (arguments.length > 1) for (var R = 1; R < arguments.length; R++) x[R - 1] = arguments[R];
-        o.push(new _(P, x)), o.length !== 1 || e || i(m);
+        o.push(new _(S, x)), o.length !== 1 || e || i(m);
       }, _.prototype.run = function() {
         this.fun.apply(null, this.array);
-      }, u.title = "browser", u.browser = !0, u.env = {}, u.argv = [], u.version = "", u.versions = {}, u.on = h, u.addListener = h, u.once = h, u.off = h, u.removeListener = h, u.removeAllListeners = h, u.emit = h, u.prependListener = h, u.prependOnceListener = h, u.listeners = function(P) {
+      }, u.title = "browser", u.browser = !0, u.env = {}, u.argv = [], u.version = "", u.versions = {}, u.on = h, u.addListener = h, u.once = h, u.off = h, u.removeListener = h, u.removeAllListeners = h, u.emit = h, u.prependListener = h, u.prependOnceListener = h, u.listeners = function(S) {
         return [];
-      }, u.binding = function(P) {
+      }, u.binding = function(S) {
         throw new Error("process.binding is not supported");
       }, u.cwd = function() {
         return "/";
-      }, u.chdir = function(P) {
+      }, u.chdir = function(S) {
         throw new Error("process.chdir is not supported");
       }, u.umask = function() {
         return 0;
@@ -4252,13 +4252,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "AmbiguousError", function() {
         return u.a;
       });
-      var S = t(98);
+      var O = t(98);
       t.d(g, "CheckoutConflictError", function() {
-        return S.a;
+        return O.a;
       });
-      var c = t(99);
+      var l = t(99);
       t.d(g, "CommitNotFetchedError", function() {
-        return c.a;
+        return l.a;
       });
       var i = t(71);
       t.d(g, "EmptyServerResponseError", function() {
@@ -4280,9 +4280,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "InternalError", function() {
         return j.a;
       });
-      var O = t(60);
+      var E = t(60);
       t.d(g, "InvalidFilepathError", function() {
-        return O.a;
+        return E.a;
       });
       var m = t(32);
       t.d(g, "InvalidOidError", function() {
@@ -4296,9 +4296,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "MaxDepthError", function() {
         return h.a;
       });
-      var P = t(56);
+      var S = t(56);
       t.d(g, "MergeNotSupportedError", function() {
-        return P.a;
+        return S.a;
       });
       var x = t(57);
       t.d(g, "MergeConflictError", function() {
@@ -4308,13 +4308,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "MissingNameError", function() {
         return R.a;
       });
-      var f = t(24);
+      var c = t(24);
       t.d(g, "MissingParameterError", function() {
-        return f.a;
+        return c.a;
       });
-      var E = t(103);
+      var P = t(103);
       t.d(g, "MultipleGitError", function() {
-        return E.a;
+        return P.a;
       });
       var w = t(72);
       t.d(g, "NoRefspecError", function() {
@@ -4378,9 +4378,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
+        constructor(l) {
           let i = "";
-          c === "not-fast-forward" ? i = " because it was not a simple fast-forward" : c === "tag-exists" && (i = " because tag already exists"), super(`Push rejected${i}. Use "force: true" to override.`), this.code = this.name = u.code, this.data = { reason: c };
+          l === "not-fast-forward" ? i = " because it was not a simple fast-forward" : l === "tag-exists" && (i = " because tag already exists"), super(`Push rejected${i}. Use "force: true" to override.`), this.code = this.name = u.code, this.data = { reason: l };
         }
       }
       u.code = "PushRejectedError";
@@ -4388,7 +4388,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "a", function() {
         return x;
       });
-      var n = t(21), u = t(24), S = t(105), c = t(13), i = t(3), s = t(14), o = t(12), e = t(15), j = t(107), O = t(29), m = t(43), _ = t(65);
+      var n = t(21), u = t(24), O = t(105), l = t(13), i = t(3), s = t(14), o = t(12), e = t(15), j = t(107), E = t(29), m = t(43), _ = t(65);
       function h(w, I, T, M, A, F, z) {
         try {
           var $ = w[F](z), H = $.value;
@@ -4397,7 +4397,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         $.done ? I(H) : Promise.resolve(H).then(M, A);
       }
-      function P(w) {
+      function S(w) {
         return function() {
           var I = this, T = arguments;
           return new Promise(function(M, A) {
@@ -4416,7 +4416,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return R.apply(this, arguments);
       }
       function R() {
-        return (R = P(function* ({ fs: w, cache: I, onSign: T, gitdir: M, message: A, author: F, committer: z, signingKey: $, amend: H = !1, dryRun: nt = !1, noUpdateBranch: ot = !1, ref: V, parent: it, tree: lt }) {
+        return (R = S(function* ({ fs: w, cache: I, onSign: T, gitdir: M, message: A, author: F, committer: z, signingKey: $, amend: H = !1, dryRun: nt = !1, noUpdateBranch: ot = !1, ref: V, parent: it, tree: lt }) {
           let dt, G, Z = !1;
           V || (V = yield i.a.resolve({ fs: w, gitdir: M, ref: "HEAD", depth: 2 }));
           try {
@@ -4424,15 +4424,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           } catch {
             Z = !0;
           }
-          if (H && Z) throw new S.a(V);
-          const ut = H ? yield Object(O.a)({ fs: w, gitdir: M, author: F, commit: G.commit }) : yield Object(O.a)({ fs: w, gitdir: M, author: F });
+          if (H && Z) throw new O.a(V);
+          const ut = H ? yield Object(E.a)({ fs: w, gitdir: M, author: F, commit: G.commit }) : yield Object(E.a)({ fs: w, gitdir: M, author: F });
           if (!ut) throw new n.a("author");
           const pt = H ? yield Object(m.a)({ fs: w, gitdir: M, author: ut, committer: z, commit: G.commit }) : yield Object(m.a)({ fs: w, gitdir: M, author: ut, committer: z });
           if (!pt) throw new n.a("committer");
-          return c.a.acquire({ fs: w, gitdir: M, cache: I, allowUnmerged: !1 }, function() {
-            var st = P(function* (mt) {
+          return l.a.acquire({ fs: w, gitdir: M, cache: I, allowUnmerged: !1 }, function() {
+            var st = S(function* (mt) {
               const bt = Object(j.a)(mt.entries).get(".");
-              if (lt || (lt = yield f({ fs: w, gitdir: M, inode: bt, dryRun: nt })), it = it ? yield Promise.all(it.map((U) => i.a.resolve({ fs: w, gitdir: M, ref: U }))) : H ? G.commit.parent : dt ? [dt] : [], !A) {
+              if (lt || (lt = yield c({ fs: w, gitdir: M, inode: bt, dryRun: nt })), it = it ? yield Promise.all(it.map((U) => i.a.resolve({ fs: w, gitdir: M, ref: U }))) : H ? G.commit.parent : dt ? [dt] : [], !A) {
                 if (!H) throw new u.a("message");
                 A = G.commit.message;
               }
@@ -4447,13 +4447,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }());
         })).apply(this, arguments);
       }
-      function f(w) {
-        return E.apply(this, arguments);
+      function c(w) {
+        return P.apply(this, arguments);
       }
-      function E() {
-        return (E = P(function* ({ fs: w, gitdir: I, inode: T, dryRun: M }) {
+      function P() {
+        return (P = S(function* ({ fs: w, gitdir: I, inode: T, dryRun: M }) {
           const A = T.children;
-          for (const $ of A) $.type === "tree" && ($.metadata.mode = "040000", $.metadata.oid = yield f({ fs: w, gitdir: I, inode: $, dryRun: M }));
+          for (const $ of A) $.type === "tree" && ($.metadata.mode = "040000", $.metadata.oid = yield c({ fs: w, gitdir: I, inode: $, dryRun: M }));
           const F = A.map(($) => ({ mode: $.metadata.mode, path: $.basename, oid: $.metadata.oid, type: $.type })), z = o.a.from(F);
           return yield Object(e.a)({ fs: w, gitdir: I, type: "tree", object: z.toObject(), dryRun: M });
         })).apply(this, arguments);
@@ -4466,8 +4466,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i, s) {
-          super(`Found multiple ${c} matching "${i}" (${s.join(", ")}). Use a longer abbreviation length to disambiguate them.`), this.code = this.name = u.code, this.data = { nouns: c, short: i, matches: s };
+        constructor(l, i, s) {
+          super(`Found multiple ${l} matching "${i}" (${s.join(", ")}). Use a longer abbreviation length to disambiguate them.`), this.code = this.name = u.code, this.data = { nouns: l, short: i, matches: s };
         }
       }
       u.code = "AmbiguousError";
@@ -4477,8 +4477,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Your local changes to the following files would be overwritten by checkout: ${c.join(", ")}`), this.code = this.name = u.code, this.data = { filepaths: c };
+        constructor(l) {
+          super(`Your local changes to the following files would be overwritten by checkout: ${l.join(", ")}`), this.code = this.name = u.code, this.data = { filepaths: l };
         }
       }
       u.code = "CheckoutConflictError";
@@ -4488,8 +4488,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i) {
-          super(`Failed to checkout "${c}" because commit ${i} is not available locally. Do a git fetch to make the branch available locally.`), this.code = this.name = u.code, this.data = { ref: c, oid: i };
+        constructor(l, i) {
+          super(`Failed to checkout "${l}" because commit ${i} is not available locally. Do a git fetch to make the branch available locally.`), this.code = this.name = u.code, this.data = { ref: l, oid: i };
         }
       }
       u.code = "CommitNotFetchedError";
@@ -4510,8 +4510,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c, i) {
-          super(`One or more branches were not updated: ${c}`), this.code = this.name = u.code, this.data = { prettyDetails: c, result: i };
+        constructor(l, i) {
+          super(`One or more branches were not updated: ${l}`), this.code = this.name = u.code, this.data = { prettyDetails: l, result: i };
         }
       }
       u.code = "GitPushError";
@@ -4521,8 +4521,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Maximum search depth of ${c} exceeded.`), this.code = this.name = u.code, this.data = { depth: c };
+        constructor(l) {
+          super(`Maximum search depth of ${l} exceeded.`), this.code = this.name = u.code, this.data = { depth: l };
         }
       }
       u.code = "MaxDepthError";
@@ -4532,8 +4532,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super('There are multiple errors that were thrown by the method. Please refer to the "errors" property to see more'), this.code = this.name = u.code, this.data = { errors: c }, this.errors = c;
+        constructor(l) {
+          super('There are multiple errors that were thrown by the method. Please refer to the "errors" property to see more'), this.code = this.name = u.code, this.data = { errors: l }, this.errors = l;
         }
       }
       u.code = "MultipleGitError";
@@ -4543,8 +4543,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`Could not merge index: Entry for '${c}' is not up to date. Either reset the index entry to HEAD, or stage your unstaged changes.`), this.code = this.name = u.code, this.data = { filepath: c };
+        constructor(l) {
+          super(`Could not merge index: Entry for '${l}' is not up to date. Either reset the index entry to HEAD, or stage your unstaged changes.`), this.code = this.name = u.code, this.data = { filepath: l };
         }
       }
       u.code = "IndexResetError";
@@ -4554,41 +4554,41 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(1);
       class u extends n.a {
-        constructor(c) {
-          super(`"${c}" does not point to any commit. You're maybe working on a repository with no commits yet. `), this.code = this.name = u.code, this.data = { ref: c };
+        constructor(l) {
+          super(`"${l}" does not point to any commit. You're maybe working on a repository with no commits yet. `), this.code = this.name = u.code, this.data = { ref: l };
         }
       }
       u.code = "NoCommitError";
     }, function(N, g, t) {
       (function(n) {
         t.d(g, "a", function() {
-          return O;
+          return E;
         });
-        var u = t(4), S = t(46), c = t(20), i = t(61), s = t(34), o = t(19);
-        function e(m, _, h, P, x, R, f) {
+        var u = t(4), O = t(46), l = t(20), i = t(61), s = t(34), o = t(19);
+        function e(m, _, h, S, x, R, c) {
           try {
-            var E = m[R](f), w = E.value;
+            var P = m[R](c), w = P.value;
           } catch (I) {
             return void h(I);
           }
-          E.done ? _(w) : Promise.resolve(w).then(P, x);
+          P.done ? _(w) : Promise.resolve(w).then(S, x);
         }
         function j(m) {
           return function() {
             var _ = this, h = arguments;
-            return new Promise(function(P, x) {
+            return new Promise(function(S, x) {
               var R = m.apply(_, h);
-              function f(w) {
-                e(R, P, x, f, E, "next", w);
+              function c(w) {
+                e(R, S, x, c, P, "next", w);
               }
-              function E(w) {
-                e(R, P, x, f, E, "throw", w);
+              function P(w) {
+                e(R, S, x, c, P, "throw", w);
               }
-              f(void 0);
+              c(void 0);
             });
           };
         }
-        class O {
+        class E {
           constructor(_, h) {
             this._dirty = !1, this._unmergedPaths = h || /* @__PURE__ */ new Set(), this._entries = _ || /* @__PURE__ */ new Map();
           }
@@ -4601,35 +4601,35 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           static from(_) {
             return j(function* () {
-              if (n.isBuffer(_)) return O.fromBuffer(_);
-              if (_ === null) return new O(null);
+              if (n.isBuffer(_)) return E.fromBuffer(_);
+              if (_ === null) return new E(null);
               throw new u.a("invalid type passed to GitIndex.from");
             })();
           }
           static fromBuffer(_) {
             return j(function* () {
               if (_.length === 0) throw new u.a("Index file is empty (.git/index)");
-              const h = new O(), P = new c.a(_), x = P.toString("utf8", 4);
+              const h = new E(), S = new l.a(_), x = S.toString("utf8", 4);
               if (x !== "DIRC") throw new u.a(`Invalid dircache magic file number: ${x}`);
-              const R = yield Object(o.a)(_.slice(0, -20)), f = _.slice(-20).toString("hex");
-              if (f !== R) throw new u.a(`Invalid checksum in GitIndex buffer: expected ${f} but saw ${R}`);
-              const E = P.readUInt32BE();
-              if (E !== 2) throw new u.a(`Unsupported dircache version: ${E}`);
-              const w = P.readUInt32BE();
+              const R = yield Object(o.a)(_.slice(0, -20)), c = _.slice(-20).toString("hex");
+              if (c !== R) throw new u.a(`Invalid checksum in GitIndex buffer: expected ${c} but saw ${R}`);
+              const P = S.readUInt32BE();
+              if (P !== 2) throw new u.a(`Unsupported dircache version: ${P}`);
+              const w = S.readUInt32BE();
               let I = 0;
-              for (; !P.eof() && I < w; ) {
+              for (; !S.eof() && I < w; ) {
                 const M = {};
-                M.ctimeSeconds = P.readUInt32BE(), M.ctimeNanoseconds = P.readUInt32BE(), M.mtimeSeconds = P.readUInt32BE(), M.mtimeNanoseconds = P.readUInt32BE(), M.dev = P.readUInt32BE(), M.ino = P.readUInt32BE(), M.mode = P.readUInt32BE(), M.uid = P.readUInt32BE(), M.gid = P.readUInt32BE(), M.size = P.readUInt32BE(), M.oid = P.slice(20).toString("hex");
-                const A = P.readUInt16BE();
+                M.ctimeSeconds = S.readUInt32BE(), M.ctimeNanoseconds = S.readUInt32BE(), M.mtimeSeconds = S.readUInt32BE(), M.mtimeNanoseconds = S.readUInt32BE(), M.dev = S.readUInt32BE(), M.ino = S.readUInt32BE(), M.mode = S.readUInt32BE(), M.uid = S.readUInt32BE(), M.gid = S.readUInt32BE(), M.size = S.readUInt32BE(), M.oid = S.slice(20).toString("hex");
+                const A = S.readUInt16BE();
                 M.flags = (T = A, { assumeValid: !!(32768 & T), extended: !!(16384 & T), stage: (12288 & T) >> 12, nameLength: 4095 & T });
-                const F = _.indexOf(0, P.tell() + 1) - P.tell();
+                const F = _.indexOf(0, S.tell() + 1) - S.tell();
                 if (F < 1) throw new u.a(`Got a path length of: ${F}`);
-                if (M.path = P.toString("utf8", F), M.path.includes("..\\") || M.path.includes("../")) throw new S.a(M.path);
-                let z = 8 - (P.tell() - 12) % 8;
+                if (M.path = S.toString("utf8", F), M.path.includes("..\\") || M.path.includes("../")) throw new O.a(M.path);
+                let z = 8 - (S.tell() - 12) % 8;
                 for (z === 0 && (z = 8); z--; ) {
-                  const $ = P.readUInt8();
+                  const $ = S.readUInt8();
                   if ($ !== 0) throw new u.a(`Expected 1-8 null characters but got '${$}' after ${M.path}`);
-                  if (P.eof()) throw new u.a("Unexpected end of file");
+                  if (S.eof()) throw new u.a("Unexpected end of file");
                 }
                 M.stages = [], h._addEntry(M), I++;
               }
@@ -4652,10 +4652,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           *[Symbol.iterator]() {
             for (const _ of this.entries) yield _;
           }
-          insert({ filepath: _, stats: h, oid: P, stage: x = 0 }) {
+          insert({ filepath: _, stats: h, oid: S, stage: x = 0 }) {
             h || (h = { ctimeSeconds: 0, ctimeNanoseconds: 0, mtimeSeconds: 0, mtimeNanoseconds: 0, dev: 0, ino: 0, mode: 0, uid: 0, gid: 0, size: 0 }), h = Object(s.a)(h);
-            const R = n.from(_), f = { ctimeSeconds: h.ctimeSeconds, ctimeNanoseconds: h.ctimeNanoseconds, mtimeSeconds: h.mtimeSeconds, mtimeNanoseconds: h.mtimeNanoseconds, dev: h.dev, ino: h.ino, mode: h.mode || 33188, uid: h.uid, gid: h.gid, size: h.size, path: _, oid: P, flags: { assumeValid: !1, extended: !1, stage: x, nameLength: R.length < 4095 ? R.length : 4095 }, stages: [] };
-            this._addEntry(f), this._dirty = !0;
+            const R = n.from(_), c = { ctimeSeconds: h.ctimeSeconds, ctimeNanoseconds: h.ctimeNanoseconds, mtimeSeconds: h.mtimeSeconds, mtimeNanoseconds: h.mtimeNanoseconds, dev: h.dev, ino: h.ino, mode: h.mode || 33188, uid: h.uid, gid: h.gid, size: h.size, path: _, oid: S, flags: { assumeValid: !1, extended: !1, stage: x, nameLength: R.length < 4095 ? R.length : 4095 }, stages: [] };
+            this._addEntry(c), this._dirty = !0;
           }
           delete({ filepath: _ }) {
             if (this._entries.has(_)) this._entries.delete(_);
@@ -4674,33 +4674,33 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           static _entryToBuffer(_) {
             return j(function* () {
-              const h = n.from(_.path), P = 8 * Math.ceil((62 + h.length + 1) / 8), x = n.alloc(P), R = new c.a(x), f = Object(s.a)(_);
-              return R.writeUInt32BE(f.ctimeSeconds), R.writeUInt32BE(f.ctimeNanoseconds), R.writeUInt32BE(f.mtimeSeconds), R.writeUInt32BE(f.mtimeNanoseconds), R.writeUInt32BE(f.dev), R.writeUInt32BE(f.ino), R.writeUInt32BE(f.mode), R.writeUInt32BE(f.uid), R.writeUInt32BE(f.gid), R.writeUInt32BE(f.size), R.write(_.oid, 20, "hex"), R.writeUInt16BE(function(E) {
-                const w = E.flags;
-                return w.extended = !1, w.nameLength = Math.min(n.from(E.path).length, 4095), (w.assumeValid ? 32768 : 0) + (w.extended ? 16384 : 0) + ((3 & w.stage) << 12) + (4095 & w.nameLength);
+              const h = n.from(_.path), S = 8 * Math.ceil((62 + h.length + 1) / 8), x = n.alloc(S), R = new l.a(x), c = Object(s.a)(_);
+              return R.writeUInt32BE(c.ctimeSeconds), R.writeUInt32BE(c.ctimeNanoseconds), R.writeUInt32BE(c.mtimeSeconds), R.writeUInt32BE(c.mtimeNanoseconds), R.writeUInt32BE(c.dev), R.writeUInt32BE(c.ino), R.writeUInt32BE(c.mode), R.writeUInt32BE(c.uid), R.writeUInt32BE(c.gid), R.writeUInt32BE(c.size), R.write(_.oid, 20, "hex"), R.writeUInt16BE(function(P) {
+                const w = P.flags;
+                return w.extended = !1, w.nameLength = Math.min(n.from(P.path).length, 4095), (w.assumeValid ? 32768 : 0) + (w.extended ? 16384 : 0) + ((3 & w.stage) << 12) + (4095 & w.nameLength);
               }(_)), R.write(_.path, h.length, "utf8"), x;
             })();
           }
           toObject() {
             var _ = this;
             return j(function* () {
-              const h = n.alloc(12), P = new c.a(h);
-              P.write("DIRC", 4, "utf8"), P.writeUInt32BE(2), P.writeUInt32BE(_.entriesFlat.length);
+              const h = n.alloc(12), S = new l.a(h);
+              S.write("DIRC", 4, "utf8"), S.writeUInt32BE(2), S.writeUInt32BE(_.entriesFlat.length);
               let x = [];
-              for (const w of _.entries) if (x.push(O._entryToBuffer(w)), w.stages.length > 1) for (const I of w.stages) I && I !== w && x.push(O._entryToBuffer(I));
+              for (const w of _.entries) if (x.push(E._entryToBuffer(w)), w.stages.length > 1) for (const I of w.stages) I && I !== w && x.push(E._entryToBuffer(I));
               x = yield Promise.all(x);
-              const R = n.concat(x), f = n.concat([h, R]), E = yield Object(o.a)(f);
-              return n.concat([f, n.from(E, "hex")]);
+              const R = n.concat(x), c = n.concat([h, R]), P = yield Object(o.a)(c);
+              return n.concat([c, n.from(P, "hex")]);
             })();
           }
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return S;
+        return O;
       });
       var n = t(40), u = t(27);
-      function S(c) {
+      function O(l) {
         const i = /* @__PURE__ */ new Map(), s = function(e) {
           if (!i.has(e)) {
             const j = { type: "tree", fullpath: e, basename: Object(n.a)(e), metadata: {}, children: [] };
@@ -4709,29 +4709,29 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return i.get(e);
         }, o = function(e, j) {
           if (!i.has(e)) {
-            const O = { type: "blob", fullpath: e, basename: Object(n.a)(e), metadata: j, parent: s(Object(u.a)(e)), children: [] };
-            O.parent && O.parent.children.push(O), i.set(e, O);
+            const E = { type: "blob", fullpath: e, basename: Object(n.a)(e), metadata: j, parent: s(Object(u.a)(e)), children: [] };
+            E.parent && E.parent.children.push(E), i.set(e, E);
           }
           return i.get(e);
         };
         s(".");
-        for (const e of c) o(e.path, e);
+        for (const e of l) o(e.path, e);
         return i;
       }
     }, function(N, g, t) {
-      function n(f, E, w, I, T, M, A) {
+      function n(c, P, w, I, T, M, A) {
         try {
-          var F = f[M](A), z = F.value;
+          var F = c[M](A), z = F.value;
         } catch ($) {
           return void w($);
         }
-        F.done ? E(z) : Promise.resolve(z).then(I, T);
+        F.done ? P(z) : Promise.resolve(z).then(I, T);
       }
-      function u(f) {
+      function u(c) {
         return function() {
-          var E = this, w = arguments;
+          var P = this, w = arguments;
           return new Promise(function(I, T) {
-            var M = f.apply(E, w);
+            var M = c.apply(P, w);
             function A(z) {
               n(M, I, T, A, F, "next", z);
             }
@@ -4745,30 +4745,30 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "a", function() {
         return R;
       });
-      const S = (f) => {
-        if ((f = f.trim().toLowerCase()) === "true" || f === "yes" || f === "on") return !0;
-        if (f === "false" || f === "no" || f === "off") return !1;
-        throw Error(`Expected 'true', 'false', 'yes', 'no', 'on', or 'off', but got ${f}`);
-      }, c = { core: { filemode: S, bare: S, logallrefupdates: S, symlinks: S, ignorecase: S, bigFileThreshold: (f) => {
-        f = f.toLowerCase();
-        let E = parseInt(f);
-        return f.endsWith("k") && (E *= 1024), f.endsWith("m") && (E *= 1048576), f.endsWith("g") && (E *= 1073741824), E;
-      } } }, i = /^\[([A-Za-z0-9-.]+)(?: "(.*)")?\]$/, s = /^[A-Za-z0-9-.]+$/, o = /^([A-Za-z][A-Za-z-]*)(?: *= *(.*))?$/, e = /^[A-Za-z][A-Za-z-]*$/, j = /^(.*?)( *[#;].*)$/, O = (f) => {
-        const E = j.exec(f);
-        if (E == null) return f;
-        const [w, I] = E.slice(1);
+      const O = (c) => {
+        if ((c = c.trim().toLowerCase()) === "true" || c === "yes" || c === "on") return !0;
+        if (c === "false" || c === "no" || c === "off") return !1;
+        throw Error(`Expected 'true', 'false', 'yes', 'no', 'on', or 'off', but got ${c}`);
+      }, l = { core: { filemode: O, bare: O, logallrefupdates: O, symlinks: O, ignorecase: O, bigFileThreshold: (c) => {
+        c = c.toLowerCase();
+        let P = parseInt(c);
+        return c.endsWith("k") && (P *= 1024), c.endsWith("m") && (P *= 1048576), c.endsWith("g") && (P *= 1073741824), P;
+      } } }, i = /^\[([A-Za-z0-9-.]+)(?: "(.*)")?\]$/, s = /^[A-Za-z0-9-.]+$/, o = /^([A-Za-z][A-Za-z-]*)(?: *= *(.*))?$/, e = /^[A-Za-z][A-Za-z-]*$/, j = /^(.*?)( *[#;].*)$/, E = (c) => {
+        const P = j.exec(c);
+        if (P == null) return c;
+        const [w, I] = P.slice(1);
         return m(w) && m(I) ? `${w}${I}` : w;
-      }, m = (f) => (f.match(/(?:^|[^\\])"/g) || []).length % 2 != 0, _ = (f) => f.split("").reduce((E, w, I, T) => {
+      }, m = (c) => (c.match(/(?:^|[^\\])"/g) || []).length % 2 != 0, _ = (c) => c.split("").reduce((P, w, I, T) => {
         const M = w === '"' && T[I - 1] !== "\\", A = w === "\\" && T[I + 1] === '"';
-        return M || A ? E : E + w;
-      }, ""), h = (f) => f != null ? f.toLowerCase() : null, P = (f, E, w) => [h(f), E, h(w)].filter((I) => I != null).join("."), x = (f) => {
-        const E = f.split("."), w = E.shift(), I = E.pop(), T = E.length ? E.join(".") : void 0;
-        return { section: w, subsection: T, name: I, path: P(w, T, I), sectionPath: P(w, T, null) };
+        return M || A ? P : P + w;
+      }, ""), h = (c) => c != null ? c.toLowerCase() : null, S = (c, P, w) => [h(c), P, h(w)].filter((I) => I != null).join("."), x = (c) => {
+        const P = c.split("."), w = P.shift(), I = P.pop(), T = P.length ? P.join(".") : void 0;
+        return { section: w, subsection: T, name: I, path: S(w, T, I), sectionPath: S(w, T, null) };
       };
       class R {
-        constructor(E) {
+        constructor(P) {
           let w = null, I = null;
-          this.parsedConfig = E ? E.split(`
+          this.parsedConfig = P ? P.split(`
 `).map((T) => {
             let M = null, A = null;
             const F = T.trim(), z = ((nt) => {
@@ -4784,58 +4784,58 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               const nt = ((ot) => {
                 const V = o.exec(ot);
                 if (V != null) {
-                  const [it, lt = "true"] = V.slice(1), dt = O(lt);
+                  const [it, lt = "true"] = V.slice(1), dt = E(lt);
                   return [it, _(dt)];
                 }
                 return null;
               })(F);
               nt != null && ([M, A] = nt);
             }
-            const H = P(w, I, M);
+            const H = S(w, I, M);
             return { line: T, isSection: $, section: w, subsection: I, name: M, value: A, path: H };
           }) : [];
         }
-        static from(E) {
-          return new R(E);
+        static from(P) {
+          return new R(P);
         }
-        get(E, w = !1) {
+        get(P, w = !1) {
           var I = this;
           return u(function* () {
-            const T = x(E).path, M = I.parsedConfig.filter((A) => A.path === T).map(({ section: A, name: F, value: z }) => {
-              const $ = c[A] && c[A][F];
+            const T = x(P).path, M = I.parsedConfig.filter((A) => A.path === T).map(({ section: A, name: F, value: z }) => {
+              const $ = l[A] && l[A][F];
               return $ ? $(z) : z;
             });
             return w ? M : M.pop();
           })();
         }
-        getall(E) {
+        getall(P) {
           var w = this;
           return u(function* () {
-            return w.get(E, !0);
+            return w.get(P, !0);
           })();
         }
-        getSubsections(E) {
+        getSubsections(P) {
           var w = this;
           return u(function* () {
-            return w.parsedConfig.filter((I) => I.section === E && I.isSection).map((I) => I.subsection);
+            return w.parsedConfig.filter((I) => I.section === P && I.isSection).map((I) => I.subsection);
           })();
         }
-        deleteSection(E, w) {
+        deleteSection(P, w) {
           var I = this;
           return u(function* () {
-            I.parsedConfig = I.parsedConfig.filter((T) => !(T.section === E && T.subsection === w));
+            I.parsedConfig = I.parsedConfig.filter((T) => !(T.section === P && T.subsection === w));
           })();
         }
-        append(E, w) {
+        append(P, w) {
           var I = this;
           return u(function* () {
-            return I.set(E, w, !0);
+            return I.set(P, w, !0);
           })();
         }
-        set(E, w, I = !1) {
+        set(P, w, I = !1) {
           var T = this;
           return u(function* () {
-            const { section: M, subsection: A, name: F, path: z, sectionPath: $ } = x(E), H = (nt = T.parsedConfig, ot = (V) => V.path === z, nt.reduce((V, it, lt) => ot(it) ? lt : V, -1));
+            const { section: M, subsection: A, name: F, path: z, sectionPath: $ } = x(P), H = (nt = T.parsedConfig, ot = (V) => V.path === z, nt.reduce((V, it, lt) => ot(it) ? lt : V, -1));
             var nt, ot;
             if (w == null) H !== -1 && T.parsedConfig.splice(H, 1);
             else if (H !== -1) {
@@ -4852,7 +4852,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           })();
         }
         toString() {
-          return this.parsedConfig.map(({ line: E, section: w, subsection: I, name: T, value: M, modified: A = !1 }) => A ? T != null && M != null ? typeof M == "string" && /[#;]/.test(M) ? `	${T} = "${M}"` : `	${T} = ${M}` : I != null ? `[${w} "${I}"]` : `[${w}]` : E).join(`
+          return this.parsedConfig.map(({ line: P, section: w, subsection: I, name: T, value: M, modified: A = !1 }) => A ? T != null && M != null ? typeof M == "string" && /[#;]/.test(M) ? `	${T} = "${M}"` : `	${T} = ${M}` : I != null ? `[${w} "${I}"]` : `[${w}]` : P).join(`
 `);
         }
       }
@@ -4862,63 +4862,63 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       var n = t(80);
       class u {
-        constructor(c = []) {
-          this.rules = c;
+        constructor(l = []) {
+          this.rules = l;
         }
-        static from(c) {
+        static from(l) {
           const i = [];
-          for (const s of c) i.push(n.a.from(s));
+          for (const s of l) i.push(n.a.from(s));
           return new u(i);
         }
-        add(c) {
-          const i = n.a.from(c);
+        add(l) {
+          const i = n.a.from(l);
           this.rules.push(i);
         }
-        translate(c) {
+        translate(l) {
           const i = [];
-          for (const s of this.rules) for (const o of c) {
+          for (const s of this.rules) for (const o of l) {
             const e = s.translate(o);
             e && i.push([o, e]);
           }
           return i;
         }
-        translateOne(c) {
+        translateOne(l) {
           let i = null;
           for (const s of this.rules) {
-            const o = s.translate(c);
+            const o = s.translate(l);
             o && (i = o);
           }
           return i;
         }
         localNamespaces() {
-          return this.rules.filter((c) => c.matchPrefix).map((c) => c.localPath.replace(/\/$/, ""));
+          return this.rules.filter((l) => l.matchPrefix).map((l) => l.localPath.replace(/\/$/, ""));
         }
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return s;
       });
-      var n = t(4), u = t(81), S = t(16);
-      function c(e, j, O, m, _, h, P) {
+      var n = t(4), u = t(81), O = t(16);
+      function l(e, j, E, m, _, h, S) {
         try {
-          var x = e[h](P), R = x.value;
-        } catch (f) {
-          return void O(f);
+          var x = e[h](S), R = x.value;
+        } catch (c) {
+          return void E(c);
         }
         x.done ? j(R) : Promise.resolve(R).then(m, _);
       }
       function i(e) {
         return function() {
-          var j = this, O = arguments;
+          var j = this, E = arguments;
           return new Promise(function(m, _) {
-            var h = e.apply(j, O);
-            function P(R) {
-              c(h, m, _, P, x, "next", R);
+            var h = e.apply(j, E);
+            function S(R) {
+              l(h, m, _, S, x, "next", R);
             }
             function x(R) {
-              c(h, m, _, P, x, "throw", R);
+              l(h, m, _, S, x, "throw", R);
             }
-            P(void 0);
+            S(void 0);
           });
         };
       }
@@ -4926,19 +4926,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return o.apply(this, arguments);
       }
       function o() {
-        return (o = i(function* ({ fs: e, cache: j, gitdir: O, oid: m, format: _ = "content", getExternalRefDelta: h }) {
-          let P = yield e.readdir(Object(S.join)(O, "objects/pack"));
-          P = P.filter((x) => x.endsWith(".idx"));
-          for (const x of P) {
-            const R = `${O}/objects/pack/${x}`, f = yield Object(u.a)({ fs: e, cache: j, filename: R, getExternalRefDelta: h });
-            if (f.error) throw new n.a(f.error);
-            if (f.offsets.has(m)) {
-              if (!f.pack) {
+        return (o = i(function* ({ fs: e, cache: j, gitdir: E, oid: m, format: _ = "content", getExternalRefDelta: h }) {
+          let S = yield e.readdir(Object(O.join)(E, "objects/pack"));
+          S = S.filter((x) => x.endsWith(".idx"));
+          for (const x of S) {
+            const R = `${E}/objects/pack/${x}`, c = yield Object(u.a)({ fs: e, cache: j, filename: R, getExternalRefDelta: h });
+            if (c.error) throw new n.a(c.error);
+            if (c.offsets.has(m)) {
+              if (!c.pack) {
                 const w = R.replace(/idx$/, "pack");
-                f.pack = e.read(w);
+                c.pack = e.read(w);
               }
-              const E = yield f.read({ oid: m, getExternalRefDelta: h });
-              return E.format = "content", E.source = `objects/pack/${x.replace(/idx$/, "pack")}`, E;
+              const P = yield c.read({ oid: m, getExternalRefDelta: h });
+              return P.format = "content", P.source = `objects/pack/${x.replace(/idx$/, "pack")}`, P;
             }
           }
           return null;
@@ -4946,43 +4946,43 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(139), u = t.n(n);
-      const S = /^.*(\r?\n|$)/gm;
-      function c({ branches: i, contents: s }) {
-        const o = i[1], e = i[2], j = s[0], O = s[1], m = s[2], _ = O.match(S), h = j.match(S), P = m.match(S), x = u()(_, h, P);
-        let R = "", f = !0;
-        for (const E of x) E.ok && (R += E.ok.join("")), E.conflict && (f = !1, R += `${"<".repeat(7)} ${o}
-`, R += E.conflict.a.join(""), R += `${"=".repeat(7)}
-`, R += E.conflict.b.join(""), R += `${">".repeat(7)} ${e}
+      const O = /^.*(\r?\n|$)/gm;
+      function l({ branches: i, contents: s }) {
+        const o = i[1], e = i[2], j = s[0], E = s[1], m = s[2], _ = E.match(O), h = j.match(O), S = m.match(O), x = u()(_, h, S);
+        let R = "", c = !0;
+        for (const P of x) P.ok && (R += P.ok.join("")), P.conflict && (c = !1, R += `${"<".repeat(7)} ${o}
+`, R += P.conflict.a.join(""), R += `${"=".repeat(7)}
+`, R += P.conflict.b.join(""), R += `${">".repeat(7)} ${e}
 `);
-        return { cleanMerge: f, mergedText: R };
+        return { cleanMerge: c, mergedText: R };
       }
     }, function(N, g, t) {
       (function(n) {
         t.d(g, "a", function() {
           return m;
         });
-        var u = t(78), S = t.n(u), c = t(140), i = t(7), s = t(84), o = t(16), e = t(50);
-        function j(h, P, x, R, f, E, w) {
+        var u = t(78), O = t.n(u), l = t(140), i = t(7), s = t(84), o = t(16), e = t(50);
+        function j(h, S, x, R, c, P, w) {
           try {
-            var I = h[E](w), T = I.value;
+            var I = h[P](w), T = I.value;
           } catch (M) {
             return void x(M);
           }
-          I.done ? P(T) : Promise.resolve(T).then(R, f);
+          I.done ? S(T) : Promise.resolve(T).then(R, c);
         }
-        function O(h) {
+        function E(h) {
           return function() {
-            var P = this, x = arguments;
-            return new Promise(function(R, f) {
-              var E = h.apply(P, x);
+            var S = this, x = arguments;
+            return new Promise(function(R, c) {
+              var P = h.apply(S, x);
               function w(T) {
-                j(E, R, f, w, I, "next", T);
+                j(P, R, c, w, I, "next", T);
               }
               function I(T) {
-                j(E, R, f, w, I, "throw", T);
+                j(P, R, c, w, I, "throw", T);
               }
               w(void 0);
             });
@@ -4992,18 +4992,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return _.apply(this, arguments);
         }
         function _() {
-          return (_ = O(function* ({ fs: h, cache: P, dir: x, gitdir: R = Object(o.join)(x, ".git"), oids: f }) {
-            const E = new S.a(), w = [];
+          return (_ = E(function* ({ fs: h, cache: S, dir: x, gitdir: R = Object(o.join)(x, ".git"), oids: c }) {
+            const P = new O.a(), w = [];
             function I(F, z) {
               const $ = n.from(F, z);
-              w.push($), E.update($);
+              w.push($), P.update($);
             }
             function T(F) {
               return M.apply(this, arguments);
             }
             function M() {
-              return (M = O(function* ({ stype: F, object: z }) {
-                const $ = c.a[F];
+              return (M = E(function* ({ stype: F, object: z }) {
+                const $ = l.a[F];
                 let H = z.length, nt = H > 15 ? 128 : 0;
                 const ot = 15 & H;
                 H >>>= 4;
@@ -5012,22 +5012,22 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 I(n.from(yield Object(s.a)(z)));
               })).apply(this, arguments);
             }
-            I("PACK"), I("00000002", "hex"), I(Object(e.a)(8, f.length), "hex");
-            for (const F of f) {
-              const { type: z, object: $ } = yield Object(i.a)({ fs: h, cache: P, gitdir: R, oid: F });
+            I("PACK"), I("00000002", "hex"), I(Object(e.a)(8, c.length), "hex");
+            for (const F of c) {
+              const { type: z, object: $ } = yield Object(i.a)({ fs: h, cache: S, gitdir: R, oid: F });
               yield T({ write: I, object: $, stype: z });
             }
-            const A = E.digest();
+            const A = P.digest();
             return w.push(A), w;
           })).apply(this, arguments);
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
-      function n(i, s, o, e, j, O, m) {
+      function n(i, s, o, e, j, E, m) {
         try {
-          var _ = i[O](m), h = _.value;
-        } catch (P) {
-          return void o(P);
+          var _ = i[E](m), h = _.value;
+        } catch (S) {
+          return void o(S);
         }
         _.done ? s(h) : Promise.resolve(h).then(e, j);
       }
@@ -5035,76 +5035,76 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return function() {
           var s = this, o = arguments;
           return new Promise(function(e, j) {
-            var O = i.apply(s, o);
+            var E = i.apply(s, o);
             function m(h) {
-              n(O, e, j, m, _, "next", h);
+              n(E, e, j, m, _, "next", h);
             }
             function _(h) {
-              n(O, e, j, m, _, "throw", h);
+              n(E, e, j, m, _, "throw", h);
             }
             m(void 0);
           });
         };
       }
-      function S(i) {
-        return c.apply(this, arguments);
+      function O(i) {
+        return l.apply(this, arguments);
       }
-      function c() {
-        return (c = u(function* ({ fs: i, gitdir: s, oid: o }) {
+      function l() {
+        return (l = u(function* ({ fs: i, gitdir: s, oid: o }) {
           const e = `objects/${o.slice(0, 2)}/${o.slice(2)}`, j = yield i.read(`${s}/${e}`);
           return j ? { object: j, format: "deflated", source: e } : null;
         })).apply(this, arguments);
       }
       t.d(g, "a", function() {
-        return S;
+        return O;
       });
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return n;
       });
-      const n = Array.prototype.flat === void 0 ? (u) => u.reduce((S, c) => S.concat(c), []) : (u) => u.flat();
+      const n = Array.prototype.flat === void 0 ? (u) => u.reduce((O, l) => O.concat(l), []) : (u) => u.flat();
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return e;
       });
-      var n = t(18), u = t(14), S = t(12), c = t(7), i = t(16);
-      function s(O, m, _, h, P, x, R) {
+      var n = t(18), u = t(14), O = t(12), l = t(7), i = t(16);
+      function s(E, m, _, h, S, x, R) {
         try {
-          var f = O[x](R), E = f.value;
+          var c = E[x](R), P = c.value;
         } catch (w) {
           return void _(w);
         }
-        f.done ? m(E) : Promise.resolve(E).then(h, P);
+        c.done ? m(P) : Promise.resolve(P).then(h, S);
       }
-      function o(O) {
+      function o(E) {
         return function() {
           var m = this, _ = arguments;
-          return new Promise(function(h, P) {
-            var x = O.apply(m, _);
-            function R(E) {
-              s(x, h, P, R, f, "next", E);
+          return new Promise(function(h, S) {
+            var x = E.apply(m, _);
+            function R(P) {
+              s(x, h, S, R, c, "next", P);
             }
-            function f(E) {
-              s(x, h, P, R, f, "throw", E);
+            function c(P) {
+              s(x, h, S, R, c, "throw", P);
             }
             R(void 0);
           });
         };
       }
-      function e(O) {
+      function e(E) {
         return j.apply(this, arguments);
       }
       function j() {
-        return (j = o(function* ({ fs: O, cache: m, dir: _, gitdir: h = Object(i.join)(_, ".git"), oids: P }) {
+        return (j = o(function* ({ fs: E, cache: m, dir: _, gitdir: h = Object(i.join)(_, ".git"), oids: S }) {
           const x = /* @__PURE__ */ new Set();
-          function R(E) {
-            return f.apply(this, arguments);
+          function R(P) {
+            return c.apply(this, arguments);
           }
-          function f() {
-            return (f = o(function* (E) {
-              if (x.has(E)) return;
-              x.add(E);
-              const { type: w, object: I } = yield Object(c.a)({ fs: O, cache: m, gitdir: h, oid: E });
+          function c() {
+            return (c = o(function* (P) {
+              if (x.has(P)) return;
+              x.add(P);
+              const { type: w, object: I } = yield Object(l.a)({ fs: E, cache: m, gitdir: h, oid: P });
               if (w === "tag") {
                 const T = n.a.from(I).headers().object;
                 yield R(T);
@@ -5112,64 +5112,64 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 const T = u.a.from(I).headers().tree;
                 yield R(T);
               } else if (w === "tree") {
-                const T = S.a.from(I);
+                const T = O.a.from(I);
                 for (const M of T) M.type === "blob" && x.add(M.oid), M.type === "tree" && (yield R(M.oid));
               }
             })).apply(this, arguments);
           }
-          for (const E of P) yield R(E);
+          for (const P of S) yield R(P);
           return x;
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(16);
-      function u(s, o, e, j, O, m, _) {
+      function u(s, o, e, j, E, m, _) {
         try {
-          var h = s[m](_), P = h.value;
+          var h = s[m](_), S = h.value;
         } catch (x) {
           return void e(x);
         }
-        h.done ? o(P) : Promise.resolve(P).then(j, O);
+        h.done ? o(S) : Promise.resolve(S).then(j, E);
       }
-      function S(s) {
+      function O(s) {
         return function() {
           var o = this, e = arguments;
-          return new Promise(function(j, O) {
+          return new Promise(function(j, E) {
             var m = s.apply(o, e);
-            function _(P) {
-              u(m, j, O, _, h, "next", P);
+            function _(S) {
+              u(m, j, E, _, h, "next", S);
             }
-            function h(P) {
-              u(m, j, O, _, h, "throw", P);
+            function h(S) {
+              u(m, j, E, _, h, "throw", S);
             }
             _(void 0);
           });
         };
       }
-      function c(s, o) {
+      function l(s, o) {
         return i.apply(this, arguments);
       }
       function i() {
-        return (i = S(function* (s, o) {
+        return (i = O(function* (s, o) {
           const e = yield s.readdir(o);
           e == null ? yield s.rm(o) : e.length ? yield Promise.all(e.map((j) => {
-            const O = Object(n.join)(o, j);
-            return s.lstat(O).then((m) => {
-              if (m) return m.isDirectory() ? c(s, O) : s.rm(O);
+            const E = Object(n.join)(o, j);
+            return s.lstat(E).then((m) => {
+              if (m) return m.isDirectory() ? l(s, E) : s.rm(E);
             });
           })).then(() => s.rmdir(o)) : yield s.rmdir(o);
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
       function n(u) {
-        let S = u.match(/^https?:\/\/([^/]+)@/);
-        if (S == null) return { url: u, auth: {} };
-        S = S[1];
-        const [c, i] = S.split(":");
-        return { url: u = u.replace(`${S}@`, ""), auth: { username: c, password: i } };
+        let O = u.match(/^https?:\/\/([^/]+)@/);
+        if (O == null) return { url: u, auth: {} };
+        O = O[1];
+        const [l, i] = O.split(":");
+        return { url: u = u.replace(`${O}@`, ""), auth: { username: l, password: i } };
       }
       t.d(g, "a", function() {
         return n;
@@ -5179,7 +5179,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         t.d(g, "a", function() {
           return z;
         });
-        var u = t(35), S = t(24), c = t(68), i = t(11), s = t(3), o = t(63), e = t(44), j = t(14), O = t(62), m = t(161), _ = t(7), h = t(66), P = t(52), x = t(164), R = t(141), f = t(39), E = t(16), w = t(48), I = t(142), T = t(126), M = t(125);
+        var u = t(35), O = t(24), l = t(68), i = t(11), s = t(3), o = t(63), e = t(44), j = t(14), E = t(62), m = t(161), _ = t(7), h = t(66), S = t(52), x = t(164), R = t(141), c = t(39), P = t(16), w = t(48), I = t(142), T = t(126), M = t(125);
         function A(H, nt, ot, V, it, lt, dt) {
           try {
             var G = H[lt](dt), Z = G.value;
@@ -5209,15 +5209,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         function $() {
           return ($ = F(function* ({ fs: H, cache: nt, http: ot, onProgress: V, onMessage: it, onAuth: lt, onAuthSuccess: dt, onAuthFailure: G, gitdir: Z, ref: ut, remoteRef: pt, remote: st, url: mt, corsProxy: bt, depth: wt = null, since: C = null, exclude: U = [], relative: L = !1, tags: K = !1, singleBranch: X = !1, headers: rt = {}, prune: yt = !1, pruneTags: jt = !1 }) {
             const Rt = ut || (yield Object(u.a)({ fs: H, gitdir: Z, test: !0 })), Tt = yield i.a.get({ fs: H, gitdir: Z }), Et = st || Rt && (yield Tt.get(`branch.${Rt}.remote`)) || "origin", Wt = mt || (yield Tt.get(`remote.${Et}.url`));
-            if (Wt === void 0) throw new S.a("remote OR url");
+            if (Wt === void 0) throw new O.a("remote OR url");
             const Vt = pt || Rt && (yield Tt.get(`branch.${Rt}.merge`)) || ut || "HEAD";
             bt === void 0 && (bt = yield Tt.get("http.corsProxy"));
             const re = o.a.getRemoteHelperFor({ url: Wt }), vt = yield re.discover({ http: ot, onAuth: lt, onAuthSuccess: dt, onAuthFailure: G, corsProxy: bt, service: "git-upload-pack", url: Wt, headers: rt, protocolVersion: 1 }), Zt = vt.auth, Dt = vt.refs;
             if (Dt.size === 0) return { defaultBranch: null, fetchHead: null, fetchHeadDescription: null };
-            if (wt !== null && !vt.capabilities.has("shallow")) throw new c.a("shallow", "depth");
-            if (C !== null && !vt.capabilities.has("deepen-since")) throw new c.a("deepen-since", "since");
-            if (U.length > 0 && !vt.capabilities.has("deepen-not")) throw new c.a("deepen-not", "exclude");
-            if (L === !0 && !vt.capabilities.has("deepen-relative")) throw new c.a("deepen-relative", "relative");
+            if (wt !== null && !vt.capabilities.has("shallow")) throw new l.a("shallow", "depth");
+            if (C !== null && !vt.capabilities.has("deepen-since")) throw new l.a("deepen-since", "since");
+            if (U.length > 0 && !vt.capabilities.has("deepen-not")) throw new l.a("deepen-not", "exclude");
+            if (L === !0 && !vt.capabilities.has("deepen-relative")) throw new l.a("deepen-relative", "relative");
             const { oid: qt, fullref: pe } = s.a.resolveAgainstMap({ ref: Vt, map: Dt });
             for (const xt of Dt.keys()) xt === pe || xt === "HEAD" || xt.startsWith("refs/heads/") || K && xt.startsWith("refs/tags/") || Dt.delete(xt);
             const Ce = Object(R.a)([...vt.capabilities], ["multi_ack_detailed", "no-done", "side-band-64k", "ofs-delta", `agent=${w.a.agent}`]);
@@ -5231,7 +5231,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             } catch {
             }
             W = [...new Set(W)];
-            const B = yield e.a.read({ fs: H, gitdir: Z }), D = vt.capabilities.has("shallow") ? [...B] : [], Y = Object(M.a)({ capabilities: Ce, wants: oe, haves: W, shallows: D, depth: wt, since: C, exclude: U }), tt = n.from(yield Object(P.a)(Y)), at = yield re.connect({ http: ot, onProgress: V, corsProxy: bt, service: "git-upload-pack", url: Wt, auth: Zt, body: [tt], headers: rt }), ct = yield Object(T.a)(at.body);
+            const B = yield e.a.read({ fs: H, gitdir: Z }), D = vt.capabilities.has("shallow") ? [...B] : [], Y = Object(M.a)({ capabilities: Ce, wants: oe, haves: W, shallows: D, depth: wt, since: C, exclude: U }), tt = n.from(yield Object(S.a)(Y)), at = yield re.connect({ http: ot, onProgress: V, corsProxy: bt, service: "git-upload-pack", url: Wt, auth: Zt, body: [tt], headers: rt }), ct = yield Object(T.a)(at.body);
             at.headers && (ct.headers = at.headers);
             for (const xt of ct.shallows) if (!B.has(xt)) try {
               const { object: Kt } = yield Object(_.a)({ fs: H, cache: nt, gitdir: Z, oid: xt }), ae = new j.a(Kt), Jt = yield Promise.all(ae.headers().parent.map((_e) => Object(m.a)({ fs: H, cache: nt, gitdir: Z, oid: _e })));
@@ -5266,7 +5266,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             const Bt = pe.startsWith("refs/tags") ? "tag" : "branch";
             if (ct.FETCH_HEAD = { oid: qt, description: `${Bt} '${Object(h.a)(pe)}' of ${Wt}` }, V || it) {
               const xt = Object(I.a)(ct.progress);
-              Object(f.a)(xt, function() {
+              Object(c.a)(xt, function() {
                 var Kt = F(function* (ae) {
                   if (it && (yield it(ae)), V) {
                     const Jt = ae.match(/([^:]*).*\((\d+?)\/(\d+?)\)/);
@@ -5278,14 +5278,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 };
               }());
             }
-            const zt = n.from(yield Object(P.a)(ct.packfile));
+            const zt = n.from(yield Object(S.a)(ct.packfile));
             if (at.body.error) throw at.body.error;
             const Ut = zt.slice(-20).toString("hex"), Ft = { defaultBranch: ct.HEAD, fetchHead: ct.FETCH_HEAD.oid, fetchHeadDescription: ct.FETCH_HEAD.description };
             if (ct.headers && (Ft.headers = ct.headers), yt && (Ft.pruned = ct.pruned), Ut !== "" && !Object(x.a)(zt)) {
               Ft.packfile = `objects/pack/pack-${Ut}.pack`;
-              const xt = Object(E.join)(Z, Ft.packfile);
+              const xt = Object(P.join)(Z, Ft.packfile);
               yield H.write(xt, zt);
-              const Kt = (Jt) => Object(_.a)({ fs: H, cache: nt, gitdir: Z, oid: Jt }), ae = yield O.a.fromPack({ pack: zt, getExternalRefDelta: Kt, onProgress: V });
+              const Kt = (Jt) => Object(_.a)({ fs: H, cache: nt, gitdir: Z, oid: Jt }), ae = yield E.a.fromPack({ pack: zt, getExternalRefDelta: Kt, onProgress: V });
               yield H.write(xt.replace(/\.pack$/, ".idx"), yield ae.toBuffer());
             }
             return Ft;
@@ -5294,32 +5294,32 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
       var n = t(10), u = n.Buffer;
-      function S(i, s) {
+      function O(i, s) {
         for (var o in i) s[o] = i[o];
       }
-      function c(i, s, o) {
+      function l(i, s, o) {
         return u(i, s, o);
       }
-      u.from && u.alloc && u.allocUnsafe && u.allocUnsafeSlow ? N.exports = n : (S(n, g), g.Buffer = c), S(u, c), c.from = function(i, s, o) {
+      u.from && u.alloc && u.allocUnsafe && u.allocUnsafeSlow ? N.exports = n : (O(n, g), g.Buffer = l), O(u, l), l.from = function(i, s, o) {
         if (typeof i == "number") throw new TypeError("Argument must not be a number");
         return u(i, s, o);
-      }, c.alloc = function(i, s, o) {
+      }, l.alloc = function(i, s, o) {
         if (typeof i != "number") throw new TypeError("Argument must be a number");
         var e = u(i);
         return s !== void 0 ? typeof o == "string" ? e.fill(s, o) : e.fill(s) : e.fill(0), e;
-      }, c.allocUnsafe = function(i) {
+      }, l.allocUnsafe = function(i) {
         if (typeof i != "number") throw new TypeError("Argument must be a number");
         return u(i);
-      }, c.allocUnsafeSlow = function(i) {
+      }, l.allocUnsafeSlow = function(i) {
         if (typeof i != "number") throw new TypeError("Argument must be a number");
         return n.SlowBuffer(i);
       };
     }, function(N, g, t) {
-      N.exports = function(n, u, S, c) {
-        for (var i = 65535 & n | 0, s = n >>> 16 & 65535 | 0, o = 0; S !== 0; ) {
-          S -= o = S > 2e3 ? 2e3 : S;
+      N.exports = function(n, u, O, l) {
+        for (var i = 65535 & n | 0, s = n >>> 16 & 65535 | 0, o = 0; O !== 0; ) {
+          O -= o = O > 2e3 ? 2e3 : O;
           do
-            s = s + (i = i + u[c++] | 0) | 0;
+            s = s + (i = i + u[l++] | 0) | 0;
           while (--o);
           i %= 65521, s %= 65521;
         }
@@ -5327,21 +5327,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       };
     }, function(N, g, t) {
       var n = function() {
-        for (var u, S = [], c = 0; c < 256; c++) {
-          u = c;
+        for (var u, O = [], l = 0; l < 256; l++) {
+          u = l;
           for (var i = 0; i < 8; i++) u = 1 & u ? 3988292384 ^ u >>> 1 : u >>> 1;
-          S[c] = u;
+          O[l] = u;
         }
-        return S;
+        return O;
       }();
-      N.exports = function(u, S, c, i) {
-        var s = n, o = i + c;
+      N.exports = function(u, O, l, i) {
+        var s = n, o = i + l;
         u ^= -1;
-        for (var e = i; e < o; e++) u = u >>> 8 ^ s[255 & (u ^ S[e])];
+        for (var e = i; e < o; e++) u = u >>> 8 ^ s[255 & (u ^ O[e])];
         return -1 ^ u;
       };
     }, function(N, g, t) {
-      var n = t(31), u = !0, S = !0;
+      var n = t(31), u = !0, O = !0;
       try {
         String.fromCharCode.apply(null, [0]);
       } catch {
@@ -5350,37 +5350,37 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       try {
         String.fromCharCode.apply(null, new Uint8Array(1));
       } catch {
-        S = !1;
+        O = !1;
       }
-      for (var c = new n.Buf8(256), i = 0; i < 256; i++) c[i] = i >= 252 ? 6 : i >= 248 ? 5 : i >= 240 ? 4 : i >= 224 ? 3 : i >= 192 ? 2 : 1;
+      for (var l = new n.Buf8(256), i = 0; i < 256; i++) l[i] = i >= 252 ? 6 : i >= 248 ? 5 : i >= 240 ? 4 : i >= 224 ? 3 : i >= 192 ? 2 : 1;
       function s(o, e) {
-        if (e < 65534 && (o.subarray && S || !o.subarray && u)) return String.fromCharCode.apply(null, n.shrinkBuf(o, e));
-        for (var j = "", O = 0; O < e; O++) j += String.fromCharCode(o[O]);
+        if (e < 65534 && (o.subarray && O || !o.subarray && u)) return String.fromCharCode.apply(null, n.shrinkBuf(o, e));
+        for (var j = "", E = 0; E < e; E++) j += String.fromCharCode(o[E]);
         return j;
       }
-      c[254] = c[254] = 1, g.string2buf = function(o) {
-        var e, j, O, m, _, h = o.length, P = 0;
-        for (m = 0; m < h; m++) (64512 & (j = o.charCodeAt(m))) == 55296 && m + 1 < h && (64512 & (O = o.charCodeAt(m + 1))) == 56320 && (j = 65536 + (j - 55296 << 10) + (O - 56320), m++), P += j < 128 ? 1 : j < 2048 ? 2 : j < 65536 ? 3 : 4;
-        for (e = new n.Buf8(P), _ = 0, m = 0; _ < P; m++) (64512 & (j = o.charCodeAt(m))) == 55296 && m + 1 < h && (64512 & (O = o.charCodeAt(m + 1))) == 56320 && (j = 65536 + (j - 55296 << 10) + (O - 56320), m++), j < 128 ? e[_++] = j : j < 2048 ? (e[_++] = 192 | j >>> 6, e[_++] = 128 | 63 & j) : j < 65536 ? (e[_++] = 224 | j >>> 12, e[_++] = 128 | j >>> 6 & 63, e[_++] = 128 | 63 & j) : (e[_++] = 240 | j >>> 18, e[_++] = 128 | j >>> 12 & 63, e[_++] = 128 | j >>> 6 & 63, e[_++] = 128 | 63 & j);
+      l[254] = l[254] = 1, g.string2buf = function(o) {
+        var e, j, E, m, _, h = o.length, S = 0;
+        for (m = 0; m < h; m++) (64512 & (j = o.charCodeAt(m))) == 55296 && m + 1 < h && (64512 & (E = o.charCodeAt(m + 1))) == 56320 && (j = 65536 + (j - 55296 << 10) + (E - 56320), m++), S += j < 128 ? 1 : j < 2048 ? 2 : j < 65536 ? 3 : 4;
+        for (e = new n.Buf8(S), _ = 0, m = 0; _ < S; m++) (64512 & (j = o.charCodeAt(m))) == 55296 && m + 1 < h && (64512 & (E = o.charCodeAt(m + 1))) == 56320 && (j = 65536 + (j - 55296 << 10) + (E - 56320), m++), j < 128 ? e[_++] = j : j < 2048 ? (e[_++] = 192 | j >>> 6, e[_++] = 128 | 63 & j) : j < 65536 ? (e[_++] = 224 | j >>> 12, e[_++] = 128 | j >>> 6 & 63, e[_++] = 128 | 63 & j) : (e[_++] = 240 | j >>> 18, e[_++] = 128 | j >>> 12 & 63, e[_++] = 128 | j >>> 6 & 63, e[_++] = 128 | 63 & j);
         return e;
       }, g.buf2binstring = function(o) {
         return s(o, o.length);
       }, g.binstring2buf = function(o) {
-        for (var e = new n.Buf8(o.length), j = 0, O = e.length; j < O; j++) e[j] = o.charCodeAt(j);
+        for (var e = new n.Buf8(o.length), j = 0, E = e.length; j < E; j++) e[j] = o.charCodeAt(j);
         return e;
       }, g.buf2string = function(o, e) {
-        var j, O, m, _, h = e || o.length, P = new Array(2 * h);
-        for (O = 0, j = 0; j < h; ) if ((m = o[j++]) < 128) P[O++] = m;
-        else if ((_ = c[m]) > 4) P[O++] = 65533, j += _ - 1;
+        var j, E, m, _, h = e || o.length, S = new Array(2 * h);
+        for (E = 0, j = 0; j < h; ) if ((m = o[j++]) < 128) S[E++] = m;
+        else if ((_ = l[m]) > 4) S[E++] = 65533, j += _ - 1;
         else {
           for (m &= _ === 2 ? 31 : _ === 3 ? 15 : 7; _ > 1 && j < h; ) m = m << 6 | 63 & o[j++], _--;
-          _ > 1 ? P[O++] = 65533 : m < 65536 ? P[O++] = m : (m -= 65536, P[O++] = 55296 | m >> 10 & 1023, P[O++] = 56320 | 1023 & m);
+          _ > 1 ? S[E++] = 65533 : m < 65536 ? S[E++] = m : (m -= 65536, S[E++] = 55296 | m >> 10 & 1023, S[E++] = 56320 | 1023 & m);
         }
-        return s(P, O);
+        return s(S, E);
       }, g.utf8border = function(o, e) {
         var j;
         for ((e = e || o.length) > o.length && (e = o.length), j = e - 1; j >= 0 && (192 & o[j]) == 128; ) j--;
-        return j < 0 || j === 0 ? e : j + c[o[j]] > e ? j : e;
+        return j < 0 || j === 0 ? e : j + l[o[j]] > e ? j : e;
       };
     }, function(N, g, t) {
       N.exports = function() {
@@ -5393,50 +5393,50 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return u;
       });
       var n = t(9);
-      function u({ capabilities: S = [], wants: c = [], haves: i = [], shallows: s = [], depth: o = null, since: e = null, exclude: j = [] }) {
-        const O = [];
-        c = [...new Set(c)];
-        let m = ` ${S.join(" ")}`;
-        for (const _ of c) O.push(n.a.encode(`want ${_}${m}
+      function u({ capabilities: O = [], wants: l = [], haves: i = [], shallows: s = [], depth: o = null, since: e = null, exclude: j = [] }) {
+        const E = [];
+        l = [...new Set(l)];
+        let m = ` ${O.join(" ")}`;
+        for (const _ of l) E.push(n.a.encode(`want ${_}${m}
 `)), m = "";
-        for (const _ of s) O.push(n.a.encode(`shallow ${_}
+        for (const _ of s) E.push(n.a.encode(`shallow ${_}
 `));
-        o !== null && O.push(n.a.encode(`deepen ${o}
-`)), e !== null && O.push(n.a.encode(`deepen-since ${Math.floor(e.valueOf() / 1e3)}
+        o !== null && E.push(n.a.encode(`deepen ${o}
+`)), e !== null && E.push(n.a.encode(`deepen-since ${Math.floor(e.valueOf() / 1e3)}
 `));
-        for (const _ of j) O.push(n.a.encode(`deepen-not ${_}
+        for (const _ of j) E.push(n.a.encode(`deepen-not ${_}
 `));
-        O.push(n.a.flush());
-        for (const _ of i) O.push(n.a.encode(`have ${_}
+        E.push(n.a.flush());
+        for (const _ of i) E.push(n.a.encode(`have ${_}
 `));
-        return O.push(n.a.encode(`done
-`)), O;
+        return E.push(n.a.encode(`done
+`)), E;
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
         return s;
       });
-      var n = t(32), u = t(77), S = t(39);
-      function c(e, j, O, m, _, h, P) {
+      var n = t(32), u = t(77), O = t(39);
+      function l(e, j, E, m, _, h, S) {
         try {
-          var x = e[h](P), R = x.value;
-        } catch (f) {
-          return void O(f);
+          var x = e[h](S), R = x.value;
+        } catch (c) {
+          return void E(c);
         }
         x.done ? j(R) : Promise.resolve(R).then(m, _);
       }
       function i(e) {
         return function() {
-          var j = this, O = arguments;
+          var j = this, E = arguments;
           return new Promise(function(m, _) {
-            var h = e.apply(j, O);
-            function P(R) {
-              c(h, m, _, P, x, "next", R);
+            var h = e.apply(j, E);
+            function S(R) {
+              l(h, m, _, S, x, "next", R);
             }
             function x(R) {
-              c(h, m, _, P, x, "throw", R);
+              l(h, m, _, S, x, "throw", R);
             }
-            P(void 0);
+            S(void 0);
           });
         };
       }
@@ -5445,24 +5445,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function o() {
         return (o = i(function* (e) {
-          const { packetlines: j, packfile: O, progress: m } = u.a.demux(e), _ = [], h = [], P = [];
+          const { packetlines: j, packfile: E, progress: m } = u.a.demux(e), _ = [], h = [], S = [];
           let x = !1, R = !1;
-          return new Promise((f, E) => {
-            Object(S.a)(j, (w) => {
+          return new Promise((c, P) => {
+            Object(O.a)(j, (w) => {
               const I = w.toString("utf8").trim();
               if (I.startsWith("shallow")) {
                 const T = I.slice(-41).trim();
-                T.length !== 40 && E(new n.a(T)), _.push(T);
+                T.length !== 40 && P(new n.a(T)), _.push(T);
               } else if (I.startsWith("unshallow")) {
                 const T = I.slice(-41).trim();
-                T.length !== 40 && E(new n.a(T)), h.push(T);
+                T.length !== 40 && P(new n.a(T)), h.push(T);
               } else if (I.startsWith("ACK")) {
                 const [, T, M] = I.split(" ");
-                P.push({ oid: T, status: M }), M || (R = !0);
+                S.push({ oid: T, status: M }), M || (R = !0);
               } else I.startsWith("NAK") ? (x = !0, R = !0) : (R = !0, x = !0);
-              R && (e.error ? E(e.error) : f({ shallows: _, unshallows: h, acks: P, nak: x, packfile: O, progress: m }));
+              R && (e.error ? P(e.error) : c({ shallows: _, unshallows: h, acks: S, nak: x, packfile: E, progress: m }));
             }).finally(() => {
-              R || (e.error ? E(e.error) : f({ shallows: _, unshallows: h, acks: P, nak: x, packfile: O, progress: m }));
+              R || (e.error ? P(e.error) : c({ shallows: _, unshallows: h, acks: S, nak: x, packfile: E, progress: m }));
             });
           });
         })).apply(this, arguments);
@@ -5470,22 +5470,22 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     }, function(N, g, t) {
       (function(n) {
         t.d(g, "a", function() {
-          return P;
+          return S;
         });
-        var u = t(22), S = t(30), c = t(57), i = t(56), s = t(12), o = t(15), e = t(40), j = t(16), O = t(111), m = t(53);
-        function _(E, w, I, T, M, A, F) {
+        var u = t(22), O = t(30), l = t(57), i = t(56), s = t(12), o = t(15), e = t(40), j = t(16), E = t(111), m = t(53);
+        function _(P, w, I, T, M, A, F) {
           try {
-            var z = E[A](F), $ = z.value;
+            var z = P[A](F), $ = z.value;
           } catch (H) {
             return void I(H);
           }
           z.done ? w($) : Promise.resolve($).then(T, M);
         }
-        function h(E) {
+        function h(P) {
           return function() {
             var w = this, I = arguments;
             return new Promise(function(T, M) {
-              var A = E.apply(w, I);
+              var A = P.apply(w, I);
               function F($) {
                 _(A, T, M, F, z, "next", $);
               }
@@ -5496,12 +5496,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             });
           };
         }
-        function P(E) {
+        function S(P) {
           return x.apply(this, arguments);
         }
         function x() {
-          return (x = h(function* ({ fs: E, cache: w, dir: I, gitdir: T = Object(j.join)(I, ".git"), index: M, ourOid: A, baseOid: F, theirOid: z, ourName: $ = "ours", baseName: H = "base", theirName: nt = "theirs", dryRun: ot = !1, abortOnConflict: V = !0, mergeDriver: it }) {
-            const lt = Object(u.a)({ ref: A }), dt = Object(u.a)({ ref: F }), G = Object(u.a)({ ref: z }), Z = [], ut = [], pt = [], st = [], mt = yield Object(S.a)({ fs: E, cache: w, dir: I, gitdir: T, trees: [lt, dt, G], map: (bt = h(function* (C, [U, L, K]) {
+          return (x = h(function* ({ fs: P, cache: w, dir: I, gitdir: T = Object(j.join)(I, ".git"), index: M, ourOid: A, baseOid: F, theirOid: z, ourName: $ = "ours", baseName: H = "base", theirName: nt = "theirs", dryRun: ot = !1, abortOnConflict: V = !0, mergeDriver: it }) {
+            const lt = Object(u.a)({ ref: A }), dt = Object(u.a)({ ref: F }), G = Object(u.a)({ ref: z }), Z = [], ut = [], pt = [], st = [], mt = yield Object(O.a)({ fs: P, cache: w, dir: I, gitdir: T, trees: [lt, dt, G], map: (bt = h(function* (C, [U, L, K]) {
               const X = Object(e.a)(C);
               switch (`${yield Object(m.a)(U, L)}-${yield Object(m.a)(K, L)}`) {
                 case "false-false":
@@ -5511,7 +5511,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 case "true-false":
                   return U ? { mode: yield U.mode(), path: X, oid: yield U.oid(), type: yield U.type() } : void 0;
                 case "true-true":
-                  if (U && L && K && (yield U.type()) === "blob" && (yield L.type()) === "blob" && (yield K.type()) === "blob") return R({ fs: E, gitdir: T, path: X, ours: U, base: L, theirs: K, ourName: $, baseName: H, theirName: nt, mergeDriver: it }).then(function() {
+                  if (U && L && K && (yield U.type()) === "blob" && (yield L.type()) === "blob" && (yield K.type()) === "blob") return R({ fs: P, gitdir: T, path: X, ours: U, base: L, theirs: K, ourName: $, baseName: H, theirName: nt, mergeDriver: it }).then(function() {
                     var rt = h(function* (yt) {
                       if (yt.cleanMerge) V || M.insert({ filepath: C, oid: yt.mergeResult.oid, stage: 0 });
                       else if (Z.push(C), ut.push(C), !V) {
@@ -5548,7 +5548,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 const K = L.filter(Boolean);
                 if (U && (!U || U.type !== "tree" || K.length !== 0)) {
                   if (K.length > 0) {
-                    const X = new s.a(K).toObject(), rt = yield Object(o.a)({ fs: E, gitdir: T, type: "tree", object: X, dryRun: ot });
+                    const X = new s.a(K).toObject(), rt = yield Object(o.a)({ fs: P, gitdir: T, type: "tree", object: X, dryRun: ot });
                     U.oid = rt;
                   }
                   return U;
@@ -5559,68 +5559,68 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               };
             }() : void 0 });
             var bt, wt;
-            return Z.length !== 0 ? (I && !V && (yield Object(S.a)({ fs: E, cache: w, dir: I, gitdir: T, trees: [Object(u.a)({ ref: mt.oid })], map: (wt = h(function* (C, [U]) {
+            return Z.length !== 0 ? (I && !V && (yield Object(O.a)({ fs: P, cache: w, dir: I, gitdir: T, trees: [Object(u.a)({ ref: mt.oid })], map: (wt = h(function* (C, [U]) {
               const L = `${I}/${C}`;
               if ((yield U.type()) === "blob") {
                 const K = yield U.mode(), X = new TextDecoder().decode(yield U.content());
-                yield E.write(L, X, { mode: K });
+                yield P.write(L, X, { mode: K });
               }
               return !0;
             }), function(C, U) {
               return wt.apply(this, arguments);
-            }) })), new c.a(Z, ut, pt, st)) : mt.oid;
+            }) })), new l.a(Z, ut, pt, st)) : mt.oid;
           })).apply(this, arguments);
         }
-        function R(E) {
-          return f.apply(this, arguments);
+        function R(P) {
+          return c.apply(this, arguments);
         }
-        function f() {
-          return (f = h(function* ({ fs: E, gitdir: w, path: I, ours: T, base: M, theirs: A, ourName: F, theirName: z, baseName: $, dryRun: H, mergeDriver: nt = O.a }) {
+        function c() {
+          return (c = h(function* ({ fs: P, gitdir: w, path: I, ours: T, base: M, theirs: A, ourName: F, theirName: z, baseName: $, dryRun: H, mergeDriver: nt = E.a }) {
             const ot = (yield M.mode()) === (yield T.mode()) ? yield A.mode() : yield T.mode();
             if ((yield T.oid()) === (yield A.oid())) return { cleanMerge: !0, mergeResult: { mode: ot, path: I, oid: yield T.oid(), type: "blob" } };
             if ((yield T.oid()) === (yield M.oid())) return { cleanMerge: !0, mergeResult: { mode: ot, path: I, oid: yield A.oid(), type: "blob" } };
             if ((yield A.oid()) === (yield M.oid())) return { cleanMerge: !0, mergeResult: { mode: ot, path: I, oid: yield T.oid(), type: "blob" } };
             const V = n.from(yield T.content()).toString("utf8"), it = n.from(yield M.content()).toString("utf8"), lt = n.from(yield A.content()).toString("utf8"), { mergedText: dt, cleanMerge: G } = yield nt({ branches: [$, F, z], contents: [it, V, lt], path: I });
-            return { cleanMerge: G, mergeResult: { mode: ot, path: I, oid: yield Object(o.a)({ fs: E, gitdir: w, type: "blob", object: n.from(dt, "utf8"), dryRun: H }), type: "blob" } };
+            return { cleanMerge: G, mergeResult: { mode: ot, path: I, oid: yield Object(o.a)({ fs: P, gitdir: w, type: "blob", object: n.from(dt, "utf8"), dryRun: H }), type: "blob" } };
           })).apply(this, arguments);
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return O;
+        return E;
       });
-      var n = t(17), u = t(3), S = t(44), c = t(18), i = t(14), s = t(7), o = t(16);
-      function e(_, h, P, x, R, f, E) {
+      var n = t(17), u = t(3), O = t(44), l = t(18), i = t(14), s = t(7), o = t(16);
+      function e(_, h, S, x, R, c, P) {
         try {
-          var w = _[f](E), I = w.value;
+          var w = _[c](P), I = w.value;
         } catch (T) {
-          return void P(T);
+          return void S(T);
         }
         w.done ? h(I) : Promise.resolve(I).then(x, R);
       }
       function j(_) {
         return function() {
-          var h = this, P = arguments;
+          var h = this, S = arguments;
           return new Promise(function(x, R) {
-            var f = _.apply(h, P);
-            function E(I) {
-              e(f, x, R, E, w, "next", I);
+            var c = _.apply(h, S);
+            function P(I) {
+              e(c, x, R, P, w, "next", I);
             }
             function w(I) {
-              e(f, x, R, E, w, "throw", I);
+              e(c, x, R, P, w, "throw", I);
             }
-            E(void 0);
+            P(void 0);
           });
         };
       }
-      function O(_) {
+      function E(_) {
         return m.apply(this, arguments);
       }
       function m() {
-        return (m = j(function* ({ fs: _, cache: h, dir: P, gitdir: x = Object(o.join)(P, ".git"), start: R, finish: f }) {
-          const E = yield S.a.read({ fs: _, gitdir: x }), w = /* @__PURE__ */ new Set(), I = /* @__PURE__ */ new Set();
+        return (m = j(function* ({ fs: _, cache: h, dir: S, gitdir: x = Object(o.join)(S, ".git"), start: R, finish: c }) {
+          const P = yield O.a.read({ fs: _, gitdir: x }), w = /* @__PURE__ */ new Set(), I = /* @__PURE__ */ new Set();
           for (const F of R) w.add(yield u.a.resolve({ fs: _, gitdir: x, ref: F }));
-          for (const F of f) try {
+          for (const F of c) try {
             const z = yield u.a.resolve({ fs: _, gitdir: x, ref: F });
             I.add(z);
           } catch {
@@ -5634,9 +5634,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               T.add(F);
               const { type: z, object: $ } = yield Object(s.a)({ fs: _, cache: h, gitdir: x, oid: F });
               if (z === "tag")
-                return M(c.a.from($).headers().object);
+                return M(l.a.from($).headers().object);
               if (z !== "commit") throw new n.a(F, z, "commit");
-              if (!E.has(F)) {
+              if (!P.has(F)) {
                 const H = i.a.from($).headers().parent;
                 for (F of H) I.has(F) || T.has(F) || (yield M(F));
               }
@@ -5648,40 +5648,40 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(9);
-      function u(s, o, e, j, O, m, _) {
+      function u(s, o, e, j, E, m, _) {
         try {
-          var h = s[m](_), P = h.value;
+          var h = s[m](_), S = h.value;
         } catch (x) {
           return void e(x);
         }
-        h.done ? o(P) : Promise.resolve(P).then(j, O);
+        h.done ? o(S) : Promise.resolve(S).then(j, E);
       }
-      function S(s) {
+      function O(s) {
         return function() {
           var o = this, e = arguments;
-          return new Promise(function(j, O) {
+          return new Promise(function(j, E) {
             var m = s.apply(o, e);
-            function _(P) {
-              u(m, j, O, _, h, "next", P);
+            function _(S) {
+              u(m, j, E, _, h, "next", S);
             }
-            function h(P) {
-              u(m, j, O, _, h, "throw", P);
+            function h(S) {
+              u(m, j, E, _, h, "throw", S);
             }
             _(void 0);
           });
         };
       }
-      function c(s) {
+      function l(s) {
         return i.apply(this, arguments);
       }
       function i() {
-        return (i = S(function* ({ capabilities: s = [], triplets: o = [] }) {
+        return (i = O(function* ({ capabilities: s = [], triplets: o = [] }) {
           const e = [];
           let j = `\0 ${s.join(" ")}`;
-          for (const O of o) e.push(n.a.encode(`${O.oldoid} ${O.oid} ${O.fullRef}${j}
+          for (const E of o) e.push(n.a.encode(`${E.oldoid} ${E.oid} ${E.fullRef}${j}
 `)), j = "";
           return e.push(n.a.flush()), e;
         })).apply(this, arguments);
@@ -5691,24 +5691,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return i;
       });
       var n = t(36), u = t(9);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -5718,24 +5718,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* (o) {
+        return (s = l(function* (o) {
           const e = {};
           let j = "";
-          const O = u.a.streamReader(o);
-          let m = yield O();
+          const E = u.a.streamReader(o);
+          let m = yield E();
           for (; m !== !0; ) m !== null && (j += m.toString("utf8") + `
-`), m = yield O();
+`), m = yield E();
           const _ = j.toString("utf8").split(`
 `);
           if (m = _.shift(), !m.startsWith("unpack ")) throw new n.a('unpack ok" or "unpack [error message]', m);
           e.ok = m === "unpack ok", e.ok || (e.error = m.slice(7)), e.refs = {};
           for (const h of _) {
             if (h.trim() === "") continue;
-            const P = h.slice(0, 2), x = h.slice(3);
+            const S = h.slice(0, 2), x = h.slice(3);
             let R = x.indexOf(" ");
             R === -1 && (R = x.length);
-            const f = x.slice(0, R), E = x.slice(R + 1);
-            e.refs[f] = { ok: P === "ok", error: E };
+            const c = x.slice(0, R), P = x.slice(R + 1);
+            e.refs[c] = { ok: S === "ok", error: P };
           }
           return e;
         })).apply(this, arguments);
@@ -5745,34 +5745,34 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return u;
       });
       var n = t(38);
-      function u(c, i) {
-        return Object(n.a)(S(c), S(i));
+      function u(l, i) {
+        return Object(n.a)(O(l), O(i));
       }
-      function S(c) {
-        return c.mode === "040000" ? c.path + "/" : c.path;
+      function O(l) {
+        return l.mode === "040000" ? l.path + "/" : l.path;
       }
     }, function(N, g, t) {
       var n;
       n = function(u) {
         u.version = "1.2.0";
-        var S = function() {
-          for (var c = 0, i = new Array(256), s = 0; s != 256; ++s) c = 1 & (c = 1 & (c = 1 & (c = 1 & (c = 1 & (c = 1 & (c = 1 & (c = 1 & (c = s) ? -306674912 ^ c >>> 1 : c >>> 1) ? -306674912 ^ c >>> 1 : c >>> 1) ? -306674912 ^ c >>> 1 : c >>> 1) ? -306674912 ^ c >>> 1 : c >>> 1) ? -306674912 ^ c >>> 1 : c >>> 1) ? -306674912 ^ c >>> 1 : c >>> 1) ? -306674912 ^ c >>> 1 : c >>> 1) ? -306674912 ^ c >>> 1 : c >>> 1, i[s] = c;
+        var O = function() {
+          for (var l = 0, i = new Array(256), s = 0; s != 256; ++s) l = 1 & (l = 1 & (l = 1 & (l = 1 & (l = 1 & (l = 1 & (l = 1 & (l = 1 & (l = s) ? -306674912 ^ l >>> 1 : l >>> 1) ? -306674912 ^ l >>> 1 : l >>> 1) ? -306674912 ^ l >>> 1 : l >>> 1) ? -306674912 ^ l >>> 1 : l >>> 1) ? -306674912 ^ l >>> 1 : l >>> 1) ? -306674912 ^ l >>> 1 : l >>> 1) ? -306674912 ^ l >>> 1 : l >>> 1) ? -306674912 ^ l >>> 1 : l >>> 1, i[s] = l;
           return typeof Int32Array < "u" ? new Int32Array(i) : i;
         }();
-        u.table = S, u.bstr = function(c, i) {
-          for (var s = -1 ^ i, o = c.length - 1, e = 0; e < o; ) s = (s = s >>> 8 ^ S[255 & (s ^ c.charCodeAt(e++))]) >>> 8 ^ S[255 & (s ^ c.charCodeAt(e++))];
-          return e === o && (s = s >>> 8 ^ S[255 & (s ^ c.charCodeAt(e))]), -1 ^ s;
-        }, u.buf = function(c, i) {
-          if (c.length > 1e4) return function(j, O) {
-            for (var m = -1 ^ O, _ = j.length - 7, h = 0; h < _; ) m = (m = (m = (m = (m = (m = (m = (m = m >>> 8 ^ S[255 & (m ^ j[h++])]) >>> 8 ^ S[255 & (m ^ j[h++])]) >>> 8 ^ S[255 & (m ^ j[h++])]) >>> 8 ^ S[255 & (m ^ j[h++])]) >>> 8 ^ S[255 & (m ^ j[h++])]) >>> 8 ^ S[255 & (m ^ j[h++])]) >>> 8 ^ S[255 & (m ^ j[h++])]) >>> 8 ^ S[255 & (m ^ j[h++])];
-            for (; h < _ + 7; ) m = m >>> 8 ^ S[255 & (m ^ j[h++])];
+        u.table = O, u.bstr = function(l, i) {
+          for (var s = -1 ^ i, o = l.length - 1, e = 0; e < o; ) s = (s = s >>> 8 ^ O[255 & (s ^ l.charCodeAt(e++))]) >>> 8 ^ O[255 & (s ^ l.charCodeAt(e++))];
+          return e === o && (s = s >>> 8 ^ O[255 & (s ^ l.charCodeAt(e))]), -1 ^ s;
+        }, u.buf = function(l, i) {
+          if (l.length > 1e4) return function(j, E) {
+            for (var m = -1 ^ E, _ = j.length - 7, h = 0; h < _; ) m = (m = (m = (m = (m = (m = (m = (m = m >>> 8 ^ O[255 & (m ^ j[h++])]) >>> 8 ^ O[255 & (m ^ j[h++])]) >>> 8 ^ O[255 & (m ^ j[h++])]) >>> 8 ^ O[255 & (m ^ j[h++])]) >>> 8 ^ O[255 & (m ^ j[h++])]) >>> 8 ^ O[255 & (m ^ j[h++])]) >>> 8 ^ O[255 & (m ^ j[h++])]) >>> 8 ^ O[255 & (m ^ j[h++])];
+            for (; h < _ + 7; ) m = m >>> 8 ^ O[255 & (m ^ j[h++])];
             return -1 ^ m;
-          }(c, i);
-          for (var s = -1 ^ i, o = c.length - 3, e = 0; e < o; ) s = (s = (s = (s = s >>> 8 ^ S[255 & (s ^ c[e++])]) >>> 8 ^ S[255 & (s ^ c[e++])]) >>> 8 ^ S[255 & (s ^ c[e++])]) >>> 8 ^ S[255 & (s ^ c[e++])];
-          for (; e < o + 3; ) s = s >>> 8 ^ S[255 & (s ^ c[e++])];
+          }(l, i);
+          for (var s = -1 ^ i, o = l.length - 3, e = 0; e < o; ) s = (s = (s = (s = s >>> 8 ^ O[255 & (s ^ l[e++])]) >>> 8 ^ O[255 & (s ^ l[e++])]) >>> 8 ^ O[255 & (s ^ l[e++])]) >>> 8 ^ O[255 & (s ^ l[e++])];
+          for (; e < o + 3; ) s = s >>> 8 ^ O[255 & (s ^ l[e++])];
           return -1 ^ s;
-        }, u.str = function(c, i) {
-          for (var s, o, e = -1 ^ i, j = 0, O = c.length; j < O; ) (s = c.charCodeAt(j++)) < 128 ? e = e >>> 8 ^ S[255 & (e ^ s)] : s < 2048 ? e = (e = e >>> 8 ^ S[255 & (e ^ (192 | s >> 6 & 31))]) >>> 8 ^ S[255 & (e ^ (128 | 63 & s))] : s >= 55296 && s < 57344 ? (s = 64 + (1023 & s), o = 1023 & c.charCodeAt(j++), e = (e = (e = (e = e >>> 8 ^ S[255 & (e ^ (240 | s >> 8 & 7))]) >>> 8 ^ S[255 & (e ^ (128 | s >> 2 & 63))]) >>> 8 ^ S[255 & (e ^ (128 | o >> 6 & 15 | (3 & s) << 4))]) >>> 8 ^ S[255 & (e ^ (128 | 63 & o))]) : e = (e = (e = e >>> 8 ^ S[255 & (e ^ (224 | s >> 12 & 15))]) >>> 8 ^ S[255 & (e ^ (128 | s >> 6 & 63))]) >>> 8 ^ S[255 & (e ^ (128 | 63 & s))];
+        }, u.str = function(l, i) {
+          for (var s, o, e = -1 ^ i, j = 0, E = l.length; j < E; ) (s = l.charCodeAt(j++)) < 128 ? e = e >>> 8 ^ O[255 & (e ^ s)] : s < 2048 ? e = (e = e >>> 8 ^ O[255 & (e ^ (192 | s >> 6 & 31))]) >>> 8 ^ O[255 & (e ^ (128 | 63 & s))] : s >= 55296 && s < 57344 ? (s = 64 + (1023 & s), o = 1023 & l.charCodeAt(j++), e = (e = (e = (e = e >>> 8 ^ O[255 & (e ^ (240 | s >> 8 & 7))]) >>> 8 ^ O[255 & (e ^ (128 | s >> 2 & 63))]) >>> 8 ^ O[255 & (e ^ (128 | o >> 6 & 15 | (3 & s) << 4))]) >>> 8 ^ O[255 & (e ^ (128 | 63 & o))]) : e = (e = (e = e >>> 8 ^ O[255 & (e ^ (224 | s >> 12 & 15))]) >>> 8 ^ O[255 & (e ^ (128 | s >> 6 & 63))]) >>> 8 ^ O[255 & (e ^ (128 | 63 & s))];
           return -1 ^ e;
         };
       }, n(typeof DO_NOT_EXPORT_CRC > "u" ? g : {});
@@ -5781,27 +5781,27 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         t.d(g, "a", function() {
           return e;
         });
-        var u = t(49), S = t.n(u), c = t(4), i = t(82);
-        function s(_, h, P, x, R, f, E) {
+        var u = t(49), O = t.n(u), l = t(4), i = t(82);
+        function s(_, h, S, x, R, c, P) {
           try {
-            var w = _[f](E), I = w.value;
+            var w = _[c](P), I = w.value;
           } catch (T) {
-            return void P(T);
+            return void S(T);
           }
           w.done ? h(I) : Promise.resolve(I).then(x, R);
         }
         function o(_) {
           return function() {
-            var h = this, P = arguments;
+            var h = this, S = arguments;
             return new Promise(function(x, R) {
-              var f = _.apply(h, P);
-              function E(I) {
-                s(f, x, R, E, w, "next", I);
+              var c = _.apply(h, S);
+              function P(I) {
+                s(c, x, R, P, w, "next", I);
               }
               function w(I) {
-                s(f, x, R, E, w, "throw", I);
+                s(c, x, R, P, w, "throw", I);
               }
-              E(void 0);
+              P(void 0);
             });
           };
         }
@@ -5810,116 +5810,116 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         function j() {
           return (j = o(function* (_, h) {
-            const P = new i.a(_);
-            let x = yield P.read(4);
-            if (x = x.toString("utf8"), x !== "PACK") throw new c.a(`Invalid PACK header '${x}'`);
-            let R = yield P.read(4);
-            if (R = R.readUInt32BE(0), R !== 2) throw new c.a(`Invalid packfile version: ${R}`);
-            let f = yield P.read(4);
-            if (f = f.readUInt32BE(0), !(f < 1)) for (; !P.eof() && f--; ) {
-              const E = P.tell(), { type: w, length: I, ofs: T, reference: M } = yield O(P), A = new S.a.Inflate();
+            const S = new i.a(_);
+            let x = yield S.read(4);
+            if (x = x.toString("utf8"), x !== "PACK") throw new l.a(`Invalid PACK header '${x}'`);
+            let R = yield S.read(4);
+            if (R = R.readUInt32BE(0), R !== 2) throw new l.a(`Invalid packfile version: ${R}`);
+            let c = yield S.read(4);
+            if (c = c.readUInt32BE(0), !(c < 1)) for (; !S.eof() && c--; ) {
+              const P = S.tell(), { type: w, length: I, ofs: T, reference: M } = yield E(S), A = new O.a.Inflate();
               for (; !A.result; ) {
-                const F = yield P.chunk();
+                const F = yield S.chunk();
                 if (!F) break;
-                if (A.push(F, !1), A.err) throw new c.a(`Pako error: ${A.msg}`);
+                if (A.push(F, !1), A.err) throw new l.a(`Pako error: ${A.msg}`);
                 if (A.result) {
-                  if (A.result.length !== I) throw new c.a("Inflated object size is different from that stated in packfile.");
-                  yield P.undo(), yield P.read(F.length - A.strm.avail_in);
-                  const z = P.tell();
-                  yield h({ data: A.result, type: w, num: f, offset: E, end: z, reference: M, ofs: T });
+                  if (A.result.length !== I) throw new l.a("Inflated object size is different from that stated in packfile.");
+                  yield S.undo(), yield S.read(F.length - A.strm.avail_in);
+                  const z = S.tell();
+                  yield h({ data: A.result, type: w, num: c, offset: P, end: z, reference: M, ofs: T });
                 }
               }
             }
           })).apply(this, arguments);
         }
-        function O(_) {
+        function E(_) {
           return m.apply(this, arguments);
         }
         function m() {
           return (m = o(function* (_) {
             let h = yield _.byte();
-            const P = h >> 4 & 7;
-            let x, R, f = 15 & h;
+            const S = h >> 4 & 7;
+            let x, R, c = 15 & h;
             if (128 & h) {
-              let E = 4;
+              let P = 4;
               do
-                h = yield _.byte(), f |= (127 & h) << E, E += 7;
+                h = yield _.byte(), c |= (127 & h) << P, P += 7;
               while (128 & h);
             }
-            if (P === 6) {
-              let E = 0;
+            if (S === 6) {
+              let P = 0;
               x = 0;
               const w = [];
               do
-                h = yield _.byte(), x |= (127 & h) << E, E += 7, w.push(h);
+                h = yield _.byte(), x |= (127 & h) << P, P += 7, w.push(h);
               while (128 & h);
               R = n.from(w);
             }
-            return P === 7 && (R = yield _.read(20)), { type: P, length: f, ofs: x, reference: R };
+            return S === 7 && (R = yield _.read(20)), { type: S, length: c, ofs: x, reference: R };
           })).apply(this, arguments);
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
       (function(n) {
         t.d(g, "a", function() {
-          return c;
+          return l;
         });
-        var u = t(4), S = t(20);
-        function c(e, j) {
-          const O = new S.a(e), m = i(O);
+        var u = t(4), O = t(20);
+        function l(e, j) {
+          const E = new O.a(e), m = i(E);
           if (m !== j.byteLength) throw new u.a(`applyDelta expected source buffer to be ${m} bytes but the provided buffer was ${j.length} bytes`);
-          const _ = i(O);
+          const _ = i(E);
           let h;
-          const P = o(O, j);
-          if (P.byteLength === _) h = P;
+          const S = o(E, j);
+          if (S.byteLength === _) h = S;
           else {
             h = n.alloc(_);
-            const x = new S.a(h);
-            for (x.copy(P); !O.eof(); ) x.copy(o(O, j));
+            const x = new O.a(h);
+            for (x.copy(S); !E.eof(); ) x.copy(o(E, j));
             const R = x.tell();
             if (_ !== R) throw new u.a(`applyDelta expected target buffer to be ${_} bytes but the resulting buffer was ${R} bytes`);
           }
           return h;
         }
         function i(e) {
-          let j = 0, O = 0, m = null;
+          let j = 0, E = 0, m = null;
           do
-            m = e.readUInt8(), j |= (127 & m) << O, O += 7;
+            m = e.readUInt8(), j |= (127 & m) << E, E += 7;
           while (128 & m);
           return j;
         }
-        function s(e, j, O) {
+        function s(e, j, E) {
           let m = 0, _ = 0;
-          for (; O--; ) 1 & j && (m |= e.readUInt8() << _), j >>= 1, _ += 8;
+          for (; E--; ) 1 & j && (m |= e.readUInt8() << _), j >>= 1, _ += 8;
           return m;
         }
         function o(e, j) {
-          const O = e.readUInt8();
-          if (128 & O) {
-            const m = s(e, 15 & O, 4);
-            let _ = s(e, (112 & O) >> 4, 3);
+          const E = e.readUInt8();
+          if (128 & E) {
+            const m = s(e, 15 & E, 4);
+            let _ = s(e, (112 & E) >> 4, 3);
             return _ === 0 && (_ = 65536), j.slice(m, m + _);
           }
-          return e.slice(O);
+          return e.slice(E);
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
       function n(u) {
         return u.split(`
-`).map((S) => S.replace(/^ /, "")).join(`
+`).map((O) => O.replace(/^ /, "")).join(`
 `);
       }
       t.d(g, "a", function() {
         return n;
       });
     }, function(N, g, t) {
-      function n(S) {
-        return /* @__PURE__ */ function(c) {
-          return c && typeof c == "object";
-        }(S) && u(S.then) && u(S.catch);
+      function n(O) {
+        return /* @__PURE__ */ function(l) {
+          return l && typeof l == "object";
+        }(O) && u(O.then) && u(O.catch);
       }
-      function u(S) {
-        return typeof S == "function";
+      function u(O) {
+        return typeof O == "function";
       }
       t.d(g, "a", function() {
         return n;
@@ -5929,13 +5929,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         function u(T) {
           return Array.isArray(T) ? T : [T];
         }
-        const S = /^\s+$/, c = /^\\!/, i = /^\\#/, s = /\r?\n/g, o = /^\.*\/|^\.+$/, e = typeof Symbol < "u" ? Symbol.for("node-ignore") : "node-ignore", j = /([0-z])-([0-z])/g, O = () => !1, m = [[/\\?\s+$/, (T) => T.indexOf("\\") === 0 ? " " : ""], [/\\\s/g, () => " "], [/[\\$.|*+(){^]/g, (T) => `\\${T}`], [/(?!\\)\?/g, () => "[^/]"], [/^\//, () => "^"], [/\//g, () => "\\/"], [/^\^*\\\*\\\*\\\//, () => "^(?:.*\\/)?"], [/^(?=[^^])/, function() {
+        const O = /^\s+$/, l = /^\\!/, i = /^\\#/, s = /\r?\n/g, o = /^\.*\/|^\.+$/, e = typeof Symbol < "u" ? Symbol.for("node-ignore") : "node-ignore", j = /([0-z])-([0-z])/g, E = () => !1, m = [[/\\?\s+$/, (T) => T.indexOf("\\") === 0 ? " " : ""], [/\\\s/g, () => " "], [/[\\$.|*+(){^]/g, (T) => `\\${T}`], [/(?!\\)\?/g, () => "[^/]"], [/^\//, () => "^"], [/\//g, () => "\\/"], [/^\^*\\\*\\\*\\\//, () => "^(?:.*\\/)?"], [/^(?=[^^])/, function() {
           return /\/(?!$)/.test(this) ? "^" : "(?:^|\\/)";
         }], [/\\\/\\\*\\\*(?=\\\/|$)/g, (T, M, A) => M + 6 < A.length ? "(?:\\/[^\\/]+)*" : "\\/.+"], [/(^|[^\\]+)\\\*(?=.+)/g, (T, M) => `${M}[^\\/]*`], [/\\\\\\(?=[$.|*+(){^])/g, () => "\\"], [/\\\\/g, () => "\\"], [/(\\)?\[([^\]/]*?)(\\*)($|\])/g, (T, M, A, F, z) => M === "\\" ? `\\[${A}${(($) => {
           const { length: H } = $;
           return $.slice(0, H - H % 2);
         })(F)}${z}` : z === "]" && F.length % 2 == 0 ? `[${(($) => $.replace(j, (H, nt, ot) => nt.charCodeAt(0) <= ot.charCodeAt(0) ? H : ""))(A)}${F}]` : "[]"], [/(?:[^*])$/, (T) => /\/$/.test(T) ? `${T}$` : `${T}(?=$|\\/$)`], [/(\^|\\\/)?\\\*$/, (T, M) => `${M ? `${M}[^/]+` : "[^/]*"}(?=$|\\/$)`]], _ = /* @__PURE__ */ Object.create(null), h = (T) => typeof T == "string";
-        class P {
+        class S {
           constructor(M, A, F, z) {
             this.origin = M, this.pattern = A, this.negative = F, this.regex = z;
           }
@@ -5947,12 +5947,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           const z = (($, H) => {
             let nt = _[$];
             return nt || (nt = m.reduce((ot, V) => ot.replace(V[0], V[1].bind($)), $), _[$] = nt), H ? new RegExp(nt, "i") : new RegExp(nt);
-          })(T = T.replace(c, "!").replace(i, "#"), M);
-          return new P(A, T, F, z);
+          })(T = T.replace(l, "!").replace(i, "#"), M);
+          return new S(A, T, F, z);
         }, R = (T, M) => {
           throw new M(T);
-        }, f = (T, M, A) => h(T) ? T ? f.isNotRelative(T) ? A(`path should be a \`path.relative()\`d string, but got "${M}"`, RangeError) : !0 : A("path must not be empty", TypeError) : A(`path must be a string, but got \`${M}\``, TypeError), E = (T) => o.test(T);
-        f.isNotRelative = E, f.convert = (T) => T;
+        }, c = (T, M, A) => h(T) ? T ? c.isNotRelative(T) ? A(`path should be a \`path.relative()\`d string, but got "${M}"`, RangeError) : !0 : A("path must not be empty", TypeError) : A(`path must be a string, but got \`${M}\``, TypeError), P = (T) => o.test(T);
+        c.isNotRelative = P, c.convert = (T) => T;
         class w {
           constructor({ ignorecase: M = !0, ignoreCase: A = M, allowRelativePaths: F = !1 } = {}) {
             var z, $, H;
@@ -5963,7 +5963,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           _addPattern(M) {
             if (M && M[e]) return this._rules = this._rules.concat(M._rules), void (this._added = !0);
-            if (((A) => A && h(A) && !S.test(A) && A.indexOf("#") !== 0)(M)) {
+            if (((A) => A && h(A) && !O.test(A) && A.indexOf("#") !== 0)(M)) {
               const A = x(M, this._ignoreCase);
               this._added = !0, this._rules.push(A);
             }
@@ -5982,8 +5982,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }), { ignored: F, unignored: z };
           }
           _test(M, A, F, z) {
-            const $ = M && f.convert(M);
-            return f($, M, this._allowRelativePaths ? O : R), this._t($, A, F, z);
+            const $ = M && c.convert(M);
+            return c($, M, this._allowRelativePaths ? E : R), this._t($, A, F, z);
           }
           _t(M, A, F, z) {
             if (M in A) return A[M];
@@ -6005,69 +6005,69 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
         }
         const I = (T) => new w(T);
-        if (I.isPathValid = (T) => f(T && f.convert(T), T, O), I.default = I, N.exports = I, n !== void 0 && (n.env && n.env.IGNORE_TEST_WIN32 || n.platform === "win32")) {
+        if (I.isPathValid = (T) => c(T && c.convert(T), T, E), I.default = I, N.exports = I, n !== void 0 && (n.env && n.env.IGNORE_TEST_WIN32 || n.platform === "win32")) {
           const T = (A) => /^\\\\\?\\/.test(A) || /["<>|\u0000-\u001F]+/u.test(A) ? A : A.replace(/\\/g, "/");
-          f.convert = T;
+          c.convert = T;
           const M = /^[a-z]:\//i;
-          f.isNotRelative = (A) => M.test(A) || E(A);
+          c.isNotRelative = (A) => M.test(A) || P(A);
         }
       }).call(this, t(92));
     }, function(N, g, t) {
       t.d(g, "a", function() {
-        return c;
+        return l;
       });
       var n = t(4);
-      function u(s, o, e, j, O, m, _) {
+      function u(s, o, e, j, E, m, _) {
         try {
-          var h = s[m](_), P = h.value;
+          var h = s[m](_), S = h.value;
         } catch (x) {
           return void e(x);
         }
-        h.done ? o(P) : Promise.resolve(P).then(j, O);
+        h.done ? o(S) : Promise.resolve(S).then(j, E);
       }
-      function S(s) {
+      function O(s) {
         return function() {
           var o = this, e = arguments;
-          return new Promise(function(j, O) {
+          return new Promise(function(j, E) {
             var m = s.apply(o, e);
-            function _(P) {
-              u(m, j, O, _, h, "next", P);
+            function _(S) {
+              u(m, j, E, _, h, "next", S);
             }
-            function h(P) {
-              u(m, j, O, _, h, "throw", P);
+            function h(S) {
+              u(m, j, E, _, h, "throw", S);
             }
             _(void 0);
           });
         };
       }
-      function c(s) {
+      function l(s) {
         return i.apply(this, arguments);
       }
       function i() {
-        return (i = S(function* ({ fs: s, gitdir: o, object: e, format: j, oid: O }) {
+        return (i = O(function* ({ fs: s, gitdir: o, object: e, format: j, oid: E }) {
           if (j !== "deflated") throw new n.a("GitObjectStoreLoose expects objects to write to be in deflated format");
-          const m = `${o}/${`objects/${O.slice(0, 2)}/${O.slice(2)}`}`;
+          const m = `${o}/${`objects/${E.slice(0, 2)}/${E.slice(2)}`}`;
           (yield s.exists(m)) || (yield s.write(m, e));
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
       var n = t(158);
-      function u(S, c) {
-        for (var i = [], s = S.length, o = c.length, e = function(m, _) {
+      function u(O, l) {
+        for (var i = [], s = O.length, o = l.length, e = function(m, _) {
           var h = new n(m, _);
           h.compose();
-          for (var P, x, R = h.getses(), f = m.length - 1, E = _.length - 1, w = R.length - 1; w >= 0; --w) R[w].t === h.SES_COMMON ? (x ? (x.chain = { file1index: f, file2index: E, chain: null }, x = x.chain) : x = P = { file1index: f, file2index: E, chain: null }, f--, E--) : R[w].t === h.SES_DELETE ? f-- : R[w].t === h.SES_ADD && E--;
+          for (var S, x, R = h.getses(), c = m.length - 1, P = _.length - 1, w = R.length - 1; w >= 0; --w) R[w].t === h.SES_COMMON ? (x ? (x.chain = { file1index: c, file2index: P, chain: null }, x = x.chain) : x = S = { file1index: c, file2index: P, chain: null }, c--, P--) : R[w].t === h.SES_DELETE ? c-- : R[w].t === h.SES_ADD && P--;
           var I = { file1index: -1, file2index: -1, chain: null };
-          return x ? (x.chain = I, P) : I;
-        }(S, c); e !== null; e = e.chain) {
-          var j = s - e.file1index - 1, O = o - e.file2index - 1;
-          s = e.file1index, o = e.file2index, (j || O) && i.push({ file1: [s + 1, j], file2: [o + 1, O] });
+          return x ? (x.chain = I, S) : I;
+        }(O, l); e !== null; e = e.chain) {
+          var j = s - e.file1index - 1, E = o - e.file2index - 1;
+          s = e.file1index, o = e.file2index, (j || E) && i.push({ file1: [s + 1, j], file2: [o + 1, E] });
         }
         return i.reverse(), i;
       }
-      N.exports = function(S, c, i) {
-        var s = [], o = [S, c, i], e = function(R, f, E) {
-          var w, I = u(f, R), T = u(f, E), M = [];
+      N.exports = function(O, l, i) {
+        var s = [], o = [O, l, i], e = function(R, c, P) {
+          var w, I = u(c, R), T = u(c, P), M = [];
           function A(L, K) {
             M.push([L.file1[0], K, L.file1[1], L.file2[0], L.file2[1]]);
           }
@@ -6088,7 +6088,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
             if ($(V), nt == H) ot[4] > 0 && F.push([ot[1], ot[3], ot[4]]);
             else {
-              var G = { 0: [R.length, -1, f.length, -1], 2: [E.length, -1, f.length, -1] };
+              var G = { 0: [R.length, -1, c.length, -1], 2: [P.length, -1, c.length, -1] };
               for (w = nt; w <= H; w++) {
                 var Z = G[(ot = M[w])[1]], ut = ot[0], pt = ut + ot[2], st = ot[3], mt = st + ot[4];
                 Z[0] = Math.min(st, Z[0]), Z[1] = Math.max(mt, Z[1]), Z[2] = Math.min(ut, Z[2]), Z[3] = Math.max(pt, Z[3]);
@@ -6098,24 +6098,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
             z = it;
           }
-          return $(f.length), F;
-        }(S, c, i), j = [];
-        function O() {
+          return $(c.length), F;
+        }(O, l, i), j = [];
+        function E() {
           j.length && s.push({ ok: j }), j = [];
         }
         function m(R) {
-          for (var f = 0; f < R.length; f++) j.push(R[f]);
+          for (var c = 0; c < R.length; c++) j.push(R[c]);
         }
         function _(R) {
           if (R[2] != R[6]) return !0;
-          for (var f = R[1], E = R[5], w = 0; w < R[2]; w++) if (S[w + f] != i[w + E]) return !0;
+          for (var c = R[1], P = R[5], w = 0; w < R[2]; w++) if (O[w + c] != i[w + P]) return !0;
           return !1;
         }
         for (var h = 0; h < e.length; h++) {
-          var P = e[h], x = P[0];
-          x == -1 ? _(P) ? (O(), s.push({ conflict: { a: S.slice(P[1], P[1] + P[2]), aIndex: P[1], o: c.slice(P[3], P[3] + P[4]), oIndex: P[3], b: i.slice(P[5], P[5] + P[6]), bIndex: P[5] } })) : m(o[0].slice(P[1], P[1] + P[2])) : m(o[x].slice(P[1], P[1] + P[2]));
+          var S = e[h], x = S[0];
+          x == -1 ? _(S) ? (E(), s.push({ conflict: { a: O.slice(S[1], S[1] + S[2]), aIndex: S[1], o: l.slice(S[3], S[3] + S[4]), oIndex: S[3], b: i.slice(S[5], S[5] + S[6]), bIndex: S[5] } })) : m(o[0].slice(S[1], S[1] + S[2])) : m(o[x].slice(S[1], S[1] + S[2]));
         }
-        return O(), s;
+        return E(), s;
       };
     }, function(N, g, t) {
       t.d(g, "a", function() {
@@ -6123,11 +6123,11 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       });
       const n = { commit: 16, tree: 32, blob: 48, tag: 64, ofs_delta: 96, ref_delta: 112 };
     }, function(N, g, t) {
-      function n(u, S) {
-        const c = u.map((i) => i.split("=", 1)[0]);
-        return S.filter((i) => {
+      function n(u, O) {
+        const l = u.map((i) => i.split("=", 1)[0]);
+        return O.filter((i) => {
           const s = i.split("=", 1)[0];
-          return c.includes(s);
+          return l.includes(s);
         });
       }
       t.d(g, "a", function() {
@@ -6138,15 +6138,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return i;
       });
       var n = t(67), u = t(39);
-      function S(s, o, e, j, O, m, _) {
+      function O(s, o, e, j, E, m, _) {
         try {
-          var h = s[m](_), P = h.value;
+          var h = s[m](_), S = h.value;
         } catch (x) {
           return void e(x);
         }
-        h.done ? o(P) : Promise.resolve(P).then(j, O);
+        h.done ? o(S) : Promise.resolve(S).then(j, E);
       }
-      function c(s) {
+      function l(s) {
         const o = s.indexOf("\r"), e = s.indexOf(`
 `);
         return o === -1 && e === -1 ? -1 : o === -1 ? e + 1 : e === -1 ? o + 1 : e === o + 1 ? e + 1 : Math.min(o, e) + 1;
@@ -6156,22 +6156,22 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         let e = "";
         var j;
         return (j = function* () {
-          yield Object(u.a)(s, (O) => {
-            for (O = O.toString("utf8"), e += O; ; ) {
-              const m = c(e);
+          yield Object(u.a)(s, (E) => {
+            for (E = E.toString("utf8"), e += E; ; ) {
+              const m = l(e);
               if (m === -1) break;
               o.write(e.slice(0, m)), e = e.slice(m);
             }
           }), e.length > 0 && o.write(e), o.end();
         }, function() {
-          var O = this, m = arguments;
+          var E = this, m = arguments;
           return new Promise(function(_, h) {
-            var P = j.apply(O, m);
-            function x(f) {
-              S(P, _, h, x, R, "next", f);
+            var S = j.apply(E, m);
+            function x(c) {
+              O(S, _, h, x, R, "next", c);
             }
-            function R(f) {
-              S(P, _, h, x, R, "throw", f);
+            function R(c) {
+              O(S, _, h, x, R, "throw", c);
             }
             x(void 0);
           });
@@ -6179,86 +6179,86 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
     }, function(N, g, t) {
       (function(n) {
-        var u = function(S) {
-          if (S = S || {}, this.Promise = S.Promise || Promise, this.queues = /* @__PURE__ */ Object.create(null), this.domainReentrant = S.domainReentrant || !1, this.domainReentrant) {
+        var u = function(O) {
+          if (O = O || {}, this.Promise = O.Promise || Promise, this.queues = /* @__PURE__ */ Object.create(null), this.domainReentrant = O.domainReentrant || !1, this.domainReentrant) {
             if (n === void 0 || n.domain === void 0) throw new Error("Domain-reentrant locks require `process.domain` to exist. Please flip `opts.domainReentrant = false`, use a NodeJS version that still implements Domain, or install a browser polyfill.");
             this.domains = /* @__PURE__ */ Object.create(null);
           }
-          this.timeout = S.timeout || u.DEFAULT_TIMEOUT, this.maxOccupationTime = S.maxOccupationTime || u.DEFAULT_MAX_OCCUPATION_TIME, this.maxExecutionTime = S.maxExecutionTime || u.DEFAULT_MAX_EXECUTION_TIME, S.maxPending === 1 / 0 || Number.isInteger(S.maxPending) && S.maxPending >= 0 ? this.maxPending = S.maxPending : this.maxPending = u.DEFAULT_MAX_PENDING;
+          this.timeout = O.timeout || u.DEFAULT_TIMEOUT, this.maxOccupationTime = O.maxOccupationTime || u.DEFAULT_MAX_OCCUPATION_TIME, this.maxExecutionTime = O.maxExecutionTime || u.DEFAULT_MAX_EXECUTION_TIME, O.maxPending === 1 / 0 || Number.isInteger(O.maxPending) && O.maxPending >= 0 ? this.maxPending = O.maxPending : this.maxPending = u.DEFAULT_MAX_PENDING;
         };
-        u.DEFAULT_TIMEOUT = 0, u.DEFAULT_MAX_OCCUPATION_TIME = 0, u.DEFAULT_MAX_EXECUTION_TIME = 0, u.DEFAULT_MAX_PENDING = 1e3, u.prototype.acquire = function(S, c, i, s) {
-          if (Array.isArray(S)) return this._acquireBatch(S, c, i, s);
-          if (typeof c != "function") throw new Error("You must pass a function to execute");
+        u.DEFAULT_TIMEOUT = 0, u.DEFAULT_MAX_OCCUPATION_TIME = 0, u.DEFAULT_MAX_EXECUTION_TIME = 0, u.DEFAULT_MAX_PENDING = 1e3, u.prototype.acquire = function(O, l, i, s) {
+          if (Array.isArray(O)) return this._acquireBatch(O, l, i, s);
+          if (typeof l != "function") throw new Error("You must pass a function to execute");
           var o = null, e = null, j = null;
           typeof i != "function" && (s = i, i = null, j = new this.Promise(function(T, M) {
             o = T, e = M;
           })), s = s || {};
-          var O = !1, m = null, _ = null, h = null, P = this, x = function(T, M, A) {
-            _ && (clearTimeout(_), _ = null), h && (clearTimeout(h), h = null), T && (P.queues[S] && P.queues[S].length === 0 && delete P.queues[S], P.domainReentrant && delete P.domains[S]), O || (j ? M ? e(M) : o(A) : typeof i == "function" && i(M, A), O = !0), T && P.queues[S] && P.queues[S].length > 0 && P.queues[S].shift()();
+          var E = !1, m = null, _ = null, h = null, S = this, x = function(T, M, A) {
+            _ && (clearTimeout(_), _ = null), h && (clearTimeout(h), h = null), T && (S.queues[O] && S.queues[O].length === 0 && delete S.queues[O], S.domainReentrant && delete S.domains[O]), E || (j ? M ? e(M) : o(A) : typeof i == "function" && i(M, A), E = !0), T && S.queues[O] && S.queues[O].length > 0 && S.queues[O].shift()();
           }, R = function(T) {
-            if (O) return x(T);
-            m && (clearTimeout(m), m = null), P.domainReentrant && T && (P.domains[S] = n.domain);
-            var M = s.maxExecutionTime || P.maxExecutionTime;
+            if (E) return x(T);
+            m && (clearTimeout(m), m = null), S.domainReentrant && T && (S.domains[O] = n.domain);
+            var M = s.maxExecutionTime || S.maxExecutionTime;
             if (M && (h = setTimeout(function() {
-              P.queues[S] && x(T, new Error("Maximum execution time is exceeded " + S));
-            }, M)), c.length === 1) {
+              S.queues[O] && x(T, new Error("Maximum execution time is exceeded " + O));
+            }, M)), l.length === 1) {
               var A = !1;
               try {
-                c(function(F, z) {
+                l(function(F, z) {
                   A || (A = !0, x(T, F, z));
                 });
               } catch (F) {
                 A || (A = !0, x(T, F));
               }
-            } else P._promiseTry(function() {
-              return c();
+            } else S._promiseTry(function() {
+              return l();
             }).then(function(F) {
               x(T, void 0, F);
             }, function(F) {
               x(T, F);
             });
           };
-          P.domainReentrant && n.domain && (R = n.domain.bind(R));
-          var f = s.maxPending || P.maxPending;
-          if (P.queues[S]) if (P.domainReentrant && n.domain && n.domain === P.domains[S]) R(!1);
-          else if (P.queues[S].length >= f) x(!1, new Error("Too many pending tasks in queue " + S));
+          S.domainReentrant && n.domain && (R = n.domain.bind(R));
+          var c = s.maxPending || S.maxPending;
+          if (S.queues[O]) if (S.domainReentrant && n.domain && n.domain === S.domains[O]) R(!1);
+          else if (S.queues[O].length >= c) x(!1, new Error("Too many pending tasks in queue " + O));
           else {
-            var E = function() {
+            var P = function() {
               R(!0);
             };
-            s.skipQueue ? P.queues[S].unshift(E) : P.queues[S].push(E);
-            var w = s.timeout || P.timeout;
+            s.skipQueue ? S.queues[O].unshift(P) : S.queues[O].push(P);
+            var w = s.timeout || S.timeout;
             w && (m = setTimeout(function() {
-              m = null, x(!1, new Error("async-lock timed out in queue " + S));
+              m = null, x(!1, new Error("async-lock timed out in queue " + O));
             }, w));
           }
-          else P.queues[S] = [], R(!0);
-          var I = s.maxOccupationTime || P.maxOccupationTime;
+          else S.queues[O] = [], R(!0);
+          var I = s.maxOccupationTime || S.maxOccupationTime;
           return I && (_ = setTimeout(function() {
-            P.queues[S] && x(!1, new Error("Maximum occupation time is exceeded in queue " + S));
+            S.queues[O] && x(!1, new Error("Maximum occupation time is exceeded in queue " + O));
           }, I)), j || void 0;
-        }, u.prototype._acquireBatch = function(S, c, i, s) {
+        }, u.prototype._acquireBatch = function(O, l, i, s) {
           typeof i != "function" && (s = i, i = null);
-          var o = this, e = S.reduceRight(function(j, O) {
+          var o = this, e = O.reduceRight(function(j, E) {
             return /* @__PURE__ */ function(m, _) {
               return function(h) {
                 o.acquire(m, _, h, s);
               };
-            }(O, j);
-          }, c);
-          if (typeof i != "function") return new this.Promise(function(j, O) {
+            }(E, j);
+          }, l);
+          if (typeof i != "function") return new this.Promise(function(j, E) {
             e.length === 1 ? e(function(m, _) {
-              m ? O(m) : j(_);
+              m ? E(m) : j(_);
             }) : j(e());
           });
           e(i);
-        }, u.prototype.isBusy = function(S) {
-          return S ? !!this.queues[S] : Object.keys(this.queues).length > 0;
-        }, u.prototype._promiseTry = function(S) {
+        }, u.prototype.isBusy = function(O) {
+          return O ? !!this.queues[O] : Object.keys(this.queues).length > 0;
+        }, u.prototype._promiseTry = function(O) {
           try {
-            return this.Promise.resolve(S());
-          } catch (c) {
-            return this.Promise.reject(c);
+            return this.Promise.resolve(O());
+          } catch (l) {
+            return this.Promise.reject(l);
           }
         }, N.exports = u;
       }).call(this, t(92));
@@ -6275,46 +6275,46 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       N.exports = t;
     }, function(N, g, t) {
       g.byteLength = function(j) {
-        var O = o(j), m = O[0], _ = O[1];
+        var E = o(j), m = E[0], _ = E[1];
         return 3 * (m + _) / 4 - _;
       }, g.toByteArray = function(j) {
-        var O, m, _ = o(j), h = _[0], P = _[1], x = new S(function(E, w, I) {
+        var E, m, _ = o(j), h = _[0], S = _[1], x = new O(function(P, w, I) {
           return 3 * (w + I) / 4 - I;
-        }(0, h, P)), R = 0, f = P > 0 ? h - 4 : h;
-        for (m = 0; m < f; m += 4) O = u[j.charCodeAt(m)] << 18 | u[j.charCodeAt(m + 1)] << 12 | u[j.charCodeAt(m + 2)] << 6 | u[j.charCodeAt(m + 3)], x[R++] = O >> 16 & 255, x[R++] = O >> 8 & 255, x[R++] = 255 & O;
-        return P === 2 && (O = u[j.charCodeAt(m)] << 2 | u[j.charCodeAt(m + 1)] >> 4, x[R++] = 255 & O), P === 1 && (O = u[j.charCodeAt(m)] << 10 | u[j.charCodeAt(m + 1)] << 4 | u[j.charCodeAt(m + 2)] >> 2, x[R++] = O >> 8 & 255, x[R++] = 255 & O), x;
+        }(0, h, S)), R = 0, c = S > 0 ? h - 4 : h;
+        for (m = 0; m < c; m += 4) E = u[j.charCodeAt(m)] << 18 | u[j.charCodeAt(m + 1)] << 12 | u[j.charCodeAt(m + 2)] << 6 | u[j.charCodeAt(m + 3)], x[R++] = E >> 16 & 255, x[R++] = E >> 8 & 255, x[R++] = 255 & E;
+        return S === 2 && (E = u[j.charCodeAt(m)] << 2 | u[j.charCodeAt(m + 1)] >> 4, x[R++] = 255 & E), S === 1 && (E = u[j.charCodeAt(m)] << 10 | u[j.charCodeAt(m + 1)] << 4 | u[j.charCodeAt(m + 2)] >> 2, x[R++] = E >> 8 & 255, x[R++] = 255 & E), x;
       }, g.fromByteArray = function(j) {
-        for (var O, m = j.length, _ = m % 3, h = [], P = 0, x = m - _; P < x; P += 16383) h.push(e(j, P, P + 16383 > x ? x : P + 16383));
-        return _ === 1 ? (O = j[m - 1], h.push(n[O >> 2] + n[O << 4 & 63] + "==")) : _ === 2 && (O = (j[m - 2] << 8) + j[m - 1], h.push(n[O >> 10] + n[O >> 4 & 63] + n[O << 2 & 63] + "=")), h.join("");
+        for (var E, m = j.length, _ = m % 3, h = [], S = 0, x = m - _; S < x; S += 16383) h.push(e(j, S, S + 16383 > x ? x : S + 16383));
+        return _ === 1 ? (E = j[m - 1], h.push(n[E >> 2] + n[E << 4 & 63] + "==")) : _ === 2 && (E = (j[m - 2] << 8) + j[m - 1], h.push(n[E >> 10] + n[E >> 4 & 63] + n[E << 2 & 63] + "=")), h.join("");
       };
-      for (var n = [], u = [], S = typeof Uint8Array < "u" ? Uint8Array : Array, c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", i = 0, s = c.length; i < s; ++i) n[i] = c[i], u[c.charCodeAt(i)] = i;
+      for (var n = [], u = [], O = typeof Uint8Array < "u" ? Uint8Array : Array, l = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", i = 0, s = l.length; i < s; ++i) n[i] = l[i], u[l.charCodeAt(i)] = i;
       function o(j) {
-        var O = j.length;
-        if (O % 4 > 0) throw new Error("Invalid string. Length must be a multiple of 4");
+        var E = j.length;
+        if (E % 4 > 0) throw new Error("Invalid string. Length must be a multiple of 4");
         var m = j.indexOf("=");
-        return m === -1 && (m = O), [m, m === O ? 0 : 4 - m % 4];
+        return m === -1 && (m = E), [m, m === E ? 0 : 4 - m % 4];
       }
-      function e(j, O, m) {
-        for (var _, h, P = [], x = O; x < m; x += 3) _ = (j[x] << 16 & 16711680) + (j[x + 1] << 8 & 65280) + (255 & j[x + 2]), P.push(n[(h = _) >> 18 & 63] + n[h >> 12 & 63] + n[h >> 6 & 63] + n[63 & h]);
-        return P.join("");
+      function e(j, E, m) {
+        for (var _, h, S = [], x = E; x < m; x += 3) _ = (j[x] << 16 & 16711680) + (j[x + 1] << 8 & 65280) + (255 & j[x + 2]), S.push(n[(h = _) >> 18 & 63] + n[h >> 12 & 63] + n[h >> 6 & 63] + n[63 & h]);
+        return S.join("");
       }
       u[45] = 62, u[95] = 63;
     }, function(N, g) {
-      g.read = function(t, n, u, S, c) {
-        var i, s, o = 8 * c - S - 1, e = (1 << o) - 1, j = e >> 1, O = -7, m = u ? c - 1 : 0, _ = u ? -1 : 1, h = t[n + m];
-        for (m += _, i = h & (1 << -O) - 1, h >>= -O, O += o; O > 0; i = 256 * i + t[n + m], m += _, O -= 8) ;
-        for (s = i & (1 << -O) - 1, i >>= -O, O += S; O > 0; s = 256 * s + t[n + m], m += _, O -= 8) ;
+      g.read = function(t, n, u, O, l) {
+        var i, s, o = 8 * l - O - 1, e = (1 << o) - 1, j = e >> 1, E = -7, m = u ? l - 1 : 0, _ = u ? -1 : 1, h = t[n + m];
+        for (m += _, i = h & (1 << -E) - 1, h >>= -E, E += o; E > 0; i = 256 * i + t[n + m], m += _, E -= 8) ;
+        for (s = i & (1 << -E) - 1, i >>= -E, E += O; E > 0; s = 256 * s + t[n + m], m += _, E -= 8) ;
         if (i === 0) i = 1 - j;
         else {
           if (i === e) return s ? NaN : 1 / 0 * (h ? -1 : 1);
-          s += Math.pow(2, S), i -= j;
+          s += Math.pow(2, O), i -= j;
         }
-        return (h ? -1 : 1) * s * Math.pow(2, i - S);
-      }, g.write = function(t, n, u, S, c, i) {
-        var s, o, e, j = 8 * i - c - 1, O = (1 << j) - 1, m = O >> 1, _ = c === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, h = S ? 0 : i - 1, P = S ? 1 : -1, x = n < 0 || n === 0 && 1 / n < 0 ? 1 : 0;
-        for (n = Math.abs(n), isNaN(n) || n === 1 / 0 ? (o = isNaN(n) ? 1 : 0, s = O) : (s = Math.floor(Math.log(n) / Math.LN2), n * (e = Math.pow(2, -s)) < 1 && (s--, e *= 2), (n += s + m >= 1 ? _ / e : _ * Math.pow(2, 1 - m)) * e >= 2 && (s++, e /= 2), s + m >= O ? (o = 0, s = O) : s + m >= 1 ? (o = (n * e - 1) * Math.pow(2, c), s += m) : (o = n * Math.pow(2, m - 1) * Math.pow(2, c), s = 0)); c >= 8; t[u + h] = 255 & o, h += P, o /= 256, c -= 8) ;
-        for (s = s << c | o, j += c; j > 0; t[u + h] = 255 & s, h += P, s /= 256, j -= 8) ;
-        t[u + h - P] |= 128 * x;
+        return (h ? -1 : 1) * s * Math.pow(2, i - O);
+      }, g.write = function(t, n, u, O, l, i) {
+        var s, o, e, j = 8 * i - l - 1, E = (1 << j) - 1, m = E >> 1, _ = l === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, h = O ? 0 : i - 1, S = O ? 1 : -1, x = n < 0 || n === 0 && 1 / n < 0 ? 1 : 0;
+        for (n = Math.abs(n), isNaN(n) || n === 1 / 0 ? (o = isNaN(n) ? 1 : 0, s = E) : (s = Math.floor(Math.log(n) / Math.LN2), n * (e = Math.pow(2, -s)) < 1 && (s--, e *= 2), (n += s + m >= 1 ? _ / e : _ * Math.pow(2, 1 - m)) * e >= 2 && (s++, e /= 2), s + m >= E ? (o = 0, s = E) : s + m >= 1 ? (o = (n * e - 1) * Math.pow(2, l), s += m) : (o = n * Math.pow(2, m - 1) * Math.pow(2, l), s = 0)); l >= 8; t[u + h] = 255 & o, h += S, o /= 256, l -= 8) ;
+        for (s = s << l | o, j += l; j > 0; t[u + h] = 255 & s, h += S, s /= 256, j -= 8) ;
+        t[u + h - S] |= 128 * x;
       };
     }, function(N, g) {
       var t = {}.toString;
@@ -6332,19 +6332,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       };
     }, function(N, g, t) {
       var n = t(119).Buffer;
-      function u(S, c) {
-        this._block = n.alloc(S), this._finalSize = c, this._blockSize = S, this._len = 0;
+      function u(O, l) {
+        this._block = n.alloc(O), this._finalSize = l, this._blockSize = O, this._len = 0;
       }
-      u.prototype.update = function(S, c) {
-        typeof S == "string" && (c = c || "utf8", S = n.from(S, c));
-        for (var i = this._block, s = this._blockSize, o = S.length, e = this._len, j = 0; j < o; ) {
-          for (var O = e % s, m = Math.min(o - j, s - O), _ = 0; _ < m; _++) i[O + _] = S[j + _];
+      u.prototype.update = function(O, l) {
+        typeof O == "string" && (l = l || "utf8", O = n.from(O, l));
+        for (var i = this._block, s = this._blockSize, o = O.length, e = this._len, j = 0; j < o; ) {
+          for (var E = e % s, m = Math.min(o - j, s - E), _ = 0; _ < m; _++) i[E + _] = O[j + _];
           j += m, (e += m) % s == 0 && this._update(i);
         }
         return this._len += o, this;
-      }, u.prototype.digest = function(S) {
-        var c = this._len % this._blockSize;
-        this._block[c] = 128, this._block.fill(0, c + 1), c >= this._finalSize && (this._update(this._block), this._block.fill(0));
+      }, u.prototype.digest = function(O) {
+        var l = this._len % this._blockSize;
+        this._block[l] = 128, this._block.fill(0, l + 1), l >= this._finalSize && (this._update(this._block), this._block.fill(0));
         var i = 8 * this._len;
         if (i <= 4294967295) this._block.writeUInt32BE(i, this._blockSize - 4);
         else {
@@ -6353,50 +6353,50 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         this._update(this._block);
         var e = this._hash();
-        return S ? e.toString(S) : e;
+        return O ? e.toString(O) : e;
       }, u.prototype._update = function() {
         throw new Error("_update must be implemented by subclass");
       }, N.exports = u;
     }, function(N, g, t) {
-      var n = t(151), u = t(31), S = t(122), c = t(96), i = t(123), s = Object.prototype.toString;
+      var n = t(151), u = t(31), O = t(122), l = t(96), i = t(123), s = Object.prototype.toString;
       function o(j) {
         if (!(this instanceof o)) return new o(j);
         this.options = u.assign({ level: -1, method: 8, chunkSize: 16384, windowBits: 15, memLevel: 8, strategy: 0, to: "" }, j || {});
-        var O = this.options;
-        O.raw && O.windowBits > 0 ? O.windowBits = -O.windowBits : O.gzip && O.windowBits > 0 && O.windowBits < 16 && (O.windowBits += 16), this.err = 0, this.msg = "", this.ended = !1, this.chunks = [], this.strm = new i(), this.strm.avail_out = 0;
-        var m = n.deflateInit2(this.strm, O.level, O.method, O.windowBits, O.memLevel, O.strategy);
-        if (m !== 0) throw new Error(c[m]);
-        if (O.header && n.deflateSetHeader(this.strm, O.header), O.dictionary) {
+        var E = this.options;
+        E.raw && E.windowBits > 0 ? E.windowBits = -E.windowBits : E.gzip && E.windowBits > 0 && E.windowBits < 16 && (E.windowBits += 16), this.err = 0, this.msg = "", this.ended = !1, this.chunks = [], this.strm = new i(), this.strm.avail_out = 0;
+        var m = n.deflateInit2(this.strm, E.level, E.method, E.windowBits, E.memLevel, E.strategy);
+        if (m !== 0) throw new Error(l[m]);
+        if (E.header && n.deflateSetHeader(this.strm, E.header), E.dictionary) {
           var _;
-          if (_ = typeof O.dictionary == "string" ? S.string2buf(O.dictionary) : s.call(O.dictionary) === "[object ArrayBuffer]" ? new Uint8Array(O.dictionary) : O.dictionary, (m = n.deflateSetDictionary(this.strm, _)) !== 0) throw new Error(c[m]);
+          if (_ = typeof E.dictionary == "string" ? O.string2buf(E.dictionary) : s.call(E.dictionary) === "[object ArrayBuffer]" ? new Uint8Array(E.dictionary) : E.dictionary, (m = n.deflateSetDictionary(this.strm, _)) !== 0) throw new Error(l[m]);
           this._dict_set = !0;
         }
       }
-      function e(j, O) {
-        var m = new o(O);
-        if (m.push(j, !0), m.err) throw m.msg || c[m.err];
+      function e(j, E) {
+        var m = new o(E);
+        if (m.push(j, !0), m.err) throw m.msg || l[m.err];
         return m.result;
       }
-      o.prototype.push = function(j, O) {
-        var m, _, h = this.strm, P = this.options.chunkSize;
+      o.prototype.push = function(j, E) {
+        var m, _, h = this.strm, S = this.options.chunkSize;
         if (this.ended) return !1;
-        _ = O === ~~O ? O : O === !0 ? 4 : 0, typeof j == "string" ? h.input = S.string2buf(j) : s.call(j) === "[object ArrayBuffer]" ? h.input = new Uint8Array(j) : h.input = j, h.next_in = 0, h.avail_in = h.input.length;
+        _ = E === ~~E ? E : E === !0 ? 4 : 0, typeof j == "string" ? h.input = O.string2buf(j) : s.call(j) === "[object ArrayBuffer]" ? h.input = new Uint8Array(j) : h.input = j, h.next_in = 0, h.avail_in = h.input.length;
         do {
-          if (h.avail_out === 0 && (h.output = new u.Buf8(P), h.next_out = 0, h.avail_out = P), (m = n.deflate(h, _)) !== 1 && m !== 0) return this.onEnd(m), this.ended = !0, !1;
-          h.avail_out !== 0 && (h.avail_in !== 0 || _ !== 4 && _ !== 2) || (this.options.to === "string" ? this.onData(S.buf2binstring(u.shrinkBuf(h.output, h.next_out))) : this.onData(u.shrinkBuf(h.output, h.next_out)));
+          if (h.avail_out === 0 && (h.output = new u.Buf8(S), h.next_out = 0, h.avail_out = S), (m = n.deflate(h, _)) !== 1 && m !== 0) return this.onEnd(m), this.ended = !0, !1;
+          h.avail_out !== 0 && (h.avail_in !== 0 || _ !== 4 && _ !== 2) || (this.options.to === "string" ? this.onData(O.buf2binstring(u.shrinkBuf(h.output, h.next_out))) : this.onData(u.shrinkBuf(h.output, h.next_out)));
         } while ((h.avail_in > 0 || h.avail_out === 0) && m !== 1);
         return _ === 4 ? (m = n.deflateEnd(this.strm), this.onEnd(m), this.ended = !0, m === 0) : _ !== 2 || (this.onEnd(0), h.avail_out = 0, !0);
       }, o.prototype.onData = function(j) {
         this.chunks.push(j);
       }, o.prototype.onEnd = function(j) {
         j === 0 && (this.options.to === "string" ? this.result = this.chunks.join("") : this.result = u.flattenChunks(this.chunks)), this.chunks = [], this.err = j, this.msg = this.strm.msg;
-      }, g.Deflate = o, g.deflate = e, g.deflateRaw = function(j, O) {
-        return (O = O || {}).raw = !0, e(j, O);
-      }, g.gzip = function(j, O) {
-        return (O = O || {}).gzip = !0, e(j, O);
+      }, g.Deflate = o, g.deflate = e, g.deflateRaw = function(j, E) {
+        return (E = E || {}).raw = !0, e(j, E);
+      }, g.gzip = function(j, E) {
+        return (E = E || {}).gzip = !0, e(j, E);
       };
     }, function(N, g, t) {
-      var n, u = t(31), S = t(152), c = t(120), i = t(121), s = t(96);
+      var n, u = t(31), O = t(152), l = t(120), i = t(121), s = t(96);
       function o(A, F) {
         return A.msg = s[F], F;
       }
@@ -6406,12 +6406,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function j(A) {
         for (var F = A.length; --F >= 0; ) A[F] = 0;
       }
-      function O(A) {
+      function E(A) {
         var F = A.state, z = F.pending;
         z > A.avail_out && (z = A.avail_out), z !== 0 && (u.arraySet(A.output, F.pending_buf, F.pending_out, z, A.next_out), A.next_out += z, F.pending_out += z, A.total_out += z, A.avail_out -= z, F.pending -= z, F.pending === 0 && (F.pending_out = 0));
       }
       function m(A, F) {
-        S._tr_flush_block(A, A.block_start >= 0 ? A.block_start : -1, A.strstart - A.block_start, F), A.block_start = A.strstart, O(A.strm);
+        O._tr_flush_block(A, A.block_start >= 0 ? A.block_start : -1, A.strstart - A.block_start, F), A.block_start = A.strstart, E(A.strm);
       }
       function _(A, F) {
         A.pending_buf[A.pending++] = F;
@@ -6419,7 +6419,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function h(A, F) {
         A.pending_buf[A.pending++] = F >>> 8 & 255, A.pending_buf[A.pending++] = 255 & F;
       }
-      function P(A, F) {
+      function S(A, F) {
         var z, $, H = A.max_chain_length, nt = A.strstart, ot = A.prev_length, V = A.nice_match, it = A.strstart > A.w_size - 262 ? A.strstart - (A.w_size - 262) : 0, lt = A.window, dt = A.w_mask, G = A.prev, Z = A.strstart + 258, ut = lt[nt + ot - 1], pt = lt[nt + ot];
         A.prev_length >= A.good_match && (H >>= 2), V > A.lookahead && (V = A.lookahead);
         do
@@ -6451,7 +6451,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             H += G;
           }
           if (A.strm.avail_in === 0) break;
-          if (ot = A.strm, V = A.window, it = A.strstart + A.lookahead, lt = H, dt = void 0, (dt = ot.avail_in) > lt && (dt = lt), z = dt === 0 ? 0 : (ot.avail_in -= dt, u.arraySet(V, ot.input, ot.next_in, dt, it), ot.state.wrap === 1 ? ot.adler = c(ot.adler, V, dt, it) : ot.state.wrap === 2 && (ot.adler = i(ot.adler, V, dt, it)), ot.next_in += dt, ot.total_in += dt, dt), A.lookahead += z, A.lookahead + A.insert >= 3) for (nt = A.strstart - A.insert, A.ins_h = A.window[nt], A.ins_h = (A.ins_h << A.hash_shift ^ A.window[nt + 1]) & A.hash_mask; A.insert && (A.ins_h = (A.ins_h << A.hash_shift ^ A.window[nt + 3 - 1]) & A.hash_mask, A.prev[nt & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = nt, nt++, A.insert--, !(A.lookahead + A.insert < 3)); ) ;
+          if (ot = A.strm, V = A.window, it = A.strstart + A.lookahead, lt = H, dt = void 0, (dt = ot.avail_in) > lt && (dt = lt), z = dt === 0 ? 0 : (ot.avail_in -= dt, u.arraySet(V, ot.input, ot.next_in, dt, it), ot.state.wrap === 1 ? ot.adler = l(ot.adler, V, dt, it) : ot.state.wrap === 2 && (ot.adler = i(ot.adler, V, dt, it)), ot.next_in += dt, ot.total_in += dt, dt), A.lookahead += z, A.lookahead + A.insert >= 3) for (nt = A.strstart - A.insert, A.ins_h = A.window[nt], A.ins_h = (A.ins_h << A.hash_shift ^ A.window[nt + 1]) & A.hash_mask; A.insert && (A.ins_h = (A.ins_h << A.hash_shift ^ A.window[nt + 3 - 1]) & A.hash_mask, A.prev[nt & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = nt, nt++, A.insert--, !(A.lookahead + A.insert < 3)); ) ;
         } while (A.lookahead < 262 && A.strm.avail_in !== 0);
       }
       function R(A, F) {
@@ -6460,37 +6460,37 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             if (x(A), A.lookahead < 262 && F === 0) return 1;
             if (A.lookahead === 0) break;
           }
-          if (z = 0, A.lookahead >= 3 && (A.ins_h = (A.ins_h << A.hash_shift ^ A.window[A.strstart + 3 - 1]) & A.hash_mask, z = A.prev[A.strstart & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = A.strstart), z !== 0 && A.strstart - z <= A.w_size - 262 && (A.match_length = P(A, z)), A.match_length >= 3) if ($ = S._tr_tally(A, A.strstart - A.match_start, A.match_length - 3), A.lookahead -= A.match_length, A.match_length <= A.max_lazy_match && A.lookahead >= 3) {
+          if (z = 0, A.lookahead >= 3 && (A.ins_h = (A.ins_h << A.hash_shift ^ A.window[A.strstart + 3 - 1]) & A.hash_mask, z = A.prev[A.strstart & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = A.strstart), z !== 0 && A.strstart - z <= A.w_size - 262 && (A.match_length = S(A, z)), A.match_length >= 3) if ($ = O._tr_tally(A, A.strstart - A.match_start, A.match_length - 3), A.lookahead -= A.match_length, A.match_length <= A.max_lazy_match && A.lookahead >= 3) {
             A.match_length--;
             do
               A.strstart++, A.ins_h = (A.ins_h << A.hash_shift ^ A.window[A.strstart + 3 - 1]) & A.hash_mask, z = A.prev[A.strstart & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = A.strstart;
             while (--A.match_length != 0);
             A.strstart++;
           } else A.strstart += A.match_length, A.match_length = 0, A.ins_h = A.window[A.strstart], A.ins_h = (A.ins_h << A.hash_shift ^ A.window[A.strstart + 1]) & A.hash_mask;
-          else $ = S._tr_tally(A, 0, A.window[A.strstart]), A.lookahead--, A.strstart++;
+          else $ = O._tr_tally(A, 0, A.window[A.strstart]), A.lookahead--, A.strstart++;
           if ($ && (m(A, !1), A.strm.avail_out === 0)) return 1;
         }
         return A.insert = A.strstart < 2 ? A.strstart : 2, F === 4 ? (m(A, !0), A.strm.avail_out === 0 ? 3 : 4) : A.last_lit && (m(A, !1), A.strm.avail_out === 0) ? 1 : 2;
       }
-      function f(A, F) {
+      function c(A, F) {
         for (var z, $, H; ; ) {
           if (A.lookahead < 262) {
             if (x(A), A.lookahead < 262 && F === 0) return 1;
             if (A.lookahead === 0) break;
           }
-          if (z = 0, A.lookahead >= 3 && (A.ins_h = (A.ins_h << A.hash_shift ^ A.window[A.strstart + 3 - 1]) & A.hash_mask, z = A.prev[A.strstart & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = A.strstart), A.prev_length = A.match_length, A.prev_match = A.match_start, A.match_length = 2, z !== 0 && A.prev_length < A.max_lazy_match && A.strstart - z <= A.w_size - 262 && (A.match_length = P(A, z), A.match_length <= 5 && (A.strategy === 1 || A.match_length === 3 && A.strstart - A.match_start > 4096) && (A.match_length = 2)), A.prev_length >= 3 && A.match_length <= A.prev_length) {
-            H = A.strstart + A.lookahead - 3, $ = S._tr_tally(A, A.strstart - 1 - A.prev_match, A.prev_length - 3), A.lookahead -= A.prev_length - 1, A.prev_length -= 2;
+          if (z = 0, A.lookahead >= 3 && (A.ins_h = (A.ins_h << A.hash_shift ^ A.window[A.strstart + 3 - 1]) & A.hash_mask, z = A.prev[A.strstart & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = A.strstart), A.prev_length = A.match_length, A.prev_match = A.match_start, A.match_length = 2, z !== 0 && A.prev_length < A.max_lazy_match && A.strstart - z <= A.w_size - 262 && (A.match_length = S(A, z), A.match_length <= 5 && (A.strategy === 1 || A.match_length === 3 && A.strstart - A.match_start > 4096) && (A.match_length = 2)), A.prev_length >= 3 && A.match_length <= A.prev_length) {
+            H = A.strstart + A.lookahead - 3, $ = O._tr_tally(A, A.strstart - 1 - A.prev_match, A.prev_length - 3), A.lookahead -= A.prev_length - 1, A.prev_length -= 2;
             do
               ++A.strstart <= H && (A.ins_h = (A.ins_h << A.hash_shift ^ A.window[A.strstart + 3 - 1]) & A.hash_mask, z = A.prev[A.strstart & A.w_mask] = A.head[A.ins_h], A.head[A.ins_h] = A.strstart);
             while (--A.prev_length != 0);
             if (A.match_available = 0, A.match_length = 2, A.strstart++, $ && (m(A, !1), A.strm.avail_out === 0)) return 1;
           } else if (A.match_available) {
-            if (($ = S._tr_tally(A, 0, A.window[A.strstart - 1])) && m(A, !1), A.strstart++, A.lookahead--, A.strm.avail_out === 0) return 1;
+            if (($ = O._tr_tally(A, 0, A.window[A.strstart - 1])) && m(A, !1), A.strstart++, A.lookahead--, A.strm.avail_out === 0) return 1;
           } else A.match_available = 1, A.strstart++, A.lookahead--;
         }
-        return A.match_available && ($ = S._tr_tally(A, 0, A.window[A.strstart - 1]), A.match_available = 0), A.insert = A.strstart < 2 ? A.strstart : 2, F === 4 ? (m(A, !0), A.strm.avail_out === 0 ? 3 : 4) : A.last_lit && (m(A, !1), A.strm.avail_out === 0) ? 1 : 2;
+        return A.match_available && ($ = O._tr_tally(A, 0, A.window[A.strstart - 1]), A.match_available = 0), A.insert = A.strstart < 2 ? A.strstart : 2, F === 4 ? (m(A, !0), A.strm.avail_out === 0 ? 3 : 4) : A.last_lit && (m(A, !1), A.strm.avail_out === 0) ? 1 : 2;
       }
-      function E(A, F, z, $, H) {
+      function P(A, F, z, $, H) {
         this.good_length = A, this.max_lazy = F, this.nice_length = z, this.max_chain = $, this.func = H;
       }
       function w() {
@@ -6498,7 +6498,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function I(A) {
         var F;
-        return A && A.state ? (A.total_in = A.total_out = 0, A.data_type = 2, (F = A.state).pending = 0, F.pending_out = 0, F.wrap < 0 && (F.wrap = -F.wrap), F.status = F.wrap ? 42 : 113, A.adler = F.wrap === 2 ? 0 : 1, F.last_flush = 0, S._tr_init(F), 0) : o(A, -2);
+        return A && A.state ? (A.total_in = A.total_out = 0, A.data_type = 2, (F = A.state).pending = 0, F.pending_out = 0, F.wrap < 0 && (F.wrap = -F.wrap), F.status = F.wrap ? 42 : 113, A.adler = F.wrap === 2 ? 0 : 1, F.last_flush = 0, O._tr_init(F), 0) : o(A, -2);
       }
       function T(A) {
         var F, z = I(A);
@@ -6512,7 +6512,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         var V = new w();
         return A.state = V, V.strm = A, V.wrap = ot, V.gzhead = null, V.w_bits = $, V.w_size = 1 << V.w_bits, V.w_mask = V.w_size - 1, V.hash_bits = H + 7, V.hash_size = 1 << V.hash_bits, V.hash_mask = V.hash_size - 1, V.hash_shift = ~~((V.hash_bits + 3 - 1) / 3), V.window = new u.Buf8(2 * V.w_size), V.head = new u.Buf16(V.hash_size), V.prev = new u.Buf16(V.w_size), V.lit_bufsize = 1 << H + 6, V.pending_buf_size = 4 * V.lit_bufsize, V.pending_buf = new u.Buf8(V.pending_buf_size), V.d_buf = 1 * V.lit_bufsize, V.l_buf = 3 * V.lit_bufsize, V.level = F, V.strategy = nt, V.method = z, T(A);
       }
-      n = [new E(0, 0, 0, 0, function(A, F) {
+      n = [new P(0, 0, 0, 0, function(A, F) {
         var z = 65535;
         for (z > A.pending_buf_size - 5 && (z = A.pending_buf_size - 5); ; ) {
           if (A.lookahead <= 1) {
@@ -6524,7 +6524,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           if ((A.strstart === 0 || A.strstart >= $) && (A.lookahead = A.strstart - $, A.strstart = $, m(A, !1), A.strm.avail_out === 0) || A.strstart - A.block_start >= A.w_size - 262 && (m(A, !1), A.strm.avail_out === 0)) return 1;
         }
         return A.insert = 0, F === 4 ? (m(A, !0), A.strm.avail_out === 0 ? 3 : 4) : (A.strstart > A.block_start && (m(A, !1), A.strm.avail_out), 1);
-      }), new E(4, 4, 8, 4, R), new E(4, 5, 16, 8, R), new E(4, 6, 32, 32, R), new E(4, 4, 16, 16, f), new E(8, 16, 32, 32, f), new E(8, 16, 128, 128, f), new E(8, 32, 128, 256, f), new E(32, 128, 258, 1024, f), new E(32, 258, 258, 4096, f)], g.deflateInit = function(A, F) {
+      }), new P(4, 4, 8, 4, R), new P(4, 5, 16, 8, R), new P(4, 6, 32, 32, R), new P(4, 4, 16, 16, c), new P(8, 16, 32, 32, c), new P(8, 16, 128, 128, c), new P(8, 32, 128, 256, c), new P(32, 128, 258, 1024, c), new P(32, 258, 258, 4096, c)], g.deflateInit = function(A, F) {
         return M(A, F, 8, 15, 8, 0);
       }, g.deflateInit2 = M, g.deflateReset = T, g.deflateResetKeep = I, g.deflateSetHeader = function(A, F) {
         return A && A.state ? A.state.wrap !== 2 ? -2 : (A.state.gzhead = F, 0) : -2;
@@ -6538,13 +6538,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           ot |= ($.strategy >= 2 || $.level < 2 ? 0 : $.level < 6 ? 1 : $.level === 6 ? 2 : 3) << 6, $.strstart !== 0 && (ot |= 32), ot += 31 - ot % 31, $.status = 113, h($, ot), $.strstart !== 0 && (h($, A.adler >>> 16), h($, 65535 & A.adler)), A.adler = 1;
         }
         if ($.status === 69) if ($.gzhead.extra) {
-          for (H = $.pending; $.gzindex < (65535 & $.gzhead.extra.length) && ($.pending !== $.pending_buf_size || ($.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), O(A), H = $.pending, $.pending !== $.pending_buf_size)); ) _($, 255 & $.gzhead.extra[$.gzindex]), $.gzindex++;
+          for (H = $.pending; $.gzindex < (65535 & $.gzhead.extra.length) && ($.pending !== $.pending_buf_size || ($.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), E(A), H = $.pending, $.pending !== $.pending_buf_size)); ) _($, 255 & $.gzhead.extra[$.gzindex]), $.gzindex++;
           $.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), $.gzindex === $.gzhead.extra.length && ($.gzindex = 0, $.status = 73);
         } else $.status = 73;
         if ($.status === 73) if ($.gzhead.name) {
           H = $.pending;
           do {
-            if ($.pending === $.pending_buf_size && ($.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), O(A), H = $.pending, $.pending === $.pending_buf_size)) {
+            if ($.pending === $.pending_buf_size && ($.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), E(A), H = $.pending, $.pending === $.pending_buf_size)) {
               nt = 1;
               break;
             }
@@ -6555,7 +6555,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         if ($.status === 91) if ($.gzhead.comment) {
           H = $.pending;
           do {
-            if ($.pending === $.pending_buf_size && ($.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), O(A), H = $.pending, $.pending === $.pending_buf_size)) {
+            if ($.pending === $.pending_buf_size && ($.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), E(A), H = $.pending, $.pending === $.pending_buf_size)) {
               nt = 1;
               break;
             }
@@ -6563,8 +6563,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           } while (nt !== 0);
           $.gzhead.hcrc && $.pending > H && (A.adler = i(A.adler, $.pending_buf, $.pending - H, H)), nt === 0 && ($.status = 103);
         } else $.status = 103;
-        if ($.status === 103 && ($.gzhead.hcrc ? ($.pending + 2 > $.pending_buf_size && O(A), $.pending + 2 <= $.pending_buf_size && (_($, 255 & A.adler), _($, A.adler >> 8 & 255), A.adler = 0, $.status = 113)) : $.status = 113), $.pending !== 0) {
-          if (O(A), A.avail_out === 0) return $.last_flush = -1, 0;
+        if ($.status === 103 && ($.gzhead.hcrc ? ($.pending + 2 > $.pending_buf_size && E(A), $.pending + 2 <= $.pending_buf_size && (_($, 255 & A.adler), _($, A.adler >> 8 & 255), A.adler = 0, $.status = 113)) : $.status = 113), $.pending !== 0) {
+          if (E(A), A.avail_out === 0) return $.last_flush = -1, 0;
         } else if (A.avail_in === 0 && e(F) <= e(z) && F !== 4) return o(A, -5);
         if ($.status === 666 && A.avail_in !== 0) return o(A, -5);
         if (A.avail_in !== 0 || $.lookahead !== 0 || F !== 0 && $.status !== 666) {
@@ -6574,7 +6574,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 if (lt === 0) return 1;
                 break;
               }
-              if (it.match_length = 0, dt = S._tr_tally(it, 0, it.window[it.strstart]), it.lookahead--, it.strstart++, dt && (m(it, !1), it.strm.avail_out === 0)) return 1;
+              if (it.match_length = 0, dt = O._tr_tally(it, 0, it.window[it.strstart]), it.lookahead--, it.strstart++, dt && (m(it, !1), it.strm.avail_out === 0)) return 1;
             }
             return it.insert = 0, lt === 4 ? (m(it, !0), it.strm.avail_out === 0 ? 3 : 4) : it.last_lit && (m(it, !1), it.strm.avail_out === 0) ? 1 : 2;
           }($, F) : $.strategy === 3 ? function(it, lt) {
@@ -6590,21 +6590,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 while (G === pt[++Z] && G === pt[++Z] && G === pt[++Z] && G === pt[++Z] && G === pt[++Z] && G === pt[++Z] && G === pt[++Z] && G === pt[++Z] && Z < ut);
                 it.match_length = 258 - (ut - Z), it.match_length > it.lookahead && (it.match_length = it.lookahead);
               }
-              if (it.match_length >= 3 ? (dt = S._tr_tally(it, 1, it.match_length - 3), it.lookahead -= it.match_length, it.strstart += it.match_length, it.match_length = 0) : (dt = S._tr_tally(it, 0, it.window[it.strstart]), it.lookahead--, it.strstart++), dt && (m(it, !1), it.strm.avail_out === 0)) return 1;
+              if (it.match_length >= 3 ? (dt = O._tr_tally(it, 1, it.match_length - 3), it.lookahead -= it.match_length, it.strstart += it.match_length, it.match_length = 0) : (dt = O._tr_tally(it, 0, it.window[it.strstart]), it.lookahead--, it.strstart++), dt && (m(it, !1), it.strm.avail_out === 0)) return 1;
             }
             return it.insert = 0, lt === 4 ? (m(it, !0), it.strm.avail_out === 0 ? 3 : 4) : it.last_lit && (m(it, !1), it.strm.avail_out === 0) ? 1 : 2;
           }($, F) : n[$.level].func($, F);
           if (V !== 3 && V !== 4 || ($.status = 666), V === 1 || V === 3) return A.avail_out === 0 && ($.last_flush = -1), 0;
-          if (V === 2 && (F === 1 ? S._tr_align($) : F !== 5 && (S._tr_stored_block($, 0, 0, !1), F === 3 && (j($.head), $.lookahead === 0 && ($.strstart = 0, $.block_start = 0, $.insert = 0))), O(A), A.avail_out === 0)) return $.last_flush = -1, 0;
+          if (V === 2 && (F === 1 ? O._tr_align($) : F !== 5 && (O._tr_stored_block($, 0, 0, !1), F === 3 && (j($.head), $.lookahead === 0 && ($.strstart = 0, $.block_start = 0, $.insert = 0))), E(A), A.avail_out === 0)) return $.last_flush = -1, 0;
         }
-        return F !== 4 ? 0 : $.wrap <= 0 ? 1 : ($.wrap === 2 ? (_($, 255 & A.adler), _($, A.adler >> 8 & 255), _($, A.adler >> 16 & 255), _($, A.adler >> 24 & 255), _($, 255 & A.total_in), _($, A.total_in >> 8 & 255), _($, A.total_in >> 16 & 255), _($, A.total_in >> 24 & 255)) : (h($, A.adler >>> 16), h($, 65535 & A.adler)), O(A), $.wrap > 0 && ($.wrap = -$.wrap), $.pending !== 0 ? 0 : 1);
+        return F !== 4 ? 0 : $.wrap <= 0 ? 1 : ($.wrap === 2 ? (_($, 255 & A.adler), _($, A.adler >> 8 & 255), _($, A.adler >> 16 & 255), _($, A.adler >> 24 & 255), _($, 255 & A.total_in), _($, A.total_in >> 8 & 255), _($, A.total_in >> 16 & 255), _($, A.total_in >> 24 & 255)) : (h($, A.adler >>> 16), h($, 65535 & A.adler)), E(A), $.wrap > 0 && ($.wrap = -$.wrap), $.pending !== 0 ? 0 : 1);
       }, g.deflateEnd = function(A) {
         var F;
         return A && A.state ? (F = A.state.status) !== 42 && F !== 69 && F !== 73 && F !== 91 && F !== 103 && F !== 113 && F !== 666 ? o(A, -2) : (A.state = null, F === 113 ? o(A, -3) : 0) : -2;
       }, g.deflateSetDictionary = function(A, F) {
         var z, $, H, nt, ot, V, it, lt, dt = F.length;
         if (!A || !A.state || (nt = (z = A.state).wrap) === 2 || nt === 1 && z.status !== 42 || z.lookahead) return -2;
-        for (nt === 1 && (A.adler = c(A.adler, F, dt, 0)), z.wrap = 0, dt >= z.w_size && (nt === 0 && (j(z.head), z.strstart = 0, z.block_start = 0, z.insert = 0), lt = new u.Buf8(z.w_size), u.arraySet(lt, F, dt - z.w_size, z.w_size, 0), F = lt, dt = z.w_size), ot = A.avail_in, V = A.next_in, it = A.input, A.avail_in = dt, A.next_in = 0, A.input = F, x(z); z.lookahead >= 3; ) {
+        for (nt === 1 && (A.adler = l(A.adler, F, dt, 0)), z.wrap = 0, dt >= z.w_size && (nt === 0 && (j(z.head), z.strstart = 0, z.block_start = 0, z.insert = 0), lt = new u.Buf8(z.w_size), u.arraySet(lt, F, dt - z.w_size, z.w_size, 0), F = lt, dt = z.w_size), ot = A.avail_in, V = A.next_in, it = A.input, A.avail_in = dt, A.next_in = 0, A.input = F, x(z); z.lookahead >= 3; ) {
           $ = z.strstart, H = z.lookahead - 2;
           do
             z.ins_h = (z.ins_h << z.hash_shift ^ z.window[$ + 3 - 1]) & z.hash_mask, z.prev[$ & z.w_mask] = z.head[z.ins_h], z.head[z.ins_h] = $, $++;
@@ -6618,24 +6618,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function u(G) {
         for (var Z = G.length; --Z >= 0; ) G[Z] = 0;
       }
-      var S = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0], c = [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13], i = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 7], s = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15], o = new Array(576);
+      var O = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0], l = [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13], i = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 7], s = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15], o = new Array(576);
       u(o);
       var e = new Array(60);
       u(e);
       var j = new Array(512);
       u(j);
-      var O = new Array(256);
-      u(O);
+      var E = new Array(256);
+      u(E);
       var m = new Array(29);
       u(m);
-      var _, h, P, x = new Array(30);
+      var _, h, S, x = new Array(30);
       function R(G, Z, ut, pt, st) {
         this.static_tree = G, this.extra_bits = Z, this.extra_base = ut, this.elems = pt, this.max_length = st, this.has_stree = G && G.length;
       }
-      function f(G, Z) {
+      function c(G, Z) {
         this.dyn_tree = G, this.max_code = 0, this.stat_desc = Z;
       }
-      function E(G) {
+      function P(G) {
         return G < 256 ? j[G] : j[256 + (G >>> 7)];
       }
       function w(G, Z) {
@@ -6683,7 +6683,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function nt(G, Z, ut) {
         var pt, st, mt, bt, wt = 0;
         if (G.last_lit !== 0) do
-          pt = G.pending_buf[G.d_buf + 2 * wt] << 8 | G.pending_buf[G.d_buf + 2 * wt + 1], st = G.pending_buf[G.l_buf + wt], wt++, pt === 0 ? T(G, st, Z) : (T(G, (mt = O[st]) + 256 + 1, Z), (bt = S[mt]) !== 0 && I(G, st -= m[mt], bt), T(G, mt = E(--pt), ut), (bt = c[mt]) !== 0 && I(G, pt -= x[mt], bt));
+          pt = G.pending_buf[G.d_buf + 2 * wt] << 8 | G.pending_buf[G.d_buf + 2 * wt + 1], st = G.pending_buf[G.l_buf + wt], wt++, pt === 0 ? T(G, st, Z) : (T(G, (mt = E[st]) + 256 + 1, Z), (bt = O[mt]) !== 0 && I(G, st -= m[mt], bt), T(G, mt = P(--pt), ut), (bt = l[mt]) !== 0 && I(G, pt -= x[mt], bt));
         while (wt < G.last_lit);
         T(G, 256, Z);
       }
@@ -6733,17 +6733,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       g._tr_init = function(G) {
         lt || (function() {
           var Z, ut, pt, st, mt, bt = new Array(16);
-          for (pt = 0, st = 0; st < 28; st++) for (m[st] = pt, Z = 0; Z < 1 << S[st]; Z++) O[pt++] = st;
-          for (O[pt - 1] = st, mt = 0, st = 0; st < 16; st++) for (x[st] = mt, Z = 0; Z < 1 << c[st]; Z++) j[mt++] = st;
-          for (mt >>= 7; st < 30; st++) for (x[st] = mt << 7, Z = 0; Z < 1 << c[st] - 7; Z++) j[256 + mt++] = st;
+          for (pt = 0, st = 0; st < 28; st++) for (m[st] = pt, Z = 0; Z < 1 << O[st]; Z++) E[pt++] = st;
+          for (E[pt - 1] = st, mt = 0, st = 0; st < 16; st++) for (x[st] = mt, Z = 0; Z < 1 << l[st]; Z++) j[mt++] = st;
+          for (mt >>= 7; st < 30; st++) for (x[st] = mt << 7, Z = 0; Z < 1 << l[st] - 7; Z++) j[256 + mt++] = st;
           for (ut = 0; ut <= 15; ut++) bt[ut] = 0;
           for (Z = 0; Z <= 143; ) o[2 * Z + 1] = 8, Z++, bt[8]++;
           for (; Z <= 255; ) o[2 * Z + 1] = 9, Z++, bt[9]++;
           for (; Z <= 279; ) o[2 * Z + 1] = 7, Z++, bt[7]++;
           for (; Z <= 287; ) o[2 * Z + 1] = 8, Z++, bt[8]++;
           for (A(o, 287, bt), Z = 0; Z < 30; Z++) e[2 * Z + 1] = 5, e[2 * Z] = M(Z, 5);
-          _ = new R(o, S, 257, 286, 15), h = new R(e, c, 0, 30, 15), P = new R(new Array(0), i, 0, 19, 7);
-        }(), lt = !0), G.l_desc = new f(G.dyn_ltree, _), G.d_desc = new f(G.dyn_dtree, h), G.bl_desc = new f(G.bl_tree, P), G.bi_buf = 0, G.bi_valid = 0, F(G);
+          _ = new R(o, O, 257, 286, 15), h = new R(e, l, 0, 30, 15), S = new R(new Array(0), i, 0, 19, 7);
+        }(), lt = !0), G.l_desc = new c(G.dyn_ltree, _), G.d_desc = new c(G.dyn_dtree, h), G.bl_desc = new c(G.bl_tree, S), G.bi_buf = 0, G.bi_valid = 0, F(G);
       }, g._tr_stored_block = dt, g._tr_flush_block = function(G, Z, ut, pt) {
         var st, mt, bt = 0;
         G.level > 0 ? (G.strm.data_type === 2 && (G.strm.data_type = function(wt) {
@@ -6762,91 +6762,91 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           it(wt, wt.dyn_ltree, C - 1), it(wt, wt.dyn_dtree, U - 1);
         }(G, G.l_desc.max_code + 1, G.d_desc.max_code + 1, bt + 1), nt(G, G.dyn_ltree, G.dyn_dtree)), F(G), pt && z(G);
       }, g._tr_tally = function(G, Z, ut) {
-        return G.pending_buf[G.d_buf + 2 * G.last_lit] = Z >>> 8 & 255, G.pending_buf[G.d_buf + 2 * G.last_lit + 1] = 255 & Z, G.pending_buf[G.l_buf + G.last_lit] = 255 & ut, G.last_lit++, Z === 0 ? G.dyn_ltree[2 * ut]++ : (G.matches++, Z--, G.dyn_ltree[2 * (O[ut] + 256 + 1)]++, G.dyn_dtree[2 * E(Z)]++), G.last_lit === G.lit_bufsize - 1;
+        return G.pending_buf[G.d_buf + 2 * G.last_lit] = Z >>> 8 & 255, G.pending_buf[G.d_buf + 2 * G.last_lit + 1] = 255 & Z, G.pending_buf[G.l_buf + G.last_lit] = 255 & ut, G.last_lit++, Z === 0 ? G.dyn_ltree[2 * ut]++ : (G.matches++, Z--, G.dyn_ltree[2 * (E[ut] + 256 + 1)]++, G.dyn_dtree[2 * P(Z)]++), G.last_lit === G.lit_bufsize - 1;
       }, g._tr_align = function(G) {
         I(G, 2, 3), T(G, 256, o), function(Z) {
           Z.bi_valid === 16 ? (w(Z, Z.bi_buf), Z.bi_buf = 0, Z.bi_valid = 0) : Z.bi_valid >= 8 && (Z.pending_buf[Z.pending++] = 255 & Z.bi_buf, Z.bi_buf >>= 8, Z.bi_valid -= 8);
         }(G);
       };
     }, function(N, g, t) {
-      var n = t(154), u = t(31), S = t(122), c = t(124), i = t(96), s = t(123), o = t(157), e = Object.prototype.toString;
+      var n = t(154), u = t(31), O = t(122), l = t(124), i = t(96), s = t(123), o = t(157), e = Object.prototype.toString;
       function j(m) {
         if (!(this instanceof j)) return new j(m);
         this.options = u.assign({ chunkSize: 16384, windowBits: 0, to: "" }, m || {});
         var _ = this.options;
         _.raw && _.windowBits >= 0 && _.windowBits < 16 && (_.windowBits = -_.windowBits, _.windowBits === 0 && (_.windowBits = -15)), !(_.windowBits >= 0 && _.windowBits < 16) || m && m.windowBits || (_.windowBits += 32), _.windowBits > 15 && _.windowBits < 48 && (15 & _.windowBits) == 0 && (_.windowBits |= 15), this.err = 0, this.msg = "", this.ended = !1, this.chunks = [], this.strm = new s(), this.strm.avail_out = 0;
         var h = n.inflateInit2(this.strm, _.windowBits);
-        if (h !== c.Z_OK) throw new Error(i[h]);
-        if (this.header = new o(), n.inflateGetHeader(this.strm, this.header), _.dictionary && (typeof _.dictionary == "string" ? _.dictionary = S.string2buf(_.dictionary) : e.call(_.dictionary) === "[object ArrayBuffer]" && (_.dictionary = new Uint8Array(_.dictionary)), _.raw && (h = n.inflateSetDictionary(this.strm, _.dictionary)) !== c.Z_OK)) throw new Error(i[h]);
+        if (h !== l.Z_OK) throw new Error(i[h]);
+        if (this.header = new o(), n.inflateGetHeader(this.strm, this.header), _.dictionary && (typeof _.dictionary == "string" ? _.dictionary = O.string2buf(_.dictionary) : e.call(_.dictionary) === "[object ArrayBuffer]" && (_.dictionary = new Uint8Array(_.dictionary)), _.raw && (h = n.inflateSetDictionary(this.strm, _.dictionary)) !== l.Z_OK)) throw new Error(i[h]);
       }
-      function O(m, _) {
+      function E(m, _) {
         var h = new j(_);
         if (h.push(m, !0), h.err) throw h.msg || i[h.err];
         return h.result;
       }
       j.prototype.push = function(m, _) {
-        var h, P, x, R, f, E = this.strm, w = this.options.chunkSize, I = this.options.dictionary, T = !1;
+        var h, S, x, R, c, P = this.strm, w = this.options.chunkSize, I = this.options.dictionary, T = !1;
         if (this.ended) return !1;
-        P = _ === ~~_ ? _ : _ === !0 ? c.Z_FINISH : c.Z_NO_FLUSH, typeof m == "string" ? E.input = S.binstring2buf(m) : e.call(m) === "[object ArrayBuffer]" ? E.input = new Uint8Array(m) : E.input = m, E.next_in = 0, E.avail_in = E.input.length;
+        S = _ === ~~_ ? _ : _ === !0 ? l.Z_FINISH : l.Z_NO_FLUSH, typeof m == "string" ? P.input = O.binstring2buf(m) : e.call(m) === "[object ArrayBuffer]" ? P.input = new Uint8Array(m) : P.input = m, P.next_in = 0, P.avail_in = P.input.length;
         do {
-          if (E.avail_out === 0 && (E.output = new u.Buf8(w), E.next_out = 0, E.avail_out = w), (h = n.inflate(E, c.Z_NO_FLUSH)) === c.Z_NEED_DICT && I && (h = n.inflateSetDictionary(this.strm, I)), h === c.Z_BUF_ERROR && T === !0 && (h = c.Z_OK, T = !1), h !== c.Z_STREAM_END && h !== c.Z_OK) return this.onEnd(h), this.ended = !0, !1;
-          E.next_out && (E.avail_out !== 0 && h !== c.Z_STREAM_END && (E.avail_in !== 0 || P !== c.Z_FINISH && P !== c.Z_SYNC_FLUSH) || (this.options.to === "string" ? (x = S.utf8border(E.output, E.next_out), R = E.next_out - x, f = S.buf2string(E.output, x), E.next_out = R, E.avail_out = w - R, R && u.arraySet(E.output, E.output, x, R, 0), this.onData(f)) : this.onData(u.shrinkBuf(E.output, E.next_out)))), E.avail_in === 0 && E.avail_out === 0 && (T = !0);
-        } while ((E.avail_in > 0 || E.avail_out === 0) && h !== c.Z_STREAM_END);
-        return h === c.Z_STREAM_END && (P = c.Z_FINISH), P === c.Z_FINISH ? (h = n.inflateEnd(this.strm), this.onEnd(h), this.ended = !0, h === c.Z_OK) : P !== c.Z_SYNC_FLUSH || (this.onEnd(c.Z_OK), E.avail_out = 0, !0);
+          if (P.avail_out === 0 && (P.output = new u.Buf8(w), P.next_out = 0, P.avail_out = w), (h = n.inflate(P, l.Z_NO_FLUSH)) === l.Z_NEED_DICT && I && (h = n.inflateSetDictionary(this.strm, I)), h === l.Z_BUF_ERROR && T === !0 && (h = l.Z_OK, T = !1), h !== l.Z_STREAM_END && h !== l.Z_OK) return this.onEnd(h), this.ended = !0, !1;
+          P.next_out && (P.avail_out !== 0 && h !== l.Z_STREAM_END && (P.avail_in !== 0 || S !== l.Z_FINISH && S !== l.Z_SYNC_FLUSH) || (this.options.to === "string" ? (x = O.utf8border(P.output, P.next_out), R = P.next_out - x, c = O.buf2string(P.output, x), P.next_out = R, P.avail_out = w - R, R && u.arraySet(P.output, P.output, x, R, 0), this.onData(c)) : this.onData(u.shrinkBuf(P.output, P.next_out)))), P.avail_in === 0 && P.avail_out === 0 && (T = !0);
+        } while ((P.avail_in > 0 || P.avail_out === 0) && h !== l.Z_STREAM_END);
+        return h === l.Z_STREAM_END && (S = l.Z_FINISH), S === l.Z_FINISH ? (h = n.inflateEnd(this.strm), this.onEnd(h), this.ended = !0, h === l.Z_OK) : S !== l.Z_SYNC_FLUSH || (this.onEnd(l.Z_OK), P.avail_out = 0, !0);
       }, j.prototype.onData = function(m) {
         this.chunks.push(m);
       }, j.prototype.onEnd = function(m) {
-        m === c.Z_OK && (this.options.to === "string" ? this.result = this.chunks.join("") : this.result = u.flattenChunks(this.chunks)), this.chunks = [], this.err = m, this.msg = this.strm.msg;
-      }, g.Inflate = j, g.inflate = O, g.inflateRaw = function(m, _) {
-        return (_ = _ || {}).raw = !0, O(m, _);
-      }, g.ungzip = O;
+        m === l.Z_OK && (this.options.to === "string" ? this.result = this.chunks.join("") : this.result = u.flattenChunks(this.chunks)), this.chunks = [], this.err = m, this.msg = this.strm.msg;
+      }, g.Inflate = j, g.inflate = E, g.inflateRaw = function(m, _) {
+        return (_ = _ || {}).raw = !0, E(m, _);
+      }, g.ungzip = E;
     }, function(N, g, t) {
-      var n = t(31), u = t(120), S = t(121), c = t(155), i = t(156);
-      function s(f) {
-        return (f >>> 24 & 255) + (f >>> 8 & 65280) + ((65280 & f) << 8) + ((255 & f) << 24);
+      var n = t(31), u = t(120), O = t(121), l = t(155), i = t(156);
+      function s(c) {
+        return (c >>> 24 & 255) + (c >>> 8 & 65280) + ((65280 & c) << 8) + ((255 & c) << 24);
       }
       function o() {
         this.mode = 0, this.last = !1, this.wrap = 0, this.havedict = !1, this.flags = 0, this.dmax = 0, this.check = 0, this.total = 0, this.head = null, this.wbits = 0, this.wsize = 0, this.whave = 0, this.wnext = 0, this.window = null, this.hold = 0, this.bits = 0, this.length = 0, this.offset = 0, this.extra = 0, this.lencode = null, this.distcode = null, this.lenbits = 0, this.distbits = 0, this.ncode = 0, this.nlen = 0, this.ndist = 0, this.have = 0, this.next = null, this.lens = new n.Buf16(320), this.work = new n.Buf16(288), this.lendyn = null, this.distdyn = null, this.sane = 0, this.back = 0, this.was = 0;
       }
-      function e(f) {
-        var E;
-        return f && f.state ? (E = f.state, f.total_in = f.total_out = E.total = 0, f.msg = "", E.wrap && (f.adler = 1 & E.wrap), E.mode = 1, E.last = 0, E.havedict = 0, E.dmax = 32768, E.head = null, E.hold = 0, E.bits = 0, E.lencode = E.lendyn = new n.Buf32(852), E.distcode = E.distdyn = new n.Buf32(592), E.sane = 1, E.back = -1, 0) : -2;
+      function e(c) {
+        var P;
+        return c && c.state ? (P = c.state, c.total_in = c.total_out = P.total = 0, c.msg = "", P.wrap && (c.adler = 1 & P.wrap), P.mode = 1, P.last = 0, P.havedict = 0, P.dmax = 32768, P.head = null, P.hold = 0, P.bits = 0, P.lencode = P.lendyn = new n.Buf32(852), P.distcode = P.distdyn = new n.Buf32(592), P.sane = 1, P.back = -1, 0) : -2;
       }
-      function j(f) {
-        var E;
-        return f && f.state ? ((E = f.state).wsize = 0, E.whave = 0, E.wnext = 0, e(f)) : -2;
+      function j(c) {
+        var P;
+        return c && c.state ? ((P = c.state).wsize = 0, P.whave = 0, P.wnext = 0, e(c)) : -2;
       }
-      function O(f, E) {
+      function E(c, P) {
         var w, I;
-        return f && f.state ? (I = f.state, E < 0 ? (w = 0, E = -E) : (w = 1 + (E >> 4), E < 48 && (E &= 15)), E && (E < 8 || E > 15) ? -2 : (I.window !== null && I.wbits !== E && (I.window = null), I.wrap = w, I.wbits = E, j(f))) : -2;
+        return c && c.state ? (I = c.state, P < 0 ? (w = 0, P = -P) : (w = 1 + (P >> 4), P < 48 && (P &= 15)), P && (P < 8 || P > 15) ? -2 : (I.window !== null && I.wbits !== P && (I.window = null), I.wrap = w, I.wbits = P, j(c))) : -2;
       }
-      function m(f, E) {
+      function m(c, P) {
         var w, I;
-        return f ? (I = new o(), f.state = I, I.window = null, (w = O(f, E)) !== 0 && (f.state = null), w) : -2;
+        return c ? (I = new o(), c.state = I, I.window = null, (w = E(c, P)) !== 0 && (c.state = null), w) : -2;
       }
-      var _, h, P = !0;
-      function x(f) {
-        if (P) {
-          var E;
-          for (_ = new n.Buf32(512), h = new n.Buf32(32), E = 0; E < 144; ) f.lens[E++] = 8;
-          for (; E < 256; ) f.lens[E++] = 9;
-          for (; E < 280; ) f.lens[E++] = 7;
-          for (; E < 288; ) f.lens[E++] = 8;
-          for (i(1, f.lens, 0, 288, _, 0, f.work, { bits: 9 }), E = 0; E < 32; ) f.lens[E++] = 5;
-          i(2, f.lens, 0, 32, h, 0, f.work, { bits: 5 }), P = !1;
+      var _, h, S = !0;
+      function x(c) {
+        if (S) {
+          var P;
+          for (_ = new n.Buf32(512), h = new n.Buf32(32), P = 0; P < 144; ) c.lens[P++] = 8;
+          for (; P < 256; ) c.lens[P++] = 9;
+          for (; P < 280; ) c.lens[P++] = 7;
+          for (; P < 288; ) c.lens[P++] = 8;
+          for (i(1, c.lens, 0, 288, _, 0, c.work, { bits: 9 }), P = 0; P < 32; ) c.lens[P++] = 5;
+          i(2, c.lens, 0, 32, h, 0, c.work, { bits: 5 }), S = !1;
         }
-        f.lencode = _, f.lenbits = 9, f.distcode = h, f.distbits = 5;
+        c.lencode = _, c.lenbits = 9, c.distcode = h, c.distbits = 5;
       }
-      function R(f, E, w, I) {
-        var T, M = f.state;
-        return M.window === null && (M.wsize = 1 << M.wbits, M.wnext = 0, M.whave = 0, M.window = new n.Buf8(M.wsize)), I >= M.wsize ? (n.arraySet(M.window, E, w - M.wsize, M.wsize, 0), M.wnext = 0, M.whave = M.wsize) : ((T = M.wsize - M.wnext) > I && (T = I), n.arraySet(M.window, E, w - I, T, M.wnext), (I -= T) ? (n.arraySet(M.window, E, w - I, I, 0), M.wnext = I, M.whave = M.wsize) : (M.wnext += T, M.wnext === M.wsize && (M.wnext = 0), M.whave < M.wsize && (M.whave += T))), 0;
+      function R(c, P, w, I) {
+        var T, M = c.state;
+        return M.window === null && (M.wsize = 1 << M.wbits, M.wnext = 0, M.whave = 0, M.window = new n.Buf8(M.wsize)), I >= M.wsize ? (n.arraySet(M.window, P, w - M.wsize, M.wsize, 0), M.wnext = 0, M.whave = M.wsize) : ((T = M.wsize - M.wnext) > I && (T = I), n.arraySet(M.window, P, w - I, T, M.wnext), (I -= T) ? (n.arraySet(M.window, P, w - I, I, 0), M.wnext = I, M.whave = M.wsize) : (M.wnext += T, M.wnext === M.wsize && (M.wnext = 0), M.whave < M.wsize && (M.whave += T))), 0;
       }
-      g.inflateReset = j, g.inflateReset2 = O, g.inflateResetKeep = e, g.inflateInit = function(f) {
-        return m(f, 15);
-      }, g.inflateInit2 = m, g.inflate = function(f, E) {
+      g.inflateReset = j, g.inflateReset2 = E, g.inflateResetKeep = e, g.inflateInit = function(c) {
+        return m(c, 15);
+      }, g.inflateInit2 = m, g.inflate = function(c, P) {
         var w, I, T, M, A, F, z, $, H, nt, ot, V, it, lt, dt, G, Z, ut, pt, st, mt, bt, wt, C, U = 0, L = new n.Buf8(4), K = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15];
-        if (!f || !f.state || !f.output || !f.input && f.avail_in !== 0) return -2;
-        (w = f.state).mode === 12 && (w.mode = 13), A = f.next_out, T = f.output, z = f.avail_out, M = f.next_in, I = f.input, F = f.avail_in, $ = w.hold, H = w.bits, nt = F, ot = z, bt = 0;
+        if (!c || !c.state || !c.output || !c.input && c.avail_in !== 0) return -2;
+        (w = c.state).mode === 12 && (w.mode = 13), A = c.next_out, T = c.output, z = c.avail_out, M = c.next_in, I = c.input, F = c.avail_in, $ = w.hold, H = w.bits, nt = F, ot = z, bt = 0;
         t: for (; ; ) switch (w.mode) {
           case 1:
             if (w.wrap === 0) {
@@ -6858,23 +6858,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               F--, $ += I[M++] << H, H += 8;
             }
             if (2 & w.wrap && $ === 35615) {
-              w.check = 0, L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = S(w.check, L, 2, 0), $ = 0, H = 0, w.mode = 2;
+              w.check = 0, L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = O(w.check, L, 2, 0), $ = 0, H = 0, w.mode = 2;
               break;
             }
             if (w.flags = 0, w.head && (w.head.done = !1), !(1 & w.wrap) || (((255 & $) << 8) + ($ >> 8)) % 31) {
-              f.msg = "incorrect header check", w.mode = 30;
+              c.msg = "incorrect header check", w.mode = 30;
               break;
             }
             if ((15 & $) != 8) {
-              f.msg = "unknown compression method", w.mode = 30;
+              c.msg = "unknown compression method", w.mode = 30;
               break;
             }
             if (H -= 4, mt = 8 + (15 & ($ >>>= 4)), w.wbits === 0) w.wbits = mt;
             else if (mt > w.wbits) {
-              f.msg = "invalid window size", w.mode = 30;
+              c.msg = "invalid window size", w.mode = 30;
               break;
             }
-            w.dmax = 1 << mt, f.adler = w.check = 1, w.mode = 512 & $ ? 10 : 12, $ = 0, H = 0;
+            w.dmax = 1 << mt, c.adler = w.check = 1, w.mode = 512 & $ ? 10 : 12, $ = 0, H = 0;
             break;
           case 2:
             for (; H < 16; ) {
@@ -6882,37 +6882,37 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               F--, $ += I[M++] << H, H += 8;
             }
             if (w.flags = $, (255 & w.flags) != 8) {
-              f.msg = "unknown compression method", w.mode = 30;
+              c.msg = "unknown compression method", w.mode = 30;
               break;
             }
             if (57344 & w.flags) {
-              f.msg = "unknown header flags set", w.mode = 30;
+              c.msg = "unknown header flags set", w.mode = 30;
               break;
             }
-            w.head && (w.head.text = $ >> 8 & 1), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = S(w.check, L, 2, 0)), $ = 0, H = 0, w.mode = 3;
+            w.head && (w.head.text = $ >> 8 & 1), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = O(w.check, L, 2, 0)), $ = 0, H = 0, w.mode = 3;
           case 3:
             for (; H < 32; ) {
               if (F === 0) break t;
               F--, $ += I[M++] << H, H += 8;
             }
-            w.head && (w.head.time = $), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, L[2] = $ >>> 16 & 255, L[3] = $ >>> 24 & 255, w.check = S(w.check, L, 4, 0)), $ = 0, H = 0, w.mode = 4;
+            w.head && (w.head.time = $), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, L[2] = $ >>> 16 & 255, L[3] = $ >>> 24 & 255, w.check = O(w.check, L, 4, 0)), $ = 0, H = 0, w.mode = 4;
           case 4:
             for (; H < 16; ) {
               if (F === 0) break t;
               F--, $ += I[M++] << H, H += 8;
             }
-            w.head && (w.head.xflags = 255 & $, w.head.os = $ >> 8), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = S(w.check, L, 2, 0)), $ = 0, H = 0, w.mode = 5;
+            w.head && (w.head.xflags = 255 & $, w.head.os = $ >> 8), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = O(w.check, L, 2, 0)), $ = 0, H = 0, w.mode = 5;
           case 5:
             if (1024 & w.flags) {
               for (; H < 16; ) {
                 if (F === 0) break t;
                 F--, $ += I[M++] << H, H += 8;
               }
-              w.length = $, w.head && (w.head.extra_len = $), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = S(w.check, L, 2, 0)), $ = 0, H = 0;
+              w.length = $, w.head && (w.head.extra_len = $), 512 & w.flags && (L[0] = 255 & $, L[1] = $ >>> 8 & 255, w.check = O(w.check, L, 2, 0)), $ = 0, H = 0;
             } else w.head && (w.head.extra = null);
             w.mode = 6;
           case 6:
-            if (1024 & w.flags && ((V = w.length) > F && (V = F), V && (w.head && (mt = w.head.extra_len - w.length, w.head.extra || (w.head.extra = new Array(w.head.extra_len)), n.arraySet(w.head.extra, I, M, V, mt)), 512 & w.flags && (w.check = S(w.check, I, V, M)), F -= V, M += V, w.length -= V), w.length)) break t;
+            if (1024 & w.flags && ((V = w.length) > F && (V = F), V && (w.head && (mt = w.head.extra_len - w.length, w.head.extra || (w.head.extra = new Array(w.head.extra_len)), n.arraySet(w.head.extra, I, M, V, mt)), 512 & w.flags && (w.check = O(w.check, I, V, M)), F -= V, M += V, w.length -= V), w.length)) break t;
             w.length = 0, w.mode = 7;
           case 7:
             if (2048 & w.flags) {
@@ -6921,7 +6921,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               do
                 mt = I[M + V++], w.head && mt && w.length < 65536 && (w.head.name += String.fromCharCode(mt));
               while (mt && V < F);
-              if (512 & w.flags && (w.check = S(w.check, I, V, M)), F -= V, M += V, mt) break t;
+              if (512 & w.flags && (w.check = O(w.check, I, V, M)), F -= V, M += V, mt) break t;
             } else w.head && (w.head.name = null);
             w.length = 0, w.mode = 8;
           case 8:
@@ -6931,7 +6931,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               do
                 mt = I[M + V++], w.head && mt && w.length < 65536 && (w.head.comment += String.fromCharCode(mt));
               while (mt && V < F);
-              if (512 & w.flags && (w.check = S(w.check, I, V, M)), F -= V, M += V, mt) break t;
+              if (512 & w.flags && (w.check = O(w.check, I, V, M)), F -= V, M += V, mt) break t;
             } else w.head && (w.head.comment = null);
             w.mode = 9;
           case 9:
@@ -6941,24 +6941,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 F--, $ += I[M++] << H, H += 8;
               }
               if ($ !== (65535 & w.check)) {
-                f.msg = "header crc mismatch", w.mode = 30;
+                c.msg = "header crc mismatch", w.mode = 30;
                 break;
               }
               $ = 0, H = 0;
             }
-            w.head && (w.head.hcrc = w.flags >> 9 & 1, w.head.done = !0), f.adler = w.check = 0, w.mode = 12;
+            w.head && (w.head.hcrc = w.flags >> 9 & 1, w.head.done = !0), c.adler = w.check = 0, w.mode = 12;
             break;
           case 10:
             for (; H < 32; ) {
               if (F === 0) break t;
               F--, $ += I[M++] << H, H += 8;
             }
-            f.adler = w.check = s($), $ = 0, H = 0, w.mode = 11;
+            c.adler = w.check = s($), $ = 0, H = 0, w.mode = 11;
           case 11:
-            if (w.havedict === 0) return f.next_out = A, f.avail_out = z, f.next_in = M, f.avail_in = F, w.hold = $, w.bits = H, 2;
-            f.adler = w.check = 1, w.mode = 12;
+            if (w.havedict === 0) return c.next_out = A, c.avail_out = z, c.next_in = M, c.avail_in = F, w.hold = $, w.bits = H, 2;
+            c.adler = w.check = 1, w.mode = 12;
           case 12:
-            if (E === 5 || E === 6) break t;
+            if (P === 5 || P === 6) break t;
           case 13:
             if (w.last) {
               $ >>>= 7 & H, H -= 7 & H, w.mode = 27;
@@ -6973,7 +6973,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 w.mode = 14;
                 break;
               case 1:
-                if (x(w), w.mode = 20, E === 6) {
+                if (x(w), w.mode = 20, P === 6) {
                   $ >>>= 2, H -= 2;
                   break t;
                 }
@@ -6982,7 +6982,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 w.mode = 17;
                 break;
               case 3:
-                f.msg = "invalid block type", w.mode = 30;
+                c.msg = "invalid block type", w.mode = 30;
             }
             $ >>>= 2, H -= 2;
             break;
@@ -6992,10 +6992,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               F--, $ += I[M++] << H, H += 8;
             }
             if ((65535 & $) != ($ >>> 16 ^ 65535)) {
-              f.msg = "invalid stored block lengths", w.mode = 30;
+              c.msg = "invalid stored block lengths", w.mode = 30;
               break;
             }
-            if (w.length = 65535 & $, $ = 0, H = 0, w.mode = 15, E === 6) break t;
+            if (w.length = 65535 & $, $ = 0, H = 0, w.mode = 15, P === 6) break t;
           case 15:
             w.mode = 16;
           case 16:
@@ -7012,7 +7012,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               F--, $ += I[M++] << H, H += 8;
             }
             if (w.nlen = 257 + (31 & $), $ >>>= 5, H -= 5, w.ndist = 1 + (31 & $), $ >>>= 5, H -= 5, w.ncode = 4 + (15 & $), $ >>>= 4, H -= 4, w.nlen > 286 || w.ndist > 30) {
-              f.msg = "too many length or distance symbols", w.mode = 30;
+              c.msg = "too many length or distance symbols", w.mode = 30;
               break;
             }
             w.have = 0, w.mode = 18;
@@ -7026,7 +7026,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
             for (; w.have < 19; ) w.lens[K[w.have++]] = 0;
             if (w.lencode = w.lendyn, w.lenbits = 7, wt = { bits: w.lenbits }, bt = i(0, w.lens, 0, 19, w.lencode, 0, w.work, wt), w.lenbits = wt.bits, bt) {
-              f.msg = "invalid code lengths set", w.mode = 30;
+              c.msg = "invalid code lengths set", w.mode = 30;
               break;
             }
             w.have = 0, w.mode = 19;
@@ -7044,7 +7044,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                     F--, $ += I[M++] << H, H += 8;
                   }
                   if ($ >>>= dt, H -= dt, w.have === 0) {
-                    f.msg = "invalid bit length repeat", w.mode = 30;
+                    c.msg = "invalid bit length repeat", w.mode = 30;
                     break;
                   }
                   mt = w.lens[w.have - 1], V = 3 + (3 & $), $ >>>= 2, H -= 2;
@@ -7062,7 +7062,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                   H -= dt, mt = 0, V = 11 + (127 & ($ >>>= dt)), $ >>>= 7, H -= 7;
                 }
                 if (w.have + V > w.nlen + w.ndist) {
-                  f.msg = "invalid bit length repeat", w.mode = 30;
+                  c.msg = "invalid bit length repeat", w.mode = 30;
                   break;
                 }
                 for (; V--; ) w.lens[w.have++] = mt;
@@ -7070,23 +7070,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
             if (w.mode === 30) break;
             if (w.lens[256] === 0) {
-              f.msg = "invalid code -- missing end-of-block", w.mode = 30;
+              c.msg = "invalid code -- missing end-of-block", w.mode = 30;
               break;
             }
             if (w.lenbits = 9, wt = { bits: w.lenbits }, bt = i(1, w.lens, 0, w.nlen, w.lencode, 0, w.work, wt), w.lenbits = wt.bits, bt) {
-              f.msg = "invalid literal/lengths set", w.mode = 30;
+              c.msg = "invalid literal/lengths set", w.mode = 30;
               break;
             }
             if (w.distbits = 6, w.distcode = w.distdyn, wt = { bits: w.distbits }, bt = i(2, w.lens, w.nlen, w.ndist, w.distcode, 0, w.work, wt), w.distbits = wt.bits, bt) {
-              f.msg = "invalid distances set", w.mode = 30;
+              c.msg = "invalid distances set", w.mode = 30;
               break;
             }
-            if (w.mode = 20, E === 6) break t;
+            if (w.mode = 20, P === 6) break t;
           case 20:
             w.mode = 21;
           case 21:
             if (F >= 6 && z >= 258) {
-              f.next_out = A, f.avail_out = z, f.next_in = M, f.avail_in = F, w.hold = $, w.bits = H, c(f, ot), A = f.next_out, T = f.output, z = f.avail_out, M = f.next_in, I = f.input, F = f.avail_in, $ = w.hold, H = w.bits, w.mode === 12 && (w.back = -1);
+              c.next_out = A, c.avail_out = z, c.next_in = M, c.avail_in = F, w.hold = $, w.bits = H, l(c, ot), A = c.next_out, T = c.output, z = c.avail_out, M = c.next_in, I = c.input, F = c.avail_in, $ = w.hold, H = w.bits, w.mode === 12 && (w.back = -1);
               break;
             }
             for (w.back = 0; G = (U = w.lencode[$ & (1 << w.lenbits) - 1]) >>> 16 & 255, Z = 65535 & U, !((dt = U >>> 24) <= H); ) {
@@ -7109,7 +7109,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               break;
             }
             if (64 & G) {
-              f.msg = "invalid literal/length code", w.mode = 30;
+              c.msg = "invalid literal/length code", w.mode = 30;
               break;
             }
             w.extra = 15 & G, w.mode = 22;
@@ -7135,7 +7135,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               $ >>>= ut, H -= ut, w.back += ut;
             }
             if ($ >>>= dt, H -= dt, w.back += dt, 64 & G) {
-              f.msg = "invalid distance code", w.mode = 30;
+              c.msg = "invalid distance code", w.mode = 30;
               break;
             }
             w.offset = Z, w.extra = 15 & G, w.mode = 24;
@@ -7148,7 +7148,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               w.offset += $ & (1 << w.extra) - 1, $ >>>= w.extra, H -= w.extra, w.back += w.extra;
             }
             if (w.offset > w.dmax) {
-              f.msg = "invalid distance too far back", w.mode = 30;
+              c.msg = "invalid distance too far back", w.mode = 30;
               break;
             }
             w.mode = 25;
@@ -7156,7 +7156,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             if (z === 0) break t;
             if (V = ot - z, w.offset > V) {
               if ((V = w.offset - V) > w.whave && w.sane) {
-                f.msg = "invalid distance too far back", w.mode = 30;
+                c.msg = "invalid distance too far back", w.mode = 30;
                 break;
               }
               V > w.wnext ? (V -= w.wnext, it = w.wsize - V) : it = w.wnext - V, V > w.length && (V = w.length), lt = w.window;
@@ -7177,8 +7177,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 if (F === 0) break t;
                 F--, $ |= I[M++] << H, H += 8;
               }
-              if (ot -= z, f.total_out += ot, w.total += ot, ot && (f.adler = w.check = w.flags ? S(w.check, T, ot, A - ot) : u(w.check, T, ot, A - ot)), ot = z, (w.flags ? $ : s($)) !== w.check) {
-                f.msg = "incorrect data check", w.mode = 30;
+              if (ot -= z, c.total_out += ot, w.total += ot, ot && (c.adler = w.check = w.flags ? O(w.check, T, ot, A - ot) : u(w.check, T, ot, A - ot)), ot = z, (w.flags ? $ : s($)) !== w.check) {
+                c.msg = "incorrect data check", w.mode = 30;
                 break;
               }
               $ = 0, H = 0;
@@ -7191,7 +7191,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 F--, $ += I[M++] << H, H += 8;
               }
               if ($ !== (4294967295 & w.total)) {
-                f.msg = "incorrect length check", w.mode = 30;
+                c.msg = "incorrect length check", w.mode = 30;
                 break;
               }
               $ = 0, H = 0;
@@ -7209,60 +7209,60 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           default:
             return -2;
         }
-        return f.next_out = A, f.avail_out = z, f.next_in = M, f.avail_in = F, w.hold = $, w.bits = H, (w.wsize || ot !== f.avail_out && w.mode < 30 && (w.mode < 27 || E !== 4)) && R(f, f.output, f.next_out, ot - f.avail_out) ? (w.mode = 31, -4) : (nt -= f.avail_in, ot -= f.avail_out, f.total_in += nt, f.total_out += ot, w.total += ot, w.wrap && ot && (f.adler = w.check = w.flags ? S(w.check, T, ot, f.next_out - ot) : u(w.check, T, ot, f.next_out - ot)), f.data_type = w.bits + (w.last ? 64 : 0) + (w.mode === 12 ? 128 : 0) + (w.mode === 20 || w.mode === 15 ? 256 : 0), (nt === 0 && ot === 0 || E === 4) && bt === 0 && (bt = -5), bt);
-      }, g.inflateEnd = function(f) {
-        if (!f || !f.state) return -2;
-        var E = f.state;
-        return E.window && (E.window = null), f.state = null, 0;
-      }, g.inflateGetHeader = function(f, E) {
+        return c.next_out = A, c.avail_out = z, c.next_in = M, c.avail_in = F, w.hold = $, w.bits = H, (w.wsize || ot !== c.avail_out && w.mode < 30 && (w.mode < 27 || P !== 4)) && R(c, c.output, c.next_out, ot - c.avail_out) ? (w.mode = 31, -4) : (nt -= c.avail_in, ot -= c.avail_out, c.total_in += nt, c.total_out += ot, w.total += ot, w.wrap && ot && (c.adler = w.check = w.flags ? O(w.check, T, ot, c.next_out - ot) : u(w.check, T, ot, c.next_out - ot)), c.data_type = w.bits + (w.last ? 64 : 0) + (w.mode === 12 ? 128 : 0) + (w.mode === 20 || w.mode === 15 ? 256 : 0), (nt === 0 && ot === 0 || P === 4) && bt === 0 && (bt = -5), bt);
+      }, g.inflateEnd = function(c) {
+        if (!c || !c.state) return -2;
+        var P = c.state;
+        return P.window && (P.window = null), c.state = null, 0;
+      }, g.inflateGetHeader = function(c, P) {
         var w;
-        return f && f.state ? (2 & (w = f.state).wrap) == 0 ? -2 : (w.head = E, E.done = !1, 0) : -2;
-      }, g.inflateSetDictionary = function(f, E) {
-        var w, I = E.length;
-        return f && f.state ? (w = f.state).wrap !== 0 && w.mode !== 11 ? -2 : w.mode === 11 && u(1, E, I, 0) !== w.check ? -3 : R(f, E, I, I) ? (w.mode = 31, -4) : (w.havedict = 1, 0) : -2;
+        return c && c.state ? (2 & (w = c.state).wrap) == 0 ? -2 : (w.head = P, P.done = !1, 0) : -2;
+      }, g.inflateSetDictionary = function(c, P) {
+        var w, I = P.length;
+        return c && c.state ? (w = c.state).wrap !== 0 && w.mode !== 11 ? -2 : w.mode === 11 && u(1, P, I, 0) !== w.check ? -3 : R(c, P, I, I) ? (w.mode = 31, -4) : (w.havedict = 1, 0) : -2;
       }, g.inflateInfo = "pako inflate (from Nodeca project)";
     }, function(N, g, t) {
       N.exports = function(n, u) {
-        var S, c, i, s, o, e, j, O, m, _, h, P, x, R, f, E, w, I, T, M, A, F, z, $, H;
-        S = n.state, c = n.next_in, $ = n.input, i = c + (n.avail_in - 5), s = n.next_out, H = n.output, o = s - (u - n.avail_out), e = s + (n.avail_out - 257), j = S.dmax, O = S.wsize, m = S.whave, _ = S.wnext, h = S.window, P = S.hold, x = S.bits, R = S.lencode, f = S.distcode, E = (1 << S.lenbits) - 1, w = (1 << S.distbits) - 1;
+        var O, l, i, s, o, e, j, E, m, _, h, S, x, R, c, P, w, I, T, M, A, F, z, $, H;
+        O = n.state, l = n.next_in, $ = n.input, i = l + (n.avail_in - 5), s = n.next_out, H = n.output, o = s - (u - n.avail_out), e = s + (n.avail_out - 257), j = O.dmax, E = O.wsize, m = O.whave, _ = O.wnext, h = O.window, S = O.hold, x = O.bits, R = O.lencode, c = O.distcode, P = (1 << O.lenbits) - 1, w = (1 << O.distbits) - 1;
         t: do {
-          x < 15 && (P += $[c++] << x, x += 8, P += $[c++] << x, x += 8), I = R[P & E];
+          x < 15 && (S += $[l++] << x, x += 8, S += $[l++] << x, x += 8), I = R[S & P];
           e: for (; ; ) {
-            if (P >>>= T = I >>> 24, x -= T, (T = I >>> 16 & 255) === 0) H[s++] = 65535 & I;
+            if (S >>>= T = I >>> 24, x -= T, (T = I >>> 16 & 255) === 0) H[s++] = 65535 & I;
             else {
               if (!(16 & T)) {
                 if ((64 & T) == 0) {
-                  I = R[(65535 & I) + (P & (1 << T) - 1)];
+                  I = R[(65535 & I) + (S & (1 << T) - 1)];
                   continue e;
                 }
                 if (32 & T) {
-                  S.mode = 12;
+                  O.mode = 12;
                   break t;
                 }
-                n.msg = "invalid literal/length code", S.mode = 30;
+                n.msg = "invalid literal/length code", O.mode = 30;
                 break t;
               }
-              M = 65535 & I, (T &= 15) && (x < T && (P += $[c++] << x, x += 8), M += P & (1 << T) - 1, P >>>= T, x -= T), x < 15 && (P += $[c++] << x, x += 8, P += $[c++] << x, x += 8), I = f[P & w];
+              M = 65535 & I, (T &= 15) && (x < T && (S += $[l++] << x, x += 8), M += S & (1 << T) - 1, S >>>= T, x -= T), x < 15 && (S += $[l++] << x, x += 8, S += $[l++] << x, x += 8), I = c[S & w];
               r: for (; ; ) {
-                if (P >>>= T = I >>> 24, x -= T, !(16 & (T = I >>> 16 & 255))) {
+                if (S >>>= T = I >>> 24, x -= T, !(16 & (T = I >>> 16 & 255))) {
                   if ((64 & T) == 0) {
-                    I = f[(65535 & I) + (P & (1 << T) - 1)];
+                    I = c[(65535 & I) + (S & (1 << T) - 1)];
                     continue r;
                   }
-                  n.msg = "invalid distance code", S.mode = 30;
+                  n.msg = "invalid distance code", O.mode = 30;
                   break t;
                 }
-                if (A = 65535 & I, x < (T &= 15) && (P += $[c++] << x, (x += 8) < T && (P += $[c++] << x, x += 8)), (A += P & (1 << T) - 1) > j) {
-                  n.msg = "invalid distance too far back", S.mode = 30;
+                if (A = 65535 & I, x < (T &= 15) && (S += $[l++] << x, (x += 8) < T && (S += $[l++] << x, x += 8)), (A += S & (1 << T) - 1) > j) {
+                  n.msg = "invalid distance too far back", O.mode = 30;
                   break t;
                 }
-                if (P >>>= T, x -= T, A > (T = s - o)) {
-                  if ((T = A - T) > m && S.sane) {
-                    n.msg = "invalid distance too far back", S.mode = 30;
+                if (S >>>= T, x -= T, A > (T = s - o)) {
+                  if ((T = A - T) > m && O.sane) {
+                    n.msg = "invalid distance too far back", O.mode = 30;
                     break t;
                   }
                   if (F = 0, z = h, _ === 0) {
-                    if (F += O - T, T < M) {
+                    if (F += E - T, T < M) {
                       M -= T;
                       do
                         H[s++] = h[F++];
@@ -7270,7 +7270,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                       F = s - A, z = H;
                     }
                   } else if (_ < T) {
-                    if (F += O + _ - T, (T -= _) < M) {
+                    if (F += E + _ - T, (T -= _) < M) {
                       M -= T;
                       do
                         H[s++] = h[F++];
@@ -7304,40 +7304,40 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
             break;
           }
-        } while (c < i && s < e);
-        c -= M = x >> 3, P &= (1 << (x -= M << 3)) - 1, n.next_in = c, n.next_out = s, n.avail_in = c < i ? i - c + 5 : 5 - (c - i), n.avail_out = s < e ? e - s + 257 : 257 - (s - e), S.hold = P, S.bits = x;
+        } while (l < i && s < e);
+        l -= M = x >> 3, S &= (1 << (x -= M << 3)) - 1, n.next_in = l, n.next_out = s, n.avail_in = l < i ? i - l + 5 : 5 - (l - i), n.avail_out = s < e ? e - s + 257 : 257 - (s - e), O.hold = S, O.bits = x;
       };
     }, function(N, g, t) {
-      var n = t(31), u = [3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0], S = [16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 16, 72, 78], c = [1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0], i = [16, 16, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 64, 64];
-      N.exports = function(s, o, e, j, O, m, _, h) {
-        var P, x, R, f, E, w, I, T, M, A = h.bits, F = 0, z = 0, $ = 0, H = 0, nt = 0, ot = 0, V = 0, it = 0, lt = 0, dt = 0, G = null, Z = 0, ut = new n.Buf16(16), pt = new n.Buf16(16), st = null, mt = 0;
+      var n = t(31), u = [3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0], O = [16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 16, 72, 78], l = [1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577, 0, 0], i = [16, 16, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 29, 64, 64];
+      N.exports = function(s, o, e, j, E, m, _, h) {
+        var S, x, R, c, P, w, I, T, M, A = h.bits, F = 0, z = 0, $ = 0, H = 0, nt = 0, ot = 0, V = 0, it = 0, lt = 0, dt = 0, G = null, Z = 0, ut = new n.Buf16(16), pt = new n.Buf16(16), st = null, mt = 0;
         for (F = 0; F <= 15; F++) ut[F] = 0;
         for (z = 0; z < j; z++) ut[o[e + z]]++;
         for (nt = A, H = 15; H >= 1 && ut[H] === 0; H--) ;
-        if (nt > H && (nt = H), H === 0) return O[m++] = 20971520, O[m++] = 20971520, h.bits = 1, 0;
+        if (nt > H && (nt = H), H === 0) return E[m++] = 20971520, E[m++] = 20971520, h.bits = 1, 0;
         for ($ = 1; $ < H && ut[$] === 0; $++) ;
         for (nt < $ && (nt = $), it = 1, F = 1; F <= 15; F++) if (it <<= 1, (it -= ut[F]) < 0) return -1;
         if (it > 0 && (s === 0 || H !== 1)) return -1;
         for (pt[1] = 0, F = 1; F < 15; F++) pt[F + 1] = pt[F] + ut[F];
         for (z = 0; z < j; z++) o[e + z] !== 0 && (_[pt[o[e + z]]++] = z);
-        if (s === 0 ? (G = st = _, w = 19) : s === 1 ? (G = u, Z -= 257, st = S, mt -= 257, w = 256) : (G = c, st = i, w = -1), dt = 0, z = 0, F = $, E = m, ot = nt, V = 0, R = -1, f = (lt = 1 << nt) - 1, s === 1 && lt > 852 || s === 2 && lt > 592) return 1;
+        if (s === 0 ? (G = st = _, w = 19) : s === 1 ? (G = u, Z -= 257, st = O, mt -= 257, w = 256) : (G = l, st = i, w = -1), dt = 0, z = 0, F = $, P = m, ot = nt, V = 0, R = -1, c = (lt = 1 << nt) - 1, s === 1 && lt > 852 || s === 2 && lt > 592) return 1;
         for (; ; ) {
-          I = F - V, _[z] < w ? (T = 0, M = _[z]) : _[z] > w ? (T = st[mt + _[z]], M = G[Z + _[z]]) : (T = 96, M = 0), P = 1 << F - V, $ = x = 1 << ot;
+          I = F - V, _[z] < w ? (T = 0, M = _[z]) : _[z] > w ? (T = st[mt + _[z]], M = G[Z + _[z]]) : (T = 96, M = 0), S = 1 << F - V, $ = x = 1 << ot;
           do
-            O[E + (dt >> V) + (x -= P)] = I << 24 | T << 16 | M | 0;
+            E[P + (dt >> V) + (x -= S)] = I << 24 | T << 16 | M | 0;
           while (x !== 0);
-          for (P = 1 << F - 1; dt & P; ) P >>= 1;
-          if (P !== 0 ? (dt &= P - 1, dt += P) : dt = 0, z++, --ut[F] == 0) {
+          for (S = 1 << F - 1; dt & S; ) S >>= 1;
+          if (S !== 0 ? (dt &= S - 1, dt += S) : dt = 0, z++, --ut[F] == 0) {
             if (F === H) break;
             F = o[e + _[z]];
           }
-          if (F > nt && (dt & f) !== R) {
-            for (V === 0 && (V = nt), E += $, it = 1 << (ot = F - V); ot + V < H && !((it -= ut[ot + V]) <= 0); ) ot++, it <<= 1;
+          if (F > nt && (dt & c) !== R) {
+            for (V === 0 && (V = nt), P += $, it = 1 << (ot = F - V); ot + V < H && !((it -= ut[ot + V]) <= 0); ) ot++, it <<= 1;
             if (lt += 1 << ot, s === 1 && lt > 852 || s === 2 && lt > 592) return 1;
-            O[R = dt & f] = nt << 24 | ot << 16 | E - m | 0;
+            E[R = dt & c] = nt << 24 | ot << 16 | P - m | 0;
           }
         }
-        return dt !== 0 && (O[E + dt] = F - V << 24 | 64 << 16 | 0), h.bits = nt, 0;
+        return dt !== 0 && (E[P + dt] = F - V << 24 | 64 << 16 | 0), h.bits = nt, 0;
       };
     }, function(N, g, t) {
       N.exports = function() {
@@ -7345,34 +7345,34 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       };
     }, function(N, g) {
       N.exports = function(t, n) {
-        var u, S, c = t, i = n, s = c.length, o = i.length, e = !1, j = null, O = s + 1, m = [], _ = [], h = [], P = "", x = function(E, w, I) {
-          return { x: E, y: w, k: I };
-        }, R = function(E, w) {
-          return { elem: E, t: w };
-        }, f = function(E, w, I) {
+        var u, O, l = t, i = n, s = l.length, o = i.length, e = !1, j = null, E = s + 1, m = [], _ = [], h = [], S = "", x = function(P, w, I) {
+          return { x: P, y: w, k: I };
+        }, R = function(P, w) {
+          return { elem: P, t: w };
+        }, c = function(P, w, I) {
           var T, M, A;
-          for (T = w > I ? m[E - 1 + O] : m[E + 1 + O], M = (A = Math.max(w, I)) - E; M < s && A < o && c[M] === i[A]; ) ++M, ++A;
-          return m[E + O] = _.length, _[_.length] = new x(M, A, T), A;
+          for (T = w > I ? m[P - 1 + E] : m[P + 1 + E], M = (A = Math.max(w, I)) - P; M < s && A < o && l[M] === i[A]; ) ++M, ++A;
+          return m[P + E] = _.length, _[_.length] = new x(M, A, T), A;
         };
-        return s >= o && (u = c, S = s, c = i, i = u, s = o, o = S, e = !0, O = s + 1), { SES_DELETE: -1, SES_COMMON: 0, SES_ADD: 1, editdistance: function() {
+        return s >= o && (u = l, O = s, l = i, i = u, s = o, o = O, e = !0, E = s + 1), { SES_DELETE: -1, SES_COMMON: 0, SES_ADD: 1, editdistance: function() {
           return j;
         }, getlcs: function() {
-          return P;
+          return S;
         }, getses: function() {
           return h;
         }, compose: function() {
-          var E, w, I, T, M, A, F, z;
-          for (E = o - s, w = s + o + 3, I = {}, F = 0; F < w; ++F) I[F] = -1, m[F] = -1;
+          var P, w, I, T, M, A, F, z;
+          for (P = o - s, w = s + o + 3, I = {}, F = 0; F < w; ++F) I[F] = -1, m[F] = -1;
           T = -1;
           do {
-            for (z = -++T; z <= E - 1; ++z) I[z + O] = f(z, I[z - 1 + O] + 1, I[z + 1 + O]);
-            for (z = E + T; z >= E + 1; --z) I[z + O] = f(z, I[z - 1 + O] + 1, I[z + 1 + O]);
-            I[E + O] = f(E, I[E - 1 + O] + 1, I[E + 1 + O]);
-          } while (I[E + O] !== o);
-          for (j = E + 2 * T, M = m[E + O], A = []; M !== -1; ) A[A.length] = new x(_[M].x, _[M].y, null), M = _[M].k;
+            for (z = -++T; z <= P - 1; ++z) I[z + E] = c(z, I[z - 1 + E] + 1, I[z + 1 + E]);
+            for (z = P + T; z >= P + 1; --z) I[z + E] = c(z, I[z - 1 + E] + 1, I[z + 1 + E]);
+            I[P + E] = c(P, I[P - 1 + E] + 1, I[P + 1 + E]);
+          } while (I[P + E] !== o);
+          for (j = P + 2 * T, M = m[P + E], A = []; M !== -1; ) A[A.length] = new x(_[M].x, _[M].y, null), M = _[M].k;
           (function($) {
             var H, nt, ot;
-            for (H = nt = 0, ot = $.length - 1; ot >= 0; --ot) for (; H < $[ot].x || nt < $[ot].y; ) $[ot].y - $[ot].x > nt - H ? (h[h.length] = new R(i[nt], e ? -1 : 1), ++nt) : $[ot].y - $[ot].x < nt - H ? (h[h.length] = new R(c[H], e ? 1 : -1), ++H) : (h[h.length] = new R(c[H], 0), P += c[H], ++H, ++nt);
+            for (H = nt = 0, ot = $.length - 1; ot >= 0; --ot) for (; H < $[ot].x || nt < $[ot].y; ) $[ot].y - $[ot].x > nt - H ? (h[h.length] = new R(i[nt], e ? -1 : 1), ++nt) : $[ot].y - $[ot].x < nt - H ? (h[h.length] = new R(l[H], e ? 1 : -1), ++H) : (h[h.length] = new R(l[H], 0), S += l[H], ++H, ++nt);
           })(A);
         } };
       };
@@ -7381,27 +7381,27 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         t.d(g, "a", function() {
           return s;
         });
-        var u = t(165), S = t(0);
-        function c(e, j, O, m, _, h, P) {
+        var u = t(165), O = t(0);
+        function l(e, j, E, m, _, h, S) {
           try {
-            var x = e[h](P), R = x.value;
-          } catch (f) {
-            return void O(f);
+            var x = e[h](S), R = x.value;
+          } catch (c) {
+            return void E(c);
           }
           x.done ? j(R) : Promise.resolve(R).then(m, _);
         }
         function i(e) {
           return function() {
-            var j = this, O = arguments;
+            var j = this, E = arguments;
             return new Promise(function(m, _) {
-              var h = e.apply(j, O);
-              function P(R) {
-                c(h, m, _, P, x, "next", R);
+              var h = e.apply(j, E);
+              function S(R) {
+                l(h, m, _, S, x, "next", R);
               }
               function x(R) {
-                c(h, m, _, P, x, "throw", R);
+                l(h, m, _, S, x, "throw", R);
               }
-              P(void 0);
+              S(void 0);
             });
           };
         }
@@ -7411,9 +7411,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         function o() {
           return (o = i(function* ({ object: e }) {
             try {
-              Object(S.a)("object", e), e = typeof e == "string" ? n.from(e, "utf8") : n.from(e);
-              const j = "blob", { oid: O, object: m } = yield Object(u.a)({ type: "blob", format: "content", object: e });
-              return { oid: O, type: j, object: new Uint8Array(m), format: "wrapped" };
+              Object(O.a)("object", e), e = typeof e == "string" ? n.from(e, "utf8") : n.from(e);
+              const j = "blob", { oid: E, object: m } = yield Object(u.a)({ type: "blob", format: "content", object: e });
+              return { oid: E, type: j, object: new Uint8Array(m), format: "wrapped" };
             } catch (j) {
               throw j.caller = "git.hashBlob", j;
             }
@@ -7425,25 +7425,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         t.d(g, "a", function() {
           return m;
         });
-        var u = t(17), S = t(2), c = t(18), i = t(14), s = t(12), o = t(15), e = t(16);
-        function j(h, P, x, R, f, E, w) {
+        var u = t(17), O = t(2), l = t(18), i = t(14), s = t(12), o = t(15), e = t(16);
+        function j(h, S, x, R, c, P, w) {
           try {
-            var I = h[E](w), T = I.value;
+            var I = h[P](w), T = I.value;
           } catch (M) {
             return void x(M);
           }
-          I.done ? P(T) : Promise.resolve(T).then(R, f);
+          I.done ? S(T) : Promise.resolve(T).then(R, c);
         }
-        function O(h) {
+        function E(h) {
           return function() {
-            var P = this, x = arguments;
-            return new Promise(function(R, f) {
-              var E = h.apply(P, x);
+            var S = this, x = arguments;
+            return new Promise(function(R, c) {
+              var P = h.apply(S, x);
               function w(T) {
-                j(E, R, f, w, I, "next", T);
+                j(P, R, c, w, I, "next", T);
               }
               function I(T) {
-                j(E, R, f, w, I, "throw", T);
+                j(P, R, c, w, I, "throw", T);
               }
               w(void 0);
             });
@@ -7453,29 +7453,29 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return _.apply(this, arguments);
         }
         function _() {
-          return (_ = O(function* ({ fs: h, dir: P, gitdir: x = Object(e.join)(P, ".git"), type: R, object: f, format: E = "parsed", oid: w, encoding: I }) {
+          return (_ = E(function* ({ fs: h, dir: S, gitdir: x = Object(e.join)(S, ".git"), type: R, object: c, format: P = "parsed", oid: w, encoding: I }) {
             try {
-              const T = new S.a(h);
-              if (E === "parsed") {
+              const T = new O.a(h);
+              if (P === "parsed") {
                 switch (R) {
                   case "commit":
-                    f = i.a.from(f).toObject();
+                    c = i.a.from(c).toObject();
                     break;
                   case "tree":
-                    f = s.a.from(f).toObject();
+                    c = s.a.from(c).toObject();
                     break;
                   case "blob":
-                    f = n.from(f, I);
+                    c = n.from(c, I);
                     break;
                   case "tag":
-                    f = c.a.from(f).toObject();
+                    c = l.a.from(c).toObject();
                     break;
                   default:
                     throw new u.a(w || "", R, "blob|commit|tag|tree");
                 }
-                E = "content";
+                P = "content";
               }
-              return w = yield Object(o.a)({ fs: T, gitdir: x, type: R, object: f, oid: w, format: E });
+              return w = yield Object(o.a)({ fs: T, gitdir: x, type: R, object: c, oid: w, format: P });
             } catch (T) {
               throw T.caller = "git.writeObject", T;
             }
@@ -7483,19 +7483,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
-      function n(f, E, w, I, T, M, A) {
+      function n(c, P, w, I, T, M, A) {
         try {
-          var F = f[M](A), z = F.value;
+          var F = c[M](A), z = F.value;
         } catch ($) {
           return void w($);
         }
-        F.done ? E(z) : Promise.resolve(z).then(I, T);
+        F.done ? P(z) : Promise.resolve(z).then(I, T);
       }
-      function u(f) {
+      function u(c) {
         return function() {
-          var E = this, w = arguments;
+          var P = this, w = arguments;
           return new Promise(function(I, T) {
-            var M = f.apply(E, w);
+            var M = c.apply(P, w);
             function A(z) {
               n(M, I, T, A, F, "next", z);
             }
@@ -7506,29 +7506,29 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           });
         };
       }
-      function S(f) {
-        return c.apply(this, arguments);
+      function O(c) {
+        return l.apply(this, arguments);
       }
-      function c() {
-        return (c = u(function* ({ fs: f, gitdir: E, oid: w }) {
+      function l() {
+        return (l = u(function* ({ fs: c, gitdir: P, oid: w }) {
           const I = `objects/${w.slice(0, 2)}/${w.slice(2)}`;
-          return f.exists(`${E}/${I}`);
+          return c.exists(`${P}/${I}`);
         })).apply(this, arguments);
       }
       var i = t(4), s = t(81), o = t(16);
-      function e(f, E, w, I, T, M, A) {
+      function e(c, P, w, I, T, M, A) {
         try {
-          var F = f[M](A), z = F.value;
+          var F = c[M](A), z = F.value;
         } catch ($) {
           return void w($);
         }
-        F.done ? E(z) : Promise.resolve(z).then(I, T);
+        F.done ? P(z) : Promise.resolve(z).then(I, T);
       }
-      function j(f) {
+      function j(c) {
         return function() {
-          var E = this, w = arguments;
+          var P = this, w = arguments;
           return new Promise(function(I, T) {
-            var M = f.apply(E, w);
+            var M = c.apply(P, w);
             function A(z) {
               e(M, I, T, A, F, "next", z);
             }
@@ -7539,15 +7539,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           });
         };
       }
-      function O(f) {
+      function E(c) {
         return m.apply(this, arguments);
       }
       function m() {
-        return (m = j(function* ({ fs: f, cache: E, gitdir: w, oid: I, getExternalRefDelta: T }) {
-          let M = yield f.readdir(Object(o.join)(w, "objects/pack"));
+        return (m = j(function* ({ fs: c, cache: P, gitdir: w, oid: I, getExternalRefDelta: T }) {
+          let M = yield c.readdir(Object(o.join)(w, "objects/pack"));
           M = M.filter((A) => A.endsWith(".idx"));
           for (const A of M) {
-            const F = `${w}/objects/pack/${A}`, z = yield Object(s.a)({ fs: f, cache: E, filename: F, getExternalRefDelta: T });
+            const F = `${w}/objects/pack/${A}`, z = yield Object(s.a)({ fs: c, cache: P, filename: F, getExternalRefDelta: T });
             if (z.error) throw new i.a(z.error);
             if (z.offsets.has(I)) return !0;
           }
@@ -7555,19 +7555,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var _ = t(7);
-      function h(f, E, w, I, T, M, A) {
+      function h(c, P, w, I, T, M, A) {
         try {
-          var F = f[M](A), z = F.value;
+          var F = c[M](A), z = F.value;
         } catch ($) {
           return void w($);
         }
-        F.done ? E(z) : Promise.resolve(z).then(I, T);
+        F.done ? P(z) : Promise.resolve(z).then(I, T);
       }
-      function P(f) {
+      function S(c) {
         return function() {
-          var E = this, w = arguments;
+          var P = this, w = arguments;
           return new Promise(function(I, T) {
-            var M = f.apply(E, w);
+            var M = c.apply(P, w);
             function A(z) {
               h(M, I, T, A, F, "next", z);
             }
@@ -7578,14 +7578,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           });
         };
       }
-      function x(f) {
+      function x(c) {
         return R.apply(this, arguments);
       }
       function R() {
-        return (R = P(function* ({ fs: f, cache: E, gitdir: w, oid: I, format: T = "content" }) {
-          const M = (F) => Object(_.a)({ fs: f, cache: E, gitdir: w, oid: F });
-          let A = yield S({ fs: f, gitdir: w, oid: I });
-          return A || (A = yield O({ fs: f, cache: E, gitdir: w, oid: I, getExternalRefDelta: M })), A;
+        return (R = S(function* ({ fs: c, cache: P, gitdir: w, oid: I, format: T = "content" }) {
+          const M = (F) => Object(_.a)({ fs: c, cache: P, gitdir: w, oid: F });
+          let A = yield O({ fs: c, gitdir: w, oid: I });
+          return A || (A = yield E({ fs: c, cache: P, gitdir: w, oid: I, getExternalRefDelta: M })), A;
         })).apply(this, arguments);
       }
       t.d(g, "a", function() {
@@ -7596,108 +7596,108 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         t.d(g, "a", function() {
           return m;
         });
-        var u = t(11), S = t(13), c = t(69), i = t(16), s = t(34), o = t(19), e = t(25);
-        function j(_, h, P, x, R, f, E) {
+        var u = t(11), O = t(13), l = t(69), i = t(16), s = t(34), o = t(19), e = t(25);
+        function j(_, h, S, x, R, c, P) {
           try {
-            var w = _[f](E), I = w.value;
+            var w = _[c](P), I = w.value;
           } catch (T) {
-            return void P(T);
+            return void S(T);
           }
           w.done ? h(I) : Promise.resolve(I).then(x, R);
         }
-        function O(_) {
+        function E(_) {
           return function() {
-            var h = this, P = arguments;
+            var h = this, S = arguments;
             return new Promise(function(x, R) {
-              var f = _.apply(h, P);
-              function E(I) {
-                j(f, x, R, E, w, "next", I);
+              var c = _.apply(h, S);
+              function P(I) {
+                j(c, x, R, P, w, "next", I);
               }
               function w(I) {
-                j(f, x, R, E, w, "throw", I);
+                j(c, x, R, P, w, "throw", I);
               }
-              E(void 0);
+              P(void 0);
             });
           };
         }
         class m {
-          constructor({ fs: h, dir: P, gitdir: x, cache: R }) {
-            this.fs = h, this.cache = R, this.dir = P, this.gitdir = x;
-            const f = this;
+          constructor({ fs: h, dir: S, gitdir: x, cache: R }) {
+            this.fs = h, this.cache = R, this.dir = S, this.gitdir = x;
+            const c = this;
             this.ConstructEntry = class {
-              constructor(E) {
-                this._fullpath = E, this._type = !1, this._mode = !1, this._stat = !1, this._content = !1, this._oid = !1;
+              constructor(P) {
+                this._fullpath = P, this._type = !1, this._mode = !1, this._stat = !1, this._content = !1, this._oid = !1;
               }
               type() {
-                var E = this;
-                return O(function* () {
-                  return f.type(E);
+                var P = this;
+                return E(function* () {
+                  return c.type(P);
                 })();
               }
               mode() {
-                var E = this;
-                return O(function* () {
-                  return f.mode(E);
+                var P = this;
+                return E(function* () {
+                  return c.mode(P);
                 })();
               }
               stat() {
-                var E = this;
-                return O(function* () {
-                  return f.stat(E);
+                var P = this;
+                return E(function* () {
+                  return c.stat(P);
                 })();
               }
               content() {
-                var E = this;
-                return O(function* () {
-                  return f.content(E);
+                var P = this;
+                return E(function* () {
+                  return c.content(P);
                 })();
               }
               oid() {
-                var E = this;
-                return O(function* () {
-                  return f.oid(E);
+                var P = this;
+                return E(function* () {
+                  return c.oid(P);
                 })();
               }
             };
           }
           readdir(h) {
-            var P = this;
-            return O(function* () {
-              const x = h._fullpath, { fs: R, dir: f } = P, E = yield R.readdir(Object(i.join)(f, x));
-              return E === null ? null : E.map((w) => Object(i.join)(x, w));
+            var S = this;
+            return E(function* () {
+              const x = h._fullpath, { fs: R, dir: c } = S, P = yield R.readdir(Object(i.join)(c, x));
+              return P === null ? null : P.map((w) => Object(i.join)(x, w));
             })();
           }
           type(h) {
-            return O(function* () {
+            return E(function* () {
               return h._type === !1 && (yield h.stat()), h._type;
             })();
           }
           mode(h) {
-            return O(function* () {
+            return E(function* () {
               return h._mode === !1 && (yield h.stat()), h._mode;
             })();
           }
           stat(h) {
-            var P = this;
-            return O(function* () {
+            var S = this;
+            return E(function* () {
               if (h._stat === !1) {
-                const { fs: x, dir: R } = P;
-                let f = yield x.lstat(`${R}/${h._fullpath}`);
-                if (!f) throw new Error(`ENOENT: no such file or directory, lstat '${h._fullpath}'`);
-                let E = f.isDirectory() ? "tree" : "blob";
-                E !== "blob" || f.isFile() || f.isSymbolicLink() || (E = "special"), h._type = E, f = Object(s.a)(f), h._mode = f.mode, f.size === -1 && h._actualSize && (f.size = h._actualSize), h._stat = f;
+                const { fs: x, dir: R } = S;
+                let c = yield x.lstat(`${R}/${h._fullpath}`);
+                if (!c) throw new Error(`ENOENT: no such file or directory, lstat '${h._fullpath}'`);
+                let P = c.isDirectory() ? "tree" : "blob";
+                P !== "blob" || c.isFile() || c.isSymbolicLink() || (P = "special"), h._type = P, c = Object(s.a)(c), h._mode = c.mode, c.size === -1 && h._actualSize && (c.size = h._actualSize), h._stat = c;
               }
               return h._stat;
             })();
           }
           content(h) {
-            var P = this;
-            return O(function* () {
+            var S = this;
+            return E(function* () {
               if (h._content === !1) {
-                const { fs: x, dir: R, gitdir: f } = P;
+                const { fs: x, dir: R, gitdir: c } = S;
                 if ((yield h.type()) === "tree") h._content = void 0;
                 else {
-                  const E = yield u.a.get({ fs: x, gitdir: f }), w = yield E.get("core.autocrlf"), I = yield x.read(`${R}/${h._fullpath}`, { autocrlf: w });
+                  const P = yield u.a.get({ fs: x, gitdir: c }), w = yield P.get("core.autocrlf"), I = yield x.read(`${R}/${h._fullpath}`, { autocrlf: w });
                   h._actualSize = I.length, h._stat && h._stat.size === -1 && (h._stat.size = h._actualSize), h._content = new Uint8Array(I);
                 }
               }
@@ -7705,20 +7705,20 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             })();
           }
           oid(h) {
-            var P = this;
-            return O(function* () {
+            var S = this;
+            return E(function* () {
               if (h._oid === !1) {
-                const { fs: x, gitdir: R, cache: f } = P;
-                let E;
-                yield S.a.acquire({ fs: x, gitdir: R, cache: f }, function() {
-                  var w = O(function* (I) {
+                const { fs: x, gitdir: R, cache: c } = S;
+                let P;
+                yield O.a.acquire({ fs: x, gitdir: R, cache: c }, function() {
+                  var w = E(function* (I) {
                     const T = I.entriesMap.get(h._fullpath), M = yield h.stat(), A = yield u.a.get({ fs: x, gitdir: R }), F = yield A.get("core.filemode"), z = n === void 0 || n.platform !== "win32";
-                    !T || Object(c.a)(M, T, F, z) ? (yield h.content()) === void 0 ? E = void 0 : (E = yield Object(o.a)(e.a.wrap({ type: "blob", object: yield h.content() })), !T || E !== T.oid || F && M.mode !== T.mode || !Object(c.a)(M, T, F, z) || I.insert({ filepath: h._fullpath, stats: M, oid: E })) : E = T.oid;
+                    !T || Object(l.a)(M, T, F, z) ? (yield h.content()) === void 0 ? P = void 0 : (P = yield Object(o.a)(e.a.wrap({ type: "blob", object: yield h.content() })), !T || P !== T.oid || F && M.mode !== T.mode || !Object(l.a)(M, T, F, z) || I.insert({ filepath: h._fullpath, stats: M, oid: P })) : P = T.oid;
                   });
                   return function(I) {
                     return w.apply(this, arguments);
                   };
-                }()), h._oid = E;
+                }()), h._oid = P;
               }
               return h._oid;
             })();
@@ -7730,25 +7730,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         t.d(g, "a", function() {
           return m;
         });
-        var u = t(95), S = t(54), c = t(89), i = t(26), s = t(8), o = t(3), e = t(15);
-        function j(h, P, x, R, f, E, w) {
+        var u = t(95), O = t(54), l = t(89), i = t(26), s = t(8), o = t(3), e = t(15);
+        function j(h, S, x, R, c, P, w) {
           try {
-            var I = h[E](w), T = I.value;
+            var I = h[P](w), T = I.value;
           } catch (M) {
             return void x(M);
           }
-          I.done ? P(T) : Promise.resolve(T).then(R, f);
+          I.done ? S(T) : Promise.resolve(T).then(R, c);
         }
-        function O(h) {
+        function E(h) {
           return function() {
-            var P = this, x = arguments;
-            return new Promise(function(R, f) {
-              var E = h.apply(P, x);
+            var S = this, x = arguments;
+            return new Promise(function(R, c) {
+              var P = h.apply(S, x);
               function w(T) {
-                j(E, R, f, w, I, "next", T);
+                j(P, R, c, w, I, "next", T);
               }
               function I(T) {
-                j(E, R, f, w, I, "throw", T);
+                j(P, R, c, w, I, "throw", T);
               }
               w(void 0);
             });
@@ -7758,21 +7758,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return _.apply(this, arguments);
         }
         function _() {
-          return (_ = O(function* ({ fs: h, cache: P, onSign: x, gitdir: R, ref: f, oid: E, note: w, force: I, author: T, committer: M, signingKey: A }) {
+          return (_ = E(function* ({ fs: h, cache: S, onSign: x, gitdir: R, ref: c, oid: P, note: w, force: I, author: T, committer: M, signingKey: A }) {
             let F;
             try {
-              F = yield o.a.resolve({ gitdir: R, fs: h, ref: f });
+              F = yield o.a.resolve({ gitdir: R, fs: h, ref: c });
             } catch (nt) {
               if (!(nt instanceof s.a)) throw nt;
             }
-            let z = (yield Object(S.a)({ fs: h, cache: P, gitdir: R, oid: F || "4b825dc642cb6eb9a060e54bf8d69288fbee4904" })).tree;
-            if (I) z = z.filter((nt) => nt.path !== E);
-            else for (const nt of z) if (nt.path === E) throw new i.a("note", E);
+            let z = (yield Object(O.a)({ fs: h, cache: S, gitdir: R, oid: F || "4b825dc642cb6eb9a060e54bf8d69288fbee4904" })).tree;
+            if (I) z = z.filter((nt) => nt.path !== P);
+            else for (const nt of z) if (nt.path === P) throw new i.a("note", P);
             typeof w == "string" && (w = n.from(w, "utf8"));
             const $ = yield Object(e.a)({ fs: h, gitdir: R, type: "blob", object: w, format: "content" });
-            z.push({ mode: "100644", path: E, oid: $, type: "blob" });
-            const H = yield Object(c.a)({ fs: h, gitdir: R, tree: z });
-            return yield Object(u.a)({ fs: h, cache: P, onSign: x, gitdir: R, ref: f, tree: H, parent: F && [F], message: `Note added by 'isomorphic-git addNote'
+            z.push({ mode: "100644", path: P, oid: $, type: "blob" });
+            const H = yield Object(l.a)({ fs: h, gitdir: R, tree: z });
+            return yield Object(u.a)({ fs: h, cache: S, onSign: x, gitdir: R, ref: c, tree: H, parent: F && [F], message: `Note added by 'isomorphic-git addNote'
 `, author: T, committer: M, signingKey: A });
           })).apply(this, arguments);
         }
@@ -7789,24 +7789,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return i;
       });
       var n = t(25), u = t(19);
-      function S(o, e, j, O, m, _, h) {
+      function O(o, e, j, E, m, _, h) {
         try {
-          var P = o[_](h), x = P.value;
+          var S = o[_](h), x = S.value;
         } catch (R) {
           return void j(R);
         }
-        P.done ? e(x) : Promise.resolve(x).then(O, m);
+        S.done ? e(x) : Promise.resolve(x).then(E, m);
       }
-      function c(o) {
+      function l(o) {
         return function() {
           var e = this, j = arguments;
-          return new Promise(function(O, m) {
+          return new Promise(function(E, m) {
             var _ = o.apply(e, j);
             function h(x) {
-              S(_, O, m, h, P, "next", x);
+              O(_, E, m, h, S, "next", x);
             }
-            function P(x) {
-              S(_, O, m, h, P, "throw", x);
+            function S(x) {
+              O(_, E, m, h, S, "throw", x);
             }
             h(void 0);
           });
@@ -7816,8 +7816,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return s.apply(this, arguments);
       }
       function s() {
-        return (s = c(function* ({ type: o, object: e, format: j = "content", oid: O }) {
-          return j !== "deflated" && (j !== "wrapped" && (e = n.a.wrap({ type: o, object: e })), O = yield Object(u.a)(e)), { oid: O, object: e };
+        return (s = l(function* ({ type: o, object: e, format: j = "content", oid: E }) {
+          return j !== "deflated" && (j !== "wrapped" && (e = n.a.wrap({ type: o, object: e })), E = yield Object(u.a)(e)), { oid: E, object: e };
         })).apply(this, arguments);
       }
     }, function(N, g, t) {
@@ -7825,25 +7825,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         t.d(g, "a", function() {
           return o;
         });
-        var u = t(52), S = t(16), c = t(112);
-        function i(j, O, m, _, h, P, x) {
+        var u = t(52), O = t(16), l = t(112);
+        function i(j, E, m, _, h, S, x) {
           try {
-            var R = j[P](x), f = R.value;
-          } catch (E) {
-            return void m(E);
+            var R = j[S](x), c = R.value;
+          } catch (P) {
+            return void m(P);
           }
-          R.done ? O(f) : Promise.resolve(f).then(_, h);
+          R.done ? E(c) : Promise.resolve(c).then(_, h);
         }
         function s(j) {
           return function() {
-            var O = this, m = arguments;
+            var E = this, m = arguments;
             return new Promise(function(_, h) {
-              var P = j.apply(O, m);
-              function x(f) {
-                i(P, _, h, x, R, "next", f);
+              var S = j.apply(E, m);
+              function x(c) {
+                i(S, _, h, x, R, "next", c);
               }
-              function R(f) {
-                i(P, _, h, x, R, "throw", f);
+              function R(c) {
+                i(S, _, h, x, R, "throw", c);
               }
               x(void 0);
             });
@@ -7853,18 +7853,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return e.apply(this, arguments);
         }
         function e() {
-          return (e = s(function* ({ fs: j, cache: O, gitdir: m, oids: _, write: h }) {
-            const P = yield Object(c.a)({ fs: j, cache: O, gitdir: m, oids: _ }), x = n.from(yield Object(u.a)(P)), R = `pack-${x.slice(-20).toString("hex")}.pack`;
-            return h ? (yield j.write(Object(S.join)(m, `objects/pack/${R}`), x), { filename: R }) : { filename: R, packfile: new Uint8Array(x) };
+          return (e = s(function* ({ fs: j, cache: E, gitdir: m, oids: _, write: h }) {
+            const S = yield Object(l.a)({ fs: j, cache: E, gitdir: m, oids: _ }), x = n.from(yield Object(u.a)(S)), R = `pack-${x.slice(-20).toString("hex")}.pack`;
+            return h ? (yield j.write(Object(O.join)(m, `objects/pack/${R}`), x), { filename: R }) : { filename: R, packfile: new Uint8Array(x) };
           })).apply(this, arguments);
         }
       }).call(this, t(10).Buffer);
     }, function(N, g, t) {
       t.r(g);
-      var n = t(13), u = t(38), S = t(107), c = t(4), i = t(34);
-      function s(r, v, y, a, p, b, l) {
+      var n = t(13), u = t(38), O = t(107), l = t(4), i = t(34);
+      function s(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -7875,23 +7875,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              s(b, a, p, l, k, "next", d);
+            function f(d) {
+              s(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              s(b, a, p, l, k, "throw", d);
+              s(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
       class e {
         constructor({ fs: v, gitdir: y, cache: a }) {
           this.treePromise = n.a.acquire({ fs: v, gitdir: y, cache: a }, function() {
-            var b = o(function* (l) {
-              return Object(S.a)(l.entries);
+            var b = o(function* (f) {
+              return Object(O.a)(f.entries);
             });
-            return function(l) {
+            return function(f) {
               return b.apply(this, arguments);
             };
           }());
@@ -7938,7 +7938,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             const a = v._fullpath, p = (yield y.treePromise).get(a);
             if (!p || p.type === "blob") return null;
             if (p.type !== "tree") throw new Error(`ENOTDIR: not a directory, scandir '${a}'`);
-            const b = p.children.map((l) => l.fullpath);
+            const b = p.children.map((f) => f.fullpath);
             return b.sort(u.a), b;
           })();
         }
@@ -7970,7 +7970,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                   case 57344:
                     return "commit";
                 }
-                throw new c.a(`Unexpected GitTree entry mode: ${b.toString(8)}`);
+                throw new l.a(`Unexpected GitTree entry mode: ${b.toString(8)}`);
               }(p.mode), v._mode = p.mode, a.type === "tree" ? v._stat = void 0 : v._stat = p;
             }
             return v._stat;
@@ -7992,7 +7992,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       }
       var j = t(37);
-      function O() {
+      function E() {
         const r = /* @__PURE__ */ Object.create(null);
         return Object.defineProperty(r, j.a, { value: function({ fs: v, gitdir: y, cache: a }) {
           return new e({ fs: v, gitdir: y, cache: a });
@@ -8005,10 +8005,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return new _.a({ fs: v, dir: y, gitdir: a, cache: p });
         } }), Object.freeze(r), r;
       }
-      var P = t(30), x = t(104), R = t(2), f = t(0), E = t(16), w = t(53);
-      function I(r, v, y, a, p, b, l) {
+      var S = t(30), x = t(104), R = t(2), c = t(0), P = t(16), w = t(53);
+      function I(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8019,13 +8019,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              I(b, a, p, l, k, "next", d);
+            function f(d) {
+              I(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              I(b, a, p, l, k, "throw", d);
+              I(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8033,12 +8033,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return A.apply(this, arguments);
       }
       function A() {
-        return (A = T(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), commit: a = "HEAD", cache: p = {} }) {
+        return (A = T(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), commit: a = "HEAD", cache: p = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("dir", v), Object(f.a)("gitdir", y);
-            const l = new R.a(r), k = [Object(m.a)({ ref: a }), h(), O()];
+            Object(c.a)("fs", r), Object(c.a)("dir", v), Object(c.a)("gitdir", y);
+            const f = new R.a(r), k = [Object(m.a)({ ref: a }), h(), E()];
             let d = [];
-            yield n.a.acquire({ fs: l, gitdir: y, cache: p }, function() {
+            yield n.a.acquire({ fs: f, gitdir: y, cache: p }, function() {
               var J = T(function* (et) {
                 d = et.unmergedPaths;
               });
@@ -8046,7 +8046,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 return J.apply(this, arguments);
               };
             }());
-            const q = yield Object(P.a)({ fs: l, cache: p, dir: v, gitdir: y, trees: k, map: (b = T(function* (J, [et, Q, ht]) {
+            const q = yield Object(S.a)({ fs: f, cache: p, dir: v, gitdir: y, trees: k, map: (b = T(function* (J, [et, Q, ht]) {
               const ft = !(yield Object(w.a)(Q, ht)), gt = d.includes(J), _t = !(yield Object(w.a)(ht, et));
               if (ft || gt) return et ? { path: J, mode: yield et.mode(), oid: yield et.oid(), type: yield et.type(), content: yield et.content() } : void 0;
               if (_t) return !1;
@@ -8054,21 +8054,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }), function(J, et) {
               return b.apply(this, arguments);
             }) });
-            yield n.a.acquire({ fs: l, gitdir: y, cache: p }, function() {
+            yield n.a.acquire({ fs: f, gitdir: y, cache: p }, function() {
               var J = T(function* (et) {
                 for (const Q of q) if (Q !== !1) if (Q) {
                   if (Q.type === "blob") {
                     const ht = new TextDecoder().decode(Q.content);
-                    yield l.write(`${v}/${Q.path}`, ht, { mode: Q.mode }), et.insert({ filepath: Q.path, oid: Q.oid, stage: 0 });
+                    yield f.write(`${v}/${Q.path}`, ht, { mode: Q.mode }), et.insert({ filepath: Q.path, oid: Q.oid, stage: 0 });
                   }
-                } else yield l.rmdir(`${v}/${Q.path}`, { recursive: !0 }), et.delete({ filepath: Q.path });
+                } else yield f.rmdir(`${v}/${Q.path}`, { recursive: !0 }), et.delete({ filepath: Q.path });
               });
               return function(et) {
                 return J.apply(this, arguments);
               };
             }());
-          } catch (l) {
-            throw l.caller = "git.abortMerge", l;
+          } catch (f) {
+            throw f.caller = "git.abortMerge", f;
           }
           var b;
         })).apply(this, arguments);
@@ -8079,9 +8079,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         for (; ~(v = r.indexOf(92)); ) r[v] = 47;
         return r;
       }
-      function V(r, v, y, a, p, b, l) {
+      function V(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8092,13 +8092,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              V(b, a, p, l, k, "next", d);
+            function f(d) {
+              V(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              V(b, a, p, l, k, "throw", d);
+              V(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8106,13 +8106,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return dt.apply(this, arguments);
       }
       function dt() {
-        return (dt = it(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), filepath: a, cache: p = {}, force: b = !1, parallel: l = !0 }) {
+        return (dt = it(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), filepath: a, cache: p = {}, force: b = !1, parallel: f = !0 }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("dir", v), Object(f.a)("gitdir", y), Object(f.a)("filepath", a);
+            Object(c.a)("fs", r), Object(c.a)("dir", v), Object(c.a)("gitdir", y), Object(c.a)("filepath", a);
             const k = new R.a(r);
             yield n.a.acquire({ fs: k, gitdir: y, cache: p }, function() {
               var d = it(function* (q) {
-                return G({ dir: v, gitdir: y, fs: k, filepath: a, index: q, force: b, parallel: l });
+                return G({ dir: v, gitdir: y, fs: k, filepath: a, index: q, force: b, parallel: f });
               });
               return function(q) {
                 return d.apply(this, arguments);
@@ -8127,21 +8127,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Z.apply(this, arguments);
       }
       function Z() {
-        return (Z = it(function* ({ dir: r, gitdir: v, fs: y, filepath: a, index: p, force: b, parallel: l }) {
+        return (Z = it(function* ({ dir: r, gitdir: v, fs: y, filepath: a, index: p, force: b, parallel: f }) {
           const k = (a = Array.isArray(a) ? a : [a]).map(function() {
             var J = it(function* (et) {
               if (!b && (yield H.a.isIgnored({ fs: y, dir: r, gitdir: v, filepath: et })))
                 return;
-              const Q = yield y.lstat(Object(E.join)(r, et));
+              const Q = yield y.lstat(Object(P.join)(r, et));
               if (!Q) throw new z.a(et);
               if (Q.isDirectory()) {
-                const ht = yield y.readdir(Object(E.join)(r, et));
-                if (l) {
-                  const ft = ht.map((gt) => G({ dir: r, gitdir: v, fs: y, filepath: [Object(E.join)(et, gt)], index: p, force: b, parallel: l }));
+                const ht = yield y.readdir(Object(P.join)(r, et));
+                if (f) {
+                  const ft = ht.map((gt) => G({ dir: r, gitdir: v, fs: y, filepath: [Object(P.join)(et, gt)], index: p, force: b, parallel: f }));
                   yield Promise.all(ft);
-                } else for (const ft of ht) yield G({ dir: r, gitdir: v, fs: y, filepath: [Object(E.join)(et, ft)], index: p, force: b, parallel: l });
+                } else for (const ft of ht) yield G({ dir: r, gitdir: v, fs: y, filepath: [Object(P.join)(et, ft)], index: p, force: b, parallel: f });
               } else {
-                const ht = yield $.a.get({ fs: y, gitdir: v }), ft = yield ht.get("core.autocrlf"), gt = Q.isSymbolicLink() ? yield y.readlink(Object(E.join)(r, et)).then(ot) : yield y.read(Object(E.join)(r, et), { autocrlf: ft });
+                const ht = yield $.a.get({ fs: y, gitdir: v }), ft = yield ht.get("core.autocrlf"), gt = Q.isSymbolicLink() ? yield y.readlink(Object(P.join)(r, et)).then(ot) : yield y.read(Object(P.join)(r, et), { autocrlf: ft });
                 if (gt === null) throw new z.a(et);
                 const _t = yield Object(nt.a)({ fs: y, gitdir: v, type: "blob", object: gt });
                 p.insert({ filepath: et, stats: Q, oid: _t });
@@ -8157,9 +8157,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var ut = t(163), pt = t(21), st = t(29), mt = t(43);
-      function bt(r, v, y, a, p, b, l) {
+      function bt(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8170,13 +8170,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              bt(b, a, p, l, k, "next", d);
+            function f(d) {
+              bt(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              bt(b, a, p, l, k, "throw", d);
+              bt(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8184,23 +8184,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return U.apply(this, arguments);
       }
       function U() {
-        return (U = wt(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(E.join)(y, ".git"), ref: p = "refs/notes/commits", oid: b, note: l, force: k, author: d, committer: q, signingKey: J, cache: et = {} }) {
+        return (U = wt(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(P.join)(y, ".git"), ref: p = "refs/notes/commits", oid: b, note: f, force: k, author: d, committer: q, signingKey: J, cache: et = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", a), Object(f.a)("oid", b), Object(f.a)("note", l), J && Object(f.a)("onSign", v);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", a), Object(c.a)("oid", b), Object(c.a)("note", f), J && Object(c.a)("onSign", v);
             const Q = new R.a(r), ht = yield Object(st.a)({ fs: Q, gitdir: a, author: d });
             if (!ht) throw new pt.a("author");
             const ft = yield Object(mt.a)({ fs: Q, gitdir: a, author: ht, committer: q });
             if (!ft) throw new pt.a("committer");
-            return yield Object(ut.a)({ fs: new R.a(Q), cache: et, onSign: v, gitdir: a, ref: p, oid: b, note: l, force: k, author: ht, committer: ft, signingKey: J });
+            return yield Object(ut.a)({ fs: new R.a(Q), cache: et, onSign: v, gitdir: a, ref: p, oid: b, note: f, force: k, author: ht, committer: ft, signingKey: J });
           } catch (Q) {
             throw Q.caller = "git.addNote", Q;
           }
         })).apply(this, arguments);
       }
       var L = t(45), K = t.n(L), X = t(26), rt = t(28);
-      function yt(r, v, y, a, p, b, l) {
+      function yt(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8211,13 +8211,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              yt(b, a, p, l, k, "next", d);
+            function f(d) {
+              yt(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              yt(b, a, p, l, k, "throw", d);
+              yt(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8233,9 +8233,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           yield b.set(`remote.${y}.url`, a), yield b.set(`remote.${y}.fetch`, `+refs/heads/*:refs/remotes/${y}/*`), yield $.a.save({ fs: r, gitdir: v, config: b });
         })).apply(this, arguments);
       }
-      function Et(r, v, y, a, p, b, l) {
+      function Et(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8246,13 +8246,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Et(b, a, p, l, k, "next", d);
+            function f(d) {
+              Et(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Et(b, a, p, l, k, "throw", d);
+              Et(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8260,18 +8260,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return re.apply(this, arguments);
       }
       function re() {
-        return (re = Wt(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), remote: a, url: p, force: b = !1 }) {
+        return (re = Wt(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), remote: a, url: p, force: b = !1 }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("remote", a), Object(f.a)("url", p), yield Rt({ fs: new R.a(r), gitdir: y, remote: a, url: p, force: b });
-          } catch (l) {
-            throw l.caller = "git.addRemote", l;
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("remote", a), Object(c.a)("url", p), yield Rt({ fs: new R.a(r), gitdir: y, remote: a, url: p, force: b });
+          } catch (f) {
+            throw f.caller = "git.addRemote", f;
           }
         })).apply(this, arguments);
       }
       var vt = t(3), Zt = t(18), Dt = t(7);
-      function qt(r, v, y, a, p, b, l) {
+      function qt(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8282,13 +8282,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              qt(b, a, p, l, k, "next", d);
+            function f(d) {
+              qt(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              qt(b, a, p, l, k, "throw", d);
+              qt(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8296,18 +8296,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return oe.apply(this, arguments);
       }
       function oe() {
-        return (oe = pe(function* ({ fs: r, cache: v, onSign: y, gitdir: a, ref: p, tagger: b, message: l = p, gpgsig: k, object: d, signingKey: q, force: J = !1 }) {
+        return (oe = pe(function* ({ fs: r, cache: v, onSign: y, gitdir: a, ref: p, tagger: b, message: f = p, gpgsig: k, object: d, signingKey: q, force: J = !1 }) {
           if (p = p.startsWith("refs/tags/") ? p : `refs/tags/${p}`, !J && (yield vt.a.exists({ fs: r, gitdir: a, ref: p }))) throw new X.a("tag", p);
           const et = yield vt.a.resolve({ fs: r, gitdir: a, ref: d || "HEAD" }), { type: Q } = yield Object(Dt.a)({ fs: r, cache: v, gitdir: a, oid: et });
-          let ht = Zt.a.from({ object: et, type: Q, tag: p.replace("refs/tags/", ""), tagger: b, message: l, gpgsig: k });
+          let ht = Zt.a.from({ object: et, type: Q, tag: p.replace("refs/tags/", ""), tagger: b, message: f, gpgsig: k });
           q && (ht = yield Zt.a.sign(ht, y, q));
           const ft = yield Object(nt.a)({ fs: r, gitdir: a, type: "tag", object: ht.toObject() });
           yield vt.a.writeRef({ fs: r, gitdir: a, ref: p, value: ft });
         })).apply(this, arguments);
       }
-      function De(r, v, y, a, p, b, l) {
+      function De(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8318,13 +8318,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              De(b, a, p, l, k, "next", d);
+            function f(d) {
+              De(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              De(b, a, p, l, k, "throw", d);
+              De(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8332,20 +8332,20 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return D.apply(this, arguments);
       }
       function D() {
-        return (D = W(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(E.join)(y, ".git"), ref: p, tagger: b, message: l = p, gpgsig: k, object: d, signingKey: q, force: J = !1, cache: et = {} }) {
+        return (D = W(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(P.join)(y, ".git"), ref: p, tagger: b, message: f = p, gpgsig: k, object: d, signingKey: q, force: J = !1, cache: et = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", a), Object(f.a)("ref", p), q && Object(f.a)("onSign", v);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", a), Object(c.a)("ref", p), q && Object(c.a)("onSign", v);
             const Q = new R.a(r), ht = yield Object(st.a)({ fs: Q, gitdir: a, author: b });
             if (!ht) throw new pt.a("tagger");
-            return yield Ce({ fs: Q, cache: et, onSign: v, gitdir: a, ref: p, tagger: ht, message: l, gpgsig: k, object: d, signingKey: q, force: J });
+            return yield Ce({ fs: Q, cache: et, onSign: v, gitdir: a, ref: p, tagger: ht, message: f, gpgsig: k, object: d, signingKey: q, force: J });
           } catch (Q) {
             throw Q.caller = "git.annotatedTag", Q;
           }
         })).apply(this, arguments);
       }
-      function Y(r, v, y, a, p, b, l) {
+      function Y(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8356,13 +8356,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Y(b, a, p, l, k, "next", d);
+            function f(d) {
+              Y(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Y(b, a, p, l, k, "throw", d);
+              Y(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8372,20 +8372,20 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function ct() {
         return (ct = tt(function* ({ fs: r, gitdir: v, ref: y, object: a, checkout: p = !1, force: b = !1 }) {
           if (y !== K.a.clean(y)) throw new rt.a(y, K.a.clean(y));
-          const l = `refs/heads/${y}`;
-          if (!b && (yield vt.a.exists({ fs: r, gitdir: v, ref: l })))
+          const f = `refs/heads/${y}`;
+          if (!b && (yield vt.a.exists({ fs: r, gitdir: v, ref: f })))
             throw new X.a("branch", y, !1);
           let k;
           try {
             k = yield vt.a.resolve({ fs: r, gitdir: v, ref: a || "HEAD" });
           } catch {
           }
-          k && (yield vt.a.writeRef({ fs: r, gitdir: v, ref: l, value: k })), p && (yield vt.a.writeSymbolicRef({ fs: r, gitdir: v, ref: "HEAD", value: l }));
+          k && (yield vt.a.writeRef({ fs: r, gitdir: v, ref: f, value: k })), p && (yield vt.a.writeSymbolicRef({ fs: r, gitdir: v, ref: "HEAD", value: f }));
         })).apply(this, arguments);
       }
-      function Bt(r, v, y, a, p, b, l) {
+      function Bt(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8396,13 +8396,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Bt(b, a, p, l, k, "next", d);
+            function f(d) {
+              Bt(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Bt(b, a, p, l, k, "throw", d);
+              Bt(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8410,9 +8410,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ft.apply(this, arguments);
       }
       function Ft() {
-        return (Ft = zt(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a, object: p, checkout: b = !1, force: l = !1 }) {
+        return (Ft = zt(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a, object: p, checkout: b = !1, force: f = !1 }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a), yield at({ fs: new R.a(r), gitdir: y, ref: a, object: p, checkout: b, force: l });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a), yield at({ fs: new R.a(r), gitdir: y, ref: a, object: p, checkout: b, force: f });
           } catch (k) {
             throw k.caller = "git.branch", k;
           }
@@ -8420,9 +8420,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       var xt = t(98), Kt = t(99), ae = t(114);
       const Jt = (r, v) => r === "." || v == null || v.length === 0 || v === "." || (v.length >= r.length ? v.startsWith(r) : r.startsWith(v));
-      function _e(r, v, y, a, p, b, l) {
+      function _e(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8433,13 +8433,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              _e(b, a, p, l, k, "next", d);
+            function f(d) {
+              _e(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              _e(b, a, p, l, k, "throw", d);
+              _e(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8447,7 +8447,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Gr.apply(this, arguments);
       }
       function Gr() {
-        return (Gr = le(function* ({ fs: r, cache: v, onProgress: y, onPostCheckout: a, dir: p, gitdir: b, remote: l, ref: k, filepaths: d, noCheckout: q, noUpdateHead: J, dryRun: et, force: Q, track: ht = !0 }) {
+        return (Gr = le(function* ({ fs: r, cache: v, onProgress: y, onPostCheckout: a, dir: p, gitdir: b, remote: f, ref: k, filepaths: d, noCheckout: q, noUpdateHead: J, dryRun: et, force: Q, track: ht = !0 }) {
           let ft, gt;
           if (a) try {
             ft = yield vt.a.resolve({ fs: r, gitdir: b, ref: "HEAD" });
@@ -8458,10 +8458,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             gt = yield vt.a.resolve({ fs: r, gitdir: b, ref: k });
           } catch (_t) {
             if (k === "HEAD") throw _t;
-            const Pt = `${l}/${k}`;
+            const Pt = `${f}/${k}`;
             if (gt = yield vt.a.resolve({ fs: r, gitdir: b, ref: Pt }), ht) {
               const Ot = yield $.a.get({ fs: r, gitdir: b });
-              yield Ot.set(`branch.${k}.remote`, l), yield Ot.set(`branch.${k}.merge`, `refs/heads/${k}`), yield $.a.save({ fs: r, gitdir: b, config: Ot });
+              yield Ot.set(`branch.${k}.remote`, f), yield Ot.set(`branch.${k}.merge`, `refs/heads/${k}`), yield $.a.save({ fs: r, gitdir: b, config: Ot });
             }
             yield vt.a.writeRef({ fs: r, gitdir: b, ref: `refs/heads/${k}`, value: gt });
           }
@@ -8475,7 +8475,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             const Pt = _t.filter(([kt]) => kt === "conflict").map(([kt, Ct]) => Ct);
             if (Pt.length > 0) throw new xt.a(Pt);
             const Ot = _t.filter(([kt]) => kt === "error").map(([kt, Ct]) => Ct);
-            if (Ot.length > 0) throw new c.a(Ot.join(", "));
+            if (Ot.length > 0) throw new l.a(Ot.join(", "));
             if (et) return void (a && (yield a({ previousHead: ft, newHead: gt, type: d != null && d.length > 0 ? "file" : "branch" })));
             let It = 0;
             const $t = _t.length;
@@ -8528,7 +8528,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                         if (we && (yield r.rm(Se)), ie === 33188) yield r.write(Se, Xe);
                         else if (ie === 33261) yield r.write(Se, Xe, { mode: 511 });
                         else {
-                          if (ie !== 40960) throw new c.a(`Invalid mode 0o${ie.toString(8)} detected in blob ${ee}`);
+                          if (ie !== 40960) throw new l.a(`Invalid mode 0o${ie.toString(8)} detected in blob ${ee}`);
                           yield r.writelink(Se, Xe);
                         }
                       }
@@ -8558,16 +8558,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Yr.apply(this, arguments);
       }
       function Yr() {
-        return (Yr = le(function* ({ fs: r, cache: v, onProgress: y, dir: a, gitdir: p, ref: b, force: l, filepaths: k }) {
+        return (Yr = le(function* ({ fs: r, cache: v, onProgress: y, dir: a, gitdir: p, ref: b, force: f, filepaths: k }) {
           let d = 0;
-          return Object(P.a)({ fs: r, cache: v, dir: a, gitdir: p, trees: [Object(m.a)({ ref: b }), h(), O()], map: (J = le(function* (et, [Q, ht, ft]) {
+          return Object(S.a)({ fs: r, cache: v, dir: a, gitdir: p, trees: [Object(m.a)({ ref: b }), h(), E()], map: (J = le(function* (et, [Q, ht, ft]) {
             if (et !== ".") {
               if (k && !k.some((gt) => Jt(et, gt))) return null;
               switch (y && (yield y({ phase: "Analyzing workdir", loaded: ++d })), [!!ft, !!Q, !!ht].map(Number).join("")) {
                 case "000":
                   return;
                 case "001":
-                  return l && k && k.includes(et) ? ["delete", et] : void 0;
+                  return f && k && k.includes(et) ? ["delete", et] : void 0;
                 case "010":
                   switch (yield Q.type()) {
                     case "tree":
@@ -8587,7 +8587,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                     case "blob-tree":
                       return ["conflict", et];
                     case "blob-blob":
-                      return (yield Q.oid()) !== (yield ht.oid()) ? l ? ["update", et, yield Q.oid(), yield Q.mode(), (yield Q.mode()) !== (yield ht.mode())] : ["conflict", et] : (yield Q.mode()) !== (yield ht.mode()) ? l ? ["update", et, yield Q.oid(), yield Q.mode(), !0] : ["conflict", et] : ["create-index", et, yield Q.oid(), yield Q.mode()];
+                      return (yield Q.oid()) !== (yield ht.oid()) ? f ? ["update", et, yield Q.oid(), yield Q.mode(), (yield Q.mode()) !== (yield ht.mode())] : ["conflict", et] : (yield Q.mode()) !== (yield ht.mode()) ? f ? ["update", et, yield Q.oid(), yield Q.mode(), !0] : ["conflict", et] : ["create-index", et, yield Q.oid(), yield Q.mode()];
                     case "commit-tree":
                       return;
                     case "commit-blob":
@@ -8602,7 +8602,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                     case "tree":
                       return ["rmdir", et];
                     case "blob":
-                      return (yield ft.oid()) !== (yield ht.oid()) ? l ? ["delete", et] : ["conflict", et] : ["delete", et];
+                      return (yield ft.oid()) !== (yield ht.oid()) ? f ? ["delete", et] : ["conflict", et] : ["delete", et];
                     case "commit":
                       return ["rmdir-index", et];
                     default:
@@ -8614,10 +8614,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                     case "tree-tree":
                       return;
                     case "blob-blob":
-                      if ((yield ft.oid()) === (yield Q.oid()) && (yield ft.mode()) === (yield Q.mode()) && !l) return;
+                      if ((yield ft.oid()) === (yield Q.oid()) && (yield ft.mode()) === (yield Q.mode()) && !f) return;
                       if (ht) {
-                        if ((yield ht.oid()) !== (yield ft.oid()) && (yield ht.oid()) !== (yield Q.oid())) return l ? ["update", et, yield Q.oid(), yield Q.mode(), (yield Q.mode()) !== (yield ht.mode())] : ["conflict", et];
-                      } else if (l) return ["update", et, yield Q.oid(), yield Q.mode(), (yield Q.mode()) !== (yield ft.mode())];
+                        if ((yield ht.oid()) !== (yield ft.oid()) && (yield ht.oid()) !== (yield Q.oid())) return f ? ["update", et, yield Q.oid(), yield Q.mode(), (yield Q.mode()) !== (yield ht.mode())] : ["conflict", et];
+                      } else if (f) return ["update", et, yield Q.oid(), yield Q.mode(), (yield Q.mode()) !== (yield ft.mode())];
                       return (yield Q.mode()) !== (yield ft.mode()) ? ["update", et, yield Q.oid(), yield Q.mode(), !0] : (yield Q.oid()) !== (yield ft.oid()) ? ["update", et, yield Q.oid(), yield Q.mode(), !1] : void 0;
                     case "tree-blob":
                       return ["update-dir-to-blob", et, yield Q.oid()];
@@ -8640,9 +8640,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var q, J;
         })).apply(this, arguments);
       }
-      function Vr(r, v, y, a, p, b, l) {
+      function Vr(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8653,13 +8653,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Vr(b, a, p, l, k, "next", d);
+            function f(d) {
+              Vr(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Vr(b, a, p, l, k, "throw", d);
+              Vr(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8667,10 +8667,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Zr.apply(this, arguments);
       }
       function Zr() {
-        return (Zr = Wu(function* ({ fs: r, onProgress: v, onPostCheckout: y, dir: a, gitdir: p = Object(E.join)(a, ".git"), remote: b = "origin", ref: l, filepaths: k, noCheckout: d = !1, noUpdateHead: q = l === void 0, dryRun: J = !1, force: et = !1, track: Q = !0, cache: ht = {} }) {
+        return (Zr = Wu(function* ({ fs: r, onProgress: v, onPostCheckout: y, dir: a, gitdir: p = Object(P.join)(a, ".git"), remote: b = "origin", ref: f, filepaths: k, noCheckout: d = !1, noUpdateHead: q = f === void 0, dryRun: J = !1, force: et = !1, track: Q = !0, cache: ht = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("dir", a), Object(f.a)("gitdir", p);
-            const ft = l || "HEAD";
+            Object(c.a)("fs", r), Object(c.a)("dir", a), Object(c.a)("gitdir", p);
+            const ft = f || "HEAD";
             return yield Be({ fs: new R.a(r), cache: ht, onProgress: v, onPostCheckout: y, dir: a, gitdir: p, remote: b, ref: ft, filepaths: k, noCheckout: d, noUpdateHead: q, dryRun: J, force: et, track: Q });
           } catch (ft) {
             throw ft.caller = "git.checkout", ft;
@@ -8678,9 +8678,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var cr = t(118);
-      function Kr(r, v, y, a, p, b, l) {
+      function Kr(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8691,13 +8691,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Kr(b, a, p, l, k, "next", d);
+            function f(d) {
+              Kr(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Kr(b, a, p, l, k, "throw", d);
+              Kr(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8705,11 +8705,11 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Xr.apply(this, arguments);
       }
       function Xr() {
-        return (Xr = Gu(function* ({ fs: r, bare: v = !1, dir: y, gitdir: a = v ? y : Object(E.join)(y, ".git"), defaultBranch: p = "master" }) {
+        return (Xr = Gu(function* ({ fs: r, bare: v = !1, dir: y, gitdir: a = v ? y : Object(P.join)(y, ".git"), defaultBranch: p = "master" }) {
           if (yield r.exists(a + "/config")) return;
           let b = ["hooks", "info", "objects/info", "objects/pack", "refs/heads", "refs/tags"];
-          b = b.map((l) => a + "/" + l);
-          for (const l of b) yield r.mkdir(l);
+          b = b.map((f) => a + "/" + f);
+          for (const f of b) yield r.mkdir(f);
           yield r.write(a + "/config", `[core]
 	repositoryformatversion = 0
 	filemode = false
@@ -8721,9 +8721,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
 `);
         })).apply(this, arguments);
       }
-      function Qr(r, v, y, a, p, b, l) {
+      function Qr(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8734,13 +8734,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Qr(b, a, p, l, k, "next", d);
+            function f(d) {
+              Qr(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Qr(b, a, p, l, k, "throw", d);
+              Qr(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8748,13 +8748,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return tn.apply(this, arguments);
       }
       function tn() {
-        return (tn = Yu(function* ({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: l, onAuthFailure: k, onPostCheckout: d, dir: q, gitdir: J, url: et, corsProxy: Q, ref: ht, remote: ft, depth: gt, since: _t, exclude: Pt, relative: Ot, singleBranch: It, noCheckout: $t, noTags: kt, headers: Ct }) {
+        return (tn = Yu(function* ({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: f, onAuthFailure: k, onPostCheckout: d, dir: q, gitdir: J, url: et, corsProxy: Q, ref: ht, remote: ft, depth: gt, since: _t, exclude: Pt, relative: Ot, singleBranch: It, noCheckout: $t, noTags: kt, headers: Ct }) {
           try {
             if (yield Jr({ fs: r, gitdir: J }), yield Rt({ fs: r, gitdir: J, remote: ft, url: et, force: !1 }), Q) {
               const Lt = yield $.a.get({ fs: r, gitdir: J });
               yield Lt.set("http.corsProxy", Q), yield $.a.save({ fs: r, gitdir: J, config: Lt });
             }
-            const { defaultBranch: St, fetchHead: Mt } = yield Object(cr.a)({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: l, onAuthFailure: k, gitdir: J, ref: ht, remote: ft, corsProxy: Q, depth: gt, since: _t, exclude: Pt, relative: Ot, singleBranch: It, headers: Ct, tags: !kt });
+            const { defaultBranch: St, fetchHead: Mt } = yield Object(cr.a)({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: f, onAuthFailure: k, gitdir: J, ref: ht, remote: ft, corsProxy: Q, depth: gt, since: _t, exclude: Pt, relative: Ot, singleBranch: It, headers: Ct, tags: !kt });
             if (Mt === null) return;
             ht = (ht = ht || St).replace("refs/heads/", ""), yield Be({ fs: r, cache: v, onProgress: a, onPostCheckout: d, dir: q, gitdir: J, ref: ht, remote: ft, noCheckout: $t });
           } catch (St) {
@@ -8763,9 +8763,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
         })).apply(this, arguments);
       }
-      function en(r, v, y, a, p, b, l) {
+      function en(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8776,13 +8776,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              en(b, a, p, l, k, "next", d);
+            function f(d) {
+              en(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              en(b, a, p, l, k, "throw", d);
+              en(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8790,18 +8790,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return nn.apply(this, arguments);
       }
       function nn() {
-        return (nn = Zu(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, onPostCheckout: k, dir: d, gitdir: q = Object(E.join)(d, ".git"), url: J, corsProxy: et, ref: Q, remote: ht = "origin", depth: ft, since: gt, exclude: _t = [], relative: Pt = !1, singleBranch: Ot = !1, noCheckout: It = !1, noTags: $t = !1, headers: kt = {}, cache: Ct = {} }) {
+        return (nn = Zu(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, onPostCheckout: k, dir: d, gitdir: q = Object(P.join)(d, ".git"), url: J, corsProxy: et, ref: Q, remote: ht = "origin", depth: ft, since: gt, exclude: _t = [], relative: Pt = !1, singleBranch: Ot = !1, noCheckout: It = !1, noTags: $t = !1, headers: kt = {}, cache: Ct = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("http", v), Object(f.a)("gitdir", q), It || Object(f.a)("dir", d), Object(f.a)("url", J), yield Vu({ fs: new R.a(r), cache: Ct, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, onPostCheckout: k, dir: d, gitdir: q, url: J, corsProxy: et, ref: Q, remote: ht, depth: ft, since: gt, exclude: _t, relative: Pt, singleBranch: Ot, noCheckout: It, noTags: $t, headers: kt });
+            return Object(c.a)("fs", r), Object(c.a)("http", v), Object(c.a)("gitdir", q), It || Object(c.a)("dir", d), Object(c.a)("url", J), yield Vu({ fs: new R.a(r), cache: Ct, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, onPostCheckout: k, dir: d, gitdir: q, url: J, corsProxy: et, ref: Q, remote: ht, depth: ft, since: gt, exclude: _t, relative: Pt, singleBranch: Ot, noCheckout: It, noTags: $t, headers: kt });
           } catch (St) {
             throw St.caller = "git.clone", St;
           }
         })).apply(this, arguments);
       }
       var fr = t(95);
-      function on(r, v, y, a, p, b, l) {
+      function on(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8812,13 +8812,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              on(b, a, p, l, k, "next", d);
+            function f(d) {
+              on(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              on(b, a, p, l, k, "throw", d);
+              on(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8826,20 +8826,20 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return sn.apply(this, arguments);
       }
       function sn() {
-        return (sn = Ku(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(E.join)(y, ".git"), message: p, author: b, committer: l, signingKey: k, amend: d = !1, dryRun: q = !1, noUpdateBranch: J = !1, ref: et, parent: Q, tree: ht, cache: ft = {} }) {
+        return (sn = Ku(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(P.join)(y, ".git"), message: p, author: b, committer: f, signingKey: k, amend: d = !1, dryRun: q = !1, noUpdateBranch: J = !1, ref: et, parent: Q, tree: ht, cache: ft = {} }) {
           try {
-            Object(f.a)("fs", r), d || Object(f.a)("message", p), k && Object(f.a)("onSign", v);
+            Object(c.a)("fs", r), d || Object(c.a)("message", p), k && Object(c.a)("onSign", v);
             const gt = new R.a(r);
-            return yield Object(fr.a)({ fs: gt, cache: ft, onSign: v, gitdir: a, message: p, author: b, committer: l, signingKey: k, amend: d, dryRun: q, noUpdateBranch: J, ref: et, parent: Q, tree: ht });
+            return yield Object(fr.a)({ fs: gt, cache: ft, onSign: v, gitdir: a, message: p, author: b, committer: f, signingKey: k, amend: d, dryRun: q, noUpdateBranch: J, ref: et, parent: Q, tree: ht });
           } catch (gt) {
             throw gt.caller = "git.commit", gt;
           }
         })).apply(this, arguments);
       }
       var Ie = t(35);
-      function un(r, v, y, a, p, b, l) {
+      function un(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8850,13 +8850,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              un(b, a, p, l, k, "next", d);
+            function f(d) {
+              un(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              un(b, a, p, l, k, "throw", d);
+              un(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8864,18 +8864,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return fn.apply(this, arguments);
       }
       function fn() {
-        return (fn = Ju(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), fullname: a = !1, test: p = !1 }) {
+        return (fn = Ju(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), fullname: a = !1, test: p = !1 }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), yield Object(Ie.a)({ fs: new R.a(r), gitdir: y, fullname: a, test: p });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), yield Object(Ie.a)({ fs: new R.a(r), gitdir: y, fullname: a, test: p });
           } catch (b) {
             throw b.caller = "git.currentBranch", b;
           }
         })).apply(this, arguments);
       }
       var Ve = t(66);
-      function ln(r, v, y, a, p, b, l) {
+      function ln(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8886,13 +8886,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ln(b, a, p, l, k, "next", d);
+            function f(d) {
+              ln(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ln(b, a, p, l, k, "throw", d);
+              ln(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8904,17 +8904,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           if (y = y.startsWith("refs/heads/") ? y : `refs/heads/${y}`, !(yield vt.a.exists({ fs: r, gitdir: v, ref: y }))) throw new z.a(y);
           const a = yield vt.a.expand({ fs: r, gitdir: v, ref: y });
           if (a === (yield Object(Ie.a)({ fs: r, gitdir: v, fullname: !0 }))) {
-            const l = yield vt.a.resolve({ fs: r, gitdir: v, ref: a });
-            yield vt.a.writeRef({ fs: r, gitdir: v, ref: "HEAD", value: l });
+            const f = yield vt.a.resolve({ fs: r, gitdir: v, ref: a });
+            yield vt.a.writeRef({ fs: r, gitdir: v, ref: "HEAD", value: f });
           }
           yield vt.a.deleteRef({ fs: r, gitdir: v, ref: a });
           const p = Object(Ve.a)(y), b = yield $.a.get({ fs: r, gitdir: v });
           yield b.deleteSection("branch", p), yield $.a.save({ fs: r, gitdir: v, config: b });
         })).apply(this, arguments);
       }
-      function dn(r, v, y, a, p, b, l) {
+      function dn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8925,13 +8925,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              dn(b, a, p, l, k, "next", d);
+            function f(d) {
+              dn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              dn(b, a, p, l, k, "throw", d);
+              dn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8939,17 +8939,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return gn.apply(this, arguments);
       }
       function gn() {
-        return (gn = tc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a }) {
+        return (gn = tc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("ref", a), yield Qu({ fs: new R.a(r), gitdir: y, ref: a });
+            return Object(c.a)("fs", r), Object(c.a)("ref", a), yield Qu({ fs: new R.a(r), gitdir: y, ref: a });
           } catch (p) {
             throw p.caller = "git.deleteBranch", p;
           }
         })).apply(this, arguments);
       }
-      function mn(r, v, y, a, p, b, l) {
+      function mn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8960,13 +8960,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              mn(b, a, p, l, k, "next", d);
+            function f(d) {
+              mn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              mn(b, a, p, l, k, "throw", d);
+              mn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -8974,17 +8974,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return wn.apply(this, arguments);
       }
       function wn() {
-        return (wn = ec(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a }) {
+        return (wn = ec(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("ref", a), yield vt.a.deleteRef({ fs: new R.a(r), gitdir: y, ref: a });
+            Object(c.a)("fs", r), Object(c.a)("ref", a), yield vt.a.deleteRef({ fs: new R.a(r), gitdir: y, ref: a });
           } catch (p) {
             throw p.caller = "git.deleteRef", p;
           }
         })).apply(this, arguments);
       }
-      function vn(r, v, y, a, p, b, l) {
+      function vn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -8995,13 +8995,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              vn(b, a, p, l, k, "next", d);
+            function f(d) {
+              vn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              vn(b, a, p, l, k, "throw", d);
+              vn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9014,9 +9014,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           yield a.deleteSection("remote", y), yield $.a.save({ fs: r, gitdir: v, config: a });
         })).apply(this, arguments);
       }
-      function _n(r, v, y, a, p, b, l) {
+      function _n(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9027,13 +9027,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              _n(b, a, p, l, k, "next", d);
+            function f(d) {
+              _n(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              _n(b, a, p, l, k, "throw", d);
+              _n(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9041,17 +9041,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return kn.apply(this, arguments);
       }
       function kn() {
-        return (kn = ic(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), remote: a }) {
+        return (kn = ic(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), remote: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("remote", a), yield nc({ fs: new R.a(r), gitdir: y, remote: a });
+            return Object(c.a)("fs", r), Object(c.a)("remote", a), yield nc({ fs: new R.a(r), gitdir: y, remote: a });
           } catch (p) {
             throw p.caller = "git.deleteRemote", p;
           }
         })).apply(this, arguments);
       }
-      function xn(r, v, y, a, p, b, l) {
+      function xn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9062,13 +9062,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              xn(b, a, p, l, k, "next", d);
+            function f(d) {
+              xn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              xn(b, a, p, l, k, "throw", d);
+              xn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9080,9 +9080,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           y = y.startsWith("refs/tags/") ? y : `refs/tags/${y}`, yield vt.a.deleteRef({ fs: r, gitdir: v, ref: y });
         })).apply(this, arguments);
       }
-      function En(r, v, y, a, p, b, l) {
+      function En(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9093,13 +9093,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              En(b, a, p, l, k, "next", d);
+            function f(d) {
+              En(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              En(b, a, p, l, k, "throw", d);
+              En(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9107,18 +9107,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Sn.apply(this, arguments);
       }
       function Sn() {
-        return (Sn = sc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a }) {
+        return (Sn = sc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("ref", a), yield ac({ fs: new R.a(r), gitdir: y, ref: a });
+            return Object(c.a)("fs", r), Object(c.a)("ref", a), yield ac({ fs: new R.a(r), gitdir: y, ref: a });
           } catch (p) {
             throw p.caller = "git.deleteTag", p;
           }
         })).apply(this, arguments);
       }
       var uc = t(97);
-      function An(r, v, y, a, p, b, l) {
+      function An(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9129,13 +9129,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              An(b, a, p, l, k, "next", d);
+            function f(d) {
+              An(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              An(b, a, p, l, k, "throw", d);
+              An(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9149,9 +9149,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var lc = t(81);
-      function Bn(r, v, y, a, p, b, l) {
+      function Bn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9162,13 +9162,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Bn(b, a, p, l, k, "next", d);
+            function f(d) {
+              Bn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Bn(b, a, p, l, k, "throw", d);
+              Bn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9178,19 +9178,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function In() {
         return (In = hc(function* ({ fs: r, cache: v, gitdir: y, oid: a, getExternalRefDelta: p }) {
           const b = [];
-          let l = yield r.readdir(Object(E.join)(y, "objects/pack"));
-          l = l.filter((k) => k.endsWith(".idx"));
-          for (const k of l) {
+          let f = yield r.readdir(Object(P.join)(y, "objects/pack"));
+          f = f.filter((k) => k.endsWith(".idx"));
+          for (const k of f) {
             const d = `${y}/objects/pack/${k}`, q = yield Object(lc.a)({ fs: r, cache: v, filename: d, getExternalRefDelta: p });
-            if (q.error) throw new c.a(q.error);
+            if (q.error) throw new l.a(q.error);
             for (const J of q.offsets.keys()) J.startsWith(a) && b.push(J);
           }
           return b;
         })).apply(this, arguments);
       }
-      function Tn(r, v, y, a, p, b, l) {
+      function Tn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9201,13 +9201,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Tn(b, a, p, l, k, "next", d);
+            function f(d) {
+              Tn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Tn(b, a, p, l, k, "throw", d);
+              Tn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9216,15 +9216,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function $n() {
         return ($n = pc(function* ({ fs: r, cache: v, gitdir: y, oid: a }) {
-          const p = yield fc({ fs: r, gitdir: y, oid: a }), b = yield dc({ fs: r, cache: v, gitdir: y, oid: a, getExternalRefDelta: (l) => Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: l }) });
-          for (const l of b) p.indexOf(l) === -1 && p.push(l);
+          const p = yield fc({ fs: r, gitdir: y, oid: a }), b = yield dc({ fs: r, cache: v, gitdir: y, oid: a, getExternalRefDelta: (f) => Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: f }) });
+          for (const f of b) p.indexOf(f) === -1 && p.push(f);
           if (p.length === 1) return p[0];
           throw p.length > 1 ? new uc.a("oids", a, p) : new z.a(`an object matching "${a}"`);
         })).apply(this, arguments);
       }
-      function Cn(r, v, y, a, p, b, l) {
+      function Cn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9235,13 +9235,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Cn(b, a, p, l, k, "next", d);
+            function f(d) {
+              Cn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Cn(b, a, p, l, k, "throw", d);
+              Cn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9249,17 +9249,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Mn.apply(this, arguments);
       }
       function Mn() {
-        return (Mn = mc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oid: a, cache: p = {} }) {
+        return (Mn = mc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oid: a, cache: p = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oid", a), yield gc({ fs: new R.a(r), cache: p, gitdir: y, oid: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oid", a), yield gc({ fs: new R.a(r), cache: p, gitdir: y, oid: a });
           } catch (b) {
             throw b.caller = "git.expandOid", b;
           }
         })).apply(this, arguments);
       }
-      function Nn(r, v, y, a, p, b, l) {
+      function Nn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9270,13 +9270,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Nn(b, a, p, l, k, "next", d);
+            function f(d) {
+              Nn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Nn(b, a, p, l, k, "throw", d);
+              Nn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9284,18 +9284,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Un.apply(this, arguments);
       }
       function Un() {
-        return (Un = yc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a }) {
+        return (Un = yc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a), yield vt.a.expand({ fs: new R.a(r), gitdir: y, ref: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a), yield vt.a.expand({ fs: new R.a(r), gitdir: y, ref: a });
           } catch (p) {
             throw p.caller = "git.expandRef", p;
           }
         })).apply(this, arguments);
       }
       var er = t(14);
-      function zn(r, v, y, a, p, b, l) {
+      function zn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9306,13 +9306,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              zn(b, a, p, l, k, "next", d);
+            function f(d) {
+              zn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              zn(b, a, p, l, k, "throw", d);
+              zn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9322,16 +9322,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function Ln() {
         return (Ln = wc(function* ({ fs: r, cache: v, gitdir: y, oids: a }) {
           const p = {}, b = a.length;
-          let l = a.map((k, d) => ({ index: d, oid: k }));
-          for (; l.length; ) {
+          let f = a.map((k, d) => ({ index: d, oid: k }));
+          for (; f.length; ) {
             const k = /* @__PURE__ */ new Set();
-            for (const q of l) {
+            for (const q of f) {
               const { oid: J, index: et } = q;
               p[J] || (p[J] = /* @__PURE__ */ new Set()), p[J].add(et), p[J].size === b && k.add(J);
             }
             if (k.size > 0) return [...k];
             const d = /* @__PURE__ */ new Map();
-            for (const q of l) {
+            for (const q of f) {
               const { oid: J, index: et } = q;
               try {
                 const { object: Q } = yield Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: J }), ht = er.a.from(Q), { parent: ft } = ht.parseHeaders();
@@ -9339,15 +9339,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               } catch {
               }
             }
-            l = Array.from(d.values());
+            f = Array.from(d.values());
           }
           return [];
         })).apply(this, arguments);
       }
       var vc = t(100), bc = t(57), _c = t(56), jc = t(127);
-      function qn(r, v, y, a, p, b, l) {
+      function qn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9358,13 +9358,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              qn(b, a, p, l, k, "next", d);
+            function f(d) {
+              qn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              qn(b, a, p, l, k, "throw", d);
+              qn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9372,13 +9372,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Gn.apply(this, arguments);
       }
       function Gn() {
-        return (Gn = Hn(function* ({ fs: r, cache: v, dir: y, gitdir: a, ours: p, theirs: b, fastForward: l = !0, fastForwardOnly: k = !1, dryRun: d = !1, noUpdateBranch: q = !1, abortOnConflict: J = !0, message: et, author: Q, committer: ht, signingKey: ft, onSign: gt, mergeDriver: _t }) {
+        return (Gn = Hn(function* ({ fs: r, cache: v, dir: y, gitdir: a, ours: p, theirs: b, fastForward: f = !0, fastForwardOnly: k = !1, dryRun: d = !1, noUpdateBranch: q = !1, abortOnConflict: J = !0, message: et, author: Q, committer: ht, signingKey: ft, onSign: gt, mergeDriver: _t }) {
           p === void 0 && (p = yield Object(Ie.a)({ fs: r, gitdir: a, fullname: !0 })), p = yield vt.a.expand({ fs: r, gitdir: a, ref: p }), b = yield vt.a.expand({ fs: r, gitdir: a, ref: b });
           const Pt = yield vt.a.resolve({ fs: r, gitdir: a, ref: p }), Ot = yield vt.a.resolve({ fs: r, gitdir: a, ref: b }), It = yield lr({ fs: r, cache: v, gitdir: a, oids: [Pt, Ot] });
           if (It.length !== 1) throw new _c.a();
           const $t = It[0];
           if ($t === Ot) return { oid: Pt, alreadyMerged: !0 };
-          if (l && $t === Pt) return d || q || (yield vt.a.writeRef({ fs: r, gitdir: a, ref: p, value: Ot })), { oid: Ot, fastForward: !0 };
+          if (f && $t === Pt) return d || q || (yield vt.a.writeRef({ fs: r, gitdir: a, ref: p, value: Ot })), { oid: Ot, fastForward: !0 };
           {
             if (k) throw new vc.a();
             const kt = yield n.a.acquire({ fs: r, gitdir: a, cache: v, allowUnmerged: !1 }, function() {
@@ -9395,9 +9395,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var Te = t(24);
-      function Yn(r, v, y, a, p, b, l) {
+      function Yn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9408,13 +9408,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Yn(b, a, p, l, k, "next", d);
+            function f(d) {
+              Yn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Yn(b, a, p, l, k, "throw", d);
+              Yn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9422,23 +9422,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Zn.apply(this, arguments);
       }
       function Zn() {
-        return (Zn = kc(function* ({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: l, onAuthFailure: k, dir: d, gitdir: q, ref: J, url: et, remote: Q, remoteRef: ht, prune: ft, pruneTags: gt, fastForward: _t, fastForwardOnly: Pt, corsProxy: Ot, singleBranch: It, headers: $t, author: kt, committer: Ct, signingKey: St }) {
+        return (Zn = kc(function* ({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: f, onAuthFailure: k, dir: d, gitdir: q, ref: J, url: et, remote: Q, remoteRef: ht, prune: ft, pruneTags: gt, fastForward: _t, fastForwardOnly: Pt, corsProxy: Ot, singleBranch: It, headers: $t, author: kt, committer: Ct, signingKey: St }) {
           try {
             if (!J) {
               const ee = yield Object(Ie.a)({ fs: r, gitdir: q });
               if (!ee) throw new Te.a("ref");
               J = ee;
             }
-            const { fetchHead: Mt, fetchHeadDescription: Lt } = yield Object(cr.a)({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: l, onAuthFailure: k, gitdir: q, corsProxy: Ot, ref: J, url: et, remote: Q, remoteRef: ht, singleBranch: It, headers: $t, prune: ft, pruneTags: gt });
+            const { fetchHead: Mt, fetchHeadDescription: Lt } = yield Object(cr.a)({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: f, onAuthFailure: k, gitdir: q, corsProxy: Ot, ref: J, url: et, remote: Q, remoteRef: ht, singleBranch: It, headers: $t, prune: ft, pruneTags: gt });
             yield Wn({ fs: r, cache: v, gitdir: q, ours: J, theirs: Mt, fastForward: _t, fastForwardOnly: Pt, message: `Merge ${Lt}`, author: kt, committer: Ct, signingKey: St, dryRun: !1, noUpdateBranch: !1 }), yield Be({ fs: r, cache: v, onProgress: a, dir: d, gitdir: q, ref: J, remote: Q, noCheckout: !1 });
           } catch (Mt) {
             throw Mt.caller = "git.pull", Mt;
           }
         })).apply(this, arguments);
       }
-      function Kn(r, v, y, a, p, b, l) {
+      function Kn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9449,13 +9449,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Kn(b, a, p, l, k, "next", d);
+            function f(d) {
+              Kn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Kn(b, a, p, l, k, "throw", d);
+              Kn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9463,19 +9463,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Xn.apply(this, arguments);
       }
       function Xn() {
-        return (Xn = xc(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, dir: k, gitdir: d = Object(E.join)(k, ".git"), ref: q, url: J, remote: et, remoteRef: Q, corsProxy: ht, singleBranch: ft, headers: gt = {}, cache: _t = {} }) {
+        return (Xn = xc(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, dir: k, gitdir: d = Object(P.join)(k, ".git"), ref: q, url: J, remote: et, remoteRef: Q, corsProxy: ht, singleBranch: ft, headers: gt = {}, cache: _t = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("http", v), Object(f.a)("gitdir", d);
+            Object(c.a)("fs", r), Object(c.a)("http", v), Object(c.a)("gitdir", d);
             const Pt = { name: "", email: "", timestamp: Date.now(), timezoneOffset: 0 };
-            return yield Vn({ fs: new R.a(r), cache: _t, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, dir: k, gitdir: d, ref: q, url: J, remote: et, remoteRef: Q, fastForwardOnly: !0, corsProxy: ht, singleBranch: ft, headers: gt, author: Pt, committer: Pt });
+            return yield Vn({ fs: new R.a(r), cache: _t, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, dir: k, gitdir: d, ref: q, url: J, remote: et, remoteRef: Q, fastForwardOnly: !0, corsProxy: ht, singleBranch: ft, headers: gt, author: Pt, committer: Pt });
           } catch (Pt) {
             throw Pt.caller = "git.fastForward", Pt;
           }
         })).apply(this, arguments);
       }
-      function Qn(r, v, y, a, p, b, l) {
+      function Qn(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9486,13 +9486,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Qn(b, a, p, l, k, "next", d);
+            function f(d) {
+              Qn(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Qn(b, a, p, l, k, "throw", d);
+              Qn(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9500,17 +9500,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ei.apply(this, arguments);
       }
       function ei() {
-        return (ei = Oc(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, dir: k, gitdir: d = Object(E.join)(k, ".git"), ref: q, remote: J, remoteRef: et, url: Q, corsProxy: ht, depth: ft = null, since: gt = null, exclude: _t = [], relative: Pt = !1, tags: Ot = !1, singleBranch: It = !1, headers: $t = {}, prune: kt = !1, pruneTags: Ct = !1, cache: St = {} }) {
+        return (ei = Oc(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, dir: k, gitdir: d = Object(P.join)(k, ".git"), ref: q, remote: J, remoteRef: et, url: Q, corsProxy: ht, depth: ft = null, since: gt = null, exclude: _t = [], relative: Pt = !1, tags: Ot = !1, singleBranch: It = !1, headers: $t = {}, prune: kt = !1, pruneTags: Ct = !1, cache: St = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("http", v), Object(f.a)("gitdir", d), yield Object(cr.a)({ fs: new R.a(r), cache: St, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, gitdir: d, ref: q, remote: J, remoteRef: et, url: Q, corsProxy: ht, depth: ft, since: gt, exclude: _t, relative: Pt, tags: Ot, singleBranch: It, headers: $t, prune: kt, pruneTags: Ct });
+            return Object(c.a)("fs", r), Object(c.a)("http", v), Object(c.a)("gitdir", d), yield Object(cr.a)({ fs: new R.a(r), cache: St, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, gitdir: d, ref: q, remote: J, remoteRef: et, url: Q, corsProxy: ht, depth: ft, since: gt, exclude: _t, relative: Pt, tags: Ot, singleBranch: It, headers: $t, prune: kt, pruneTags: Ct });
           } catch (Mt) {
             throw Mt.caller = "git.fetch", Mt;
           }
         })).apply(this, arguments);
       }
-      function ri(r, v, y, a, p, b, l) {
+      function ri(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9521,13 +9521,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ri(b, a, p, l, k, "next", d);
+            function f(d) {
+              ri(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ri(b, a, p, l, k, "throw", d);
+              ri(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9535,18 +9535,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ii.apply(this, arguments);
       }
       function ii() {
-        return (ii = Ec(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oids: a, cache: p = {} }) {
+        return (ii = Ec(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oids: a, cache: p = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oids", a), yield lr({ fs: new R.a(r), cache: p, gitdir: y, oids: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oids", a), yield lr({ fs: new R.a(r), cache: p, gitdir: y, oids: a });
           } catch (b) {
             throw b.caller = "git.findMergeBase", b;
           }
         })).apply(this, arguments);
       }
       var Pc = t(27);
-      function oi(r, v, y, a, p, b, l) {
+      function oi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9557,13 +9557,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              oi(b, a, p, l, k, "next", d);
+            function f(d) {
+              oi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              oi(b, a, p, l, k, "throw", d);
+              oi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9572,7 +9572,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function si() {
         return (si = Sc(function* ({ fs: r, filepath: v }) {
-          if (yield r.exists(Object(E.join)(v, ".git"))) return v;
+          if (yield r.exists(Object(P.join)(v, ".git"))) return v;
           {
             const y = Object(Pc.a)(v);
             if (y === v) throw new z.a(`git root for ${v}`);
@@ -9580,9 +9580,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
         })).apply(this, arguments);
       }
-      function ui(r, v, y, a, p, b, l) {
+      function ui(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9593,13 +9593,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ui(b, a, p, l, k, "next", d);
+            function f(d) {
+              ui(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ui(b, a, p, l, k, "throw", d);
+              ui(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9609,16 +9609,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function fi() {
         return (fi = Ac(function* ({ fs: r, filepath: v }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("filepath", v), yield ai({ fs: new R.a(r), filepath: v });
+            return Object(c.a)("fs", r), Object(c.a)("filepath", v), yield ai({ fs: new R.a(r), filepath: v });
           } catch (y) {
             throw y.caller = "git.findRoot", y;
           }
         })).apply(this, arguments);
       }
       var Rc = t(41);
-      function li(r, v, y, a, p, b, l) {
+      function li(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9629,13 +9629,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              li(b, a, p, l, k, "next", d);
+            function f(d) {
+              li(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              li(b, a, p, l, k, "throw", d);
+              li(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9643,17 +9643,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return di.apply(this, arguments);
       }
       function di() {
-        return (di = Bc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), path: a }) {
+        return (di = Bc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), path: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("path", a), yield Object(Rc.a)({ fs: new R.a(r), gitdir: y, path: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("path", a), yield Object(Rc.a)({ fs: new R.a(r), gitdir: y, path: a });
           } catch (p) {
             throw p.caller = "git.getConfig", p;
           }
         })).apply(this, arguments);
       }
-      function pi(r, v, y, a, p, b, l) {
+      function pi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9664,13 +9664,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              pi(b, a, p, l, k, "next", d);
+            function f(d) {
+              pi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              pi(b, a, p, l, k, "throw", d);
+              pi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9682,9 +9682,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return (yield $.a.get({ fs: r, gitdir: v })).getall(y);
         })).apply(this, arguments);
       }
-      function mi(r, v, y, a, p, b, l) {
+      function mi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9695,13 +9695,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              mi(b, a, p, l, k, "next", d);
+            function f(d) {
+              mi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              mi(b, a, p, l, k, "throw", d);
+              mi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9709,18 +9709,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return wi.apply(this, arguments);
       }
       function wi() {
-        return (wi = $c(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), path: a }) {
+        return (wi = $c(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), path: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("path", a), yield Tc({ fs: new R.a(r), gitdir: y, path: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("path", a), yield Tc({ fs: new R.a(r), gitdir: y, path: a });
           } catch (p) {
             throw p.caller = "git.getConfigAll", p;
           }
         })).apply(this, arguments);
       }
       var hr = t(63);
-      function vi(r, v, y, a, p, b, l) {
+      function vi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9731,13 +9731,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              vi(b, a, p, l, k, "next", d);
+            function f(d) {
+              vi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              vi(b, a, p, l, k, "throw", d);
+              vi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9745,10 +9745,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return _i.apply(this, arguments);
       }
       function _i() {
-        return (_i = Cc(function* ({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, url: b, headers: l = {}, forPush: k = !1 }) {
+        return (_i = Cc(function* ({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, url: b, headers: f = {}, forPush: k = !1 }) {
           try {
-            Object(f.a)("http", r), Object(f.a)("url", b);
-            const d = hr.a.getRemoteHelperFor({ url: b }), q = yield d.discover({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, headers: l, protocolVersion: 1 }), J = { capabilities: [...q.capabilities] };
+            Object(c.a)("http", r), Object(c.a)("url", b);
+            const d = hr.a.getRemoteHelperFor({ url: b }), q = yield d.discover({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, headers: f, protocolVersion: 1 }), J = { capabilities: [...q.capabilities] };
             for (const [et, Q] of q.refs) {
               const ht = et.split("/"), ft = ht.pop();
               let gt = J;
@@ -9769,24 +9769,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function ji(r, v, y, a) {
         const p = [];
-        for (const [b, l] of r.refs) {
+        for (const [b, f] of r.refs) {
           if (v && !b.startsWith(v)) continue;
           if (b.endsWith("^{}")) {
             if (a) {
               const d = b.replace("^{}", ""), q = p[p.length - 1], J = q.ref === d ? q : p.find((et) => et.ref === d);
               if (J === void 0) throw new Error("I did not expect this to happen");
-              J.peeled = l;
+              J.peeled = f;
             }
             continue;
           }
-          const k = { ref: b, oid: l };
+          const k = { ref: b, oid: f };
           y && r.symrefs.has(b) && (k.target = r.symrefs.get(b)), p.push(k);
         }
         return p;
       }
-      function ki(r, v, y, a, p, b, l) {
+      function ki(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9797,13 +9797,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ki(b, a, p, l, k, "next", d);
+            function f(d) {
+              ki(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ki(b, a, p, l, k, "throw", d);
+              ki(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9811,10 +9811,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Oi.apply(this, arguments);
       }
       function Oi() {
-        return (Oi = Dc(function* ({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, url: b, headers: l = {}, forPush: k = !1, protocolVersion: d = 2 }) {
+        return (Oi = Dc(function* ({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, url: b, headers: f = {}, forPush: k = !1, protocolVersion: d = 2 }) {
           try {
-            Object(f.a)("http", r), Object(f.a)("url", b);
-            const q = hr.a.getRemoteHelperFor({ url: b }), J = yield q.discover({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, headers: l, protocolVersion: d });
+            Object(c.a)("http", r), Object(c.a)("url", b);
+            const q = hr.a.getRemoteHelperFor({ url: b }), J = yield q.discover({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, headers: f, protocolVersion: d });
             if (J.protocolVersion === 2) return { protocolVersion: J.protocolVersion, capabilities: J.capabilities2 };
             const et = {};
             for (const Q of J.capabilities) {
@@ -9828,9 +9828,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var Ei = t(159), Mc = t(62);
-      function Pi(r, v, y, a, p, b, l) {
+      function Pi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9841,13 +9841,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Pi(b, a, p, l, k, "next", d);
+            function f(d) {
+              Pi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Pi(b, a, p, l, k, "throw", d);
+              Pi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9857,17 +9857,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       function Si() {
         return (Si = Nc(function* ({ fs: r, cache: v, onProgress: y, dir: a, gitdir: p, filepath: b }) {
           try {
-            b = Object(E.join)(a, b);
-            const l = yield r.read(b), k = (q) => Object(Dt.a)({ fs: r, cache: v, gitdir: p, oid: q }), d = yield Mc.a.fromPack({ pack: l, getExternalRefDelta: k, onProgress: y });
+            b = Object(P.join)(a, b);
+            const f = yield r.read(b), k = (q) => Object(Dt.a)({ fs: r, cache: v, gitdir: p, oid: q }), d = yield Mc.a.fromPack({ pack: f, getExternalRefDelta: k, onProgress: y });
             return yield r.write(b.replace(/\.pack$/, ".idx"), yield d.toBuffer()), { oids: [...d.hashes] };
-          } catch (l) {
-            throw l.caller = "git.indexPack", l;
+          } catch (f) {
+            throw f.caller = "git.indexPack", f;
           }
         })).apply(this, arguments);
       }
-      function Ai(r, v, y, a, p, b, l) {
+      function Ai(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9878,13 +9878,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ai(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ai(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ai(b, a, p, l, k, "throw", d);
+              Ai(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9892,17 +9892,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Bi.apply(this, arguments);
       }
       function Bi() {
-        return (Bi = Uc(function* ({ fs: r, onProgress: v, dir: y, gitdir: a = Object(E.join)(y, ".git"), filepath: p, cache: b = {} }) {
+        return (Bi = Uc(function* ({ fs: r, onProgress: v, dir: y, gitdir: a = Object(P.join)(y, ".git"), filepath: p, cache: b = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("dir", y), Object(f.a)("gitdir", y), Object(f.a)("filepath", p), yield Fc({ fs: new R.a(r), cache: b, onProgress: v, dir: y, gitdir: a, filepath: p });
-          } catch (l) {
-            throw l.caller = "git.indexPack", l;
+            return Object(c.a)("fs", r), Object(c.a)("dir", y), Object(c.a)("gitdir", y), Object(c.a)("filepath", p), yield Fc({ fs: new R.a(r), cache: b, onProgress: v, dir: y, gitdir: a, filepath: p });
+          } catch (f) {
+            throw f.caller = "git.indexPack", f;
           }
         })).apply(this, arguments);
       }
-      function Ii(r, v, y, a, p, b, l) {
+      function Ii(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9913,13 +9913,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ii(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ii(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ii(b, a, p, l, k, "throw", d);
+              Ii(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9927,18 +9927,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return $i.apply(this, arguments);
       }
       function $i() {
-        return ($i = zc(function* ({ fs: r, bare: v = !1, dir: y, gitdir: a = v ? y : Object(E.join)(y, ".git"), defaultBranch: p = "master" }) {
+        return ($i = zc(function* ({ fs: r, bare: v = !1, dir: y, gitdir: a = v ? y : Object(P.join)(y, ".git"), defaultBranch: p = "master" }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", a), v || Object(f.a)("dir", y), yield Jr({ fs: new R.a(r), bare: v, dir: y, gitdir: a, defaultBranch: p });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", a), v || Object(c.a)("dir", y), yield Jr({ fs: new R.a(r), bare: v, dir: y, gitdir: a, defaultBranch: p });
           } catch (b) {
             throw b.caller = "git.init", b;
           }
         })).apply(this, arguments);
       }
       var Lc = t(102), Ze = t(17), Ci = t(44);
-      function Di(r, v, y, a, p, b, l) {
+      function Di(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9949,13 +9949,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Di(b, a, p, l, k, "next", d);
+            function f(d) {
+              Di(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Di(b, a, p, l, k, "throw", d);
+              Di(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -9964,7 +9964,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function Ni() {
         return (Ni = qc(function* ({ fs: r, cache: v, gitdir: y, oid: a, ancestor: p, depth: b }) {
-          const l = yield Ci.a.read({ fs: r, gitdir: y });
+          const f = yield Ci.a.read({ fs: r, gitdir: y });
           if (!a) throw new Te.a("oid");
           if (!p) throw new Te.a("ancestor");
           if (a === p) return !1;
@@ -9976,14 +9976,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             if (et !== "commit") throw new Ze.a(J, et, "commit");
             const ht = er.a.from(Q).parse();
             for (const ft of ht.parent) if (ft === p) return !0;
-            if (!l.has(J)) for (const ft of ht.parent) d.has(ft) || (k.push(ft), d.add(ft));
+            if (!f.has(J)) for (const ft of ht.parent) d.has(ft) || (k.push(ft), d.add(ft));
           }
           return !1;
         })).apply(this, arguments);
       }
-      function Fi(r, v, y, a, p, b, l) {
+      function Fi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -9994,13 +9994,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Fi(b, a, p, l, k, "next", d);
+            function f(d) {
+              Fi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Fi(b, a, p, l, k, "throw", d);
+              Fi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10008,17 +10008,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return zi.apply(this, arguments);
       }
       function zi() {
-        return (zi = Hc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oid: a, ancestor: p, depth: b = -1, cache: l = {} }) {
+        return (zi = Hc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oid: a, ancestor: p, depth: b = -1, cache: f = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oid", a), Object(f.a)("ancestor", p), yield Mi({ fs: new R.a(r), cache: l, gitdir: y, oid: a, ancestor: p, depth: b });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oid", a), Object(c.a)("ancestor", p), yield Mi({ fs: new R.a(r), cache: f, gitdir: y, oid: a, ancestor: p, depth: b });
           } catch (k) {
             throw k.caller = "git.isDescendent", k;
           }
         })).apply(this, arguments);
       }
-      function Li(r, v, y, a, p, b, l) {
+      function Li(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10029,13 +10029,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Li(b, a, p, l, k, "next", d);
+            function f(d) {
+              Li(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Li(b, a, p, l, k, "throw", d);
+              Li(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10043,17 +10043,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Hi.apply(this, arguments);
       }
       function Hi() {
-        return (Hi = Wc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), filepath: a }) {
+        return (Hi = Wc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), filepath: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("dir", v), Object(f.a)("gitdir", y), Object(f.a)("filepath", a), H.a.isIgnored({ fs: new R.a(r), dir: v, gitdir: y, filepath: a });
+            return Object(c.a)("fs", r), Object(c.a)("dir", v), Object(c.a)("gitdir", y), Object(c.a)("filepath", a), H.a.isIgnored({ fs: new R.a(r), dir: v, gitdir: y, filepath: a });
           } catch (p) {
             throw p.caller = "git.isIgnored", p;
           }
         })).apply(this, arguments);
       }
-      function Wi(r, v, y, a, p, b, l) {
+      function Wi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10064,13 +10064,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Wi(b, a, p, l, k, "next", d);
+            function f(d) {
+              Wi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Wi(b, a, p, l, k, "throw", d);
+              Wi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10078,18 +10078,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Yi.apply(this, arguments);
       }
       function Yi() {
-        return (Yi = Gc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), remote: a }) {
+        return (Yi = Gc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), remote: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), vt.a.listBranches({ fs: new R.a(r), gitdir: y, remote: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), vt.a.listBranches({ fs: new R.a(r), gitdir: y, remote: a });
           } catch (p) {
             throw p.caller = "git.listBranches", p;
           }
         })).apply(this, arguments);
       }
       var Ke = t(54);
-      function Vi(r, v, y, a, p, b, l) {
+      function Vi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10100,13 +10100,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Vi(b, a, p, l, k, "next", d);
+            function f(d) {
+              Vi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Vi(b, a, p, l, k, "throw", d);
+              Vi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10121,7 +10121,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
           return n.a.acquire({ fs: r, gitdir: v, cache: a }, function() {
             var p = dr(function* (b) {
-              return b.entries.map((l) => l.path);
+              return b.entries.map((f) => f.path);
             });
             return function(b) {
               return p.apply(this, arguments);
@@ -10134,13 +10134,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function Ji() {
         return (Ji = dr(function* ({ fs: r, cache: v, gitdir: y, oid: a, filenames: p, prefix: b }) {
-          const { tree: l } = yield Object(Ke.a)({ fs: r, cache: v, gitdir: y, oid: a });
-          for (const k of l) k.type === "tree" ? yield Ki({ fs: r, cache: v, gitdir: y, oid: k.oid, filenames: p, prefix: Object(E.join)(b, k.path) }) : p.push(Object(E.join)(b, k.path));
+          const { tree: f } = yield Object(Ke.a)({ fs: r, cache: v, gitdir: y, oid: a });
+          for (const k of f) k.type === "tree" ? yield Ki({ fs: r, cache: v, gitdir: y, oid: k.oid, filenames: p, prefix: Object(P.join)(b, k.path) }) : p.push(Object(P.join)(b, k.path));
         })).apply(this, arguments);
       }
-      function Xi(r, v, y, a, p, b, l) {
+      function Xi(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10151,13 +10151,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Xi(b, a, p, l, k, "next", d);
+            function f(d) {
+              Xi(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Xi(b, a, p, l, k, "throw", d);
+              Xi(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10165,17 +10165,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return to.apply(this, arguments);
       }
       function to() {
-        return (to = Vc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a, cache: p = {} }) {
+        return (to = Vc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a, cache: p = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), yield Yc({ fs: new R.a(r), cache: p, gitdir: y, ref: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), yield Yc({ fs: new R.a(r), cache: p, gitdir: y, ref: a });
           } catch (b) {
             throw b.caller = "git.listFiles", b;
           }
         })).apply(this, arguments);
       }
-      function eo(r, v, y, a, p, b, l) {
+      function eo(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10186,13 +10186,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              eo(b, a, p, l, k, "next", d);
+            function f(d) {
+              eo(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              eo(b, a, p, l, k, "throw", d);
+              eo(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10210,9 +10210,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return (yield Object(Ke.a)({ fs: r, cache: v, gitdir: y, oid: p })).tree.map((b) => ({ target: b.path, note: b.oid }));
         })).apply(this, arguments);
       }
-      function no(r, v, y, a, p, b, l) {
+      function no(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10223,13 +10223,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              no(b, a, p, l, k, "next", d);
+            function f(d) {
+              no(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              no(b, a, p, l, k, "throw", d);
+              no(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10237,17 +10237,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return oo.apply(this, arguments);
       }
       function oo() {
-        return (oo = Jc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a = "refs/notes/commits", cache: p = {} }) {
+        return (oo = Jc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a = "refs/notes/commits", cache: p = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a), yield Kc({ fs: new R.a(r), cache: p, gitdir: y, ref: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a), yield Kc({ fs: new R.a(r), cache: p, gitdir: y, ref: a });
           } catch (b) {
             throw b.caller = "git.listNotes", b;
           }
         })).apply(this, arguments);
       }
-      function ao(r, v, y, a, p, b, l) {
+      function ao(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10258,13 +10258,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ao(b, a, p, l, k, "next", d);
+            function f(d) {
+              ao(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ao(b, a, p, l, k, "throw", d);
+              ao(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10272,17 +10272,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return uo.apply(this, arguments);
       }
       function uo() {
-        return (uo = Xc(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), filepath: a }) {
+        return (uo = Xc(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), filepath: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), vt.a.listRefs({ fs: new R.a(r), gitdir: y, filepath: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), vt.a.listRefs({ fs: new R.a(r), gitdir: y, filepath: a });
           } catch (p) {
             throw p.caller = "git.listRefs", p;
           }
         })).apply(this, arguments);
       }
-      function co(r, v, y, a, p, b, l) {
+      function co(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10293,13 +10293,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              co(b, a, p, l, k, "next", d);
+            function f(d) {
+              co(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              co(b, a, p, l, k, "throw", d);
+              co(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10319,9 +10319,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }()));
         })).apply(this, arguments);
       }
-      function ho(r, v, y, a, p, b, l) {
+      function ho(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10332,13 +10332,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ho(b, a, p, l, k, "next", d);
+            function f(d) {
+              ho(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ho(b, a, p, l, k, "throw", d);
+              ho(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10346,18 +10346,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return go.apply(this, arguments);
       }
       function go() {
-        return (go = tf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git") }) {
+        return (go = tf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git") }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), yield Qc({ fs: new R.a(r), gitdir: y });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), yield Qc({ fs: new R.a(r), gitdir: y });
           } catch (a) {
             throw a.caller = "git.listRemotes", a;
           }
         })).apply(this, arguments);
       }
       var mo = t(55), Ee = t(9);
-      function yo(r, v, y, a, p, b, l) {
+      function yo(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10368,13 +10368,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              yo(b, a, p, l, k, "next", d);
+            function f(d) {
+              yo(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              yo(b, a, p, l, k, "throw", d);
+              yo(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10388,8 +10388,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           for (; a = yield v(), a !== !0; ) {
             if (a === null) continue;
             a = a.toString("utf8").replace(/\n$/, "");
-            const [p, b, ...l] = a.split(" "), k = { ref: b, oid: p };
-            for (const d of l) {
+            const [p, b, ...f] = a.split(" "), k = { ref: b, oid: p };
+            for (const d of f) {
               const [q, J] = d.split(":");
               q === "symref-target" ? k.target = J : q === "peeled" && (k.peeled = J);
             }
@@ -10399,9 +10399,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var pr = t(48);
-      function vo(r, v, y, a, p, b, l) {
+      function vo(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10412,13 +10412,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              vo(b, a, p, l, k, "next", d);
+            function f(d) {
+              vo(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              vo(b, a, p, l, k, "throw", d);
+              vo(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10433,9 +10433,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
 `)), (y || v || r) && a.push(Ee.a.delim()), y && a.push(Ee.a.encode("peel")), v && a.push(Ee.a.encode("symrefs")), r && a.push(Ee.a.encode(`ref-prefix ${r}`)), a.push(Ee.a.flush()), a;
         })).apply(this, arguments);
       }
-      function _o(r, v, y, a, p, b, l) {
+      function _o(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10446,13 +10446,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              _o(b, a, p, l, k, "next", d);
+            function f(d) {
+              _o(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              _o(b, a, p, l, k, "throw", d);
+              _o(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10460,21 +10460,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ko.apply(this, arguments);
       }
       function ko() {
-        return (ko = af(function* ({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, url: b, headers: l = {}, forPush: k = !1, protocolVersion: d = 2, prefix: q, symrefs: J, peelTags: et }) {
+        return (ko = af(function* ({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, url: b, headers: f = {}, forPush: k = !1, protocolVersion: d = 2, prefix: q, symrefs: J, peelTags: et }) {
           try {
-            Object(f.a)("http", r), Object(f.a)("url", b);
-            const Q = yield mo.a.discover({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, headers: l, protocolVersion: d });
+            Object(c.a)("http", r), Object(c.a)("url", b);
+            const Q = yield mo.a.discover({ http: r, onAuth: v, onAuthSuccess: y, onAuthFailure: a, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, headers: f, protocolVersion: d });
             if (Q.protocolVersion === 1) return ji(Q, q, J, et);
             const ht = yield of({ prefix: q, symrefs: J, peelTags: et });
-            return rf((yield mo.a.connect({ http: r, auth: Q.auth, headers: l, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, body: ht })).body);
+            return rf((yield mo.a.connect({ http: r, auth: Q.auth, headers: f, corsProxy: p, service: k ? "git-receive-pack" : "git-upload-pack", url: b, body: ht })).body);
           } catch (Q) {
             throw Q.caller = "git.listServerRefs", Q;
           }
         })).apply(this, arguments);
       }
-      function xo(r, v, y, a, p, b, l) {
+      function xo(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10485,13 +10485,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              xo(b, a, p, l, k, "next", d);
+            function f(d) {
+              xo(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              xo(b, a, p, l, k, "throw", d);
+              xo(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10499,9 +10499,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Eo.apply(this, arguments);
       }
       function Eo() {
-        return (Eo = sf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git") }) {
+        return (Eo = sf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git") }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), vt.a.listTags({ fs: new R.a(r), gitdir: y });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), vt.a.listTags({ fs: new R.a(r), gitdir: y });
           } catch (a) {
             throw a.caller = "git.listTags", a;
           }
@@ -10512,9 +10512,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return r.committer.timestamp - v.committer.timestamp;
       }
       var gr = t(12), cf = t(47);
-      function Po(r, v, y, a, p, b, l) {
+      function Po(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10525,13 +10525,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Po(b, a, p, l, k, "next", d);
+            function f(d) {
+              Po(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Po(b, a, p, l, k, "throw", d);
+              Po(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10543,29 +10543,29 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return (Ro = So(function* ({ fs: r, cache: v, gitdir: y, oid: a, fileId: p }) {
           if (p === ff) return;
           const b = a;
-          let l;
+          let f;
           const k = yield Object(cf.a)({ fs: r, cache: v, gitdir: y, oid: a }), d = k.tree;
-          return p === k.oid ? l = k.path : (l = yield Bo({ fs: r, cache: v, gitdir: y, tree: d, fileId: p, oid: b }), Array.isArray(l) && (l.length === 0 ? l = void 0 : l.length === 1 && (l = l[0]))), l;
+          return p === k.oid ? f = k.path : (f = yield Bo({ fs: r, cache: v, gitdir: y, tree: d, fileId: p, oid: b }), Array.isArray(f) && (f.length === 0 ? f = void 0 : f.length === 1 && (f = f[0]))), f;
         })).apply(this, arguments);
       }
       function Bo(r) {
         return Io.apply(this, arguments);
       }
       function Io() {
-        return (Io = So(function* ({ fs: r, cache: v, gitdir: y, tree: a, fileId: p, oid: b, filepaths: l = [], parentPath: k = "" }) {
+        return (Io = So(function* ({ fs: r, cache: v, gitdir: y, tree: a, fileId: p, oid: b, filepaths: f = [], parentPath: k = "" }) {
           const d = a.entries().map(function(q) {
             let J;
-            return q.oid === p ? (J = Object(E.join)(k, q.path), l.push(J)) : q.type === "tree" && (J = Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: q.oid }).then(function({ object: et }) {
-              return Bo({ fs: r, cache: v, gitdir: y, tree: gr.a.from(et), fileId: p, oid: b, filepaths: l, parentPath: Object(E.join)(k, q.path) });
+            return q.oid === p ? (J = Object(P.join)(k, q.path), f.push(J)) : q.type === "tree" && (J = Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: q.oid }).then(function({ object: et }) {
+              return Bo({ fs: r, cache: v, gitdir: y, tree: gr.a.from(et), fileId: p, oid: b, filepaths: f, parentPath: Object(P.join)(k, q.path) });
             })), J;
           });
-          return yield Promise.all(d), l;
+          return yield Promise.all(d), f;
         })).apply(this, arguments);
       }
       var rr = t(70);
-      function To(r, v, y, a, p, b, l) {
+      function To(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10576,13 +10576,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              To(b, a, p, l, k, "next", d);
+            function f(d) {
+              To(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              To(b, a, p, l, k, "throw", d);
+              To(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10590,8 +10590,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return $o.apply(this, arguments);
       }
       function $o() {
-        return ($o = lf(function* ({ fs: r, cache: v, gitdir: y, filepath: a, ref: p, depth: b, since: l, force: k, follow: d }) {
-          const q = l === void 0 ? void 0 : Math.floor(l.valueOf() / 1e3), J = [], et = yield Ci.a.read({ fs: r, gitdir: y }), Q = yield vt.a.resolve({ fs: r, gitdir: y, ref: p }), ht = [yield Object(Je.a)({ fs: r, cache: v, gitdir: y, oid: Q })];
+        return ($o = lf(function* ({ fs: r, cache: v, gitdir: y, filepath: a, ref: p, depth: b, since: f, force: k, follow: d }) {
+          const q = f === void 0 ? void 0 : Math.floor(f.valueOf() / 1e3), J = [], et = yield Ci.a.read({ fs: r, gitdir: y }), Q = yield vt.a.resolve({ fs: r, gitdir: y, ref: p }), ht = [yield Object(Je.a)({ fs: r, cache: v, gitdir: y, oid: Q })];
           let ft, gt, _t;
           function Pt(Ot) {
             _t && a && J.push(Ot);
@@ -10640,9 +10640,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return J;
         })).apply(this, arguments);
       }
-      function Co(r, v, y, a, p, b, l) {
+      function Co(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10653,13 +10653,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Co(b, a, p, l, k, "next", d);
+            function f(d) {
+              Co(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Co(b, a, p, l, k, "throw", d);
+              Co(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10667,17 +10667,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Mo.apply(this, arguments);
       }
       function Mo() {
-        return (Mo = df(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), filepath: a, ref: p = "HEAD", depth: b, since: l, force: k, follow: d, cache: q = {} }) {
+        return (Mo = df(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), filepath: a, ref: p = "HEAD", depth: b, since: f, force: k, follow: d, cache: q = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", p), yield hf({ fs: new R.a(r), cache: q, gitdir: y, filepath: a, ref: p, depth: b, since: l, force: k, follow: d });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", p), yield hf({ fs: new R.a(r), cache: q, gitdir: y, filepath: a, ref: p, depth: b, since: f, force: k, follow: d });
           } catch (J) {
             throw J.caller = "git.log", J;
           }
         })).apply(this, arguments);
       }
-      function No(r, v, y, a, p, b, l) {
+      function No(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10688,13 +10688,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              No(b, a, p, l, k, "next", d);
+            function f(d) {
+              No(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              No(b, a, p, l, k, "throw", d);
+              No(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10702,23 +10702,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Uo.apply(this, arguments);
       }
       function Uo() {
-        return (Uo = pf(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(E.join)(y, ".git"), ours: p, theirs: b, fastForward: l = !0, fastForwardOnly: k = !1, dryRun: d = !1, noUpdateBranch: q = !1, abortOnConflict: J = !0, message: et, author: Q, committer: ht, signingKey: ft, cache: gt = {}, mergeDriver: _t }) {
+        return (Uo = pf(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(P.join)(y, ".git"), ours: p, theirs: b, fastForward: f = !0, fastForwardOnly: k = !1, dryRun: d = !1, noUpdateBranch: q = !1, abortOnConflict: J = !0, message: et, author: Q, committer: ht, signingKey: ft, cache: gt = {}, mergeDriver: _t }) {
           try {
-            Object(f.a)("fs", r), ft && Object(f.a)("onSign", v);
+            Object(c.a)("fs", r), ft && Object(c.a)("onSign", v);
             const Pt = new R.a(r), Ot = yield Object(st.a)({ fs: Pt, gitdir: a, author: Q });
-            if (!(Ot || k && l)) throw new pt.a("author");
+            if (!(Ot || k && f)) throw new pt.a("author");
             const It = yield Object(mt.a)({ fs: Pt, gitdir: a, author: Ot, committer: ht });
-            if (!(It || k && l)) throw new pt.a("committer");
-            return yield Wn({ fs: Pt, cache: gt, dir: y, gitdir: a, ours: p, theirs: b, fastForward: l, fastForwardOnly: k, dryRun: d, noUpdateBranch: q, abortOnConflict: J, message: et, author: Ot, committer: It, signingKey: ft, onSign: v, mergeDriver: _t });
+            if (!(It || k && f)) throw new pt.a("committer");
+            return yield Wn({ fs: Pt, cache: gt, dir: y, gitdir: a, ours: p, theirs: b, fastForward: f, fastForwardOnly: k, dryRun: d, noUpdateBranch: q, abortOnConflict: J, message: et, author: Ot, committer: It, signingKey: ft, onSign: v, mergeDriver: _t });
           } catch (Pt) {
             throw Pt.caller = "git.merge", Pt;
           }
         })).apply(this, arguments);
       }
       var gf = t(166);
-      function zo(r, v, y, a, p, b, l) {
+      function zo(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10729,13 +10729,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              zo(b, a, p, l, k, "next", d);
+            function f(d) {
+              zo(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              zo(b, a, p, l, k, "throw", d);
+              zo(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10743,17 +10743,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return qo.apply(this, arguments);
       }
       function qo() {
-        return (qo = mf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oids: a, write: p = !1, cache: b = {} }) {
+        return (qo = mf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oids: a, write: p = !1, cache: b = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oids", a), yield Object(gf.a)({ fs: new R.a(r), cache: b, gitdir: y, oids: a, write: p });
-          } catch (l) {
-            throw l.caller = "git.packObjects", l;
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oids", a), yield Object(gf.a)({ fs: new R.a(r), cache: b, gitdir: y, oids: a, write: p });
+          } catch (f) {
+            throw f.caller = "git.packObjects", f;
           }
         })).apply(this, arguments);
       }
-      function Ho(r, v, y, a, p, b, l) {
+      function Ho(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10764,13 +10764,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ho(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ho(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ho(b, a, p, l, k, "throw", d);
+              Ho(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10778,23 +10778,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Go.apply(this, arguments);
       }
       function Go() {
-        return (Go = yf(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, dir: k, gitdir: d = Object(E.join)(k, ".git"), ref: q, url: J, remote: et, remoteRef: Q, prune: ht = !1, pruneTags: ft = !1, fastForward: gt = !0, fastForwardOnly: _t = !1, corsProxy: Pt, singleBranch: Ot, headers: It = {}, author: $t, committer: kt, signingKey: Ct, cache: St = {} }) {
+        return (Go = yf(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, dir: k, gitdir: d = Object(P.join)(k, ".git"), ref: q, url: J, remote: et, remoteRef: Q, prune: ht = !1, pruneTags: ft = !1, fastForward: gt = !0, fastForwardOnly: _t = !1, corsProxy: Pt, singleBranch: Ot, headers: It = {}, author: $t, committer: kt, signingKey: Ct, cache: St = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", d);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", d);
             const Mt = new R.a(r), Lt = yield Object(st.a)({ fs: Mt, gitdir: d, author: $t });
             if (!Lt) throw new pt.a("author");
             const ee = yield Object(mt.a)({ fs: Mt, gitdir: d, author: Lt, committer: kt });
             if (!ee) throw new pt.a("committer");
-            return yield Vn({ fs: Mt, cache: St, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, dir: k, gitdir: d, ref: q, url: J, remote: et, remoteRef: Q, fastForward: gt, fastForwardOnly: _t, corsProxy: Pt, singleBranch: Ot, headers: It, author: Lt, committer: ee, signingKey: Ct, prune: ht, pruneTags: ft });
+            return yield Vn({ fs: Mt, cache: St, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, dir: k, gitdir: d, ref: q, url: J, remote: et, remoteRef: Q, fastForward: gt, fastForwardOnly: _t, corsProxy: Pt, singleBranch: Ot, headers: It, author: Lt, committer: ee, signingKey: Ct, prune: ht, pruneTags: ft });
           } catch (Mt) {
             throw Mt.caller = "git.pull", Mt;
           }
         })).apply(this, arguments);
       }
       var wf = t(128), mr = t(115), vf = t(112), bf = t(101), Yo = t(94), _f = t(58), jf = t(77), kf = t(141), xf = t(39), Of = t(142), Ef = t(130), Pf = t(129);
-      function Vo(r, v, y, a, p, b, l) {
+      function Vo(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10805,13 +10805,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Vo(b, a, p, l, k, "next", d);
+            function f(d) {
+              Vo(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Vo(b, a, p, l, k, "throw", d);
+              Vo(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10819,7 +10819,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ko.apply(this, arguments);
       }
       function Ko() {
-        return (Ko = Zo(function* ({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: l, onAuthFailure: k, onPrePush: d, gitdir: q, ref: J, remoteRef: et, remote: Q, url: ht, force: ft = !1, delete: gt = !1, corsProxy: _t, headers: Pt = {} }) {
+        return (Ko = Zo(function* ({ fs: r, cache: v, http: y, onProgress: a, onMessage: p, onAuth: b, onAuthSuccess: f, onAuthFailure: k, onPrePush: d, gitdir: q, ref: J, remoteRef: et, remote: Q, url: ht, force: ft = !1, delete: gt = !1, corsProxy: _t, headers: Pt = {} }) {
           const Ot = J || (yield Object(Ie.a)({ fs: r, gitdir: q }));
           if (Ot === void 0) throw new Te.a("ref");
           const It = yield $.a.get({ fs: r, gitdir: q });
@@ -10829,7 +10829,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           const kt = et || (yield It.get(`branch.${Ot}.merge`));
           if ($t === void 0) throw new Te.a("remoteRef");
           _t === void 0 && (_t = yield It.get("http.corsProxy"));
-          const Ct = yield vt.a.expand({ fs: r, gitdir: q, ref: Ot }), St = gt ? "0000000000000000000000000000000000000000" : yield vt.a.resolve({ fs: r, gitdir: q, ref: Ct }), Mt = hr.a.getRemoteHelperFor({ url: $t }), Lt = yield Mt.discover({ http: y, onAuth: b, onAuthSuccess: l, onAuthFailure: k, corsProxy: _t, service: "git-receive-pack", url: $t, headers: Pt, protocolVersion: 1 }), ee = Lt.auth;
+          const Ct = yield vt.a.expand({ fs: r, gitdir: q, ref: Ot }), St = gt ? "0000000000000000000000000000000000000000" : yield vt.a.resolve({ fs: r, gitdir: q, ref: Ct }), Mt = hr.a.getRemoteHelperFor({ url: $t }), Lt = yield Mt.discover({ http: y, onAuth: b, onAuthSuccess: f, onAuthFailure: k, corsProxy: _t, service: "git-receive-pack", url: $t, headers: Pt, protocolVersion: 1 }), ee = Lt.auth;
           let ie;
           if (kt) try {
             ie = yield vt.a.expandAgainstMap({ ref: kt, map: Lt.refs });
@@ -10893,9 +10893,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
         })).apply(this, arguments);
       }
-      function Jo(r, v, y, a, p, b, l) {
+      function Jo(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10906,13 +10906,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Jo(b, a, p, l, k, "next", d);
+            function f(d) {
+              Jo(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Jo(b, a, p, l, k, "throw", d);
+              Jo(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10920,17 +10920,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Qo.apply(this, arguments);
       }
       function Qo() {
-        return (Qo = Af(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, onPrePush: k, dir: d, gitdir: q = Object(E.join)(d, ".git"), ref: J, remoteRef: et, remote: Q = "origin", url: ht, force: ft = !1, delete: gt = !1, corsProxy: _t, headers: Pt = {}, cache: Ot = {} }) {
+        return (Qo = Af(function* ({ fs: r, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, onPrePush: k, dir: d, gitdir: q = Object(P.join)(d, ".git"), ref: J, remoteRef: et, remote: Q = "origin", url: ht, force: ft = !1, delete: gt = !1, corsProxy: _t, headers: Pt = {}, cache: Ot = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("http", v), Object(f.a)("gitdir", q), yield Sf({ fs: new R.a(r), cache: Ot, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: l, onPrePush: k, gitdir: q, ref: J, remoteRef: et, remote: Q, url: ht, force: ft, delete: gt, corsProxy: _t, headers: Pt });
+            return Object(c.a)("fs", r), Object(c.a)("http", v), Object(c.a)("gitdir", q), yield Sf({ fs: new R.a(r), cache: Ot, http: v, onProgress: y, onMessage: a, onAuth: p, onAuthSuccess: b, onAuthFailure: f, onPrePush: k, gitdir: q, ref: J, remoteRef: et, remote: Q, url: ht, force: ft, delete: gt, corsProxy: _t, headers: Pt });
           } catch (It) {
             throw It.caller = "git.push", It;
           }
         })).apply(this, arguments);
       }
-      function ta(r, v, y, a, p, b, l) {
+      function ta(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10941,13 +10941,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ta(b, a, p, l, k, "next", d);
+            function f(d) {
+              ta(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ta(b, a, p, l, k, "throw", d);
+              ta(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10962,9 +10962,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return { oid: a, blob: new Uint8Array(b) };
         })).apply(this, arguments);
       }
-      function na(r, v, y, a, p, b, l) {
+      function na(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -10975,13 +10975,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              na(b, a, p, l, k, "next", d);
+            function f(d) {
+              na(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              na(b, a, p, l, k, "throw", d);
+              na(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -10993,9 +10993,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return p !== void 0 && (a = yield Object(rr.a)({ fs: r, cache: v, gitdir: y, oid: a, filepath: p })), yield ea({ fs: r, cache: v, gitdir: y, oid: a });
         })).apply(this, arguments);
       }
-      function aa(r, v, y, a, p, b, l) {
+      function aa(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11006,13 +11006,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              aa(b, a, p, l, k, "next", d);
+            function f(d) {
+              aa(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              aa(b, a, p, l, k, "throw", d);
+              aa(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11020,17 +11020,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ua.apply(this, arguments);
       }
       function ua() {
-        return (ua = If(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oid: a, filepath: p, cache: b = {} }) {
+        return (ua = If(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oid: a, filepath: p, cache: b = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oid", a), yield ia({ fs: new R.a(r), cache: b, gitdir: y, oid: a, filepath: p });
-          } catch (l) {
-            throw l.caller = "git.readBlob", l;
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oid", a), yield ia({ fs: new R.a(r), cache: b, gitdir: y, oid: a, filepath: p });
+          } catch (f) {
+            throw f.caller = "git.readBlob", f;
           }
         })).apply(this, arguments);
       }
-      function ca(r, v, y, a, p, b, l) {
+      function ca(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11041,13 +11041,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ca(b, a, p, l, k, "next", d);
+            function f(d) {
+              ca(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ca(b, a, p, l, k, "throw", d);
+              ca(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11055,17 +11055,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return fa.apply(this, arguments);
       }
       function fa() {
-        return (fa = Tf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oid: a, cache: p = {} }) {
+        return (fa = Tf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oid: a, cache: p = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oid", a), yield Object(Je.a)({ fs: new R.a(r), cache: p, gitdir: y, oid: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oid", a), yield Object(Je.a)({ fs: new R.a(r), cache: p, gitdir: y, oid: a });
           } catch (b) {
             throw b.caller = "git.readCommit", b;
           }
         })).apply(this, arguments);
       }
-      function la(r, v, y, a, p, b, l) {
+      function la(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11076,13 +11076,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              la(b, a, p, l, k, "next", d);
+            function f(d) {
+              la(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              la(b, a, p, l, k, "throw", d);
+              la(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11091,13 +11091,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function ha() {
         return (ha = $f(function* ({ fs: r, cache: v, gitdir: y, ref: a = "refs/notes/commits", oid: p }) {
-          const b = yield vt.a.resolve({ gitdir: y, fs: r, ref: a }), { blob: l } = yield ia({ fs: r, cache: v, gitdir: y, oid: b, filepath: p });
-          return l;
+          const b = yield vt.a.resolve({ gitdir: y, fs: r, ref: a }), { blob: f } = yield ia({ fs: r, cache: v, gitdir: y, oid: b, filepath: p });
+          return f;
         })).apply(this, arguments);
       }
-      function da(r, v, y, a, p, b, l) {
+      function da(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11108,13 +11108,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              da(b, a, p, l, k, "next", d);
+            function f(d) {
+              da(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              da(b, a, p, l, k, "throw", d);
+              da(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11122,17 +11122,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ga.apply(this, arguments);
       }
       function ga() {
-        return (ga = Df(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a = "refs/notes/commits", oid: p, cache: b = {} }) {
+        return (ga = Df(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a = "refs/notes/commits", oid: p, cache: b = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a), Object(f.a)("oid", p), yield Cf({ fs: new R.a(r), cache: b, gitdir: y, ref: a, oid: p });
-          } catch (l) {
-            throw l.caller = "git.readNote", l;
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a), Object(c.a)("oid", p), yield Cf({ fs: new R.a(r), cache: b, gitdir: y, ref: a, oid: p });
+          } catch (f) {
+            throw f.caller = "git.readNote", f;
           }
         })).apply(this, arguments);
       }
-      function ma(r, v, y, a, p, b, l) {
+      function ma(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11143,13 +11143,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ma(b, a, p, l, k, "next", d);
+            function f(d) {
+              ma(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ma(b, a, p, l, k, "throw", d);
+              ma(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11157,9 +11157,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return wa.apply(this, arguments);
       }
       function wa() {
-        return (wa = Mf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oid: a, format: p = "parsed", filepath: b, encoding: l, cache: k = {} }) {
+        return (wa = Mf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oid: a, format: p = "parsed", filepath: b, encoding: f, cache: k = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oid", a);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oid", a);
             const d = new R.a(r);
             b !== void 0 && (a = yield Object(rr.a)({ fs: d, cache: k, gitdir: y, oid: a, filepath: b }));
             const q = p === "parsed" ? "content" : p, J = yield Object(Dt.a)({ fs: d, cache: k, gitdir: y, oid: a, format: q });
@@ -11171,7 +11171,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 J.object = gr.a.from(J.object).entries();
                 break;
               case "blob":
-                l ? J.object = J.object.toString(l) : (J.object = new Uint8Array(J.object), J.format = "content");
+                f ? J.object = J.object.toString(f) : (J.object = new Uint8Array(J.object), J.format = "content");
                 break;
               case "tag":
                 J.object = Zt.a.from(J.object).parse();
@@ -11186,9 +11186,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
         })).apply(this, arguments);
       }
-      function va(r, v, y, a, p, b, l) {
+      function va(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11199,13 +11199,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              va(b, a, p, l, k, "next", d);
+            function f(d) {
+              va(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              va(b, a, p, l, k, "throw", d);
+              va(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11216,13 +11216,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return (ba = Nf(function* ({ fs: r, cache: v, gitdir: y, oid: a }) {
           const { type: p, object: b } = yield Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: a, format: "content" });
           if (p !== "tag") throw new Ze.a(a, p, "tag");
-          const l = Zt.a.from(b);
-          return { oid: a, tag: l.parse(), payload: l.payload() };
+          const f = Zt.a.from(b);
+          return { oid: a, tag: f.parse(), payload: f.payload() };
         })).apply(this, arguments);
       }
-      function _a(r, v, y, a, p, b, l) {
+      function _a(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11233,13 +11233,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              _a(b, a, p, l, k, "next", d);
+            function f(d) {
+              _a(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              _a(b, a, p, l, k, "throw", d);
+              _a(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11247,17 +11247,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ka.apply(this, arguments);
       }
       function ka() {
-        return (ka = Uf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oid: a, cache: p = {} }) {
+        return (ka = Uf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oid: a, cache: p = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oid", a), yield Ff({ fs: new R.a(r), cache: p, gitdir: y, oid: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oid", a), yield Ff({ fs: new R.a(r), cache: p, gitdir: y, oid: a });
           } catch (b) {
             throw b.caller = "git.readTag", b;
           }
         })).apply(this, arguments);
       }
-      function xa(r, v, y, a, p, b, l) {
+      function xa(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11268,13 +11268,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              xa(b, a, p, l, k, "next", d);
+            function f(d) {
+              xa(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              xa(b, a, p, l, k, "throw", d);
+              xa(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11282,17 +11282,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ea.apply(this, arguments);
       }
       function Ea() {
-        return (Ea = zf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), oid: a, filepath: p, cache: b = {} }) {
+        return (Ea = zf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), oid: a, filepath: p, cache: b = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("oid", a), yield Object(Ke.a)({ fs: new R.a(r), cache: b, gitdir: y, oid: a, filepath: p });
-          } catch (l) {
-            throw l.caller = "git.readTree", l;
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("oid", a), yield Object(Ke.a)({ fs: new R.a(r), cache: b, gitdir: y, oid: a, filepath: p });
+          } catch (f) {
+            throw f.caller = "git.readTree", f;
           }
         })).apply(this, arguments);
       }
-      function Pa(r, v, y, a, p, b, l) {
+      function Pa(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11303,13 +11303,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Pa(b, a, p, l, k, "next", d);
+            function f(d) {
+              Pa(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Pa(b, a, p, l, k, "throw", d);
+              Pa(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11317,13 +11317,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ra.apply(this, arguments);
       }
       function Ra() {
-        return (Ra = Sa(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), filepath: a, cache: p = {} }) {
+        return (Ra = Sa(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), filepath: a, cache: p = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("filepath", a), yield n.a.acquire({ fs: new R.a(r), gitdir: y, cache: p }, function() {
-              var b = Sa(function* (l) {
-                l.delete({ filepath: a });
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("filepath", a), yield n.a.acquire({ fs: new R.a(r), gitdir: y, cache: p }, function() {
+              var b = Sa(function* (f) {
+                f.delete({ filepath: a });
               });
-              return function(l) {
+              return function(f) {
                 return b.apply(this, arguments);
               };
             }());
@@ -11333,9 +11333,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var nr = t(89);
-      function Ba(r, v, y, a, p, b, l) {
+      function Ba(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11346,13 +11346,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ba(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ba(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ba(b, a, p, l, k, "throw", d);
+              Ba(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11360,7 +11360,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ia.apply(this, arguments);
       }
       function Ia() {
-        return (Ia = Lf(function* ({ fs: r, cache: v, onSign: y, gitdir: a, ref: p = "refs/notes/commits", oid: b, author: l, committer: k, signingKey: d }) {
+        return (Ia = Lf(function* ({ fs: r, cache: v, onSign: y, gitdir: a, ref: p = "refs/notes/commits", oid: b, author: f, committer: k, signingKey: d }) {
           let q;
           try {
             q = yield vt.a.resolve({ gitdir: a, fs: r, ref: p });
@@ -11371,12 +11371,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           J = J.filter((Q) => Q.path !== b);
           const et = yield Object(nr.a)({ fs: r, gitdir: a, tree: J });
           return yield Object(fr.a)({ fs: r, cache: v, onSign: y, gitdir: a, ref: p, tree: et, parent: q && [q], message: `Note removed by 'isomorphic-git removeNote'
-`, author: l, committer: k, signingKey: d });
+`, author: f, committer: k, signingKey: d });
         })).apply(this, arguments);
       }
-      function Ta(r, v, y, a, p, b, l) {
+      function Ta(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11387,13 +11387,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ta(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ta(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ta(b, a, p, l, k, "throw", d);
+              Ta(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11401,10 +11401,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ca.apply(this, arguments);
       }
       function Ca() {
-        return (Ca = Hf(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(E.join)(y, ".git"), ref: p = "refs/notes/commits", oid: b, author: l, committer: k, signingKey: d, cache: q = {} }) {
+        return (Ca = Hf(function* ({ fs: r, onSign: v, dir: y, gitdir: a = Object(P.join)(y, ".git"), ref: p = "refs/notes/commits", oid: b, author: f, committer: k, signingKey: d, cache: q = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", a), Object(f.a)("oid", b);
-            const J = new R.a(r), et = yield Object(st.a)({ fs: J, gitdir: a, author: l });
+            Object(c.a)("fs", r), Object(c.a)("gitdir", a), Object(c.a)("oid", b);
+            const J = new R.a(r), et = yield Object(st.a)({ fs: J, gitdir: a, author: f });
             if (!et) throw new pt.a("author");
             const Q = yield Object(mt.a)({ fs: J, gitdir: a, author: et, committer: k });
             if (!Q) throw new pt.a("committer");
@@ -11414,9 +11414,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
         })).apply(this, arguments);
       }
-      function Da(r, v, y, a, p, b, l) {
+      function Da(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11427,13 +11427,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Da(b, a, p, l, k, "next", d);
+            function f(d) {
+              Da(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Da(b, a, p, l, k, "throw", d);
+              Da(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11444,17 +11444,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return (Ma = Wf(function* ({ fs: r, gitdir: v, oldref: y, ref: a, checkout: p = !1 }) {
           if (a !== K.a.clean(a)) throw new rt.a(a, K.a.clean(a));
           if (y !== K.a.clean(y)) throw new rt.a(y, K.a.clean(y));
-          const b = `refs/heads/${y}`, l = `refs/heads/${a}`;
-          if (yield vt.a.exists({ fs: r, gitdir: v, ref: l })) throw new X.a("branch", a, !1);
+          const b = `refs/heads/${y}`, f = `refs/heads/${a}`;
+          if (yield vt.a.exists({ fs: r, gitdir: v, ref: f })) throw new X.a("branch", a, !1);
           const k = yield vt.a.resolve({ fs: r, gitdir: v, ref: b, depth: 1 });
-          yield vt.a.writeRef({ fs: r, gitdir: v, ref: l, value: k }), yield vt.a.deleteRef({ fs: r, gitdir: v, ref: b });
+          yield vt.a.writeRef({ fs: r, gitdir: v, ref: f, value: k }), yield vt.a.deleteRef({ fs: r, gitdir: v, ref: b });
           const d = yield Object(Ie.a)({ fs: r, gitdir: v, fullname: !0 });
-          (p || d === b) && (yield vt.a.writeSymbolicRef({ fs: r, gitdir: v, ref: "HEAD", value: l }));
+          (p || d === b) && (yield vt.a.writeSymbolicRef({ fs: r, gitdir: v, ref: "HEAD", value: f }));
         })).apply(this, arguments);
       }
-      function Na(r, v, y, a, p, b, l) {
+      function Na(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11465,13 +11465,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Na(b, a, p, l, k, "next", d);
+            function f(d) {
+              Na(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Na(b, a, p, l, k, "throw", d);
+              Na(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11479,18 +11479,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ua.apply(this, arguments);
       }
       function Ua() {
-        return (Ua = Yf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a, oldref: p, checkout: b = !1 }) {
+        return (Ua = Yf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a, oldref: p, checkout: b = !1 }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a), Object(f.a)("oldref", p), yield Gf({ fs: new R.a(r), gitdir: y, ref: a, oldref: p, checkout: b });
-          } catch (l) {
-            throw l.caller = "git.renameBranch", l;
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a), Object(c.a)("oldref", p), yield Gf({ fs: new R.a(r), gitdir: y, ref: a, oldref: p, checkout: b });
+          } catch (f) {
+            throw f.caller = "git.renameBranch", f;
           }
         })).apply(this, arguments);
       }
       var Vf = t(25), Zf = t(19);
-      function za(r, v, y, a, p, b, l) {
+      function za(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11501,13 +11501,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              za(b, a, p, l, k, "next", d);
+            function f(d) {
+              za(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              za(b, a, p, l, k, "throw", d);
+              za(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11519,9 +11519,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return Object(Zf.a)(Vf.a.wrap({ type: v, object: y }));
         })).apply(this, arguments);
       }
-      function Ha(r, v, y, a, p, b, l) {
+      function Ha(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11532,13 +11532,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ha(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ha(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ha(b, a, p, l, k, "throw", d);
+              Ha(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11546,24 +11546,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ya.apply(this, arguments);
       }
       function Ya() {
-        return (Ya = Wa(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), filepath: a, ref: p, cache: b = {} }) {
+        return (Ya = Wa(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), filepath: a, ref: p, cache: b = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("filepath", a);
-            const l = new R.a(r);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("filepath", a);
+            const f = new R.a(r);
             let k, d;
             try {
-              k = yield vt.a.resolve({ fs: l, gitdir: y, ref: p || "HEAD" });
+              k = yield vt.a.resolve({ fs: f, gitdir: y, ref: p || "HEAD" });
             } catch (et) {
               if (p) throw et;
             }
             if (k) try {
-              k = yield Object(rr.a)({ fs: l, cache: b, gitdir: y, oid: k, filepath: a });
+              k = yield Object(rr.a)({ fs: f, cache: b, gitdir: y, oid: k, filepath: a });
             } catch {
               k = null;
             }
             let q = { ctime: /* @__PURE__ */ new Date(0), mtime: /* @__PURE__ */ new Date(0), dev: 0, ino: 0, mode: 0, uid: 0, gid: 0, size: 0 };
-            const J = v && (yield l.read(Object(E.join)(v, a)));
-            J && (d = yield La({ gitdir: y, type: "blob", object: J }), k === d && (q = yield l.lstat(Object(E.join)(v, a)))), yield n.a.acquire({ fs: l, gitdir: y, cache: b }, function() {
+            const J = v && (yield f.read(Object(P.join)(v, a)));
+            J && (d = yield La({ gitdir: y, type: "blob", object: J }), k === d && (q = yield f.lstat(Object(P.join)(v, a)))), yield n.a.acquire({ fs: f, gitdir: y, cache: b }, function() {
               var et = Wa(function* (Q) {
                 Q.delete({ filepath: a }), k && Q.insert({ filepath: a, stats: q, oid: k });
               });
@@ -11571,14 +11571,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 return et.apply(this, arguments);
               };
             }());
-          } catch (l) {
-            throw l.caller = "git.reset", l;
+          } catch (f) {
+            throw f.caller = "git.reset", f;
           }
         })).apply(this, arguments);
       }
-      function Va(r, v, y, a, p, b, l) {
+      function Va(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11589,13 +11589,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Va(b, a, p, l, k, "next", d);
+            function f(d) {
+              Va(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Va(b, a, p, l, k, "throw", d);
+              Va(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11603,17 +11603,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ka.apply(this, arguments);
       }
       function Ka() {
-        return (Ka = Jf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a, depth: p }) {
+        return (Ka = Jf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a, depth: p }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a), yield vt.a.resolve({ fs: new R.a(r), gitdir: y, ref: a, depth: p });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a), yield vt.a.resolve({ fs: new R.a(r), gitdir: y, ref: a, depth: p });
           } catch (b) {
             throw b.caller = "git.resolveRef", b;
           }
         })).apply(this, arguments);
       }
-      function Ja(r, v, y, a, p, b, l) {
+      function Ja(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11624,13 +11624,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ja(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ja(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ja(b, a, p, l, k, "throw", d);
+              Ja(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11638,19 +11638,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Qa.apply(this, arguments);
       }
       function Qa() {
-        return (Qa = Xf(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), path: a, value: p, append: b = !1 }) {
+        return (Qa = Xf(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), path: a, value: p, append: b = !1 }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("path", a);
-            const l = new R.a(r), k = yield $.a.get({ fs: l, gitdir: y });
-            b ? yield k.append(a, p) : yield k.set(a, p), yield $.a.save({ fs: l, gitdir: y, config: k });
-          } catch (l) {
-            throw l.caller = "git.setConfig", l;
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("path", a);
+            const f = new R.a(r), k = yield $.a.get({ fs: f, gitdir: y });
+            b ? yield k.append(a, p) : yield k.set(a, p), yield $.a.save({ fs: f, gitdir: y, config: k });
+          } catch (f) {
+            throw f.caller = "git.setConfig", f;
           }
         })).apply(this, arguments);
       }
-      function ts(r, v, y, a, p, b, l) {
+      function ts(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11661,13 +11661,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ts(b, a, p, l, k, "next", d);
+            function f(d) {
+              ts(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ts(b, a, p, l, k, "throw", d);
+              ts(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11686,8 +11686,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return `${v > 0 ? "-" : "+"}${y.toString().padStart(2, "0")}${a}`;
         }
         static createStashReflogEntry(v, y, a) {
-          const p = v.name.replace(/\s/g, ""), b = Math.floor(Date.now() / 1e3), l = ir.timezoneOffsetForRefLogEntry;
-          return `0000000000000000000000000000000000000000 ${y} ${p} ${v.email} ${b} ${l}	${a}
+          const p = v.name.replace(/\s/g, ""), b = Math.floor(Date.now() / 1e3), f = ir.timezoneOffsetForRefLogEntry;
+          return `0000000000000000000000000000000000000000 ${y} ${p} ${v.email} ${b} ${f}	${a}
 `;
         }
         static getStashReflogEntry(v, y = !1) {
@@ -11696,9 +11696,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       }
       var tl = t(33), el = t.n(tl), rl = t(113);
-      function ns(r, v, y, a, p, b, l) {
+      function ns(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11709,17 +11709,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ns(b, a, p, l, k, "next", d);
+            function f(d) {
+              ns(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ns(b, a, p, l, k, "throw", d);
+              ns(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
-      const nl = { stage: O, workdir: h };
+      const nl = { stage: E, workdir: h };
       let wr;
       function Me(r, v) {
         return is.apply(this, arguments);
@@ -11734,13 +11734,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function os() {
         return (os = se(function* (r, v, y, a, p = null) {
-          const b = Object(E.join)(y, a), l = yield r.lstat(b);
-          if (!l) throw new z.a(b);
-          if (l.isDirectory()) throw new c.a(`${b}: file expected, but found directory`);
+          const b = Object(P.join)(y, a), f = yield r.lstat(b);
+          if (!f) throw new z.a(b);
+          if (f.isDirectory()) throw new l.a(`${b}: file expected, but found directory`);
           const k = p ? yield Object(rl.a)({ fs: r, gitdir: v, oid: p }) : void 0;
           let d = k ? p : void 0;
           return k || (yield Me({ fs: r, gitdir: v, currentFilepath: b }, se(function* () {
-            const q = l.isSymbolicLink() ? yield r.readlink(b).then(ot) : yield r.read(b);
+            const q = f.isSymbolicLink() ? yield r.readlink(b).then(ot) : yield r.read(b);
             if (q === null) throw new z.a(b);
             d = yield Object(nt.a)({ fs: r, gitdir: v, type: "blob", object: q });
           }))), d;
@@ -11751,18 +11751,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function as() {
         return (as = se(function* ({ fs: r, dir: v, gitdir: y, entries: a }) {
-          function p(l) {
+          function p(f) {
             return b.apply(this, arguments);
           }
           function b() {
-            return (b = se(function* (l) {
-              if (l.type === "tree") {
-                if (!l.oid) {
-                  const k = yield Promise.all(l.children.map(p));
-                  l.oid = yield Object(nr.a)({ fs: r, gitdir: y, tree: k }), l.mode = 16384;
+            return (b = se(function* (f) {
+              if (f.type === "tree") {
+                if (!f.oid) {
+                  const k = yield Promise.all(f.children.map(p));
+                  f.oid = yield Object(nr.a)({ fs: r, gitdir: y, tree: k }), f.mode = 16384;
                 }
-              } else l.type === "blob" && (l.oid = yield il(r, y, v, l.path, l.oid), l.mode = 33188);
-              return l.path = l.path.split("/").pop(), l;
+              } else f.type === "blob" && (f.oid = yield il(r, y, v, f.path, f.oid), f.mode = 33188);
+              return f.path = f.path.split("/").pop(), f;
             })).apply(this, arguments);
           }
           return Promise.all(a.map(p));
@@ -11773,9 +11773,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function us() {
         return (us = se(function* ({ fs: r, dir: v, gitdir: y, treePair: a }) {
-          const p = a[1] === "stage", b = a.map((Q) => typeof Q == "string" ? nl[Q]() : Q), l = [], k = function() {
+          const p = a[1] === "stage", b = a.map((Q) => typeof Q == "string" ? nl[Q]() : Q), f = [], k = function() {
             var Q = se(function* (ht, [ft, gt]) {
-              if (ht !== "." && !(yield H.a.isIgnored({ fs: r, dir: v, gitdir: y, filepath: ht }))) return gt ? ((!ft || (yield ft.oid()) !== (yield gt.oid()) && (yield gt.oid()) !== void 0) && l.push([ft, gt]), { mode: yield gt.mode(), path: ht, oid: yield gt.oid(), type: yield gt.type() }) : void 0;
+              if (ht !== "." && !(yield H.a.isIgnored({ fs: r, dir: v, gitdir: y, filepath: ht }))) return gt ? ((!ft || (yield ft.oid()) !== (yield gt.oid()) && (yield gt.oid()) !== void 0) && f.push([ft, gt]), { mode: yield gt.mode(), path: ht, oid: yield gt.oid(), type: yield gt.type() }) : void 0;
             });
             return function(ht, ft) {
               return Q.apply(this, arguments);
@@ -11792,15 +11792,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               const gt = [];
               for (const _t of ft) {
                 const [Pt, Ot] = _t;
-                p ? Ot && ((yield r.exists(`${v}/${Ot.toString()}`)) ? gt.push(_t) : l.push([null, Ot])) : Pt && (Ot ? gt.push(_t) : l.push([Pt, null]));
+                p ? Ot && ((yield r.exists(`${v}/${Ot.toString()}`)) ? gt.push(_t) : f.push([null, Ot])) : Pt && (Ot ? gt.push(_t) : f.push([Pt, null]));
               }
               return gt.length ? Promise.all(gt.map(ht)) : [];
             });
             return function(ht, ft) {
               return Q.apply(this, arguments);
             };
-          }(), J = yield Object(P.a)({ fs: r, cache: {}, dir: v, gitdir: y, trees: b, map: k, reduce: d, iterate: q });
-          if (l.length === 0 || J.length === 0) return null;
+          }(), J = yield Object(S.a)({ fs: r, cache: {}, dir: v, gitdir: y, trees: b, map: k, reduce: d, iterate: q });
+          if (f.length === 0 || J.length === 0) return null;
           const et = (yield ol({ fs: r, dir: v, gitdir: y, entries: J })).filter(Boolean).map((Q) => ({ mode: Q.mode, path: Q.path, oid: Q.oid, type: Q.type }));
           return Object(nr.a)({ fs: r, gitdir: y, tree: et });
         })).apply(this, arguments);
@@ -11810,23 +11810,23 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function cs() {
         return (cs = se(function* ({ fs: r, dir: v, gitdir: y, stashCommit: a, parentCommit: p, wasStaged: b }) {
-          const l = [], k = [], d = yield Object(P.a)({ fs: r, cache: {}, dir: v, gitdir: y, trees: [Object(m.a)({ ref: p }), Object(m.a)({ ref: a })], map: (q = se(function* (J, [et, Q]) {
+          const f = [], k = [], d = yield Object(S.a)({ fs: r, cache: {}, dir: v, gitdir: y, trees: [Object(m.a)({ ref: p }), Object(m.a)({ ref: a })], map: (q = se(function* (J, [et, Q]) {
             if (J === "." || (yield H.a.isIgnored({ fs: r, dir: v, gitdir: y, filepath: J }))) return;
             const ht = Q ? yield Q.type() : yield et.type();
             if (ht !== "tree" && ht !== "blob") return;
             if (!Q && et) {
               const gt = ht === "tree" ? "rmdir" : "rm";
-              return ht === "tree" && l.push(J), ht === "blob" && b && k.push({ filepath: J, oid: yield et.oid() }), { method: gt, filepath: J };
+              return ht === "tree" && f.push(J), ht === "blob" && b && k.push({ filepath: J, oid: yield et.oid() }), { method: gt, filepath: J };
             }
             const ft = yield Q.oid();
-            return et && (yield et.oid()) === ft ? void 0 : ht === "tree" ? { method: "mkdir", filepath: J } : (b && k.push({ filepath: J, oid: ft, stats: yield r.lstat(Object(E.join)(v, J)) }), { method: "write", filepath: J, oid: ft });
+            return et && (yield et.oid()) === ft ? void 0 : ht === "tree" ? { method: "mkdir", filepath: J } : (b && k.push({ filepath: J, oid: ft, stats: yield r.lstat(Object(P.join)(v, J)) }), { method: "write", filepath: J, oid: ft });
           }), function(J, et) {
             return q.apply(this, arguments);
           }) });
           var q;
-          yield Me({ fs: r, gitdir: y, dirRemoved: l, ops: d }, se(function* () {
+          yield Me({ fs: r, gitdir: y, dirRemoved: f, ops: d }, se(function* () {
             for (const J of d) {
-              const et = Object(E.join)(v, J.filepath);
+              const et = Object(P.join)(v, J.filepath);
               switch (J.method) {
                 case "rmdir":
                   yield r.rmdir(et);
@@ -11838,7 +11838,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                   yield r.rm(et);
                   break;
                 case "write":
-                  if (!l.some((Q) => et.startsWith(Q))) {
+                  if (!f.some((Q) => et.startsWith(Q))) {
                     const { object: Q } = yield Object(Dt.a)({ fs: r, cache: {}, gitdir: y, oid: J.oid });
                     (yield r.exists(et)) && (yield r.rm(et)), yield r.write(et, Q);
                   }
@@ -11856,9 +11856,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }());
         })).apply(this, arguments);
       }
-      function fs(r, v, y, a, p, b, l) {
+      function fs(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11869,18 +11869,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              fs(b, a, p, l, k, "next", d);
+            function f(d) {
+              fs(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              fs(b, a, p, l, k, "throw", d);
+              fs(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
       class je {
-        constructor({ fs: v, dir: y, gitdir: a = Object(E.join)(y, ".git") }) {
+        constructor({ fs: v, dir: y, gitdir: a = Object(P.join)(y, ".git") }) {
           Object.assign(this, { fs: v, dir: y, gitdir: a, _author: null });
         }
         static get refStash() {
@@ -11890,10 +11890,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return "logs/refs/stash";
         }
         get refStashPath() {
-          return Object(E.join)(this.gitdir, je.refStash);
+          return Object(P.join)(this.gitdir, je.refStash);
         }
         get refLogsStashPath() {
-          return Object(E.join)(this.gitdir, je.refLogsStash);
+          return Object(P.join)(this.gitdir, je.refLogsStash);
         }
         getAuthor() {
           var v = this;
@@ -11932,10 +11932,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         writeStashReflogEntry({ stashCommit: v, message: y }) {
           var a = this;
           return Pe(function* () {
-            const p = yield a.getAuthor(), b = ir.createStashReflogEntry(p, v, y), l = a.refLogsStashPath;
-            yield Me({ filepath: l, entry: b }, Pe(function* () {
-              const k = (yield a.fs.exists(l)) ? yield a.fs.read(l, "utf8") : "";
-              yield a.fs.write(l, k + b, "utf8");
+            const p = yield a.getAuthor(), b = ir.createStashReflogEntry(p, v, y), f = a.refLogsStashPath;
+            yield Me({ filepath: f, entry: b }, Pe(function* () {
+              const k = (yield a.fs.exists(f)) ? yield a.fs.read(f, "utf8") : "";
+              yield a.fs.write(f, k + b, "utf8");
             }));
           })();
         }
@@ -11948,9 +11948,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           })();
         }
       }
-      function ls(r, v, y, a, p, b, l) {
+      function ls(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -11961,13 +11961,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              ls(b, a, p, l, k, "next", d);
+            function f(d) {
+              ls(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              ls(b, a, p, l, k, "throw", d);
+              ls(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -11978,12 +11978,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return (hs = ye(function* ({ fs: r, dir: v, gitdir: y, message: a = "" }) {
           const p = new je({ fs: r, dir: v, gitdir: y });
           yield p.getAuthor();
-          const b = yield Object(Ie.a)({ fs: r, gitdir: y, fullname: !1 }), l = yield vt.a.resolve({ fs: r, gitdir: y, ref: "HEAD" }), k = (yield yr({ fs: r, dir: v, gitdir: y, oid: l })).commit.message, d = [l];
+          const b = yield Object(Ie.a)({ fs: r, gitdir: y, fullname: !1 }), f = yield vt.a.resolve({ fs: r, gitdir: y, ref: "HEAD" }), k = (yield yr({ fs: r, dir: v, gitdir: y, oid: f })).commit.message, d = [f];
           let q = null, J = Object(m.a)({ ref: "HEAD" });
           const et = yield ss({ fs: r, dir: v, gitdir: y, treePair: [Object(m.a)({ ref: "HEAD" }), "stage"] });
           if (et) {
             const gt = yield p.writeStashCommit({ message: `stash-Index: WIP on ${b} - ${(/* @__PURE__ */ new Date()).toISOString()}`, tree: et, parent: d });
-            d.push(gt), q = et, J = O();
+            d.push(gt), q = et, J = E();
           }
           const Q = yield ss({ fs: r, dir: v, gitdir: y, treePair: [J, "workdir"] });
           if (Q) {
@@ -11991,7 +11991,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             d.push(gt), q = Q;
           }
           if (!q || !et && !Q) throw new z.a("changes, nothing to stash");
-          const ht = (a.trim() || `WIP on ${b}`) + `: ${l.substring(0, 7)} ${k}`, ft = yield p.writeStashCommit({ message: ht, tree: q, parent: d });
+          const ht = (a.trim() || `WIP on ${b}`) + `: ${f.substring(0, 7)} ${k}`, ft = yield p.writeStashCommit({ message: ht, tree: q, parent: d });
           return yield p.writeStashRef(ft), yield p.writeStashReflogEntry({ stashCommit: ft, message: ht }), yield ur({ fs: r, dir: v, gitdir: y, ref: b, track: !1, force: !0 }), ft;
         })).apply(this, arguments);
       }
@@ -12000,10 +12000,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       function ps() {
         return (ps = ye(function* ({ fs: r, dir: v, gitdir: y, refIdx: a = 0 }) {
-          const p = new je({ fs: r, dir: v, gitdir: y }), b = yield p.readStashCommit(a), { parent: l = null } = b.commit ? b.commit : {};
-          if (l && Array.isArray(l)) for (let k = 0; k < l.length - 1; k++) {
-            const d = (yield Object(Je.a)({ fs: r, cache: {}, gitdir: y, oid: l[k + 1] })).commit.message.startsWith("stash-Index");
-            yield al({ fs: r, dir: v, gitdir: y, stashCommit: l[k + 1], parentCommit: l[k], wasStaged: d });
+          const p = new je({ fs: r, dir: v, gitdir: y }), b = yield p.readStashCommit(a), { parent: f = null } = b.commit ? b.commit : {};
+          if (f && Array.isArray(f)) for (let k = 0; k < f.length - 1; k++) {
+            const d = (yield Object(Je.a)({ fs: r, cache: {}, gitdir: y, oid: f[k + 1] })).commit.message.startsWith("stash-Index");
+            yield al({ fs: r, dir: v, gitdir: y, stashCommit: f[k + 1], parentCommit: f[k], wasStaged: d });
           }
         })).apply(this, arguments);
       }
@@ -12018,15 +12018,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           yield Me(b, ye(function* () {
             (yield r.exists(b)) && (yield r.rm(b));
           }));
-          const l = yield p.readStashReflogs({ parsed: !1 });
-          if (!l.length) return;
-          l.splice(a, 1);
+          const f = yield p.readStashReflogs({ parsed: !1 });
+          if (!f.length) return;
+          f.splice(a, 1);
           const k = p.refLogsStashPath;
-          yield Me({ reflogEntries: l, stashReflogPath: k, stashMgr: p }, ye(function* () {
-            if (l.length) {
-              yield r.write(k, l.join(`
+          yield Me({ reflogEntries: f, stashReflogPath: k, stashMgr: p }, ye(function* () {
+            if (f.length) {
+              yield r.write(k, f.join(`
 `), "utf8");
-              const d = l[l.length - 1].split(" ")[1];
+              const d = f[f.length - 1].split(" ")[1];
               yield p.writeStashRef(d);
             } else yield r.rm(k);
           }));
@@ -12048,10 +12048,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           const a = new je({ fs: r, dir: v, gitdir: y }), p = [a.refStashPath, a.refLogsStashPath];
           yield Me(p, ye(function* () {
             yield Promise.all(p.map(function() {
-              var b = ye(function* (l) {
-                if (yield r.exists(l)) return r.rm(l);
+              var b = ye(function* (f) {
+                if (yield r.exists(f)) return r.rm(f);
               });
-              return function(l) {
+              return function(f) {
                 return b.apply(this, arguments);
               };
             }()));
@@ -12066,9 +12066,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           yield ds({ fs: r, dir: v, gitdir: y, refIdx: a }), yield gs({ fs: r, dir: v, gitdir: y, refIdx: a });
         })).apply(this, arguments);
       }
-      function bs(r, v, y, a, p, b, l) {
+      function bs(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12079,13 +12079,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              bs(b, a, p, l, k, "next", d);
+            function f(d) {
+              bs(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              bs(b, a, p, l, k, "throw", d);
+              bs(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12093,12 +12093,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ks.apply(this, arguments);
       }
       function ks() {
-        return (ks = _s(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), op: a = "push", message: p = "", refIdx: b = 0 }) {
-          Object(f.a)("fs", r), Object(f.a)("dir", v), Object(f.a)("gitdir", y), Object(f.a)("op", a);
-          const l = { push: sl, apply: ds, drop: gs, list: ul, clear: cl, pop: fl }, k = ["apply", "drop", "pop"];
+        return (ks = _s(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), op: a = "push", message: p = "", refIdx: b = 0 }) {
+          Object(c.a)("fs", r), Object(c.a)("dir", v), Object(c.a)("gitdir", y), Object(c.a)("op", a);
+          const f = { push: sl, apply: ds, drop: gs, list: ul, clear: cl, pop: fl }, k = ["apply", "drop", "pop"];
           try {
             const d = new R.a(r);
-            ["refs", "logs", "logs/refs"].map((J) => Object(E.join)(y, J)).forEach(function() {
+            ["refs", "logs", "logs/refs"].map((J) => Object(P.join)(y, J)).forEach(function() {
               var J = _s(function* (et) {
                 (yield d.exists(et)) || (yield d.mkdir(et));
               });
@@ -12106,7 +12106,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 return J.apply(this, arguments);
               };
             }());
-            const q = l[a];
+            const q = f[a];
             if (q) {
               if (k.includes(a) && b < 0) throw new rt.a(`stash@${b}`, "number that is in range of [0, num of stash pushed]");
               return yield q({ fs: d, dir: v, gitdir: y, message: p, refIdx: b });
@@ -12118,9 +12118,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         })).apply(this, arguments);
       }
       var ll = t(69);
-      function xs(r, v, y, a, p, b, l) {
+      function xs(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12131,13 +12131,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              xs(b, a, p, l, k, "next", d);
+            function f(d) {
+              xs(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              xs(b, a, p, l, k, "throw", d);
+              xs(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12145,12 +12145,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Es.apply(this, arguments);
       }
       function Es() {
-        return (Es = Ne(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), filepath: a, cache: p = {} }) {
+        return (Es = Ne(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), filepath: a, cache: p = {} }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("filepath", a);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("filepath", a);
             const b = new R.a(r);
             if (yield H.a.isIgnored({ fs: b, gitdir: y, dir: v, filepath: a })) return "ignored";
-            const l = yield hl({ fs: b, cache: p, gitdir: y }), k = yield Ps({ fs: b, cache: p, gitdir: y, tree: l, path: a }), d = yield n.a.acquire({ fs: b, gitdir: y, cache: p }, function() {
+            const f = yield hl({ fs: b, cache: p, gitdir: y }), k = yield Ps({ fs: b, cache: p, gitdir: y, tree: f, path: a }), d = yield n.a.acquire({ fs: b, gitdir: y, cache: p }, function() {
               var ft = Ne(function* (gt) {
                 for (const _t of gt) if (_t.path === a) return _t;
                 return null;
@@ -12158,11 +12158,11 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               return function(gt) {
                 return ft.apply(this, arguments);
               };
-            }()), q = yield b.lstat(Object(E.join)(v, a)), J = k !== null, et = d !== null, Q = q !== null, ht = function() {
+            }()), q = yield b.lstat(Object(P.join)(v, a)), J = k !== null, et = d !== null, Q = q !== null, ht = function() {
               var ft = Ne(function* () {
                 if (et && !Object(ll.a)(d, q)) return d.oid;
                 {
-                  const gt = yield b.read(Object(E.join)(v, a)), _t = yield La({ gitdir: y, type: "blob", object: gt });
+                  const gt = yield b.read(Object(P.join)(v, a)), _t = yield La({ gitdir: y, type: "blob", object: gt });
                   return et && d.oid === _t && q.size !== -1 && n.a.acquire({ fs: b, gitdir: y, cache: p }, function() {
                     var Pt = Ne(function* (Ot) {
                       Ot.insert({ filepath: a, stats: q, oid: _t });
@@ -12202,12 +12202,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return (Ss = Ne(function* ({ fs: r, cache: v, gitdir: y, tree: a, path: p }) {
           typeof p == "string" && (p = p.split("/"));
           const b = p.shift();
-          for (const l of a) if (l.path === b) {
-            if (p.length === 0) return l.oid;
-            const { type: k, object: d } = yield Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: l.oid });
+          for (const f of a) if (f.path === b) {
+            if (p.length === 0) return f.oid;
+            const { type: k, object: d } = yield Object(Dt.a)({ fs: r, cache: v, gitdir: y, oid: f.oid });
             if (k === "tree")
               return Ps({ fs: r, cache: v, gitdir: y, tree: gr.a.from(d), path: p });
-            if (k === "blob") throw new Ze.a(l.oid, k, "blob", p.join("/"));
+            if (k === "blob") throw new Ze.a(f.oid, k, "blob", p.join("/"));
           }
           return null;
         })).apply(this, arguments);
@@ -12227,9 +12227,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return p;
         })).apply(this, arguments);
       }
-      function Rs(r, v, y, a, p, b, l) {
+      function Rs(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12240,13 +12240,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Rs(b, a, p, l, k, "next", d);
+            function f(d) {
+              Rs(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Rs(b, a, p, l, k, "throw", d);
+              Rs(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12254,11 +12254,11 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ts.apply(this, arguments);
       }
       function Ts() {
-        return (Ts = Bs(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a = "HEAD", filepaths: p = ["."], filter: b, cache: l = {}, ignored: k = !1 }) {
+        return (Ts = Bs(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a = "HEAD", filepaths: p = ["."], filter: b, cache: f = {}, ignored: k = !1 }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a);
             const q = new R.a(r);
-            return yield Object(P.a)({ fs: q, cache: l, dir: v, gitdir: y, trees: [Object(m.a)({ ref: a }), h(), O()], map: (d = Bs(function* (J, [et, Q, ht]) {
+            return yield Object(S.a)({ fs: q, cache: f, dir: v, gitdir: y, trees: [Object(m.a)({ ref: a }), h(), E()], map: (d = Bs(function* (J, [et, Q, ht]) {
               if (!et && !ht && Q && !k && (yield H.a.isIgnored({ fs: q, dir: v, filepath: J })) || !p.some((St) => Jt(J, St))) return null;
               if (b && !b(J)) return;
               const [ft, gt, _t] = yield Promise.all([et && et.type(), Q && Q.type(), ht && ht.type()]), Pt = [ft, gt, _t].includes("blob");
@@ -12281,9 +12281,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var d;
         })).apply(this, arguments);
       }
-      function $s(r, v, y, a, p, b, l) {
+      function $s(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12294,13 +12294,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              $s(b, a, p, l, k, "next", d);
+            function f(d) {
+              $s(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              $s(b, a, p, l, k, "throw", d);
+              $s(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12308,24 +12308,24 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ds.apply(this, arguments);
       }
       function Ds() {
-        return (Ds = dl(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a, object: p, force: b = !1 }) {
+        return (Ds = dl(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a, object: p, force: b = !1 }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a);
-            const l = new R.a(r);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a);
+            const f = new R.a(r);
             if (a === void 0) throw new Te.a("ref");
             a = a.startsWith("refs/tags/") ? a : `refs/tags/${a}`;
-            const k = yield vt.a.resolve({ fs: l, gitdir: y, ref: p || "HEAD" });
-            if (!b && (yield vt.a.exists({ fs: l, gitdir: y, ref: a }))) throw new X.a("tag", a);
-            yield vt.a.writeRef({ fs: l, gitdir: y, ref: a, value: k });
-          } catch (l) {
-            throw l.caller = "git.tag", l;
+            const k = yield vt.a.resolve({ fs: f, gitdir: y, ref: p || "HEAD" });
+            if (!b && (yield vt.a.exists({ fs: f, gitdir: y, ref: a }))) throw new X.a("tag", a);
+            yield vt.a.writeRef({ fs: f, gitdir: y, ref: a, value: k });
+          } catch (f) {
+            throw f.caller = "git.tag", f;
           }
         })).apply(this, arguments);
       }
       var Ms = t(60);
-      function Ns(r, v, y, a, p, b, l) {
+      function Ns(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12336,13 +12336,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ns(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ns(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ns(b, a, p, l, k, "throw", d);
+              Ns(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12350,14 +12350,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Us.apply(this, arguments);
       }
       function Us() {
-        return (Us = vr(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), cache: a = {}, filepath: p, oid: b, mode: l, add: k, remove: d, force: q }) {
+        return (Us = vr(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), cache: a = {}, filepath: p, oid: b, mode: f, add: k, remove: d, force: q }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("filepath", p);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("filepath", p);
             const J = new R.a(r);
             if (d) return yield n.a.acquire({ fs: J, gitdir: y, cache: a }, function() {
               var Q = vr(function* (ht) {
                 let ft;
-                if (q || (ft = yield J.lstat(Object(E.join)(v, p)), !ft)) ht.has({ filepath: p }) && ht.delete({ filepath: p });
+                if (q || (ft = yield J.lstat(Object(P.join)(v, p)), !ft)) ht.has({ filepath: p }) && ht.delete({ filepath: p });
                 else if (ft.isDirectory()) throw new Ms.a("directory");
               });
               return function(ht) {
@@ -12366,16 +12366,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }());
             let et;
             if (!b) {
-              if (et = yield J.lstat(Object(E.join)(v, p)), !et) throw new z.a(`file at "${p}" on disk and "remove" not set`);
+              if (et = yield J.lstat(Object(P.join)(v, p)), !et) throw new z.a(`file at "${p}" on disk and "remove" not set`);
               if (et.isDirectory()) throw new Ms.a("directory");
             }
             return yield n.a.acquire({ fs: J, gitdir: y, cache: a }, function() {
               var Q = vr(function* (ht) {
                 if (!k && !ht.has({ filepath: p })) throw new z.a(`file at "${p}" in index and "add" not set`);
-                let ft = { ctime: /* @__PURE__ */ new Date(0), mtime: /* @__PURE__ */ new Date(0), dev: 0, ino: 0, mode: l, uid: 0, gid: 0, size: 0 };
+                let ft = { ctime: /* @__PURE__ */ new Date(0), mtime: /* @__PURE__ */ new Date(0), dev: 0, ino: 0, mode: f, uid: 0, gid: 0, size: 0 };
                 if (!b) {
                   ft = et;
-                  const gt = ft.isSymbolicLink() ? yield J.readlink(Object(E.join)(v, p)) : yield J.read(Object(E.join)(v, p));
+                  const gt = ft.isSymbolicLink() ? yield J.readlink(Object(P.join)(v, p)) : yield J.read(Object(P.join)(v, p));
                   b = yield Object(nt.a)({ fs: J, gitdir: y, type: "blob", format: "content", object: gt });
                 }
                 return ht.insert({ filepath: p, oid: b, stats: ft }), b;
@@ -12396,9 +12396,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           throw r.caller = "git.version", r;
         }
       }
-      function Ls(r, v, y, a, p, b, l) {
+      function Ls(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12409,13 +12409,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ls(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ls(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ls(b, a, p, l, k, "throw", d);
+              Ls(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12423,17 +12423,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Hs.apply(this, arguments);
       }
       function Hs() {
-        return (Hs = pl(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), trees: a, map: p, reduce: b, iterate: l, cache: k = {} }) {
+        return (Hs = pl(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), trees: a, map: p, reduce: b, iterate: f, cache: k = {} }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("trees", a), yield Object(P.a)({ fs: new R.a(r), cache: k, dir: v, gitdir: y, trees: a, map: p, reduce: b, iterate: l });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("trees", a), yield Object(S.a)({ fs: new R.a(r), cache: k, dir: v, gitdir: y, trees: a, map: p, reduce: b, iterate: f });
           } catch (d) {
             throw d.caller = "git.walk", d;
           }
         })).apply(this, arguments);
       }
-      function Ws(r, v, y, a, p, b, l) {
+      function Ws(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12444,13 +12444,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Ws(b, a, p, l, k, "next", d);
+            function f(d) {
+              Ws(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Ws(b, a, p, l, k, "throw", d);
+              Ws(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12458,17 +12458,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ys.apply(this, arguments);
       }
       function Ys() {
-        return (Ys = gl(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), blob: a }) {
+        return (Ys = gl(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), blob: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("blob", a), yield Object(nt.a)({ fs: new R.a(r), gitdir: y, type: "blob", object: a, format: "content" });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("blob", a), yield Object(nt.a)({ fs: new R.a(r), gitdir: y, type: "blob", object: a, format: "content" });
           } catch (p) {
             throw p.caller = "git.writeBlob", p;
           }
         })).apply(this, arguments);
       }
-      function Vs(r, v, y, a, p, b, l) {
+      function Vs(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12479,13 +12479,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Vs(b, a, p, l, k, "next", d);
+            function f(d) {
+              Vs(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Vs(b, a, p, l, k, "throw", d);
+              Vs(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12493,18 +12493,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Ks.apply(this, arguments);
       }
       function Ks() {
-        return (Ks = ml(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), commit: a }) {
+        return (Ks = ml(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), commit: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("commit", a), yield es({ fs: new R.a(r), gitdir: y, commit: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("commit", a), yield es({ fs: new R.a(r), gitdir: y, commit: a });
           } catch (p) {
             throw p.caller = "git.writeCommit", p;
           }
         })).apply(this, arguments);
       }
       var Js = t(160);
-      function Xs(r, v, y, a, p, b, l) {
+      function Xs(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12515,13 +12515,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              Xs(b, a, p, l, k, "next", d);
+            function f(d) {
+              Xs(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              Xs(b, a, p, l, k, "throw", d);
+              Xs(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12529,21 +12529,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return tu.apply(this, arguments);
       }
       function tu() {
-        return (tu = yl(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), ref: a, value: p, force: b = !1, symbolic: l = !1 }) {
+        return (tu = yl(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), ref: a, value: p, force: b = !1, symbolic: f = !1 }) {
           try {
-            Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("ref", a), Object(f.a)("value", p);
+            Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("ref", a), Object(c.a)("value", p);
             const k = new R.a(r);
             if (a !== K.a.clean(a)) throw new rt.a(a, K.a.clean(a));
             if (!b && (yield vt.a.exists({ fs: k, gitdir: y, ref: a }))) throw new X.a("ref", a);
-            l ? yield vt.a.writeSymbolicRef({ fs: k, gitdir: y, ref: a, value: p }) : (p = yield vt.a.resolve({ fs: k, gitdir: y, ref: p }), yield vt.a.writeRef({ fs: k, gitdir: y, ref: a, value: p }));
+            f ? yield vt.a.writeSymbolicRef({ fs: k, gitdir: y, ref: a, value: p }) : (p = yield vt.a.resolve({ fs: k, gitdir: y, ref: p }), yield vt.a.writeRef({ fs: k, gitdir: y, ref: a, value: p }));
           } catch (k) {
             throw k.caller = "git.writeRef", k;
           }
         })).apply(this, arguments);
       }
-      function eu(r, v, y, a, p, b, l) {
+      function eu(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12554,13 +12554,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              eu(b, a, p, l, k, "next", d);
+            function f(d) {
+              eu(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              eu(b, a, p, l, k, "throw", d);
+              eu(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12573,9 +12573,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return yield Object(nt.a)({ fs: r, gitdir: v, type: "tag", object: a, format: "content" });
         })).apply(this, arguments);
       }
-      function nu(r, v, y, a, p, b, l) {
+      function nu(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12586,13 +12586,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              nu(b, a, p, l, k, "next", d);
+            function f(d) {
+              nu(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              nu(b, a, p, l, k, "throw", d);
+              nu(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12600,17 +12600,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return ou.apply(this, arguments);
       }
       function ou() {
-        return (ou = bl(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), tag: a }) {
+        return (ou = bl(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), tag: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("tag", a), yield vl({ fs: new R.a(r), gitdir: y, tag: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("tag", a), yield vl({ fs: new R.a(r), gitdir: y, tag: a });
           } catch (p) {
             throw p.caller = "git.writeTag", p;
           }
         })).apply(this, arguments);
       }
-      function au(r, v, y, a, p, b, l) {
+      function au(r, v, y, a, p, b, f) {
         try {
-          var k = r[b](l), d = k.value;
+          var k = r[b](f), d = k.value;
         } catch (q) {
           return void y(q);
         }
@@ -12621,13 +12621,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           var v = this, y = arguments;
           return new Promise(function(a, p) {
             var b = r.apply(v, y);
-            function l(d) {
-              au(b, a, p, l, k, "next", d);
+            function f(d) {
+              au(b, a, p, f, k, "next", d);
             }
             function k(d) {
-              au(b, a, p, l, k, "throw", d);
+              au(b, a, p, f, k, "throw", d);
             }
-            l(void 0);
+            f(void 0);
           });
         };
       }
@@ -12635,9 +12635,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return uu.apply(this, arguments);
       }
       function uu() {
-        return (uu = _l(function* ({ fs: r, dir: v, gitdir: y = Object(E.join)(v, ".git"), tree: a }) {
+        return (uu = _l(function* ({ fs: r, dir: v, gitdir: y = Object(P.join)(v, ".git"), tree: a }) {
           try {
-            return Object(f.a)("fs", r), Object(f.a)("gitdir", y), Object(f.a)("tree", a), yield Object(nr.a)({ fs: new R.a(r), gitdir: y, tree: a });
+            return Object(c.a)("fs", r), Object(c.a)("gitdir", y), Object(c.a)("tree", a), yield Object(nr.a)({ fs: new R.a(r), gitdir: y, tree: a });
           } catch (p) {
             throw p.caller = "git.writeTree", p;
           }
@@ -12647,7 +12647,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       t.d(g, "Errors", function() {
         return cu;
       }), t.d(g, "STAGE", function() {
-        return O;
+        return E;
       }), t.d(g, "TREE", function() {
         return m.a;
       }), t.d(g, "WORKDIR", function() {
@@ -12784,7 +12784,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return su;
       }), t.d(g, "stash", function() {
         return js;
-      }), g.default = { Errors: cu, STAGE: O, TREE: m.a, WORKDIR: h, add: lt, abortMerge: M, addNote: C, addRemote: Vt, annotatedTag: B, branch: Ut, checkout: ur, clone: rn, commit: an, getConfig: hi, getConfigAll: yi, setConfig: Xa, currentBranch: cn, deleteBranch: pn, deleteRef: yn, deleteRemote: jn, deleteTag: Pn, expandOid: Dn, expandRef: Fn, fastForward: Jn, fetch: ti, findMergeBase: ni, findRoot: ci, getRemoteInfo: bi, getRemoteInfo2: xi, hashBlob: Ei.a, indexPack: Ri, init: Ti, isDescendent: Ui, isIgnored: qi, listBranches: Gi, listFiles: Qi, listNotes: io, listRefs: so, listRemotes: po, listServerRefs: jo, listTags: Oo, log: Do, merge: Fo, packObjects: Lo, pull: Wo, push: Xo, readBlob: sa, readCommit: yr, readNote: pa, readObject: ya, readTag: ja, readTree: Oa, remove: Aa, removeNote: $a, renameBranch: Fa, resetIndex: Ga, updateIndex: Fs, resolveRef: Za, status: Os, statusMatrix: Is, tag: Cs, version: zs, walk: qs, writeBlob: Gs, writeCommit: Zs, writeObject: Js.a, writeRef: Qs, writeTag: iu, writeTree: su, stash: js };
+      }), g.default = { Errors: cu, STAGE: E, TREE: m.a, WORKDIR: h, add: lt, abortMerge: M, addNote: C, addRemote: Vt, annotatedTag: B, branch: Ut, checkout: ur, clone: rn, commit: an, getConfig: hi, getConfigAll: yi, setConfig: Xa, currentBranch: cn, deleteBranch: pn, deleteRef: yn, deleteRemote: jn, deleteTag: Pn, expandOid: Dn, expandRef: Fn, fastForward: Jn, fetch: ti, findMergeBase: ni, findRoot: ci, getRemoteInfo: bi, getRemoteInfo2: xi, hashBlob: Ei.a, indexPack: Ri, init: Ti, isDescendent: Ui, isIgnored: qi, listBranches: Gi, listFiles: Qi, listNotes: io, listRefs: so, listRemotes: po, listServerRefs: jo, listTags: Oo, log: Do, merge: Fo, packObjects: Lo, pull: Wo, push: Xo, readBlob: sa, readCommit: yr, readNote: pa, readObject: ya, readTag: ja, readTree: Oa, remove: Aa, removeNote: $a, renameBranch: Fa, resetIndex: Ga, updateIndex: Fs, resolveRef: Za, status: Os, statusMatrix: Is, tag: Cs, version: zs, walk: qs, writeBlob: Gs, writeCommit: Zs, writeObject: Js.a, writeRef: Qs, writeTag: iu, writeTree: su, stash: js };
     }]);
   });
   (function(N, g) {
@@ -12792,22 +12792,22 @@ ${j.gpgsig ? j.gpgsig : ""}`;
   })(void 0, function(N) {
     async function g(n) {
       const u = [];
-      let S = 0;
+      let O = 0;
       for await (const s of n)
-        u.push(s), S += s.byteLength;
-      const c = new Uint8Array(S);
+        u.push(s), O += s.byteLength;
+      const l = new Uint8Array(O);
       let i = 0;
       for (const s of u)
-        c.set(s, i), i += s.byteLength;
-      return c;
+        l.set(s, i), i += s.byteLength;
+      return l;
     }
-    async function t({ onProgress: n, url: u, method: S = "GET", headers: c = {}, body: i }) {
+    async function t({ onProgress: n, url: u, method: O = "GET", headers: l = {}, body: i }) {
       try {
         i && (i = await g(i));
         const s = {
-          method: S,
+          method: O,
           headers: {
-            ...c,
+            ...l,
             Connection: "keep-alive"
           },
           body: i
@@ -12824,16 +12824,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
             }
             e.releaseLock();
           }
-        } : [new Uint8Array(await o.arrayBuffer())], O = {};
+        } : [new Uint8Array(await o.arrayBuffer())], E = {};
         for (const [m, _] of o.headers.entries())
-          O[m] = _;
+          E[m] = _;
         return {
           url: o.url,
           method: o.method,
           statusCode: o.status,
           statusMessage: o.statusText,
           body: j,
-          headers: O
+          headers: E
         };
       } catch (s) {
         throw console.error("Request failed:", s), s;
@@ -12854,17 +12854,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         var u = g[n] = { i: n, l: !1, exports: {} };
         return N[n].call(u.exports, u, u.exports, t), u.l = !0, u.exports;
       }
-      return t.m = N, t.c = g, t.d = function(n, u, S) {
-        t.o(n, u) || Object.defineProperty(n, u, { enumerable: !0, get: S });
+      return t.m = N, t.c = g, t.d = function(n, u, O) {
+        t.o(n, u) || Object.defineProperty(n, u, { enumerable: !0, get: O });
       }, t.r = function(n) {
         typeof Symbol < "u" && Symbol.toStringTag && Object.defineProperty(n, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(n, "__esModule", { value: !0 });
       }, t.t = function(n, u) {
         if (1 & u && (n = t(n)), 8 & u || 4 & u && typeof n == "object" && n && n.__esModule) return n;
-        var S = /* @__PURE__ */ Object.create(null);
-        if (t.r(S), Object.defineProperty(S, "default", { enumerable: !0, value: n }), 2 & u && typeof n != "string") for (var c in n) t.d(S, c, function(i) {
+        var O = /* @__PURE__ */ Object.create(null);
+        if (t.r(O), Object.defineProperty(O, "default", { enumerable: !0, value: n }), 2 & u && typeof n != "string") for (var l in n) t.d(O, l, function(i) {
           return n[i];
-        }.bind(null, c));
-        return S;
+        }.bind(null, l));
+        return O;
       }, t.n = function(n) {
         var u = n && n.__esModule ? function() {
           return n.default;
@@ -12876,45 +12876,45 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         return Object.prototype.hasOwnProperty.call(n, u);
       }, t.p = "", t(t.s = 3);
     }([function(N, g) {
-      function t(c) {
-        if (c.length === 0) return ".";
-        let i = u(c);
-        return i = i.reduce(S, []), n(...i);
+      function t(l) {
+        if (l.length === 0) return ".";
+        let i = u(l);
+        return i = i.reduce(O, []), n(...i);
       }
-      function n(...c) {
-        if (c.length === 0) return "";
-        let i = c.join("/");
+      function n(...l) {
+        if (l.length === 0) return "";
+        let i = l.join("/");
         return i = i.replace(/\/{2,}/g, "/");
       }
-      function u(c) {
-        if (c.length === 0) return [];
-        if (c === "/") return ["/"];
-        let i = c.split("/");
-        return i[i.length - 1] === "" && i.pop(), c[0] === "/" ? i[0] = "/" : i[0] !== "." && i.unshift("."), i;
+      function u(l) {
+        if (l.length === 0) return [];
+        if (l === "/") return ["/"];
+        let i = l.split("/");
+        return i[i.length - 1] === "" && i.pop(), l[0] === "/" ? i[0] = "/" : i[0] !== "." && i.unshift("."), i;
       }
-      function S(c, i) {
-        if (c.length === 0) return c.push(i), c;
-        if (i === ".") return c;
+      function O(l, i) {
+        if (l.length === 0) return l.push(i), l;
+        if (i === ".") return l;
         if (i === "..") {
-          if (c.length === 1) {
-            if (c[0] === "/") throw new Error("Unable to normalize path - traverses above root directory");
-            if (c[0] === ".") return c.push(i), c;
+          if (l.length === 1) {
+            if (l[0] === "/") throw new Error("Unable to normalize path - traverses above root directory");
+            if (l[0] === ".") return l.push(i), l;
           }
-          return c[c.length - 1] === ".." ? (c.push(".."), c) : (c.pop(), c);
+          return l[l.length - 1] === ".." ? (l.push(".."), l) : (l.pop(), l);
         }
-        return c.push(i), c;
+        return l.push(i), l;
       }
-      N.exports = { join: n, normalize: t, split: u, basename: function(c) {
-        if (c === "/") throw new Error(`Cannot get basename of "${c}"`);
-        const i = c.lastIndexOf("/");
-        return i === -1 ? c : c.slice(i + 1);
-      }, dirname: function(c) {
-        const i = c.lastIndexOf("/");
-        if (i === -1) throw new Error(`Cannot get dirname of "${c}"`);
-        return i === 0 ? "/" : c.slice(0, i);
-      }, resolve: function(...c) {
+      N.exports = { join: n, normalize: t, split: u, basename: function(l) {
+        if (l === "/") throw new Error(`Cannot get basename of "${l}"`);
+        const i = l.lastIndexOf("/");
+        return i === -1 ? l : l.slice(i + 1);
+      }, dirname: function(l) {
+        const i = l.lastIndexOf("/");
+        if (i === -1) throw new Error(`Cannot get dirname of "${l}"`);
+        return i === 0 ? "/" : l.slice(0, i);
+      }, resolve: function(...l) {
         let i = "";
-        for (let s of c) i = s.startsWith("/") ? s : t(n(i, s));
+        for (let s of l) i = s.startsWith("/") ? s : t(n(i, s));
         return i;
       } };
     }, function(N, g) {
@@ -12925,13 +12925,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           }
         };
       }
-      const n = t("EEXIST"), u = t("ENOENT"), S = t("ENOTDIR"), c = t("ENOTEMPTY"), i = t("ETIMEDOUT");
-      N.exports = { EEXIST: n, ENOENT: u, ENOTDIR: S, ENOTEMPTY: c, ETIMEDOUT: i };
+      const n = t("EEXIST"), u = t("ENOENT"), O = t("ENOTDIR"), l = t("ENOTEMPTY"), i = t("ETIMEDOUT");
+      N.exports = { EEXIST: n, ENOENT: u, ENOTDIR: O, ENOTEMPTY: l, ETIMEDOUT: i };
     }, function(N, g, t) {
       t.r(g), t.d(g, "Store", function() {
         return n;
       }), t.d(g, "get", function() {
-        return c;
+        return l;
       }), t.d(g, "set", function() {
         return i;
       }), t.d(g, "update", function() {
@@ -12943,7 +12943,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }), t.d(g, "keys", function() {
         return j;
       }), t.d(g, "close", function() {
-        return O;
+        return E;
       });
       class n {
         constructor(_ = "keyval-store", h = "keyval") {
@@ -12951,16 +12951,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         _init() {
           this._dbp || (this._dbp = new Promise((_, h) => {
-            const P = indexedDB.open(this._dbName);
-            P.onerror = () => h(P.error), P.onsuccess = () => _(P.result), P.onupgradeneeded = () => {
-              P.result.createObjectStore(this._storeName);
+            const S = indexedDB.open(this._dbName);
+            S.onerror = () => h(S.error), S.onsuccess = () => _(S.result), S.onupgradeneeded = () => {
+              S.result.createObjectStore(this._storeName);
             };
           }));
         }
         _withIDBStore(_, h) {
-          return this._init(), this._dbp.then((P) => new Promise((x, R) => {
-            const f = P.transaction(this.storeName, _);
-            f.oncomplete = () => x(), f.onabort = f.onerror = () => R(f.error), h(f.objectStore(this.storeName));
+          return this._init(), this._dbp.then((S) => new Promise((x, R) => {
+            const c = S.transaction(this.storeName, _);
+            c.oncomplete = () => x(), c.onabort = c.onerror = () => R(c.error), h(c.objectStore(this.storeName));
           }));
         }
         _close() {
@@ -12970,39 +12970,39 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       }
       let u;
-      function S() {
+      function O() {
         return u || (u = new n()), u;
       }
-      function c(m, _ = S()) {
+      function l(m, _ = O()) {
         let h;
-        return _._withIDBStore("readwrite", (P) => {
-          h = P.get(m);
+        return _._withIDBStore("readwrite", (S) => {
+          h = S.get(m);
         }).then(() => h.result);
       }
-      function i(m, _, h = S()) {
-        return h._withIDBStore("readwrite", (P) => {
-          P.put(_, m);
+      function i(m, _, h = O()) {
+        return h._withIDBStore("readwrite", (S) => {
+          S.put(_, m);
         });
       }
-      function s(m, _, h = S()) {
-        return h._withIDBStore("readwrite", (P) => {
-          const x = P.get(m);
+      function s(m, _, h = O()) {
+        return h._withIDBStore("readwrite", (S) => {
+          const x = S.get(m);
           x.onsuccess = () => {
-            P.put(_(x.result), m);
+            S.put(_(x.result), m);
           };
         });
       }
-      function o(m, _ = S()) {
+      function o(m, _ = O()) {
         return _._withIDBStore("readwrite", (h) => {
           h.delete(m);
         });
       }
-      function e(m = S()) {
+      function e(m = O()) {
         return m._withIDBStore("readwrite", (_) => {
           _.clear();
         });
       }
-      function j(m = S()) {
+      function j(m = O()) {
         const _ = [];
         return m._withIDBStore("readwrite", (h) => {
           (h.openKeyCursor || h.openCursor).call(h).onsuccess = function() {
@@ -13010,75 +13010,75 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           };
         }).then(() => _);
       }
-      function O(m = S()) {
+      function E(m = O()) {
         return m._close();
       }
     }, function(N, g, t) {
       const n = t(4), u = t(5);
-      function S(c, i) {
-        return typeof c == "function" && (i = c), [(...s) => i(null, ...s), i = n(i)];
+      function O(l, i) {
+        return typeof l == "function" && (i = l), [(...s) => i(null, ...s), i = n(i)];
       }
       N.exports = class {
-        constructor(...c) {
-          this.promises = new u(...c), this.init = this.init.bind(this), this.readFile = this.readFile.bind(this), this.writeFile = this.writeFile.bind(this), this.unlink = this.unlink.bind(this), this.readdir = this.readdir.bind(this), this.mkdir = this.mkdir.bind(this), this.rmdir = this.rmdir.bind(this), this.rename = this.rename.bind(this), this.stat = this.stat.bind(this), this.lstat = this.lstat.bind(this), this.readlink = this.readlink.bind(this), this.symlink = this.symlink.bind(this), this.backFile = this.backFile.bind(this), this.du = this.du.bind(this), this.flush = this.flush.bind(this);
+        constructor(...l) {
+          this.promises = new u(...l), this.init = this.init.bind(this), this.readFile = this.readFile.bind(this), this.writeFile = this.writeFile.bind(this), this.unlink = this.unlink.bind(this), this.readdir = this.readdir.bind(this), this.mkdir = this.mkdir.bind(this), this.rmdir = this.rmdir.bind(this), this.rename = this.rename.bind(this), this.stat = this.stat.bind(this), this.lstat = this.lstat.bind(this), this.readlink = this.readlink.bind(this), this.symlink = this.symlink.bind(this), this.backFile = this.backFile.bind(this), this.du = this.du.bind(this), this.flush = this.flush.bind(this);
         }
-        init(c, i) {
-          return this.promises.init(c, i);
+        init(l, i) {
+          return this.promises.init(l, i);
         }
-        readFile(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.readFile(c, i).then(o).catch(e);
+        readFile(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.readFile(l, i).then(o).catch(e);
         }
-        writeFile(c, i, s, o) {
-          const [e, j] = S(s, o);
-          this.promises.writeFile(c, i, s).then(e).catch(j);
+        writeFile(l, i, s, o) {
+          const [e, j] = O(s, o);
+          this.promises.writeFile(l, i, s).then(e).catch(j);
         }
-        unlink(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.unlink(c, i).then(o).catch(e);
+        unlink(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.unlink(l, i).then(o).catch(e);
         }
-        readdir(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.readdir(c, i).then(o).catch(e);
+        readdir(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.readdir(l, i).then(o).catch(e);
         }
-        mkdir(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.mkdir(c, i).then(o).catch(e);
+        mkdir(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.mkdir(l, i).then(o).catch(e);
         }
-        rmdir(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.rmdir(c, i).then(o).catch(e);
+        rmdir(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.rmdir(l, i).then(o).catch(e);
         }
-        rename(c, i, s) {
-          const [o, e] = S(s);
-          this.promises.rename(c, i).then(o).catch(e);
+        rename(l, i, s) {
+          const [o, e] = O(s);
+          this.promises.rename(l, i).then(o).catch(e);
         }
-        stat(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.stat(c).then(o).catch(e);
+        stat(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.stat(l).then(o).catch(e);
         }
-        lstat(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.lstat(c).then(o).catch(e);
+        lstat(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.lstat(l).then(o).catch(e);
         }
-        readlink(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.readlink(c).then(o).catch(e);
+        readlink(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.readlink(l).then(o).catch(e);
         }
-        symlink(c, i, s) {
-          const [o, e] = S(s);
-          this.promises.symlink(c, i).then(o).catch(e);
+        symlink(l, i, s) {
+          const [o, e] = O(s);
+          this.promises.symlink(l, i).then(o).catch(e);
         }
-        backFile(c, i, s) {
-          const [o, e] = S(i, s);
-          this.promises.backFile(c, i).then(o).catch(e);
+        backFile(l, i, s) {
+          const [o, e] = O(i, s);
+          this.promises.backFile(l, i).then(o).catch(e);
         }
-        du(c, i) {
-          const [s, o] = S(i);
-          this.promises.du(c).then(s).catch(o);
+        du(l, i) {
+          const [s, o] = O(i);
+          this.promises.du(l).then(s).catch(o);
         }
-        flush(c) {
-          const [i, s] = S(c);
+        flush(l) {
+          const [i, s] = O(l);
           this.promises.flush().then(i).catch(s);
         }
       };
@@ -13091,19 +13091,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         };
       };
     }, function(N, g, t) {
-      const n = t(6), u = t(16), S = t(0);
-      function c(o, e, ...j) {
-        return e !== void 0 && typeof e != "function" || (e = {}), typeof e == "string" && (e = { encoding: e }), [o = S.normalize(o), e, ...j];
+      const n = t(6), u = t(16), O = t(0);
+      function l(o, e, ...j) {
+        return e !== void 0 && typeof e != "function" || (e = {}), typeof e == "string" && (e = { encoding: e }), [o = O.normalize(o), e, ...j];
       }
-      function i(o, e, j, ...O) {
-        return j !== void 0 && typeof j != "function" || (j = {}), typeof j == "string" && (j = { encoding: j }), [o = S.normalize(o), e, j, ...O];
+      function i(o, e, j, ...E) {
+        return j !== void 0 && typeof j != "function" || (j = {}), typeof j == "string" && (j = { encoding: j }), [o = O.normalize(o), e, j, ...E];
       }
       function s(o, e, ...j) {
-        return [S.normalize(o), S.normalize(e), ...j];
+        return [O.normalize(o), O.normalize(e), ...j];
       }
       N.exports = class {
         constructor(o, e = {}) {
-          this.init = this.init.bind(this), this.readFile = this._wrap(this.readFile, c, !1), this.writeFile = this._wrap(this.writeFile, i, !0), this.unlink = this._wrap(this.unlink, c, !0), this.readdir = this._wrap(this.readdir, c, !1), this.mkdir = this._wrap(this.mkdir, c, !0), this.rmdir = this._wrap(this.rmdir, c, !0), this.rename = this._wrap(this.rename, s, !0), this.stat = this._wrap(this.stat, c, !1), this.lstat = this._wrap(this.lstat, c, !1), this.readlink = this._wrap(this.readlink, c, !1), this.symlink = this._wrap(this.symlink, s, !0), this.backFile = this._wrap(this.backFile, c, !0), this.du = this._wrap(this.du, c, !1), this._deactivationPromise = null, this._deactivationTimeout = null, this._activationPromise = null, this._operations = /* @__PURE__ */ new Set(), o && this.init(o, e);
+          this.init = this.init.bind(this), this.readFile = this._wrap(this.readFile, l, !1), this.writeFile = this._wrap(this.writeFile, i, !0), this.unlink = this._wrap(this.unlink, l, !0), this.readdir = this._wrap(this.readdir, l, !1), this.mkdir = this._wrap(this.mkdir, l, !0), this.rmdir = this._wrap(this.rmdir, l, !0), this.rename = this._wrap(this.rename, s, !0), this.stat = this._wrap(this.stat, l, !1), this.lstat = this._wrap(this.lstat, l, !1), this.readlink = this._wrap(this.readlink, l, !1), this.symlink = this._wrap(this.symlink, s, !0), this.backFile = this._wrap(this.backFile, l, !0), this.du = this._wrap(this.du, l, !1), this._deactivationPromise = null, this._deactivationTimeout = null, this._activationPromise = null, this._operations = /* @__PURE__ */ new Set(), o && this.init(o, e);
         }
         async init(...o) {
           return this._initPromiseResolve && await this._initPromise, this._initPromise = this._init(...o), this._initPromise;
@@ -13115,12 +13115,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           this._operations.size > 0 && (this._isShuttingDown = !0, await new Promise((o) => this._gracefulShutdownResolve = o), this._isShuttingDown = !1, this._gracefulShutdownResolve = null);
         }
         _wrap(o, e, j) {
-          return async (...O) => {
-            O = e(...O);
-            let m = { name: o.name, args: O };
+          return async (...E) => {
+            E = e(...E);
+            let m = { name: o.name, args: E };
             this._operations.add(m);
             try {
-              return await this._activate(), await o.apply(this, O);
+              return await this._activate(), await o.apply(this, E);
             } finally {
               this._operations.delete(m), j && this._backend.saveSuperblock(), this._operations.size === 0 && (this._deactivationTimeout || clearTimeout(this._deactivationTimeout), this._deactivationTimeout = setTimeout(this._deactivate.bind(this), 500));
             }
@@ -13178,15 +13178,15 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       };
     }, function(N, g, t) {
-      const { encode: n, decode: u } = t(7), S = t(10), c = t(11), { ENOENT: i, ENOTEMPTY: s, ETIMEDOUT: o } = t(1), e = t(12), j = t(13), O = t(14), m = t(15), _ = t(0);
+      const { encode: n, decode: u } = t(7), O = t(10), l = t(11), { ENOENT: i, ENOTEMPTY: s, ETIMEDOUT: o } = t(1), e = t(12), j = t(13), E = t(14), m = t(15), _ = t(0);
       N.exports = class {
         constructor() {
-          this.saveSuperblock = S(() => {
+          this.saveSuperblock = O(() => {
             this.flush();
           }, 500);
         }
-        async init(h, { wipe: P, url: x, urlauto: R, fileDbName: f = h, db: E = null, fileStoreName: w = h + "_files", lockDbName: I = h + "_lock", lockStoreName: T = h + "_lock" } = {}) {
-          this._name = h, this._idb = E || new e(f, w), this._mutex = navigator.locks ? new m(h) : new O(I, T), this._cache = new c(h), this._opts = { wipe: P, url: x }, this._needsWipe = !!P, x && (this._http = new j(x), this._urlauto = !!R);
+        async init(h, { wipe: S, url: x, urlauto: R, fileDbName: c = h, db: P = null, fileStoreName: w = h + "_files", lockDbName: I = h + "_lock", lockStoreName: T = h + "_lock" } = {}) {
+          this._name = h, this._idb = P || new e(c, w), this._mutex = navigator.locks ? new m(h) : new E(I, T), this._cache = new l(h), this._opts = { wipe: S, url: x }, this._needsWipe = !!S, x && (this._http = new j(x), this._urlauto = !!R);
         }
         async activate() {
           if (this._cache.activated) return;
@@ -13194,8 +13194,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           const h = await this._idb.loadSuperblock();
           if (h) this._cache.activate(h);
           else if (this._http) {
-            const P = await this._http.loadSuperblock();
-            this._cache.activate(P), await this._saveSuperblock();
+            const S = await this._http.loadSuperblock();
+            this._cache.activate(S), await this._saveSuperblock();
           } else this._cache.activate();
           if (!await this._mutex.has()) throw new o();
         }
@@ -13211,76 +13211,76 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         async _saveSuperblock() {
           this._cache.activated && (this._lastSavedAt = Date.now(), await this._idb.saveSuperblock(this._cache._root));
         }
-        _writeStat(h, P, x) {
-          let R = _.split(_.dirname(h)), f = R.shift();
-          for (let E of R) {
-            f = _.join(f, E);
+        _writeStat(h, S, x) {
+          let R = _.split(_.dirname(h)), c = R.shift();
+          for (let P of R) {
+            c = _.join(c, P);
             try {
-              this._cache.mkdir(f, { mode: 511 });
+              this._cache.mkdir(c, { mode: 511 });
             } catch {
             }
           }
-          return this._cache.writeStat(h, P, x);
+          return this._cache.writeStat(h, S, x);
         }
-        async readFile(h, P) {
-          const { encoding: x } = P;
+        async readFile(h, S) {
+          const { encoding: x } = S;
           if (x && x !== "utf8") throw new Error('Only "utf8" encoding is supported in readFile');
-          let R = null, f = null;
+          let R = null, c = null;
           try {
-            f = this._cache.stat(h), R = await this._idb.readFile(f.ino);
-          } catch (E) {
-            if (!this._urlauto) throw E;
+            c = this._cache.stat(h), R = await this._idb.readFile(c.ino);
+          } catch (P) {
+            if (!this._urlauto) throw P;
           }
           if (!R && this._http) {
-            let E = this._cache.lstat(h);
-            for (; E.type === "symlink"; ) h = _.resolve(_.dirname(h), E.target), E = this._cache.lstat(h);
+            let P = this._cache.lstat(h);
+            for (; P.type === "symlink"; ) h = _.resolve(_.dirname(h), P.target), P = this._cache.lstat(h);
             R = await this._http.readFile(h);
           }
-          if (R && (f && f.size == R.byteLength || (f = await this._writeStat(h, R.byteLength, { mode: f ? f.mode : 438 }), this.saveSuperblock()), x === "utf8" ? R = u(R) : R.toString = () => u(R)), !f) throw new i(h);
+          if (R && (c && c.size == R.byteLength || (c = await this._writeStat(h, R.byteLength, { mode: c ? c.mode : 438 }), this.saveSuperblock()), x === "utf8" ? R = u(R) : R.toString = () => u(R)), !c) throw new i(h);
           return R;
         }
-        async writeFile(h, P, x) {
-          const { mode: R, encoding: f = "utf8" } = x;
-          if (typeof P == "string") {
-            if (f !== "utf8") throw new Error('Only "utf8" encoding is supported in writeFile');
-            P = n(P);
+        async writeFile(h, S, x) {
+          const { mode: R, encoding: c = "utf8" } = x;
+          if (typeof S == "string") {
+            if (c !== "utf8") throw new Error('Only "utf8" encoding is supported in writeFile');
+            S = n(S);
           }
-          const E = await this._cache.writeStat(h, P.byteLength, { mode: R });
-          await this._idb.writeFile(E.ino, P);
+          const P = await this._cache.writeStat(h, S.byteLength, { mode: R });
+          await this._idb.writeFile(P.ino, S);
         }
-        async unlink(h, P) {
+        async unlink(h, S) {
           const x = this._cache.lstat(h);
           this._cache.unlink(h), x.type !== "symlink" && await this._idb.unlink(x.ino);
         }
-        readdir(h, P) {
+        readdir(h, S) {
           return this._cache.readdir(h);
         }
-        mkdir(h, P) {
-          const { mode: x = 511 } = P;
+        mkdir(h, S) {
+          const { mode: x = 511 } = S;
           this._cache.mkdir(h, { mode: x });
         }
-        rmdir(h, P) {
+        rmdir(h, S) {
           if (h === "/") throw new s();
           this._cache.rmdir(h);
         }
-        rename(h, P) {
-          this._cache.rename(h, P);
+        rename(h, S) {
+          this._cache.rename(h, S);
         }
-        stat(h, P) {
+        stat(h, S) {
           return this._cache.stat(h);
         }
-        lstat(h, P) {
+        lstat(h, S) {
           return this._cache.lstat(h);
         }
-        readlink(h, P) {
+        readlink(h, S) {
           return this._cache.readlink(h);
         }
-        symlink(h, P) {
-          this._cache.symlink(h, P);
+        symlink(h, S) {
+          this._cache.symlink(h, S);
         }
-        async backFile(h, P) {
+        async backFile(h, S) {
           let x = await this._http.sizeFile(h);
-          await this._writeStat(h, x, P);
+          await this._writeStat(h, x, S);
         }
         du(h) {
           return this._cache.du(h);
@@ -13294,18 +13294,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     }, function(N, g, t) {
       (function(n) {
         (function(u) {
-          function S(i) {
+          function O(i) {
             if ((i = i === void 0 ? "utf-8" : i) !== "utf-8") throw new RangeError("Failed to construct 'TextEncoder': The encoding label provided ('" + i + "') is invalid.");
           }
-          function c(i, s) {
+          function l(i, s) {
             if (s = s === void 0 ? { fatal: !1 } : s, (i = i === void 0 ? "utf-8" : i) !== "utf-8") throw new RangeError("Failed to construct 'TextDecoder': The encoding label provided ('" + i + "') is invalid.");
             if (s.fatal) throw Error("Failed to construct 'TextDecoder': the 'fatal' option is unsupported.");
           }
           if (u.TextEncoder && u.TextDecoder) return !1;
-          Object.defineProperty(S.prototype, "encoding", { value: "utf-8" }), S.prototype.encode = function(i, s) {
+          Object.defineProperty(O.prototype, "encoding", { value: "utf-8" }), O.prototype.encode = function(i, s) {
             if ((s = s === void 0 ? { stream: !1 } : s).stream) throw Error("Failed to encode: the 'stream' option is unsupported.");
             s = 0;
-            for (var o = i.length, e = 0, j = Math.max(32, o + (o >> 1) + 7), O = new Uint8Array(j >> 3 << 3); s < o; ) {
+            for (var o = i.length, e = 0, j = Math.max(32, o + (o >> 1) + 7), E = new Uint8Array(j >> 3 << 3); s < o; ) {
               var m = i.charCodeAt(s++);
               if (55296 <= m && 56319 >= m) {
                 if (s < o) {
@@ -13314,19 +13314,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
                 }
                 if (55296 <= m && 56319 >= m) continue;
               }
-              if (e + 4 > O.length && (j += 8, j = (j *= 1 + s / i.length * 2) >> 3 << 3, (_ = new Uint8Array(j)).set(O), O = _), (4294967168 & m) == 0) O[e++] = m;
+              if (e + 4 > E.length && (j += 8, j = (j *= 1 + s / i.length * 2) >> 3 << 3, (_ = new Uint8Array(j)).set(E), E = _), (4294967168 & m) == 0) E[e++] = m;
               else {
-                if ((4294965248 & m) == 0) O[e++] = m >> 6 & 31 | 192;
-                else if ((4294901760 & m) == 0) O[e++] = m >> 12 & 15 | 224, O[e++] = m >> 6 & 63 | 128;
+                if ((4294965248 & m) == 0) E[e++] = m >> 6 & 31 | 192;
+                else if ((4294901760 & m) == 0) E[e++] = m >> 12 & 15 | 224, E[e++] = m >> 6 & 63 | 128;
                 else {
                   if ((4292870144 & m) != 0) continue;
-                  O[e++] = m >> 18 & 7 | 240, O[e++] = m >> 12 & 63 | 128, O[e++] = m >> 6 & 63 | 128;
+                  E[e++] = m >> 18 & 7 | 240, E[e++] = m >> 12 & 63 | 128, E[e++] = m >> 6 & 63 | 128;
                 }
-                O[e++] = 63 & m | 128;
+                E[e++] = 63 & m | 128;
               }
             }
-            return O.slice(0, e);
-          }, Object.defineProperty(c.prototype, "encoding", { value: "utf-8" }), Object.defineProperty(c.prototype, "fatal", { value: !1 }), Object.defineProperty(c.prototype, "ignoreBOM", { value: !1 }), c.prototype.decode = function(i, s) {
+            return E.slice(0, e);
+          }, Object.defineProperty(l.prototype, "encoding", { value: "utf-8" }), Object.defineProperty(l.prototype, "fatal", { value: !1 }), Object.defineProperty(l.prototype, "ignoreBOM", { value: !1 }), l.prototype.decode = function(i, s) {
             if ((s = s === void 0 ? { stream: !1 } : s).stream) throw Error("Failed to decode: the 'stream' option is unsupported.");
             s = 0;
             for (var o = (i = new Uint8Array(i)).length, e = []; s < o; ) {
@@ -13334,16 +13334,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               if (j === 0) break;
               if ((128 & j) == 0) e.push(j);
               else if ((224 & j) == 192) {
-                var O = 63 & i[s++];
-                e.push((31 & j) << 6 | O);
+                var E = 63 & i[s++];
+                e.push((31 & j) << 6 | E);
               } else if ((240 & j) == 224) {
-                O = 63 & i[s++];
+                E = 63 & i[s++];
                 var m = 63 & i[s++];
-                e.push((31 & j) << 12 | O << 6 | m);
-              } else (248 & j) == 240 && (65535 < (j = (7 & j) << 18 | (O = 63 & i[s++]) << 12 | (m = 63 & i[s++]) << 6 | 63 & i[s++]) && (j -= 65536, e.push(j >>> 10 & 1023 | 55296), j = 56320 | 1023 & j), e.push(j));
+                e.push((31 & j) << 12 | E << 6 | m);
+              } else (248 & j) == 240 && (65535 < (j = (7 & j) << 18 | (E = 63 & i[s++]) << 12 | (m = 63 & i[s++]) << 6 | 63 & i[s++]) && (j -= 65536, e.push(j >>> 10 & 1023 | 55296), j = 56320 | 1023 & j), e.push(j));
             }
             return String.fromCharCode.apply(null, e);
-          }, u.TextEncoder = S, u.TextDecoder = c;
+          }, u.TextEncoder = O, u.TextDecoder = l;
         })(typeof window < "u" ? window : n !== void 0 ? n : this);
       }).call(this, t(9));
     }, function(N, g) {
@@ -13359,17 +13359,17 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       N.exports = t;
     }, function(N, g) {
       N.exports = function(t, n, u) {
-        var S;
+        var O;
         return function() {
           if (!n) return t.apply(this, arguments);
-          var c = this, i = arguments, s = u && !S;
-          return clearTimeout(S), S = setTimeout(function() {
-            if (S = null, !s) return t.apply(c, i);
+          var l = this, i = arguments, s = u && !O;
+          return clearTimeout(O), O = setTimeout(function() {
+            if (O = null, !s) return t.apply(l, i);
           }, n), s ? t.apply(this, arguments) : void 0;
         };
       };
     }, function(N, g, t) {
-      const n = t(0), { EEXIST: u, ENOENT: S, ENOTDIR: c, ENOTEMPTY: i } = t(1), s = 0;
+      const n = t(0), { EEXIST: u, ENOENT: O, ENOTDIR: l, ENOTEMPTY: i } = t(1), s = 0;
       N.exports = class {
         constructor() {
         }
@@ -13390,7 +13390,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         _countInodes(o) {
           let e = 1;
-          for (let [j, O] of o) j !== s && (e += this._countInodes(O));
+          for (let [j, E] of o) j !== s && (e += this._countInodes(E));
           return e;
         }
         autoinc() {
@@ -13398,16 +13398,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         _maxInode(o) {
           let e = o.get(s).ino;
-          for (let [j, O] of o) j !== s && (e = Math.max(e, this._maxInode(O)));
+          for (let [j, E] of o) j !== s && (e = Math.max(e, this._maxInode(E)));
           return e;
         }
         print(o = this._root.get("/")) {
           let e = "";
-          const j = (O, m) => {
-            for (let [_, h] of O) {
+          const j = (E, m) => {
+            for (let [_, h] of E) {
               if (_ === 0) continue;
-              let P = h.get(s), x = P.mode.toString(8);
-              e += `${"	".repeat(m)}${_}	${x}`, P.type === "file" ? e += `	${P.size}	${P.mtimeMs}
+              let S = h.get(s), x = S.mode.toString(8);
+              e += `${"	".repeat(m)}${_}	${x}`, S.type === "file" ? e += `	${S.size}	${S.mtimeMs}
 ` : (e += `
 `, j(h, m + 1));
             }
@@ -13417,74 +13417,74 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         parse(o) {
           let e = 0;
           function j(h) {
-            const P = ++e, x = h.length === 1 ? "dir" : "file";
-            let [R, f, E] = h;
-            return R = parseInt(R, 8), f = f ? parseInt(f) : 0, E = E ? parseInt(E) : Date.now(), /* @__PURE__ */ new Map([[s, { mode: R, type: x, size: f, mtimeMs: E, ino: P }]]);
+            const S = ++e, x = h.length === 1 ? "dir" : "file";
+            let [R, c, P] = h;
+            return R = parseInt(R, 8), c = c ? parseInt(c) : 0, P = P ? parseInt(P) : Date.now(), /* @__PURE__ */ new Map([[s, { mode: R, type: x, size: c, mtimeMs: P, ino: S }]]);
           }
-          let O = o.trim().split(`
+          let E = o.trim().split(`
 `), m = this._makeRoot(), _ = [{ indent: -1, node: m }, { indent: 0, node: null }];
-          for (let h of O) {
-            let P = h.match(/^\t*/)[0].length;
-            h = h.slice(P);
-            let [x, ...R] = h.split("	"), f = j(R);
-            if (P <= _[_.length - 1].indent) for (; P <= _[_.length - 1].indent; ) _.pop();
-            _.push({ indent: P, node: f }), _[_.length - 2].node.set(x, f);
+          for (let h of E) {
+            let S = h.match(/^\t*/)[0].length;
+            h = h.slice(S);
+            let [x, ...R] = h.split("	"), c = j(R);
+            if (S <= _[_.length - 1].indent) for (; S <= _[_.length - 1].indent; ) _.pop();
+            _.push({ indent: S, node: c }), _[_.length - 2].node.set(x, c);
           }
           return m;
         }
         _lookup(o, e = !0) {
-          let j = this._root, O = "/", m = n.split(o);
+          let j = this._root, E = "/", m = n.split(o);
           for (let _ = 0; _ < m.length; ++_) {
             let h = m[_];
-            if (!(j = j.get(h))) throw new S(o);
+            if (!(j = j.get(h))) throw new O(o);
             if (e || _ < m.length - 1) {
-              const P = j.get(s);
-              if (P.type === "symlink") {
-                let x = n.resolve(O, P.target);
+              const S = j.get(s);
+              if (S.type === "symlink") {
+                let x = n.resolve(E, S.target);
                 j = this._lookup(x);
               }
-              O = O ? n.join(O, h) : h;
+              E = E ? n.join(E, h) : h;
             }
           }
           return j;
         }
         mkdir(o, { mode: e }) {
           if (o === "/") throw new u();
-          let j = this._lookup(n.dirname(o)), O = n.basename(o);
-          if (j.has(O)) throw new u();
+          let j = this._lookup(n.dirname(o)), E = n.basename(o);
+          if (j.has(E)) throw new u();
           let m = /* @__PURE__ */ new Map(), _ = { mode: e, type: "dir", size: 0, mtimeMs: Date.now(), ino: this.autoinc() };
-          m.set(s, _), j.set(O, m);
+          m.set(s, _), j.set(E, m);
         }
         rmdir(o) {
           let e = this._lookup(o);
-          if (e.get(s).type !== "dir") throw new c();
+          if (e.get(s).type !== "dir") throw new l();
           if (e.size > 1) throw new i();
-          let j = this._lookup(n.dirname(o)), O = n.basename(o);
-          j.delete(O);
+          let j = this._lookup(n.dirname(o)), E = n.basename(o);
+          j.delete(E);
         }
         readdir(o) {
           let e = this._lookup(o);
-          if (e.get(s).type !== "dir") throw new c();
+          if (e.get(s).type !== "dir") throw new l();
           return [...e.keys()].filter((j) => typeof j == "string");
         }
         writeStat(o, e, { mode: j }) {
-          let O;
+          let E;
           try {
             let x = this.stat(o);
-            j == null && (j = x.mode), O = x.ino;
+            j == null && (j = x.mode), E = x.ino;
           } catch {
           }
-          j == null && (j = 438), O == null && (O = this.autoinc());
-          let m = this._lookup(n.dirname(o)), _ = n.basename(o), h = { mode: j, type: "file", size: e, mtimeMs: Date.now(), ino: O }, P = /* @__PURE__ */ new Map();
-          return P.set(s, h), m.set(_, P), h;
+          j == null && (j = 438), E == null && (E = this.autoinc());
+          let m = this._lookup(n.dirname(o)), _ = n.basename(o), h = { mode: j, type: "file", size: e, mtimeMs: Date.now(), ino: E }, S = /* @__PURE__ */ new Map();
+          return S.set(s, h), m.set(_, S), h;
         }
         unlink(o) {
           let e = this._lookup(n.dirname(o)), j = n.basename(o);
           e.delete(j);
         }
         rename(o, e) {
-          let j = n.basename(e), O = this._lookup(o);
-          this._lookup(n.dirname(e)).set(j, O), this.unlink(o);
+          let j = n.basename(e), E = this._lookup(o);
+          this._lookup(n.dirname(e)).set(j, E), this.unlink(o);
         }
         stat(o) {
           return this._lookup(o).get(s);
@@ -13496,19 +13496,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return this._lookup(o, !1).get(s).target;
         }
         symlink(o, e) {
-          let j, O;
+          let j, E;
           try {
             let x = this.stat(e);
-            O === null && (O = x.mode), j = x.ino;
+            E === null && (E = x.mode), j = x.ino;
           } catch {
           }
-          O == null && (O = 40960), j == null && (j = this.autoinc());
-          let m = this._lookup(n.dirname(e)), _ = n.basename(e), h = { mode: O, type: "symlink", target: o, size: 0, mtimeMs: Date.now(), ino: j }, P = /* @__PURE__ */ new Map();
-          return P.set(s, h), m.set(_, P), h;
+          E == null && (E = 40960), j == null && (j = this.autoinc());
+          let m = this._lookup(n.dirname(e)), _ = n.basename(e), h = { mode: E, type: "symlink", target: o, size: 0, mtimeMs: Date.now(), ino: j }, S = /* @__PURE__ */ new Map();
+          return S.set(s, h), m.set(_, S), h;
         }
         _du(o) {
           let e = 0;
-          for (const [j, O] of o.entries()) e += j === s ? O.size : this._du(O);
+          for (const [j, E] of o.entries()) e += j === s ? E.size : this._du(E);
           return e;
         }
         du(o) {
@@ -13519,8 +13519,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     }, function(N, g, t) {
       const n = t(2);
       N.exports = class {
-        constructor(u, S) {
-          this._database = u, this._storename = S, this._store = new n.Store(this._database, this._storename);
+        constructor(u, O) {
+          this._database = u, this._storename = O, this._store = new n.Store(this._database, this._storename);
         }
         saveSuperblock(u) {
           return n.set("!root", u, this._store);
@@ -13531,8 +13531,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         readFile(u) {
           return n.get(u, this._store);
         }
-        writeFile(u, S) {
-          return n.set(u, S, this._store);
+        writeFile(u, O) {
+          return n.set(u, O, this._store);
         }
         unlink(u) {
           return n.del(u, this._store);
@@ -13564,47 +13564,47 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
       };
     }, function(N, g, t) {
-      const n = t(2), u = (S) => new Promise((c) => setTimeout(c, S));
+      const n = t(2), u = (O) => new Promise((l) => setTimeout(l, O));
       N.exports = class {
-        constructor(S, c) {
-          this._id = Math.random(), this._database = S, this._storename = c, this._store = new n.Store(this._database, this._storename), this._lock = null;
+        constructor(O, l) {
+          this._id = Math.random(), this._database = O, this._storename = l, this._store = new n.Store(this._database, this._storename), this._lock = null;
         }
-        async has({ margin: S = 2e3 } = {}) {
+        async has({ margin: O = 2e3 } = {}) {
           if (this._lock && this._lock.holder === this._id) {
-            const c = Date.now();
-            return this._lock.expires > c + S || await this.renew();
+            const l = Date.now();
+            return this._lock.expires > l + O || await this.renew();
           }
           return !1;
         }
-        async renew({ ttl: S = 5e3 } = {}) {
-          let c;
+        async renew({ ttl: O = 5e3 } = {}) {
+          let l;
           return await n.update("lock", (i) => {
-            const s = Date.now() + S;
-            return c = i && i.holder === this._id, this._lock = c ? { holder: this._id, expires: s } : i, this._lock;
-          }, this._store), c;
+            const s = Date.now() + O;
+            return l = i && i.holder === this._id, this._lock = l ? { holder: this._id, expires: s } : i, this._lock;
+          }, this._store), l;
         }
-        async acquire({ ttl: S = 5e3 } = {}) {
-          let c, i, s;
+        async acquire({ ttl: O = 5e3 } = {}) {
+          let l, i, s;
           if (await n.update("lock", (o) => {
-            const e = Date.now(), j = e + S;
-            return i = o && o.expires < e, c = o === void 0 || i, s = o && o.holder === this._id, this._lock = c ? { holder: this._id, expires: j } : o, this._lock;
+            const e = Date.now(), j = e + O;
+            return i = o && o.expires < e, l = o === void 0 || i, s = o && o.holder === this._id, this._lock = l ? { holder: this._id, expires: j } : o, this._lock;
           }, this._store), s) throw new Error("Mutex double-locked");
-          return c;
+          return l;
         }
-        async wait({ interval: S = 100, limit: c = 6e3, ttl: i } = {}) {
-          for (; c--; ) {
+        async wait({ interval: O = 100, limit: l = 6e3, ttl: i } = {}) {
+          for (; l--; ) {
             if (await this.acquire({ ttl: i })) return !0;
-            await u(S);
+            await u(O);
           }
           throw new Error("Mutex timeout");
         }
-        async release({ force: S = !1 } = {}) {
-          let c, i, s;
-          if (await n.update("lock", (o) => (c = S || o && o.holder === this._id, i = o === void 0, s = o && o.holder !== this._id, this._lock = c ? void 0 : o, this._lock), this._store), await n.close(this._store), !c && !S) {
+        async release({ force: O = !1 } = {}) {
+          let l, i, s;
+          if (await n.update("lock", (o) => (l = O || o && o.holder === this._id, i = o === void 0, s = o && o.holder !== this._id, this._lock = l ? void 0 : o, this._lock), this._store), await n.close(this._store), !l && !O) {
             if (i) throw new Error("Mutex double-freed");
             if (s) throw new Error("Mutex lost ownership");
           }
-          return c;
+          return l;
         }
       };
     }, function(N, g) {
@@ -13624,10 +13624,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         }
         async wait({ timeout: t = 6e5 } = {}) {
           return new Promise((n, u) => {
-            const S = new AbortController();
+            const O = new AbortController();
             setTimeout(() => {
-              S.abort(), u(new Error("Mutex timeout"));
-            }, t), navigator.locks.request(this._database + "_lock", { signal: S.signal }, (c) => (this._has = !!c, n(!!c), new Promise((i) => {
+              O.abort(), u(new Error("Mutex timeout"));
+            }, t), navigator.locks.request(this._database + "_lock", { signal: O.signal }, (l) => (this._has = !!l, n(!!l), new Promise((i) => {
               this._release = i;
             })));
           });
@@ -13664,50 +13664,48 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     }
     async fetchWithServiceWorker(g, t) {
       try {
-        let n = "/git";
-        typeof self < "u" && self.registration ? n = self.location.origin + "/git" : typeof window < "u" && window.location && (n = window.location.origin + "/git");
-        const u = await fetch(n, {
+        const n = await fetch("/git", {
           method: "POST",
           body: JSON.stringify({ operation: g, args: t }),
           headers: { "Content-Type": "application/json" }
         });
-        let S;
+        let u;
         try {
-          S = await u.json();
-        } catch (c) {
-          throw fu("Error parsing JSON response:", c), new Error("Response is not valid JSON");
+          u = await n.json();
+        } catch (O) {
+          throw fu("Error parsing JSON response:", O), new Error("Response is not valid JSON");
         }
-        if (!u.ok) {
-          let c = `Fetch failed with status: ${u.status}`;
-          switch (u.status) {
+        if (!n.ok) {
+          let O = `Fetch failed with status: ${n.status}`;
+          switch (n.status) {
             case 400:
-              c = "Bad Request: The server could not understand the request.";
+              O = "Bad Request: The server could not understand the request.";
               break;
             case 401:
-              c = "Unauthorized: Authentication is required or has failed.";
+              O = "Unauthorized: Authentication is required or has failed.";
               break;
             case 403:
-              c = "Forbidden: You do not have permission to access this resource.";
+              O = "Forbidden: You do not have permission to access this resource.";
               break;
             case 404:
-              c = "Not Found: The requested resource could not be found.";
+              O = "Not Found: The requested resource could not be found.";
               break;
             case 500:
-              c = "Internal Server Error: The server encountered an error.";
+              O = "Internal Server Error: The server encountered an error.";
               break;
             case 502:
-              c = "Bad Gateway: The server received an invalid response from the upstream server.";
+              O = "Bad Gateway: The server received an invalid response from the upstream server.";
               break;
             case 503:
-              c = "Service Unavailable: The server is currently unable to handle the request.";
+              O = "Service Unavailable: The server is currently unable to handle the request.";
               break;
             case 504:
-              c = "Gateway Timeout: The server did not receive a timely response from the upstream server.";
+              O = "Gateway Timeout: The server did not receive a timely response from the upstream server.";
               break;
             default:
-              c = `Unexpected status code: ${u.status}`;
+              O = `Unexpected status code: ${n.status}`;
           }
-          throw new Error(JSON.stringify(S.details));
+          throw new Error(JSON.stringify(u.details));
         }
       } catch (n) {
         throw fu("Fetch error:", n), n;
@@ -13716,8 +13714,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     async sendMessageToChannel(g, t = "worker-channel") {
       return new Promise((n) => {
         const u = new BroadcastChannel(t);
-        u.onmessage = (S) => {
-          S.data.operation === `${g.operation}` && (u.close(), n(S.data));
+        u.onmessage = (O) => {
+          O.data.operation === `${g.operation}` && (u.close(), n(O.data));
         }, u.postMessage(g);
       });
     }
@@ -13852,8 +13850,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       try {
         te("Applying update from channel:", n), this._files = new Map(n.files), this._mergeVersionVector(u), te("Memory updated from channel successfully");
-      } catch (c) {
-        Qe("Failed to apply channel message:", c);
+      } catch (l) {
+        Qe("Failed to apply channel message:", l);
       }
     }
     async wipe() {
@@ -13893,10 +13891,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       if (this._files.get(g).type !== "dir")
         throw Object.assign(new Error("ENOTDIR"), { code: "ENOTDIR" });
       const n = /* @__PURE__ */ new Set(), u = g === "/" ? "/" : `${g}/`;
-      for (const S of this._files.keys())
-        if (S.startsWith(u) && S !== g) {
-          const c = S.slice(u.length).split("/")[0];
-          n.add(c);
+      for (const O of this._files.keys())
+        if (O.startsWith(u) && O !== g) {
+          const l = O.slice(u.length).split("/")[0];
+          n.add(l);
         }
       return [...n];
     }
@@ -14006,22 +14004,22 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     return (g + t) * 3 / 4 - t;
   }
   function Ll(N) {
-    var g, t = Bu(N), n = t[0], u = t[1], S = new Nl(zl(N, n, u)), c = 0, i = u > 0 ? n - 4 : n, s;
+    var g, t = Bu(N), n = t[0], u = t[1], O = new Nl(zl(N, n, u)), l = 0, i = u > 0 ? n - 4 : n, s;
     for (s = 0; s < i; s += 4)
-      g = he[N.charCodeAt(s)] << 18 | he[N.charCodeAt(s + 1)] << 12 | he[N.charCodeAt(s + 2)] << 6 | he[N.charCodeAt(s + 3)], S[c++] = g >> 16 & 255, S[c++] = g >> 8 & 255, S[c++] = g & 255;
-    return u === 2 && (g = he[N.charCodeAt(s)] << 2 | he[N.charCodeAt(s + 1)] >> 4, S[c++] = g & 255), u === 1 && (g = he[N.charCodeAt(s)] << 10 | he[N.charCodeAt(s + 1)] << 4 | he[N.charCodeAt(s + 2)] >> 2, S[c++] = g >> 8 & 255, S[c++] = g & 255), S;
+      g = he[N.charCodeAt(s)] << 18 | he[N.charCodeAt(s + 1)] << 12 | he[N.charCodeAt(s + 2)] << 6 | he[N.charCodeAt(s + 3)], O[l++] = g >> 16 & 255, O[l++] = g >> 8 & 255, O[l++] = g & 255;
+    return u === 2 && (g = he[N.charCodeAt(s)] << 2 | he[N.charCodeAt(s + 1)] >> 4, O[l++] = g & 255), u === 1 && (g = he[N.charCodeAt(s)] << 10 | he[N.charCodeAt(s + 1)] << 4 | he[N.charCodeAt(s + 2)] >> 2, O[l++] = g >> 8 & 255, O[l++] = g & 255), O;
   }
   function ql(N) {
     return ve[N >> 18 & 63] + ve[N >> 12 & 63] + ve[N >> 6 & 63] + ve[N & 63];
   }
   function Hl(N, g, t) {
-    for (var n, u = [], S = g; S < t; S += 3)
-      n = (N[S] << 16 & 16711680) + (N[S + 1] << 8 & 65280) + (N[S + 2] & 255), u.push(ql(n));
+    for (var n, u = [], O = g; O < t; O += 3)
+      n = (N[O] << 16 & 16711680) + (N[O + 1] << 8 & 65280) + (N[O + 2] & 255), u.push(ql(n));
     return u.join("");
   }
   function Wl(N) {
-    for (var g, t = N.length, n = t % 3, u = [], S = 16383, c = 0, i = t - n; c < i; c += S)
-      u.push(Hl(N, c, c + S > i ? i : c + S));
+    for (var g, t = N.length, n = t % 3, u = [], O = 16383, l = 0, i = t - n; l < i; l += O)
+      u.push(Hl(N, l, l + O > i ? i : l + O));
     return n === 1 ? (g = N[t - 1], u.push(
       ve[g >> 2] + ve[g << 4 & 63] + "=="
     )) : n === 2 && (g = (N[t - 2] << 8) + N[t - 1], u.push(
@@ -14031,25 +14029,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
   var Lr = {};
   /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
   Lr.read = function(N, g, t, n, u) {
-    var S, c, i = u * 8 - n - 1, s = (1 << i) - 1, o = s >> 1, e = -7, j = t ? u - 1 : 0, O = t ? -1 : 1, m = N[g + j];
-    for (j += O, S = m & (1 << -e) - 1, m >>= -e, e += i; e > 0; S = S * 256 + N[g + j], j += O, e -= 8)
+    var O, l, i = u * 8 - n - 1, s = (1 << i) - 1, o = s >> 1, e = -7, j = t ? u - 1 : 0, E = t ? -1 : 1, m = N[g + j];
+    for (j += E, O = m & (1 << -e) - 1, m >>= -e, e += i; e > 0; O = O * 256 + N[g + j], j += E, e -= 8)
       ;
-    for (c = S & (1 << -e) - 1, S >>= -e, e += n; e > 0; c = c * 256 + N[g + j], j += O, e -= 8)
+    for (l = O & (1 << -e) - 1, O >>= -e, e += n; e > 0; l = l * 256 + N[g + j], j += E, e -= 8)
       ;
-    if (S === 0)
-      S = 1 - o;
+    if (O === 0)
+      O = 1 - o;
     else {
-      if (S === s)
-        return c ? NaN : (m ? -1 : 1) * (1 / 0);
-      c = c + Math.pow(2, n), S = S - o;
+      if (O === s)
+        return l ? NaN : (m ? -1 : 1) * (1 / 0);
+      l = l + Math.pow(2, n), O = O - o;
     }
-    return (m ? -1 : 1) * c * Math.pow(2, S - n);
+    return (m ? -1 : 1) * l * Math.pow(2, O - n);
   };
-  Lr.write = function(N, g, t, n, u, S) {
-    var c, i, s, o = S * 8 - u - 1, e = (1 << o) - 1, j = e >> 1, O = u === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, m = n ? 0 : S - 1, _ = n ? 1 : -1, h = g < 0 || g === 0 && 1 / g < 0 ? 1 : 0;
-    for (g = Math.abs(g), isNaN(g) || g === 1 / 0 ? (i = isNaN(g) ? 1 : 0, c = e) : (c = Math.floor(Math.log(g) / Math.LN2), g * (s = Math.pow(2, -c)) < 1 && (c--, s *= 2), c + j >= 1 ? g += O / s : g += O * Math.pow(2, 1 - j), g * s >= 2 && (c++, s /= 2), c + j >= e ? (i = 0, c = e) : c + j >= 1 ? (i = (g * s - 1) * Math.pow(2, u), c = c + j) : (i = g * Math.pow(2, j - 1) * Math.pow(2, u), c = 0)); u >= 8; N[t + m] = i & 255, m += _, i /= 256, u -= 8)
+  Lr.write = function(N, g, t, n, u, O) {
+    var l, i, s, o = O * 8 - u - 1, e = (1 << o) - 1, j = e >> 1, E = u === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, m = n ? 0 : O - 1, _ = n ? 1 : -1, h = g < 0 || g === 0 && 1 / g < 0 ? 1 : 0;
+    for (g = Math.abs(g), isNaN(g) || g === 1 / 0 ? (i = isNaN(g) ? 1 : 0, l = e) : (l = Math.floor(Math.log(g) / Math.LN2), g * (s = Math.pow(2, -l)) < 1 && (l--, s *= 2), l + j >= 1 ? g += E / s : g += E * Math.pow(2, 1 - j), g * s >= 2 && (l++, s /= 2), l + j >= e ? (i = 0, l = e) : l + j >= 1 ? (i = (g * s - 1) * Math.pow(2, u), l = l + j) : (i = g * Math.pow(2, j - 1) * Math.pow(2, u), l = 0)); u >= 8; N[t + m] = i & 255, m += _, i /= 256, u -= 8)
       ;
-    for (c = c << u | i, o += u; o > 0; N[t + m] = c & 255, m += _, c /= 256, o -= 8)
+    for (l = l << u | i, o += u; o > 0; N[t + m] = l & 255, m += _, l /= 256, o -= 8)
       ;
     N[t + m - _] |= h * 128;
   };
@@ -14064,16 +14062,16 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     N.Buffer = e, N.SlowBuffer = w, N.INSPECT_MAX_BYTES = 50;
     const u = 2147483647;
     N.kMaxLength = u;
-    const { Uint8Array: S, ArrayBuffer: c, SharedArrayBuffer: i } = globalThis;
+    const { Uint8Array: O, ArrayBuffer: l, SharedArrayBuffer: i } = globalThis;
     e.TYPED_ARRAY_SUPPORT = s(), !e.TYPED_ARRAY_SUPPORT && typeof console < "u" && typeof console.error == "function" && console.error(
       "This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."
     );
     function s() {
       try {
-        const W = new S(1), B = { foo: function() {
+        const W = new O(1), B = { foo: function() {
           return 42;
         } };
-        return Object.setPrototypeOf(B, S.prototype), Object.setPrototypeOf(W, B), W.foo() === 42;
+        return Object.setPrototypeOf(B, O.prototype), Object.setPrototypeOf(W, B), W.foo() === 42;
       } catch {
         return !1;
       }
@@ -14094,7 +14092,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     function o(W) {
       if (W > u)
         throw new RangeError('The value "' + W + '" is invalid for option "size"');
-      const B = new S(W);
+      const B = new O(W);
       return Object.setPrototypeOf(B, e.prototype), B;
     }
     function e(W, B, D) {
@@ -14111,13 +14109,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     function j(W, B, D) {
       if (typeof W == "string")
         return h(W, B);
-      if (c.isView(W))
+      if (l.isView(W))
         return x(W);
       if (W == null)
         throw new TypeError(
           "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof W
         );
-      if (qt(W, c) || W && qt(W.buffer, c) || typeof i < "u" && (qt(W, i) || W && qt(W.buffer, i)))
+      if (qt(W, l) || W && qt(W.buffer, l) || typeof i < "u" && (qt(W, i) || W && qt(W.buffer, i)))
         return R(W, B, D);
       if (typeof W == "number")
         throw new TypeError(
@@ -14126,7 +14124,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       const Y = W.valueOf && W.valueOf();
       if (Y != null && Y !== W)
         return e.from(Y, B, D);
-      const tt = f(W);
+      const tt = c(W);
       if (tt) return tt;
       if (typeof Symbol < "u" && Symbol.toPrimitive != null && typeof W[Symbol.toPrimitive] == "function")
         return e.from(W[Symbol.toPrimitive]("string"), B, D);
@@ -14136,21 +14134,21 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     }
     e.from = function(W, B, D) {
       return j(W, B, D);
-    }, Object.setPrototypeOf(e.prototype, S.prototype), Object.setPrototypeOf(e, S);
-    function O(W) {
+    }, Object.setPrototypeOf(e.prototype, O.prototype), Object.setPrototypeOf(e, O);
+    function E(W) {
       if (typeof W != "number")
         throw new TypeError('"size" argument must be of type number');
       if (W < 0)
         throw new RangeError('The value "' + W + '" is invalid for option "size"');
     }
     function m(W, B, D) {
-      return O(W), W <= 0 ? o(W) : B !== void 0 ? typeof D == "string" ? o(W).fill(B, D) : o(W).fill(B) : o(W);
+      return E(W), W <= 0 ? o(W) : B !== void 0 ? typeof D == "string" ? o(W).fill(B, D) : o(W).fill(B) : o(W);
     }
     e.alloc = function(W, B, D) {
       return m(W, B, D);
     };
     function _(W) {
-      return O(W), o(W < 0 ? 0 : E(W) | 0);
+      return E(W), o(W < 0 ? 0 : P(W) | 0);
     }
     e.allocUnsafe = function(W) {
       return _(W);
@@ -14165,18 +14163,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       const tt = Y.write(W, B);
       return tt !== D && (Y = Y.slice(0, tt)), Y;
     }
-    function P(W) {
-      const B = W.length < 0 ? 0 : E(W.length) | 0, D = o(B);
+    function S(W) {
+      const B = W.length < 0 ? 0 : P(W.length) | 0, D = o(B);
       for (let Y = 0; Y < B; Y += 1)
         D[Y] = W[Y] & 255;
       return D;
     }
     function x(W) {
-      if (qt(W, S)) {
-        const B = new S(W);
+      if (qt(W, O)) {
+        const B = new O(W);
         return R(B.buffer, B.byteOffset, B.byteLength);
       }
-      return P(W);
+      return S(W);
     }
     function R(W, B, D) {
       if (B < 0 || W.byteLength < B)
@@ -14184,19 +14182,19 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       if (W.byteLength < B + (D || 0))
         throw new RangeError('"length" is outside of buffer bounds');
       let Y;
-      return B === void 0 && D === void 0 ? Y = new S(W) : D === void 0 ? Y = new S(W, B) : Y = new S(W, B, D), Object.setPrototypeOf(Y, e.prototype), Y;
+      return B === void 0 && D === void 0 ? Y = new O(W) : D === void 0 ? Y = new O(W, B) : Y = new O(W, B, D), Object.setPrototypeOf(Y, e.prototype), Y;
     }
-    function f(W) {
+    function c(W) {
       if (e.isBuffer(W)) {
-        const B = E(W.length) | 0, D = o(B);
+        const B = P(W.length) | 0, D = o(B);
         return D.length === 0 || W.copy(D, 0, 0, B), D;
       }
       if (W.length !== void 0)
-        return typeof W.length != "number" || pe(W.length) ? o(0) : P(W);
+        return typeof W.length != "number" || pe(W.length) ? o(0) : S(W);
       if (W.type === "Buffer" && Array.isArray(W.data))
-        return P(W.data);
+        return S(W.data);
     }
-    function E(W) {
+    function P(W) {
       if (W >= u)
         throw new RangeError("Attempt to allocate Buffer larger than maximum size: 0x" + u.toString(16) + " bytes");
       return W | 0;
@@ -14207,7 +14205,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     e.isBuffer = function(B) {
       return B != null && B._isBuffer === !0 && B !== e.prototype;
     }, e.compare = function(B, D) {
-      if (qt(B, S) && (B = e.from(B, B.offset, B.byteLength)), qt(D, S) && (D = e.from(D, D.offset, D.byteLength)), !e.isBuffer(B) || !e.isBuffer(D))
+      if (qt(B, O) && (B = e.from(B, B.offset, B.byteLength)), qt(D, O) && (D = e.from(D, D.offset, D.byteLength)), !e.isBuffer(B) || !e.isBuffer(D))
         throw new TypeError(
           'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
         );
@@ -14249,8 +14247,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       let at = 0;
       for (Y = 0; Y < B.length; ++Y) {
         let ct = B[Y];
-        if (qt(ct, S))
-          at + ct.length > tt.length ? (e.isBuffer(ct) || (ct = e.from(ct)), ct.copy(tt, at)) : S.prototype.set.call(
+        if (qt(ct, O))
+          at + ct.length > tt.length ? (e.isBuffer(ct) || (ct = e.from(ct)), ct.copy(tt, at)) : O.prototype.set.call(
             tt,
             ct,
             at
@@ -14266,7 +14264,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     function I(W, B) {
       if (e.isBuffer(W))
         return W.length;
-      if (c.isView(W) || qt(W, c))
+      if (l.isView(W) || qt(W, l))
         return W.byteLength;
       if (typeof W != "string")
         throw new TypeError(
@@ -14365,7 +14363,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       const D = N.INSPECT_MAX_BYTES;
       return B = this.toString("hex", 0, D).replace(/(.{2})/g, "$1 ").trim(), this.length > D && (B += " ... "), "<Buffer " + B + ">";
     }, n && (e.prototype[n] = e.prototype.inspect), e.prototype.compare = function(B, D, Y, tt, at) {
-      if (qt(B, S) && (B = e.from(B, B.offset, B.byteLength)), !e.isBuffer(B))
+      if (qt(B, O) && (B = e.from(B, B.offset, B.byteLength)), !e.isBuffer(B))
         throw new TypeError(
           'The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof B
         );
@@ -14398,7 +14396,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       if (typeof B == "string" && (B = e.from(B, Y)), e.isBuffer(B))
         return B.length === 0 ? -1 : F(W, B, D, Y, tt);
       if (typeof B == "number")
-        return B = B & 255, typeof S.prototype.indexOf == "function" ? tt ? S.prototype.indexOf.call(W, B, D) : S.prototype.lastIndexOf.call(W, B, D) : F(W, [B], D, Y, tt);
+        return B = B & 255, typeof O.prototype.indexOf == "function" ? tt ? O.prototype.indexOf.call(W, B, D) : O.prototype.lastIndexOf.call(W, B, D) : F(W, [B], D, Y, tt);
       throw new TypeError("val must be string, number or Buffer");
     }
     function F(W, B, D, Y, tt) {
@@ -14785,7 +14783,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       if (tt < 0) throw new RangeError("sourceEnd out of bounds");
       tt > this.length && (tt = this.length), B.length - D < tt - Y && (tt = B.length - D + Y);
       const at = tt - Y;
-      return this === B && typeof S.prototype.copyWithin == "function" ? this.copyWithin(D, Y, tt) : S.prototype.set.call(
+      return this === B && typeof O.prototype.copyWithin == "function" ? this.copyWithin(D, Y, tt) : O.prototype.set.call(
         B,
         this.subarray(Y, tt),
         D
@@ -15004,81 +15002,81 @@ ${j.gpgsig ? j.gpgsig : ""}`;
   function Gl() {
     return hu || (hu = 1, function(N) {
       function g(x, R) {
-        var f;
-        return x instanceof Ue ? f = x : f = Ue.from(x.buffer, x.byteOffset, x.byteLength), f.toString(R);
+        var c;
+        return x instanceof Ue ? c = x : c = Ue.from(x.buffer, x.byteOffset, x.byteLength), c.toString(R);
       }
       var t = function(x) {
         return Ue.from(x);
       };
       function n(x) {
-        for (var R = 0, f = Math.min(256 * 256, x.length + 1), E = new Uint16Array(f), w = [], I = 0; ; ) {
+        for (var R = 0, c = Math.min(256 * 256, x.length + 1), P = new Uint16Array(c), w = [], I = 0; ; ) {
           var T = R < x.length;
-          if (!T || I >= f - 1) {
-            var M = E.subarray(0, I), A = M;
+          if (!T || I >= c - 1) {
+            var M = P.subarray(0, I), A = M;
             if (w.push(String.fromCharCode.apply(null, A)), !T) return w.join("");
             x = x.subarray(R), R = 0, I = 0;
           }
           var F = x[R++];
-          if ((F & 128) === 0) E[I++] = F;
+          if ((F & 128) === 0) P[I++] = F;
           else if ((F & 224) === 192) {
             var z = x[R++] & 63;
-            E[I++] = (F & 31) << 6 | z;
+            P[I++] = (F & 31) << 6 | z;
           } else if ((F & 240) === 224) {
             var z = x[R++] & 63, $ = x[R++] & 63;
-            E[I++] = (F & 31) << 12 | z << 6 | $;
+            P[I++] = (F & 31) << 12 | z << 6 | $;
           } else if ((F & 248) === 240) {
             var z = x[R++] & 63, $ = x[R++] & 63, H = x[R++] & 63, nt = (F & 7) << 18 | z << 12 | $ << 6 | H;
-            nt > 65535 && (nt -= 65536, E[I++] = nt >>> 10 & 1023 | 55296, nt = 56320 | nt & 1023), E[I++] = nt;
+            nt > 65535 && (nt -= 65536, P[I++] = nt >>> 10 & 1023 | 55296, nt = 56320 | nt & 1023), P[I++] = nt;
           }
         }
       }
       function u(x) {
-        for (var R = 0, f = x.length, E = 0, w = Math.max(32, f + (f >>> 1) + 7), I = new Uint8Array(w >>> 3 << 3); R < f; ) {
+        for (var R = 0, c = x.length, P = 0, w = Math.max(32, c + (c >>> 1) + 7), I = new Uint8Array(w >>> 3 << 3); R < c; ) {
           var T = x.charCodeAt(R++);
           if (T >= 55296 && T <= 56319) {
-            if (R < f) {
+            if (R < c) {
               var M = x.charCodeAt(R);
               (M & 64512) === 56320 && (++R, T = ((T & 1023) << 10) + (M & 1023) + 65536);
             }
             if (T >= 55296 && T <= 56319) continue;
           }
-          if (E + 4 > I.length) {
+          if (P + 4 > I.length) {
             w += 8, w *= 1 + R / x.length * 2, w = w >>> 3 << 3;
             var A = new Uint8Array(w);
             A.set(I), I = A;
           }
           if ((T & 4294967168) === 0) {
-            I[E++] = T;
+            I[P++] = T;
             continue;
-          } else if ((T & 4294965248) === 0) I[E++] = T >>> 6 & 31 | 192;
-          else if ((T & 4294901760) === 0) I[E++] = T >>> 12 & 15 | 224, I[E++] = T >>> 6 & 63 | 128;
-          else if ((T & 4292870144) === 0) I[E++] = T >>> 18 & 7 | 240, I[E++] = T >>> 12 & 63 | 128, I[E++] = T >>> 6 & 63 | 128;
+          } else if ((T & 4294965248) === 0) I[P++] = T >>> 6 & 31 | 192;
+          else if ((T & 4294901760) === 0) I[P++] = T >>> 12 & 15 | 224, I[P++] = T >>> 6 & 63 | 128;
+          else if ((T & 4292870144) === 0) I[P++] = T >>> 18 & 7 | 240, I[P++] = T >>> 12 & 63 | 128, I[P++] = T >>> 6 & 63 | 128;
           else continue;
-          I[E++] = T & 63 | 128;
+          I[P++] = T & 63 | 128;
         }
-        return I.slice ? I.slice(0, E) : I.subarray(0, E);
+        return I.slice ? I.slice(0, P) : I.subarray(0, P);
       }
-      var S = "Failed to ", c = function(x, R, f) {
-        if (x) throw new Error("".concat(S).concat(R, ": the '").concat(f, "' option is unsupported."));
+      var O = "Failed to ", l = function(x, R, c) {
+        if (x) throw new Error("".concat(O).concat(R, ": the '").concat(c, "' option is unsupported."));
       }, i = typeof Ue == "function" && Ue.from, s = i ? t : u;
       function o() {
         this.encoding = "utf-8";
       }
       o.prototype.encode = function(x, R) {
-        return c(R && R.stream, "encode", "stream"), s(x);
+        return l(R && R.stream, "encode", "stream"), s(x);
       };
       function e(x) {
         var R;
         try {
-          var f = new Blob([x], { type: "text/plain;charset=UTF-8" });
-          R = URL.createObjectURL(f);
-          var E = new XMLHttpRequest();
-          return E.open("GET", R, !1), E.send(), E.responseText;
+          var c = new Blob([x], { type: "text/plain;charset=UTF-8" });
+          R = URL.createObjectURL(c);
+          var P = new XMLHttpRequest();
+          return P.open("GET", R, !1), P.send(), P.responseText;
         } finally {
           R && URL.revokeObjectURL(R);
         }
       }
-      var j = !i && typeof Blob == "function" && typeof URL == "function" && typeof URL.createObjectURL == "function", O = ["utf-8", "utf8", "unicode-1-1-utf-8"], m = n;
+      var j = !i && typeof Blob == "function" && typeof URL == "function" && typeof URL.createObjectURL == "function", E = ["utf-8", "utf8", "unicode-1-1-utf-8"], m = n;
       i ? m = g : j && (m = function(x) {
         try {
           return e(x);
@@ -15086,18 +15084,18 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return n(x);
         }
       });
-      var _ = "construct 'TextDecoder'", h = "".concat(S, " ").concat(_, ": the ");
-      function P(x, R) {
-        c(R && R.fatal, _, "fatal"), x = x || "utf-8";
-        var f;
-        if (i ? f = Ue.isEncoding(x) : f = O.indexOf(x.toLowerCase()) !== -1, !f) throw new RangeError("".concat(h, " encoding label provided ('").concat(x, "') is invalid."));
+      var _ = "construct 'TextDecoder'", h = "".concat(O, " ").concat(_, ": the ");
+      function S(x, R) {
+        l(R && R.fatal, _, "fatal"), x = x || "utf-8";
+        var c;
+        if (i ? c = Ue.isEncoding(x) : c = E.indexOf(x.toLowerCase()) !== -1, !c) throw new RangeError("".concat(h, " encoding label provided ('").concat(x, "') is invalid."));
         this.encoding = x, this.fatal = !1, this.ignoreBOM = !1;
       }
-      P.prototype.decode = function(x, R) {
-        c(R && R.stream, "decode", "stream");
-        var f;
-        return x instanceof Uint8Array ? f = x : x.buffer instanceof ArrayBuffer ? f = new Uint8Array(x.buffer) : f = new Uint8Array(x), m(f, this.encoding);
-      }, N.TextEncoder = N.TextEncoder || o, N.TextDecoder = N.TextDecoder || P;
+      S.prototype.decode = function(x, R) {
+        l(R && R.stream, "decode", "stream");
+        var c;
+        return x instanceof Uint8Array ? c = x : x.buffer instanceof ArrayBuffer ? c = new Uint8Array(x.buffer) : c = new Uint8Array(x), m(c, this.encoding);
+      }, N.TextEncoder = N.TextEncoder || o, N.TextDecoder = N.TextDecoder || S;
     }(typeof window < "u" ? window : typeof globalThis < "u" ? globalThis : xr)), xr;
   }
   var Or, du;
@@ -15116,10 +15114,10 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       return function() {
         if (!t)
           return g.apply(this, arguments);
-        var S = this, c = arguments, i = n && !u;
+        var O = this, l = arguments, i = n && !u;
         if (clearTimeout(u), u = setTimeout(function() {
           if (u = null, !i)
-            return g.apply(S, c);
+            return g.apply(O, l);
         }, t), i)
           return g.apply(this, arguments);
       };
@@ -15134,7 +15132,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       if (i.length === 0)
         return ".";
       let s = n(i);
-      return s = s.reduce(c, []), t(...s);
+      return s = s.reduce(l, []), t(...s);
     }
     function g(...i) {
       let s = "";
@@ -15158,12 +15156,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       if (s === -1) throw new Error(`Cannot get dirname of "${i}"`);
       return s === 0 ? "/" : i.slice(0, s);
     }
-    function S(i) {
+    function O(i) {
       if (i === "/") throw new Error(`Cannot get basename of "${i}"`);
       const s = i.lastIndexOf("/");
       return s === -1 ? i : i.slice(s + 1);
     }
-    function c(i, s) {
+    function l(i, s) {
       if (i.length === 0)
         return i.push(s), i;
       if (s === ".") return i;
@@ -15182,7 +15180,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       join: t,
       normalize: N,
       split: n,
-      basename: S,
+      basename: O,
       dirname: u,
       resolve: g
     }, Pr;
@@ -15191,26 +15189,26 @@ ${j.gpgsig ? j.gpgsig : ""}`;
   function Iu() {
     if (mu) return Sr;
     mu = 1;
-    function N(c) {
+    function N(l) {
       return class extends Error {
         constructor(...i) {
-          super(...i), this.code = c, this.message ? this.message = c + ": " + this.message : this.message = c;
+          super(...i), this.code = l, this.message ? this.message = l + ": " + this.message : this.message = l;
         }
       };
     }
-    const g = N("EEXIST"), t = N("ENOENT"), n = N("ENOTDIR"), u = N("ENOTEMPTY"), S = N("ETIMEDOUT");
-    return Sr = { EEXIST: g, ENOENT: t, ENOTDIR: n, ENOTEMPTY: u, ETIMEDOUT: S }, Sr;
+    const g = N("EEXIST"), t = N("ENOENT"), n = N("ENOTDIR"), u = N("ENOTEMPTY"), O = N("ETIMEDOUT");
+    return Sr = { EEXIST: g, ENOENT: t, ENOTDIR: n, ENOTEMPTY: u, ETIMEDOUT: O }, Sr;
   }
   var Ar, yu;
   function Zl() {
     if (yu) return Ar;
     yu = 1;
-    const N = qr(), { EEXIST: g, ENOENT: t, ENOTDIR: n, ENOTEMPTY: u } = Iu(), S = 0;
+    const N = qr(), { EEXIST: g, ENOENT: t, ENOTDIR: n, ENOTEMPTY: u } = Iu(), O = 0;
     return Ar = class {
       constructor() {
       }
       _makeRoot(i = /* @__PURE__ */ new Map()) {
-        return i.set(S, { mode: 511, type: "dir", size: 0, ino: 0, mtimeMs: Date.now() }), i;
+        return i.set(O, { mode: 511, type: "dir", size: 0, ino: 0, mtimeMs: Date.now() }), i;
       }
       activate(i = null) {
         i === null ? this._root = /* @__PURE__ */ new Map([["/", this._makeRoot()]]) : typeof i == "string" ? this._root = /* @__PURE__ */ new Map([["/", this._makeRoot(this.parse(i))]]) : this._root = i;
@@ -15227,25 +15225,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       _countInodes(i) {
         let s = 1;
         for (let [o, e] of i)
-          o !== S && (s += this._countInodes(e));
+          o !== O && (s += this._countInodes(e));
         return s;
       }
       autoinc() {
         return this._maxInode(this._root.get("/")) + 1;
       }
       _maxInode(i) {
-        let s = i.get(S).ino;
+        let s = i.get(O).ino;
         for (let [o, e] of i)
-          o !== S && (s = Math.max(s, this._maxInode(e)));
+          o !== O && (s = Math.max(s, this._maxInode(e)));
         return s;
       }
       print(i = this._root.get("/")) {
         let s = "";
         const o = (e, j) => {
-          for (let [O, m] of e) {
-            if (O === 0) continue;
-            let _ = m.get(S), h = _.mode.toString(8);
-            s += `${"	".repeat(j)}${O}	${h}`, _.type === "file" ? s += `	${_.size}	${_.mtimeMs}
+          for (let [E, m] of e) {
+            if (E === 0) continue;
+            let _ = m.get(O), h = _.mode.toString(8);
+            s += `${"	".repeat(j)}${E}	${h}`, _.type === "file" ? s += `	${_.size}	${_.mtimeMs}
 ` : (s += `
 `, o(m, j + 1));
           }
@@ -15256,32 +15254,32 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         let s = 0;
         function o(m) {
           const _ = ++s, h = m.length === 1 ? "dir" : "file";
-          let [P, x, R] = m;
-          return P = parseInt(P, 8), x = x ? parseInt(x) : 0, R = R ? parseInt(R) : Date.now(), /* @__PURE__ */ new Map([[S, { mode: P, type: h, size: x, mtimeMs: R, ino: _ }]]);
+          let [S, x, R] = m;
+          return S = parseInt(S, 8), x = x ? parseInt(x) : 0, R = R ? parseInt(R) : Date.now(), /* @__PURE__ */ new Map([[O, { mode: S, type: h, size: x, mtimeMs: R, ino: _ }]]);
         }
         let e = i.trim().split(`
-`), j = this._makeRoot(), O = [
+`), j = this._makeRoot(), E = [
           { indent: -1, node: j },
           { indent: 0, node: null }
         ];
         for (let m of e) {
           let h = m.match(/^\t*/)[0].length;
           m = m.slice(h);
-          let [P, ...x] = m.split("	"), R = o(x);
-          if (h <= O[O.length - 1].indent)
-            for (; h <= O[O.length - 1].indent; )
-              O.pop();
-          O.push({ indent: h, node: R }), O[O.length - 2].node.set(P, R);
+          let [S, ...x] = m.split("	"), R = o(x);
+          if (h <= E[E.length - 1].indent)
+            for (; h <= E[E.length - 1].indent; )
+              E.pop();
+          E.push({ indent: h, node: R }), E[E.length - 2].node.set(S, R);
         }
         return j;
       }
       _lookup(i, s = !0) {
         let o = this._root, e = "/", j = N.split(i);
-        for (let O = 0; O < j.length; ++O) {
-          let m = j[O];
+        for (let E = 0; E < j.length; ++E) {
+          let m = j[E];
           if (o = o.get(m), !o) throw new t(i);
-          if (s || O < j.length - 1) {
-            const _ = o.get(S);
+          if (s || E < j.length - 1) {
+            const _ = o.get(O);
             if (_.type === "symlink") {
               let h = N.resolve(e, _.target);
               o = this._lookup(h);
@@ -15296,25 +15294,25 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         let o = this._lookup(N.dirname(i)), e = N.basename(i);
         if (o.has(e))
           throw new g();
-        let j = /* @__PURE__ */ new Map(), O = {
+        let j = /* @__PURE__ */ new Map(), E = {
           mode: s,
           type: "dir",
           size: 0,
           mtimeMs: Date.now(),
           ino: this.autoinc()
         };
-        j.set(S, O), o.set(e, j);
+        j.set(O, E), o.set(e, j);
       }
       rmdir(i) {
         let s = this._lookup(i);
-        if (s.get(S).type !== "dir") throw new n();
+        if (s.get(O).type !== "dir") throw new n();
         if (s.size > 1) throw new u();
         let o = this._lookup(N.dirname(i)), e = N.basename(i);
         o.delete(e);
       }
       readdir(i) {
         let s = this._lookup(i);
-        if (s.get(S).type !== "dir") throw new n();
+        if (s.get(O).type !== "dir") throw new n();
         return [...s.keys()].filter((o) => typeof o == "string");
       }
       writeStat(i, s, { mode: o }) {
@@ -15325,14 +15323,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         } catch {
         }
         o == null && (o = 438), e == null && (e = this.autoinc());
-        let j = this._lookup(N.dirname(i)), O = N.basename(i), m = {
+        let j = this._lookup(N.dirname(i)), E = N.basename(i), m = {
           mode: o,
           type: "file",
           size: s,
           mtimeMs: Date.now(),
           ino: e
         }, _ = /* @__PURE__ */ new Map();
-        return _.set(S, m), j.set(O, _), m;
+        return _.set(O, m), j.set(E, _), m;
       }
       unlink(i) {
         let s = this._lookup(N.dirname(i)), o = N.basename(i);
@@ -15343,13 +15341,13 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         this._lookup(N.dirname(s)).set(o, e), this.unlink(i);
       }
       stat(i) {
-        return this._lookup(i).get(S);
+        return this._lookup(i).get(O);
       }
       lstat(i) {
-        return this._lookup(i, !1).get(S);
+        return this._lookup(i, !1).get(O);
       }
       readlink(i) {
-        return this._lookup(i, !1).get(S).target;
+        return this._lookup(i, !1).get(O).target;
       }
       symlink(i, s) {
         let o, e;
@@ -15359,7 +15357,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         } catch {
         }
         e == null && (e = 40960), o == null && (o = this.autoinc());
-        let j = this._lookup(N.dirname(s)), O = N.basename(s), m = {
+        let j = this._lookup(N.dirname(s)), E = N.basename(s), m = {
           mode: e,
           type: "symlink",
           target: i,
@@ -15367,12 +15365,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           mtimeMs: Date.now(),
           ino: o
         }, _ = /* @__PURE__ */ new Map();
-        return _.set(S, m), j.set(O, _), m;
+        return _.set(O, m), j.set(E, _), m;
       }
       _du(i) {
         let s = 0;
         for (const [o, e] of i.entries())
-          o === S ? s += e.size : s += this._du(e);
+          o === O ? s += e.size : s += this._du(e);
         return s;
       }
       du(i) {
@@ -15394,9 +15392,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }));
     }
     _withIDBStore(g, t) {
-      return this._init(), this._dbp.then((n) => new Promise((u, S) => {
-        const c = n.transaction(this.storeName, g);
-        c.oncomplete = () => u(), c.onabort = c.onerror = () => S(c.error), t(c.objectStore(this.storeName));
+      return this._init(), this._dbp.then((n) => new Promise((u, O) => {
+        const l = n.transaction(this.storeName, g);
+        l.oncomplete = () => u(), l.onabort = l.onerror = () => O(l.error), t(l.objectStore(this.storeName));
       }));
     }
     _close() {
@@ -15534,35 +15532,35 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       // Returns true if successful
       async renew({ ttl: n = 5e3 } = {}) {
         let u;
-        return await N.update("lock", (S) => {
+        return await N.update("lock", (O) => {
           const i = Date.now() + n;
-          return u = S && S.holder === this._id, this._lock = u ? { holder: this._id, expires: i } : S, this._lock;
+          return u = O && O.holder === this._id, this._lock = u ? { holder: this._id, expires: i } : O, this._lock;
         }, this._store), u;
       }
       // Returns true if successful
       async acquire({ ttl: n = 5e3 } = {}) {
-        let u, S, c;
+        let u, O, l;
         if (await N.update("lock", (i) => {
           const s = Date.now(), o = s + n;
-          return S = i && i.expires < s, u = i === void 0 || S, c = i && i.holder === this._id, this._lock = u ? { holder: this._id, expires: o } : i, this._lock;
-        }, this._store), c)
+          return O = i && i.expires < s, u = i === void 0 || O, l = i && i.holder === this._id, this._lock = u ? { holder: this._id, expires: o } : i, this._lock;
+        }, this._store), l)
           throw new Error("Mutex double-locked");
         return u;
       }
       // check at 10Hz, give up after 10 minutes
-      async wait({ interval: n = 100, limit: u = 6e3, ttl: S } = {}) {
+      async wait({ interval: n = 100, limit: u = 6e3, ttl: O } = {}) {
         for (; u--; ) {
-          if (await this.acquire({ ttl: S })) return !0;
+          if (await this.acquire({ ttl: O })) return !0;
           await g(n);
         }
         throw new Error("Mutex timeout");
       }
       // Returns true if successful
       async release({ force: n = !1 } = {}) {
-        let u, S, c;
-        if (await N.update("lock", (i) => (u = n || i && i.holder === this._id, S = i === void 0, c = i && i.holder !== this._id, this._lock = u ? void 0 : i, this._lock), this._store), await N.close(this._store), !u && !n) {
-          if (S) throw new Error("Mutex double-freed");
-          if (c) throw new Error("Mutex lost ownership");
+        let u, O, l;
+        if (await N.update("lock", (i) => (u = n || i && i.holder === this._id, O = i === void 0, l = i && i.holder !== this._id, this._lock = u ? void 0 : i, this._lock), this._store), await N.close(this._store), !u && !n) {
+          if (O) throw new Error("Mutex double-freed");
+          if (l) throw new Error("Mutex lost ownership");
         }
         return u;
       }
@@ -15591,8 +15589,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           const u = new AbortController();
           setTimeout(() => {
             u.abort(), n(new Error("Mutex timeout"));
-          }, g), navigator.locks.request(this._database + "_lock", { signal: u.signal }, (S) => (this._has = !!S, t(!!S), new Promise((c) => {
-            this._release = c;
+          }, g), navigator.locks.request(this._database + "_lock", { signal: u.signal }, (O) => (this._has = !!O, t(!!O), new Promise((l) => {
+            this._release = l;
           })));
         });
       }
@@ -15606,7 +15604,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
   function uh() {
     if (ju) return Cr;
     ju = 1;
-    const { encode: N, decode: g } = Yl(), t = Vl(), n = Zl(), { ENOENT: u, ENOTEMPTY: S, ETIMEDOUT: c } = Iu(), i = ih(), s = oh(), o = ah(), e = sh(), j = qr();
+    const { encode: N, decode: g } = Yl(), t = Vl(), n = Zl(), { ENOENT: u, ENOTEMPTY: O, ETIMEDOUT: l } = Iu(), i = ih(), s = oh(), o = ah(), e = sh(), j = qr();
     return Cr = class {
       constructor() {
         this.saveSuperblock = t(() => {
@@ -15616,14 +15614,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       async init(m, {
         wipe: _,
         url: h,
-        urlauto: P,
+        urlauto: S,
         fileDbName: x = m,
         db: R = null,
-        fileStoreName: f = m + "_files",
-        lockDbName: E = m + "_lock",
+        fileStoreName: c = m + "_files",
+        lockDbName: P = m + "_lock",
         lockStoreName: w = m + "_lock"
       } = {}) {
-        this._name = m, this._idb = R || new i(x, f), this._mutex = navigator.locks ? new e(m) : new o(E, w), this._cache = new n(m), this._opts = { wipe: _, url: h }, this._needsWipe = !!_, h && (this._http = new s(h), this._urlauto = !!P);
+        this._name = m, this._idb = R || new i(x, c), this._mutex = navigator.locks ? new e(m) : new o(P, w), this._cache = new n(m), this._opts = { wipe: _, url: h }, this._needsWipe = !!_, h && (this._http = new s(h), this._urlauto = !!S);
       }
       async activate() {
         if (this._cache.activated) return;
@@ -15637,7 +15635,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         } else
           this._cache.activate();
         if (!await this._mutex.has())
-          throw new c();
+          throw new l();
       }
       async deactivate() {
         await this._mutex.has() && await this._saveSuperblock(), this._cache.deactivate();
@@ -15652,8 +15650,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         this._cache.activated && (this._lastSavedAt = Date.now(), await this._idb.saveSuperblock(this._cache._root));
       }
       _writeStat(m, _, h) {
-        let P = j.split(j.dirname(m)), x = P.shift();
-        for (let R of P) {
+        let S = j.split(j.dirname(m)), x = S.shift();
+        for (let R of S) {
           x = j.join(x, R);
           try {
             this._cache.mkdir(x, { mode: 511 });
@@ -15665,29 +15663,29 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       async readFile(m, _) {
         const { encoding: h } = _;
         if (h && h !== "utf8") throw new Error('Only "utf8" encoding is supported in readFile');
-        let P = null, x = null;
+        let S = null, x = null;
         try {
-          x = this._cache.stat(m), P = await this._idb.readFile(x.ino);
+          x = this._cache.stat(m), S = await this._idb.readFile(x.ino);
         } catch (R) {
           if (!this._urlauto) throw R;
         }
-        if (!P && this._http) {
+        if (!S && this._http) {
           let R = this._cache.lstat(m);
           for (; R.type === "symlink"; )
             m = j.resolve(j.dirname(m), R.target), R = this._cache.lstat(m);
-          P = await this._http.readFile(m);
+          S = await this._http.readFile(m);
         }
-        if (P && ((!x || x.size != P.byteLength) && (x = await this._writeStat(m, P.byteLength, { mode: x ? x.mode : 438 }), this.saveSuperblock()), h === "utf8" ? P = g(P) : P.toString = () => g(P)), !x) throw new u(m);
-        return P;
+        if (S && ((!x || x.size != S.byteLength) && (x = await this._writeStat(m, S.byteLength, { mode: x ? x.mode : 438 }), this.saveSuperblock()), h === "utf8" ? S = g(S) : S.toString = () => g(S)), !x) throw new u(m);
+        return S;
       }
       async writeFile(m, _, h) {
-        const { mode: P, encoding: x = "utf8" } = h;
+        const { mode: S, encoding: x = "utf8" } = h;
         if (typeof _ == "string") {
           if (x !== "utf8")
             throw new Error('Only "utf8" encoding is supported in writeFile');
           _ = N(_);
         }
-        const R = await this._cache.writeStat(m, _.byteLength, { mode: P });
+        const R = await this._cache.writeStat(m, _.byteLength, { mode: S });
         await this._idb.writeFile(R.ino, _);
       }
       async unlink(m, _) {
@@ -15703,7 +15701,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       }
       rmdir(m, _) {
         if (m === "/")
-          throw new S();
+          throw new O();
         this._cache.rmdir(m);
       }
       rename(m, _) {
@@ -15755,22 +15753,22 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     if (xu) return Mr;
     xu = 1;
     const N = uh(), g = ch(), t = qr();
-    function n(c, i, ...s) {
-      return c = t.normalize(c), (typeof i > "u" || typeof i == "function") && (i = {}), typeof i == "string" && (i = {
+    function n(l, i, ...s) {
+      return l = t.normalize(l), (typeof i > "u" || typeof i == "function") && (i = {}), typeof i == "string" && (i = {
         encoding: i
-      }), [c, i, ...s];
+      }), [l, i, ...s];
     }
-    function u(c, i, s, ...o) {
-      return c = t.normalize(c), (typeof s > "u" || typeof s == "function") && (s = {}), typeof s == "string" && (s = {
+    function u(l, i, s, ...o) {
+      return l = t.normalize(l), (typeof s > "u" || typeof s == "function") && (s = {}), typeof s == "string" && (s = {
         encoding: s
-      }), [c, i, s, ...o];
+      }), [l, i, s, ...o];
     }
-    function S(c, i, ...s) {
-      return [t.normalize(c), t.normalize(i), ...s];
+    function O(l, i, ...s) {
+      return [t.normalize(l), t.normalize(i), ...s];
     }
     return Mr = class {
       constructor(i, s = {}) {
-        this.init = this.init.bind(this), this.readFile = this._wrap(this.readFile, n, !1), this.writeFile = this._wrap(this.writeFile, u, !0), this.unlink = this._wrap(this.unlink, n, !0), this.readdir = this._wrap(this.readdir, n, !1), this.mkdir = this._wrap(this.mkdir, n, !0), this.rmdir = this._wrap(this.rmdir, n, !0), this.rename = this._wrap(this.rename, S, !0), this.stat = this._wrap(this.stat, n, !1), this.lstat = this._wrap(this.lstat, n, !1), this.readlink = this._wrap(this.readlink, n, !1), this.symlink = this._wrap(this.symlink, S, !0), this.backFile = this._wrap(this.backFile, n, !0), this.du = this._wrap(this.du, n, !1), this._deactivationPromise = null, this._deactivationTimeout = null, this._activationPromise = null, this._operations = /* @__PURE__ */ new Set(), i && this.init(i, s);
+        this.init = this.init.bind(this), this.readFile = this._wrap(this.readFile, n, !1), this.writeFile = this._wrap(this.writeFile, u, !0), this.unlink = this._wrap(this.unlink, n, !0), this.readdir = this._wrap(this.readdir, n, !1), this.mkdir = this._wrap(this.mkdir, n, !0), this.rmdir = this._wrap(this.rmdir, n, !0), this.rename = this._wrap(this.rename, O, !0), this.stat = this._wrap(this.stat, n, !1), this.lstat = this._wrap(this.lstat, n, !1), this.readlink = this._wrap(this.readlink, n, !1), this.symlink = this._wrap(this.symlink, O, !0), this.backFile = this._wrap(this.backFile, n, !0), this.du = this._wrap(this.du, n, !1), this._deactivationPromise = null, this._deactivationTimeout = null, this._activationPromise = null, this._operations = /* @__PURE__ */ new Set(), i && this.init(i, s);
       }
       async init(...i) {
         return this._initPromiseResolve && await this._initPromise, this._initPromise = this._init(...i), this._initPromise;
@@ -15854,70 +15852,70 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     Ou = 1;
     const N = Ml(), g = fh();
     function t(n, u) {
-      return typeof n == "function" && (u = n), u = N(u), [(...c) => u(null, ...c), u];
+      return typeof n == "function" && (u = n), u = N(u), [(...l) => u(null, ...l), u];
     }
     return Nr = class {
       constructor(...u) {
         this.promises = new g(...u), this.init = this.init.bind(this), this.readFile = this.readFile.bind(this), this.writeFile = this.writeFile.bind(this), this.unlink = this.unlink.bind(this), this.readdir = this.readdir.bind(this), this.mkdir = this.mkdir.bind(this), this.rmdir = this.rmdir.bind(this), this.rename = this.rename.bind(this), this.stat = this.stat.bind(this), this.lstat = this.lstat.bind(this), this.readlink = this.readlink.bind(this), this.symlink = this.symlink.bind(this), this.backFile = this.backFile.bind(this), this.du = this.du.bind(this), this.flush = this.flush.bind(this);
       }
-      init(u, S) {
-        return this.promises.init(u, S);
+      init(u, O) {
+        return this.promises.init(u, O);
       }
-      readFile(u, S, c) {
-        const [i, s] = t(S, c);
-        this.promises.readFile(u, S).then(i).catch(s);
+      readFile(u, O, l) {
+        const [i, s] = t(O, l);
+        this.promises.readFile(u, O).then(i).catch(s);
       }
-      writeFile(u, S, c, i) {
-        const [s, o] = t(c, i);
-        this.promises.writeFile(u, S, c).then(s).catch(o);
+      writeFile(u, O, l, i) {
+        const [s, o] = t(l, i);
+        this.promises.writeFile(u, O, l).then(s).catch(o);
       }
-      unlink(u, S, c) {
-        const [i, s] = t(S, c);
-        this.promises.unlink(u, S).then(i).catch(s);
+      unlink(u, O, l) {
+        const [i, s] = t(O, l);
+        this.promises.unlink(u, O).then(i).catch(s);
       }
-      readdir(u, S, c) {
-        const [i, s] = t(S, c);
-        this.promises.readdir(u, S).then(i).catch(s);
+      readdir(u, O, l) {
+        const [i, s] = t(O, l);
+        this.promises.readdir(u, O).then(i).catch(s);
       }
-      mkdir(u, S, c) {
-        const [i, s] = t(S, c);
-        this.promises.mkdir(u, S).then(i).catch(s);
+      mkdir(u, O, l) {
+        const [i, s] = t(O, l);
+        this.promises.mkdir(u, O).then(i).catch(s);
       }
-      rmdir(u, S, c) {
-        const [i, s] = t(S, c);
-        this.promises.rmdir(u, S).then(i).catch(s);
+      rmdir(u, O, l) {
+        const [i, s] = t(O, l);
+        this.promises.rmdir(u, O).then(i).catch(s);
       }
-      rename(u, S, c) {
-        const [i, s] = t(c);
-        this.promises.rename(u, S).then(i).catch(s);
+      rename(u, O, l) {
+        const [i, s] = t(l);
+        this.promises.rename(u, O).then(i).catch(s);
       }
-      stat(u, S, c) {
-        const [i, s] = t(S, c);
+      stat(u, O, l) {
+        const [i, s] = t(O, l);
         this.promises.stat(u).then(i).catch(s);
       }
-      lstat(u, S, c) {
-        const [i, s] = t(S, c);
+      lstat(u, O, l) {
+        const [i, s] = t(O, l);
         this.promises.lstat(u).then(i).catch(s);
       }
-      readlink(u, S, c) {
-        const [i, s] = t(S, c);
+      readlink(u, O, l) {
+        const [i, s] = t(O, l);
         this.promises.readlink(u).then(i).catch(s);
       }
-      symlink(u, S, c) {
-        const [i, s] = t(c);
-        this.promises.symlink(u, S).then(i).catch(s);
+      symlink(u, O, l) {
+        const [i, s] = t(l);
+        this.promises.symlink(u, O).then(i).catch(s);
       }
-      backFile(u, S, c) {
-        const [i, s] = t(S, c);
-        this.promises.backFile(u, S).then(i).catch(s);
+      backFile(u, O, l) {
+        const [i, s] = t(O, l);
+        this.promises.backFile(u, O).then(i).catch(s);
       }
-      du(u, S) {
-        const [c, i] = t(S);
-        this.promises.du(u).then(c).catch(i);
+      du(u, O) {
+        const [l, i] = t(O);
+        this.promises.du(u).then(l).catch(i);
       }
       flush(u) {
-        const [S, c] = t(u);
-        this.promises.flush().then(S).catch(c);
+        const [O, l] = t(u);
+        this.promises.flush().then(O).catch(l);
       }
     }, Nr;
   }
@@ -15949,8 +15947,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         let u;
         if (t === "memory") {
           ue(`Creating memory FS for ${n}`);
-          const S = new $l(this.options, g);
-          ue(`Memory backend created for ${n}`), u = new Eu(g, { backend: S }), ue(`Memory FS created for ${n}`), this._log(`Created memory FS with backend for ${n}`);
+          const O = new $l(this.options, g);
+          ue(`Memory backend created for ${n}`), u = new Eu(g, { backend: O }), ue(`Memory FS created for ${n}`), this._log(`Created memory FS with backend for ${n}`);
         } else if (t === "idb")
           u = new Eu(g), this._log(`Created IDB FS for ${n}`);
         else
@@ -15996,8 +15994,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
         const u = indexedDB.deleteDatabase(g);
         u.onsuccess = () => {
           ue(`Deleted database ${g} successfully`), t();
-        }, u.onerror = (S) => {
-          or(`Error deleting database ${g}:`, S), n(S);
+        }, u.onerror = (O) => {
+          or(`Error deleting database ${g}:`, O), n(O);
         }, u.onblocked = () => {
           console.warn(`Delete database ${g} blocked`);
         };
@@ -16023,7 +16021,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     async processDatabaseList(g) {
       const t = [];
       for (const n of g) {
-        const u = typeof n == "string" ? n : n.name, c = (await this.openDatabase(u)).objectStoreNames, i = Array.from(c).filter((s) => s.startsWith("fs_")).map((s) => ({ database: u, fileStore: s }));
+        const u = typeof n == "string" ? n : n.name, l = (await this.openDatabase(u)).objectStoreNames, i = Array.from(l).filter((s) => s.startsWith("fs_")).map((s) => ({ database: u, fileStore: s }));
         t.push(...i);
       }
       return ue("Processing database list:", t), t;
@@ -16031,11 +16029,11 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     async openDatabase(g) {
       return ue("Opening database:", g), new Promise((t, n) => {
         const u = indexedDB.open(g);
-        u.onsuccess = (S) => {
-          const c = S.target.result;
-          t(c);
-        }, u.onerror = (S) => {
-          n(`Error opening database ${g}: ${S.target.error}`);
+        u.onsuccess = (O) => {
+          const l = O.target.result;
+          t(l);
+        }, u.onerror = (O) => {
+          n(`Error opening database ${g}: ${O.target.error}`);
         };
       });
     }
@@ -16047,14 +16045,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
           return;
         }
         n instanceof Promise ? n.then((u) => {
-          this.processDatabaseList(u).then((S) => g(S)).catch((S) => t(S));
+          this.processDatabaseList(u).then((O) => g(O)).catch((O) => t(O));
         }).catch((u) => t(u)) : (n.onsuccess = async (u) => {
-          const S = u.target.result;
+          const O = u.target.result;
           try {
-            const c = await this.processDatabaseList(S);
-            g(c);
-          } catch (c) {
-            t(c);
+            const l = await this.processDatabaseList(O);
+            g(l);
+          } catch (l) {
+            t(l);
           }
         }, n.onerror = (u) => {
           t(`Error retrieving database list: ${u.target.error}`);
@@ -16196,7 +16194,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
   self.addEventListener("fetch", (N) => {
     try {
       const g = new URL(N.request.url);
-      if (console.log(`Fetching: ${g.pathname}`), g.pathname === self.location.origin + "/git") {
+      if (console.log(`Fetching: ${g.pathname}`), g.pathname === "/git") {
         N.respondWith(
           Ah(N.request).catch((n) => (console.error("Error handling Git request:", n), new Response(
             JSON.stringify({ error: "Git request failed", details: n.message || n.toString() }),
@@ -16291,11 +16289,11 @@ ${j.gpgsig ? j.gpgsig : ""}`;
               { status: 400, headers: { "Content-Type": "application/json" } }
             );
         }
-      } catch (S) {
-        return console.error(`Error executing ${t}:`, S), new Response(
+      } catch (O) {
+        return console.error(`Error executing ${t}:`, O), new Response(
           JSON.stringify({
             error: `Error executing ${t}`,
-            details: S.message || S.toString()
+            details: O.message || O.toString()
           }),
           { status: 500, headers: { "Content-Type": "application/json" } }
         );
@@ -16314,7 +16312,7 @@ ${j.gpgsig ? j.gpgsig : ""}`;
   async function Rh({ dir: N, ref: g, branch: t }) {
     var n = /^HEAD~([0-9]+)$/, u = g.match(n);
     if (u) {
-      var S = +u[1], c = await (void 0)({ fs: Gt, dir: N, depth: S + 1 }), i = c.pop().oid;
+      var O = +u[1], l = await (void 0)({ fs: Gt, dir: N, depth: O + 1 }), i = l.pop().oid;
       return new Promise((s, o) => {
         Gt.writeFile(N + `/.git/refs/heads/${t}`, i, (e) => {
           if (e)
@@ -16334,12 +16332,12 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     for (; n <= t; )
       try {
         return await N(g);
-      } catch (S) {
-        if (S.message.includes("Failed to fetch") || S.message.includes("CORS") || S.message.includes("HTTP Error")) {
+      } catch (O) {
+        if (O.message.includes("Failed to fetch") || O.message.includes("CORS") || O.message.includes("HTTP Error")) {
           if (n++, n > t) throw new Error("Max retries reached for operation.");
-          At(`Network error, Retrying operation in ${u / 1e3} seconds... (Attempt ${n})`), await new Promise((c) => setTimeout(c, u)), u *= 2;
+          At(`Network error, Retrying operation in ${u / 1e3} seconds... (Attempt ${n})`), await new Promise((l) => setTimeout(l, u)), u *= 2;
         } else
-          throw S;
+          throw O;
       }
   }
   function Ge(N, g) {
@@ -16431,14 +16429,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     try {
       const t = await caches.open(He), n = {};
       At("fl", g);
-      for (const [S, c] of Object.entries(g)) {
-        At("fn, fp", S, c);
-        const i = await Gt.promises.stat(c);
+      for (const [O, l] of Object.entries(g)) {
+        At("fn, fp", O, l);
+        const i = await Gt.promises.stat(l);
         if (i.isDirectory())
-          n[c] = "";
+          n[l] = "";
         else if (i.isFile()) {
-          const s = await Gt.promises.readFile(c, "utf8");
-          n[c] = s;
+          const s = await Gt.promises.readFile(l, "utf8");
+          n[l] = s;
         }
       }
       At("filesWithContent", n);
@@ -16456,8 +16454,8 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       At("files", t), n[N] = N;
       for (const u of t) {
         At("file", u);
-        let S = g !== "/" ? `${g}/${u}` : `${g}${u}`;
-        (await Gt.promises.lstat(S)).isDirectory() ? (At("fullPath", S), n = { ...n, ...await Fu(S) }) : (At("result", n), n[S] = S);
+        let O = g !== "/" ? `${g}/${u}` : `${g}${u}`;
+        (await Gt.promises.lstat(O)).isDirectory() ? (At("fullPath", O), n = { ...n, ...await Fu(O) }) : (At("result", n), n[O] = O);
       }
       return n;
     } catch (g) {
@@ -16490,9 +16488,9 @@ ${j.gpgsig ? j.gpgsig : ""}`;
       n += `/${u}`;
       try {
         await N.promises.mkdir(n), At(`Directory created: ${n}`);
-      } catch (S) {
-        if (S.code !== "EEXIST")
-          throw Ht(`Error creating directory: ${n}`, S), S;
+      } catch (O) {
+        if (O.code !== "EEXIST")
+          throw Ht(`Error creating directory: ${n}`, O), O;
       }
     }
   }
@@ -16669,14 +16667,14 @@ ${j.gpgsig ? j.gpgsig : ""}`;
     try {
       const t = await caches.open(He);
       let n = await caches.match("log"), u = n ? await n.json() : [];
-      const S = (/* @__PURE__ */ new Date()).toISOString(), c = { action: N, data: g, timestamp: S };
-      u.push(c);
+      const O = (/* @__PURE__ */ new Date()).toISOString(), l = { action: N, data: g, timestamp: O };
+      u.push(l);
       let i = new Blob([JSON.stringify(u)]).size;
       const s = 5 * 1024;
       for (; i > s; )
         u.shift(), i = new Blob([JSON.stringify(u)]).size;
       const o = new Response(JSON.stringify(u), { headers: { "Content-Type": "application/json" } });
-      await t.put("log", o), At(`Logged action: ${N} at ${S}`, c);
+      await t.put("log", o), At(`Logged action: ${N} at ${O}`, l);
     } catch (t) {
       Ht("Error logging data to cache:", t);
     }
