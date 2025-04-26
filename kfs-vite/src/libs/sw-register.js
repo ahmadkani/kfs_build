@@ -41,7 +41,7 @@ class ServiceWorkerRegistration {
         const swPath = './service-worker.js';
         const newRegistration = await navigator.serviceWorker.register(
           swPath, 
-          { scope, type: 'classic' }
+          { scope, type: 'module' }
         );
 
         consoleDotLog('Service Worker registered with scope:', scope, newRegistration);

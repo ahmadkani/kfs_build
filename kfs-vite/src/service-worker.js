@@ -1,12 +1,11 @@
 /* eslint-env serviceworker */
 /* globals LightningFS git GitHttp */
-
-importScripts('./src/libs/isomorphicgit129.js');
-importScripts('./src/libs/LightningFS.js');
-importScripts('./src/libs/GitHttp.js');
-importScripts('./src/libs/workerUtils/Logger.js')
-importScripts('./src/libs/swUtils/memoryBackend-global.js')
-importScripts('./src/libs/swUtils/fsManager-global.js');
+import * as git from './libs/isomorphicgit129.js'
+import * as GitHttp from './libs/GitHttp.js';
+import * as LightningFS from './libs/LightningFS.js';
+import {Logger} from './libs/LoggerES6.js';
+import fsManager from './libs/workerUtils/fsManagerES6.js';
+import {config} from './configES6.js';
 
 const manifest = self.__WB_MANIFEST;
 
@@ -16,12 +15,12 @@ let username = '';
 let password = '';
 let dir = '/';
 let depth = 1;
+let http = GitHttp;
 let remote = 'origin';
 let ref = 'main';
 let corsProxy = 'http://localhost:9000' 
 let cache = {};
 let settingsFileAddresses = {};
-let http = GitHttp;
 let useCacheForRepo = 0;
 let broadcastChannel;
 let fs = null;
@@ -34,7 +33,7 @@ let noMainErrorCounts = {
 };
 let consoleLoggingOn = true;
 let fsArgs = {};
-const FSManager = new FsManager();
+const FSManager = new fsManager();
 
 function consoleDotLog(...parameters) {
   if (!consoleLoggingOn) return;
@@ -82,7 +81,6 @@ self.addEventListener('activate', (event) => {
       ref = 'main';
       cache = {};
       settingsFileAddresses = {};
-      http = GitHttp;
       useCacheForRepo = 0;
       broadcastChannel;
       fs = new LightningFS('fs');
