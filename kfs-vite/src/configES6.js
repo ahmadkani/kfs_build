@@ -15,6 +15,7 @@ const config = {
     memoryBackendGlobal: true,
     VFSutils: true,
     ServiceWorkerRegistration: true,
+    serviceWorker: true,
     storageUtils: true,
     supportChecker: true,
     dotGit: true,
@@ -32,5 +33,25 @@ const config = {
     interval: 60,
   }
 };
+
+export function setConfig(newConfig) {
+  if (config !== null) {
+      throw new Error('Configuration has already been set and cannot be modified.');
+  }
+  for (const key in newConfig) {
+    if (config.hasOwnProperty(key)) {
+      config[key] = newConfig[key];
+    } else {
+      throw new Error(`Invalid configuration key: ${key}`);
+    }
+  }
+}
+
+export function getConfig() {
+  if (config === null) {
+      throw new Error('Configuration has not been set yet.');
+  }
+  return config;
+}
 
 export { config };

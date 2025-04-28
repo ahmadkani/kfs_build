@@ -1,6 +1,7 @@
 import { Logger } from "./LoggerES6.js";
-import { config } from '../configES6.js';
+import { getConfig } from '../configES6.js';
 
+const config = getConfig();
 const logger = new Logger(config.logging.ServiceWorkerRegistration);
 
 function consoleDotLog(...parameters) {
@@ -122,5 +123,4 @@ class ServiceWorkerRegistration {
   }
 }
 
-// Export a singleton instance
 export const serviceWorker = new ServiceWorkerRegistration();

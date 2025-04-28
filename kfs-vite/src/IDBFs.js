@@ -1,6 +1,7 @@
 import { Logger } from "./libs/LoggerES6.js";
 import { workerPool } from "./WorkerPool.js";
 import { config } from './configES6.js';
+import LightningFS from '@isomorphic-git/lightning-fs';
 
 const logger = new Logger(config.logging.IDBFs);
 
@@ -308,9 +309,11 @@ class IDBFs {
     try {
       if (!this.workerThread) await this.initializeWorker();
       
-      const dirEntries = await this.workerThread.execute('readDirDot', { path });
+      const result = await this.workerThread.execute('readDirDot', { path });
+      const dirEntries = result?.entries || [];
   
       return options.fullObjects ? dirEntries : dirEntries.map(entry => entry.path);
+      
     } catch (error) {
       consoleDotError(`Error reading directory ${path}:`, error);
       return [];

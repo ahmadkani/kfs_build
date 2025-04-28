@@ -105,7 +105,7 @@ self.setSettingsAddresses = async function () {
 async function fetchWithServiceWorker(operation, args) {
 
   if (supportsServiceWorker && useSW) {
-    await swUtilsInstance.fetchWithServiceWorker(operation, args);
+    return await swUtilsInstance.fetchWithServiceWorker(operation, args);
   } else {
     consoleDotLog('This browser doesn\'t support service worker');
   }

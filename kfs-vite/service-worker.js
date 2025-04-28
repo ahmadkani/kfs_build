@@ -1,11 +1,11 @@
 /* eslint-env serviceworker */
 /* globals LightningFS git GitHttp */
-import * as git from './libs/isomorphicgit129.js'
-import * as GitHttp from './libs/GitHttp.js';
-import * as LightningFS from './libs/LightningFS.js';
-import {Logger} from './libs/LoggerES6.js';
-import fsManager from './libs/workerUtils/fsManagerES6.js';
-import {config} from './configES6.js';
+import * as git from './src/libs/isomorphicgit.js'
+import * as GitHttp from './src/libs/http.js';
+import * as LightningFS from './src/libs/LightningFS.js';
+import {Logger} from './src/libs/LoggerES6.js';
+import fsManager from './src/libs/workerUtils/fsManagerES6.js';
+import {config} from './src/configES6.js';
 
 const manifest = self.__WB_MANIFEST;
 
@@ -271,8 +271,11 @@ self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
     console.log(`Fetching: ${url.pathname}`);
 
+    console.log('Service Worker scope:', self.registration.scope);
+    console.log('Request URL path:', url.pathname);
+
     // If the request is for `/git`, handle it specifically
-    if (url.pathname === '/git') {
+    if (url.pathname.endsWith('/git')) {
       event.respondWith(
         handleGitRequest(event.request).catch(error => {
           console.error('Error handling Git request:', error);
@@ -554,7 +557,7 @@ function buildHeaders(username, password) {
 
 async function listServerRefs(args) {
   consoleDotLog('listServerRefs args', args);
-  return await retryOperation(async (args) => {
+  return await retryOperation(async () => {
     noMainErrorCounts.listServerRefsCount++;
     await mutex.lock();
     try {
@@ -605,7 +608,7 @@ async function listServerRefs(args) {
 
 async function clone(args) {
   consoleDotLog('entering clone with : ', args);
-  return await retryOperation(async (args) => {
+  return await retryOperation(async () => {
     consoleDotLog('Entering clone function with arguments:', args);
 
     noMainErrorCounts.cloneCount ++;
@@ -825,7 +828,7 @@ const authenticate = {
 
 
 async function pull(args) {
-  return await retryOperation(async (args) => {
+  return await retryOperation(async () => {
     noMainErrorCounts.pullCount++;
     let pullResult = {};
     await mutex.lock();
@@ -880,7 +883,7 @@ async function pull(args) {
 }
 
 async function fastForward(args) {
-  return await retryOperation(async (args) => {
+  return await retryOperation(async () => {
     noMainErrorCounts.ffCount++;
     let ffResult = {};
     await mutex.lock();
@@ -935,7 +938,7 @@ async function fastForward(args) {
 }
 
 async function push(args) {
-  return await retryOperation(async (args) => {
+  return await retryOperation(async () => {
     noMainErrorCounts.pushCount++;
     let pushResult = {};
     await mutex.lock();
@@ -986,7 +989,7 @@ async function push(args) {
 }
 
 async function doFetch(args) {
-  return await retryOperation(async (args) => {
+  return await retryOperation(async () => {
     noMainErrorCounts.fetchCount++;
     let fetchResult = {};
     await mutex.lock();
