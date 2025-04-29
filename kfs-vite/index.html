@@ -60,12 +60,22 @@
     </div>
 
     <script type="module">
-        import { KFS } from "./src/kfs.js";
+        import { KFS, setConfig } from "./src/kfs.js";
         import { serviceWorker } from "./src/libs/sw-register.js";
 
         // Initialize KFS
         const kfs = new KFS();
         
+        // await setConfig({
+        //     corsProxy: 'http://localhost:9000/',
+        //     logging: {
+        //         serviceWorker: true, // This will enable all serviceWorker-related logging
+        //         gitWorker: true,      // This will enable all gitWorker-related logging
+        //         kfs: true,           // This will enable all vfs-related logging
+        //         storage: true,      // This will enable all storage-related logging
+        //     }
+        // });
+
         // Service Worker Management
         document.getElementById('registerSW').addEventListener('click', async () => {
             try {
@@ -113,7 +123,7 @@
             try {
                 logOutput("Mounting filesystem...");
                 
-                await kfs.mount(path, "idb", "1", "git", {
+                await kfs.mount(path, "memory", "1", "git", {
                     fetchInfo: {
                         url: 'https://github.com/ahmadkani/ahmadkani',
                         username: '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',

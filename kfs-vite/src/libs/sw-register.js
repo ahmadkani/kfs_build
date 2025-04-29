@@ -1,7 +1,7 @@
 import { Logger } from "./LoggerES6.js";
 import { getConfig } from '../configES6.js';
 
-const config = getConfig();
+const config = await getConfig();
 const logger = new Logger(config.logging.ServiceWorkerRegistration);
 
 function consoleDotLog(...parameters) {

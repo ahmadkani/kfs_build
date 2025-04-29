@@ -1,9 +1,10 @@
 import { VFS } from "./vfs.js";
 import { Logger } from "./libs/LoggerES6.js";
-import { config } from './configES6.js';
+import { getConfig } from './configES6.js';
 import { VersioningManager } from './libs/kfsUtils/versioningManager.js';
 import { MergingManager } from './libs/kfsUtils/mergingManager.js';
 
+const config = await getConfig();
 const logger = new Logger(config.logging.kfs);
 
 function consoleDotLog(...params) {
@@ -244,3 +245,4 @@ export class KFS {
 }
 
 export { serviceWorker } from './libs/sw-register.js';
+export { setConfig } from './configES6.js';

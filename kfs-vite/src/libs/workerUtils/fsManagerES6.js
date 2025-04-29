@@ -16,7 +16,7 @@ function consoleDotError(...parameters) {
 consoleDotLog('Loading fsmanagerES6.')
 
 class fsManager {
-  constructor(options = {}) {
+  constructor(options = {supportsServiceWorker: true, useSW: true}) {
     this.fsInstances = new Map();
     this.initializationLocks = new Map(); // For concurrency control
     this.debug = true;
@@ -48,7 +48,7 @@ class fsManager {
       if (fsType === "memory") {
         consoleDotLog(`Creating memory FS for ${key}`);
         const backend = new memoryBackend(this.options, fsName);
-        consoleDotLog(`Memory backend created for ${key}`);
+        consoleDotLog(`Memory backend created for ${key} backend: `, backend);
         fsInstance = new LightningFS(fsName, { backend });
         consoleDotLog(`Memory FS created for ${key}`);
         this._log(`Created memory FS with backend for ${key}`);
