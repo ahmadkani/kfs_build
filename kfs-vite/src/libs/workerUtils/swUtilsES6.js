@@ -1,6 +1,6 @@
 import {Logger} from "./../LoggerES6.js";
 import {config} from "./../../configES6.js";
-    const logger = new Logger(config.logging.memoryBackendAMD);
+    const logger = new Logger(config.logging.swUtils);
   
     function consoleDotLog(...args) {
       logger.consoleDotLog("[ SWUtils ]", ...args);

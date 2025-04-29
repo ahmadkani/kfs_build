@@ -21,7 +21,7 @@ const config = {
     dotGit: false,
     GitAuth: false,
     serviceWorker: false,
-    workerPool: false,
+    WorkerPool: false,
   },
   versioning: {
     strategy: 'immediate',
@@ -53,7 +53,7 @@ const loggingGroups = {
     'gitWorker',
     'dotGit',
     'GitAuth',
-    'workerPool'
+    'WorkerPool'
   ],
   storage: [
     'memoryFS',
