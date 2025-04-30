@@ -26,6 +26,7 @@ export class VFS {
     this.VFSutils = null;
     this.storageUtils = new StorageUtils(storageName);
     this.currentMountPath = '';
+    this.idbSupported = null; // Will store the IndexedDB support status
     consoleDotLog('VFS instance created');
   }
 
@@ -50,14 +51,36 @@ export class VFS {
   // Storage and Support Checking
   async checkIndexedDBSupport() {
     consoleDotLog('Checking IndexedDB support...');
+    if (this.idbSupported !== null) {
+      return this.idbSupported; // Return cached result if available
+    }
+    
     try {
       await checkIndexedDBSupport();
       consoleDotLog('IndexedDB is supported');
+      this.idbSupported = true;
       return true;
     } catch (error) {
       consoleDotError('IndexedDB not supported:', error);
+      this.idbSupported = false;
       return false;
     }
+  }
+
+  async determineUseSW(fsType, options) {
+    // If useSW is explicitly set in options, use that value
+    if (options.useSW !== undefined) {
+      return options.useSW;
+    }
+    
+    // For IDB filesystem, check support and disable SW if not supported
+    if (fsType === 'idb') {
+      const isSupported = await this.checkIndexedDBSupport();
+      return isSupported; // Only use SW if IDB is supported
+    }
+    
+    // Default to false for memory filesystem
+    return false;
   }
 
   async loadMountFromStorage(mountPath) {
@@ -93,6 +116,9 @@ export class VFS {
   async createFSInstance(fsType, mountPath, options = {}) {
     consoleDotLog(`Creating FS instance of type ${fsType} for mount path ${mountPath}`);
     try {
+      // Determine the actual useSW value based on filesystem type and support
+      const useSW = await this.determineUseSW(fsType, options);
+      
       if (fsType === 'idb') {
         consoleDotLog('Checking IndexedDB support for IDB FS');
         const isSupported = await this.checkIndexedDBSupport();
@@ -106,11 +132,11 @@ export class VFS {
       switch (fsType) {
         case 'memory':
           consoleDotLog('Creating MemoryFS instance');
-          fsInstance = new MemoryFS(mountPath, options);
+          fsInstance = new MemoryFS(mountPath, { ...options, useSW: false }); // Always disable SW for memory FS
           break;
         case 'idb':
           consoleDotLog('Creating IDBFs instance');
-          fsInstance = new IDBFs(mountPath, options);
+          fsInstance = new IDBFs(mountPath, { ...options, useSW });
           break;
         default:
           const errorMsg = `Unknown FS type: ${fsType}`;
@@ -142,7 +168,7 @@ export class VFS {
     
     if (!mountData.fsInstance) {
       consoleDotLog(`Creating new FS instance for mount at ${fsPath}`);
-      const useSW = mountData?.useSW || false;
+      const useSW = await this.determineUseSW(mountData.fsType, mountData);
       mountData.fsInstance = await this.createFSInstance(
         mountData.fsType, 
         fsPath, 
@@ -173,7 +199,6 @@ export class VFS {
     consoleDotLog(`Mounting filesystem - path: ${path}, type: ${fsType}, name: ${fsName}, method: ${fetchMethod}, options: ${JSON.stringify(options)}`);
     try {
       const fetchInfo = options.fetchInfo || {};
-      const useSW = options.useSW || false;
       const versioning = this.getVersioningConfig(options);
       const merging = this.getMergingConfig(options);
       
@@ -193,11 +218,11 @@ export class VFS {
 
       if (storedMount) {
         consoleDotLog(`Found stored mount, initializing existing mount at ${mountPath}`);
-        return this.initializeStoredMount(mountPath, storedMount, fetchMethod, fetchInfo, { useSW, versioning, merging });
+        return this.initializeStoredMount(mountPath, storedMount, fetchMethod, fetchInfo, { versioning, merging });
       }
 
       consoleDotLog(`No stored mount found, creating new mount at ${mountPath}`);
-      return this.createNewMount(mountPath, fsType, fsName, fetchMethod, fetchInfo, useSW, versioning, merging);
+      return this.createNewMount(mountPath, fsType, fsName, fetchMethod, fetchInfo, versioning, merging);
     } catch (error) {
       consoleDotError('Mount operation failed:', error);
       throw error;
@@ -212,7 +237,6 @@ export class VFS {
         storedMount.fsType,
         mountPath,
         { 
-          useSW: options.useSW, 
           versioning: this.getVersioningConfig(storedMount),
           merging: this.getMergingConfig(storedMount)
         }
@@ -224,8 +248,7 @@ export class VFS {
         storedMount.fsType,
         fsInstance,
         mountPath,
-        storedMount.fetchInfo || fetchInfo,
-        options.useSW
+        storedMount.fetchInfo || fetchInfo
       );
 
       this.mounts[mountPath] = {
@@ -234,8 +257,7 @@ export class VFS {
         fetchMethod: storedMount.fetchMethod || fetchMethod,
         fetchInfo: storedMount.fetchInfo || fetchInfo,
         versioning: this.getVersioningConfig(storedMount),
-        merging: this.getMergingConfig(storedMount),
-        useSW: options.useSW
+        merging: this.getMergingConfig(storedMount)
       };      
 
       this.initializedMounts.add(mountPath);
@@ -247,14 +269,14 @@ export class VFS {
     }
   }
 
-  async createNewMount(mountPath, fsType, fsName, fetchMethod, fetchInfo, useSW = false, versioning = {}, merging = {}) {
+  async createNewMount(mountPath, fsType, fsName, fetchMethod, fetchInfo, versioning = {}, merging = {}) {
     consoleDotLog(`Creating new mount at ${mountPath}`);
     try {
       consoleDotLog(`Creating new FS instance (type: ${fsType})`);
-      const fsInstance = await this.createFSInstance(fsType, mountPath, { useSW, versioning, merging });
+      const fsInstance = await this.createFSInstance(fsType, mountPath, { versioning, merging });
       
       consoleDotLog(`Fetching data for new mount using method: ${fetchMethod}`);
-      await this.fetchFS(fetchMethod, fsType, fsInstance, mountPath, fetchInfo, useSW);
+      await this.fetchFS(fetchMethod, fsType, fsInstance, mountPath, fetchInfo);
 
       consoleDotLog('Generating filesystem table');
       const fsTable = await this.VFSutils.generateFsTable();
@@ -272,7 +294,6 @@ export class VFS {
           time: new Date().toISOString(),
           size: fsSize
         },
-        useSW,
         versioning: this.getVersioningConfig({ versioning }),
         merging: this.getMergingConfig({ merging })
       };

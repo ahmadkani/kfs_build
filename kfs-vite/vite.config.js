@@ -29,7 +29,7 @@ export default defineConfig(({ command, mode }) => {
         },
         formats: ['es'],
       },
-      outDir: 'dist',
+      outDir: 'kfs',
       emptyOutDir: true,
       sourcemap: true,
       target: 'esnext',
@@ -51,7 +51,6 @@ export default defineConfig(({ command, mode }) => {
             'isomorphic-git/http/web': 'http',
             '@isomorphic-git/lightning-fs': 'LightningFS',
           },
-          assetFileNames: 'assets/[name].[ext]',
           entryFileNames: (chunkInfo) => {
             return chunkInfo.name === 'sw'
               ? 'service-worker.js'
@@ -88,13 +87,13 @@ export default defineConfig(({ command, mode }) => {
         output: {
           entryFileNames: 'workers/[name].js',
           format: 'es',
-          sourcemap: true,
+          sourcemap: false,
           sourcemapPathTransform: (relativeSourcePath) => {
             return path.resolve(__dirname, 'src', relativeSourcePath);
           },
         },
       },
-      plugins: [nodePolyfills({ globals: { Buffer: true } })],
+      plugins: () => [nodePolyfills({ globals: { Buffer: true } })],
     },
 
     define: { global: 'globalThis' },

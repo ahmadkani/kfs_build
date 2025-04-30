@@ -1,7 +1,7 @@
 import { Logger } from "./libs/LoggerES6.js";
 import MagicPortal from "./libs/MagicPortalES6.js";
 import { config } from './configES6.js';
-import GitWorker from './workers/gitWorker.js?worker&inline';
+import GitWorker from './workers/gitWorker.js?worker';
 
 const logger = new Logger(config.logging.WorkerPool);
 

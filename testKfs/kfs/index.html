@@ -60,7 +60,7 @@
     </div>
 
     <script type="module">
-        import { KFS, serviceWorker } from "./kfs.js";
+        import { KFS, serviceWorker, setConfig } from "./kfs.js";
         
         // Initialize KFS
         const kfs = new KFS();
@@ -112,6 +112,16 @@
             try {
                 logOutput("Mounting filesystem...");
                 
+                await setConfig ({
+                    logging: {
+                        serviceWorker: true,
+                        gitWorker: true,
+                        kfs: true,
+                        storage: true,
+                    }
+                })
+                console.log("Config set successfully");
+
                 await kfs.mount(path, "memory", "1", "git", {
                     fetchInfo: {
                         url: 'https://github.com/ahmadkani/ahmadkani',
@@ -120,7 +130,7 @@
                         name: 'ahmad',
                         email: 'ahmad@kani.com',
                     }, 
-                    useSW: false,
+                    useSW: true,
                     merging: {
                         strategy: 'immediate',
                         interval: 60,

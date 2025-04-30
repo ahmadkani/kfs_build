@@ -7,9 +7,16 @@ import {Logger} from './libs/LoggerES6.js';
 import fsManager from './libs/workerUtils/fsManagerES6.js';
 import {config} from './configES6.js';
 
-const manifest = self.__WB_MANIFEST;
 
-consoleDotLog('Service Worker loaded with manifest:', manifest);
+const logger = new Logger(config.logging.serviceWorker);
+
+function consoleDotLog(...parameters) {
+  logger.consoleDotLog('[WorkerPool]', ...parameters);
+}
+
+function consoleDotError(...parameters) {
+  logger.consoleDotError('[WorkerPool]', ...parameters);
+}
 
 let username = '';
 let password = '';
@@ -31,18 +38,9 @@ let noMainErrorCounts = {
   fetchCount: 0,
   ffCount: 0
 };
+let consoleLoggingOn = true;
 let fsArgs = {};
 const FSManager = new fsManager();
-
-const logger = new Logger(config.logging.serviceWorker);
-
-function consoleDotLog(...parameters) {
-  logger.consoleDotLog('[serviceWorker] ', ...parameters);
-}
-
-function consoleDotError(...parameters) {
-  logger.consoleDotError('[serviceWorker] ', ...parameters);
-}
 
 const CACHE_NAME = 'cache-v1';
 //const OFFLINE_URL = '/offline.html';
@@ -264,16 +262,16 @@ async function fetchSettingsFileContent(pathname) {
 self.addEventListener('fetch', (event) => {
   try {
     const url = new URL(event.request.url);
-    consoleDotLog(`Fetching: ${url.pathname}`);
+    console.log(`Fetching: ${url.pathname}`);
 
-    consoleDotLog('Service Worker scope:', self.registration.scope);
-    consoleDotLog('Request URL path:', url.pathname);
+    console.log('Service Worker scope:', self.registration.scope);
+    console.log('Request URL path:', url.pathname);
 
     // If the request is for `/git`, handle it specifically
     if (url.pathname.endsWith('/git')) {
       event.respondWith(
         handleGitRequest(event.request).catch(error => {
-          consoleDotError('Error handling Git request:', error);
+          console.error('Error handling Git request:', error);
           return new Response(
             JSON.stringify({ error: 'Git request failed', details: error.message || error.toString() }),
             { status: 500, headers: { 'Content-Type': 'application/json' } }
@@ -287,10 +285,10 @@ self.addEventListener('fetch', (event) => {
       ? url.pathname.slice(scopePath.length - 1)
       : url.pathname;
 
-    consoleDotLog(`Extracted path: ${extractedPath}`);
+    console.log(`Extracted path: ${extractedPath}`);
 
     if (settingsFileAddresses[extractedPath]) {
-      consoleDotLog('Matched settings file path:', extractedPath);
+      console.log('Matched settings file path:', extractedPath);
 
       event.respondWith(
         fetchSettingsFileContent(extractedPath)
@@ -300,7 +298,7 @@ self.addEventListener('fetch', (event) => {
             })
           )
           .catch(error => {
-            consoleDotError('Error reading file:', error);
+            console.error('Error reading file:', error);
             return new Response(
               JSON.stringify({ error: 'File not found or inaccessible', details: error.message || error.toString() }),
               { status: 404, headers: { 'Content-Type': 'application/json' } }
@@ -314,7 +312,7 @@ self.addEventListener('fetch', (event) => {
       fetch(event.request)
         .then(response => {
           if (!response.ok) {
-            consoleDotError('HTTP error response:', response.status);
+            console.error('HTTP error response:', response.status);
             return new Response(
               JSON.stringify({ error: 'HTTP error', status: response.status }),
               { status: response.status, headers: { 'Content-Type': 'application/json' } }
@@ -323,7 +321,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(error => {
-          consoleDotError('Network fetch failed:', error);
+          console.error('Network fetch failed:', error);
           return new Response(
             JSON.stringify({ error: 'Network error', details: error.message || error.toString() }),
             { status: 500, headers: { 'Content-Type': 'application/json' } }
@@ -331,7 +329,7 @@ self.addEventListener('fetch', (event) => {
         })
     );
   } catch (error) {
-    consoleDotError('Error in fetch handler:', error);
+    console.error('Error in fetch handler:', error);
     event.respondWith(
       new Response(
         JSON.stringify({ error: 'Unexpected error', details: error.message || error.toString() }),
@@ -419,7 +417,7 @@ async function handleGitRequest(request) {
           );
       }
     } catch (operationError) {
-      consoleDotError(`Error executing ${operation}:`, operationError);
+      console.error(`Error executing ${operation}:`, operationError);
       return new Response(
         JSON.stringify({
           error: `Error executing ${operation}`,
@@ -435,7 +433,7 @@ async function handleGitRequest(request) {
     );
 
   } catch (error) {
-    consoleDotError('Error in handleGitRequest:', error);
+    console.error('Error in handleGitRequest:', error);
     return new Response(
       JSON.stringify({ error: 'Unexpected error', details: error.message || error.toString() }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }

@@ -103,7 +103,7 @@ class MemoryFS {
 
     try {
       if (!this.workerThread) await this.initializeWorker();
-      const currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => (currentData = ""));
+      let currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       let data = currentData;
       consoleDotLog(`Current data in file ${file.path}:`, data);
       if (data === null) data = ""; // Ensure data is not null
@@ -132,7 +132,7 @@ class MemoryFS {
 
     try {
       if (!this.workerThread) await this.initializeWorker();
-      const data = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => (data = ""));
+      const data = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       if (whence === "SEEK_SET") file.pos = offset;
       else if (whence === "SEEK_CUR") file.pos += offset;
       else if (whence === "SEEK_END") file.pos = data.length + offset;
@@ -167,7 +167,7 @@ class MemoryFS {
 
     try {
       if (!this.workerThread) await this.initializeWorker();
-      const currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => (currentData = ""));
+      let currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       let data = currentData;
       consoleDotLog(`Current data in file ${file.path}:`, data);
       data = data.slice(0, length);
@@ -322,7 +322,7 @@ class MemoryFS {
 
     try {
       if (!this.workerThread) await this.initializeWorker();
-      const data = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => ( data = "" ));
+      const data = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       consoleDotLog(`Current data in file ${file.path}:`, data);
       const eof = file.pos >= data.length;
       consoleDotLog(`EOF status for file ${file.path}: ${eof}`);

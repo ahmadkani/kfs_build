@@ -110,7 +110,7 @@ class IDBFs {
 
     try {
       if (!this.workerThread) await this.initializeWorker();
-      const currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
+      let currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       let data = currentData;
       consoleDotLog(`Current data in file ${file.path}:`, data);
       if (data === null) data = ""; // Ensure data is not null
@@ -174,7 +174,7 @@ class IDBFs {
 
     try {
       if (!this.workerThread) await this.initializeWorker();
-      const currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
+      let currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       let data = currentData;
       consoleDotLog(`Current data in file ${file.path}:`, data);
       data = data.slice(0, length);

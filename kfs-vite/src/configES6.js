@@ -63,7 +63,7 @@ const loggingGroups = {
   ]
 };
 
-export async function setConfig(newConfig) {
+async function setConfig(newConfig) {
   if (config === null) {
     throw new Error('Configuration has already been set and cannot be modified.');
   }
@@ -101,11 +101,11 @@ export async function setConfig(newConfig) {
   }
 }
 
-export async function getConfig() {
+async function getConfig() {
   if (config === null) {
     throw new Error('Configuration has not been set yet.');
   }
   return config;
 }
 
-export { config };
+export { config, getConfig, setConfig };
