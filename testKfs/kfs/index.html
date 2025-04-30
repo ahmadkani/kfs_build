@@ -60,7 +60,7 @@
     </div>
 
     <script type="module">
-        import { KFS, serviceWorker } from "./kfs.js"; // Adjust the path as necessary
+        import { KFS, serviceWorker } from "./kfs.js";
         
         // Initialize KFS
         const kfs = new KFS();
@@ -120,7 +120,7 @@
                         name: 'ahmad',
                         email: 'ahmad@kani.com',
                     }, 
-                    useSW: true,
+                    useSW: false,
                     merging: {
                         strategy: 'immediate',
                         interval: 60,
