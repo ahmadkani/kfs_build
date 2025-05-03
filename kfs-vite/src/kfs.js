@@ -131,35 +131,86 @@ export class KFS {
     return args;
   }
 
-  async create(path, type = 'file', content = '') {
+  async create(path, type = 'file', content = '', mode = 'w') {
     try {
       if (!['file', 'dir'].includes(type)) {
         throw new Error(`Invalid type: ${type}. Must be 'file' or 'dir'`);
       }
-
+      if (!['a', 'w'].includes(mode)) {
+        throw new Error(`Invalid mode: ${mode}. Must be 'a' (append) or 'w' (write)`);
+      }
+  
       path = this._normalizePath(path);
       const { fs, relativePath, versioning } = await this.vfs.resolveFS(path);
   
       if (type === 'file') {
-          await this._ensurePathExists(fs, relativePath);
-      }
-
-      if (type === 'dir') {
-        await fs.fsInstance.fs_mkdir(relativePath);
-      } else {
-        const fd = await fs.fsInstance.fs_fopen(relativePath, 'w');
-        await fs.fsInstance.fs_fwrite(fd, content);
+        await this._ensurePathExists(fs, relativePath);
+        
+        let finalContent = content;
+        let operationMessage = `Created file at ${path}`;
+        
+        if (mode === 'a') {
+          try {
+            // Try to read existing content
+            const fd = await fs.fsInstance.fs_fopen(relativePath, 'r');
+            const existingContent = await fs.fsInstance.fs_fread(fd, 1024*1024); // Read up to 1MB
+            await fs.fsInstance.fs_fclose(fd);
+            
+            finalContent = existingContent + content;
+            operationMessage = `Appended to file at ${path}`;
+          } catch (readError) {
+            // File doesn't exist yet, proceed with normal creation
+            operationMessage = `Created file at ${path}`;
+          }
+        }
+  
+        const fd = await fs.fsInstance.fs_fopen(relativePath, 'w'); // Always use 'w' here since we've handled append logic
+        await fs.fsInstance.fs_fwrite(fd, finalContent);
         await fs.fsInstance.fs_fclose(fd);
+  
+        await this.vfs.writeToFsTable(relativePath, type, finalContent.length);
+  
+        if (versioning?.strategy === 'immediate') {
+          await this._handleCommit(operationMessage);
+        } else {
+          await this.versioningManager.maybeTriggerVersioning(versioning);
+        }
+      } else if (type === 'dir') {
+        if (mode === 'a') {
+          // For directories, 'a' mode means don't throw if already exists
+          try {
+            await fs.fsInstance.fs_mkdir(relativePath);
+            await this.vfs.writeToFsTable(relativePath, type, 0);
+            
+            if (versioning?.strategy === 'immediate') {
+              await this._handleCommit(`Created directory at ${path}`);
+            }
+          } catch (error) {
+            if (!error.message.includes('exists')) throw error;
+            // Directory already exists - no action needed for append mode
+          }
+        } else { // mode === 'w'
+          // For 'w' mode, try to remove existing first (like truncate for files)
+          try {
+            const stats = await fs.fsInstance.fs_stat(relativePath);
+            if (await stats.isDirectory()) {
+              await fs.fsInstance.fs_rmdir(relativePath);
+            } else {
+              await fs.fsInstance.fs_remove(relativePath);
+            }
+          } catch (error) {
+            // Doesn't exist - that's fine
+          }
+          
+          await fs.fsInstance.fs_mkdir(relativePath);
+          await this.vfs.writeToFsTable(relativePath, type, 0);
+          
+          if (versioning?.strategy === 'immediate') {
+            await this._handleCommit(`Created directory at ${path}`);
+          }
+        }
       }
-
-      await this.vfs.writeToFsTable(relativePath, type, content.length);
-
-      if (versioning?.strategy === 'immediate') {
-        await this._handleCommit(`Created ${type} at ${path}`);
-      } else {
-        await this.versioningManager.maybeTriggerVersioning(versioning);
-      }
-
+  
       return { success: true };
     } catch (error) {
       consoleDotError(`Failed to create ${type} at ${path}:`, error);
@@ -209,7 +260,7 @@ export class KFS {
         return await this.fsInstance.fs_readdir(relativePath);
       } else {
         const fd = await this.fsInstance.fs_fopen(relativePath, 'r');
-        const data = await this.fsInstance.fs_fread(fd, 1024);
+        const data = await this.fsInstance.fs_fread(fd, 1024*1024);
         await this.fsInstance.fs_fclose(fd);
         return data;
       }

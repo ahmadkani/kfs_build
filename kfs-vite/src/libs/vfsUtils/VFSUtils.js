@@ -220,10 +220,6 @@ export class VFSutils {
             }
             
             current = current.children[part];
-            
-            if (current.type !== 'directory') {
-                throw new Error(`Path component is not a directory: ${pathParts.slice(0, i+1).join('/')}`);
-            }
         }
 
         const name = pathParts[pathParts.length - 1];

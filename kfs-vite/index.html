@@ -177,14 +177,16 @@
             
             try {
                 logOutput(`Creating file at ${filePath}...`);
-                await kfs.create(filePath, "file", "Hello from KFS!");
+                // await kfs.create(filePath, "file", "Hello from KFS!\n", "a");
+                await kfs.create(filePath, "dir", "a");
+                await kfs.create(`${filePath}/new`, "file", "Hello from KFS!\n", "a");
                 logOutput(`✅ File created at ${filePath}`);
             } catch (error) {
                 logOutput(`❌ File creation failed: ${error.message}`);
                 console.error("Write error:", error);
             }
         };
-        
+    
         window.readFile = async function () {
             const filePath = document.getElementById("filePath").value.trim();
             if (!filePath) return logOutput("Please enter a file path");
