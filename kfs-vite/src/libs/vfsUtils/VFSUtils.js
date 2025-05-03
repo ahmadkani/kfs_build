@@ -236,7 +236,7 @@ export class VFSutils {
                 
                 // Check if already exists
                 if (current.children[name]) {
-                    throw new Error(`Path already exists: ${path}`);
+                    consoleDotLog(`path ${path} already exists, updating its content`);
                 }
                 
                 current.children[name] = this.createFsTableEntry(
