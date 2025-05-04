@@ -1,11 +1,11 @@
 /* eslint-env serviceworker */
 /* globals LightningFS git GitHttp */
-import * as git from './libs/isomorphicgit.js'
-import * as GitHttp from './libs/http.js';
-import * as LightningFS from './libs/LightningFS.js';
-import {Logger} from './libs/LoggerES6.js';
-import fsManager from './libs/workerUtils/fsManagerES6.js';
-import {config} from './configES6.js';
+import * as git from './src/libs/isomorphicgit.js'
+import * as GitHttp from './src/libs/http.js';
+import * as LightningFS from './src/libs/LightningFS.js';
+import {Logger} from './src/libs/LoggerES6.js';
+import fsManager from './src/libs/workerUtils/fsManagerES6.js';
+import {config} from './src/configES6.js';
 
 
 const logger = new Logger(config.logging.serviceWorker);

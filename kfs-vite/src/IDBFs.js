@@ -312,7 +312,7 @@ class IDBFs {
       const result = await this.workerThread.execute('readDirDot', { path });
       const dirEntries = result?.entries || [];
   
-      return options.fullObjects ? dirEntries : dirEntries.map(entry => entry.path);
+      return dirEntries.map(entry => ({ path: entry.path, type: (entry.type === 'tree' ? 'dir' : 'file') }));
       
     } catch (error) {
       consoleDotError(`Error reading directory ${path}:`, error);

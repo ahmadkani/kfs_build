@@ -165,7 +165,11 @@ export class KFS {
         }
   
         const fd = await fs.fsInstance.fs_fopen(relativePath, 'w'); // Always use 'w' here since we've handled append logic
-        await fs.fsInstance.fs_fwrite(fd, finalContent);
+        const writeResult = await fs.fsInstance.fs_fwrite(fd, finalContent);
+        if (writeResult === -1) {
+          throw new Error('Failed to write to file');
+        }
+        
         await fs.fsInstance.fs_fclose(fd);
   
         await this.vfs.writeToFsTable(relativePath, type, finalContent.length);
@@ -257,7 +261,9 @@ export class KFS {
       if (!stats) throw new Error('ENOENT: no such file or directory');
 
       if (await stats.isDirectory()) {
-        return await this.fsInstance.fs_readdir(relativePath);
+        const result = await this.fsInstance.fs_readdir(relativePath);
+        consoleDotLog('result', result)
+        return result;
       } else {
         const fd = await this.fsInstance.fs_fopen(relativePath, 'r');
         const data = await this.fsInstance.fs_fread(fd, 1024*1024);

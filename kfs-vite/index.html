@@ -177,9 +177,9 @@
             
             try {
                 logOutput(`Creating file at ${filePath}...`);
-                // await kfs.create(filePath, "file", "Hello from KFS!\n", "a");
-                await kfs.create(filePath, "dir", "a");
-                await kfs.create(`${filePath}/new`, "file", "Hello from KFS!\n", "a");
+                await kfs.create(filePath, "file", "Hello from KFS!\n", "a");
+                // await kfs.create(filePath, "dir", "a");
+                // await kfs.create(`${filePath}/new`, "file", "Hello from KFS!\n", "a");
                 logOutput(`✅ File created at ${filePath}`);
             } catch (error) {
                 logOutput(`❌ File creation failed: ${error.message}`);
@@ -191,15 +191,23 @@
             const filePath = document.getElementById("filePath").value.trim();
             if (!filePath) return logOutput("Please enter a file path");
             
+                            
+
+
             try {
-                logOutput(`Reading file at ${filePath}...`);
+                logOutput(`Reading at ${filePath}...`);
                 const content = await kfs.read(filePath); 
-                
                 if (content) {
-                    logOutput(`📄 File content:\n${content}`);
+                    if (typeof(content) === 'object') {
+                        logOutput(`Dir output:`);
+                        content.map(entry => logOutput(`📄 Entry: ${entry.path}, type: ${entry.type}`));
+                    }
+                    else {
+                        logOutput(`📄 File content:\n${content}`);
+                    }
                 } else {
-                    logOutput("❌ File is empty or not found");
-                }
+                        logOutput("❌ File is empty or not found");
+                    }
             } catch (error) {
                 logOutput(`❌ File read failed: ${error.message}`);
                 console.error("Read error:", error);

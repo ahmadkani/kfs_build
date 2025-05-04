@@ -2046,7 +2046,6 @@ const operationHandlers = {
   removeFileDot: ({ filePath, doCommit = 1 }) => removeFileDot(filePath, doCommit),
   rename: ({ oldPath, newPath }) => rename(oldPath, newPath),
   mkdirRecursive: ({ path }) => mkdirRecursive(path),
-  mkdirDot: ({ path }) => mkdirDot(path),
   listServerRefs: ({args}) => listServerRefs(args),
   getUsername: getUsername,
   getEmail: getEmail,

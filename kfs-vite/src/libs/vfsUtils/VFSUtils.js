@@ -157,7 +157,7 @@ export class VFSutils {
 
   buildHierarchicalFsTable(fileList) {
     const root = this.createRootEntry();
-    consoleDotLog('Root entry:', fileList);
+    
     fileList.forEach(entry => {
       const pathParts = entry.path.split('/').filter(p => p !== '');
       let current = root;
@@ -165,16 +165,36 @@ export class VFSutils {
       pathParts.forEach((part, index) => {
         const isLast = index === pathParts.length - 1;
         
-        if (!current.children[part]) {
+        // If current node doesn't exist or isn't a directory, create it
+        if (current.children[part]) {
+          const existing = current.children[part];
+          const expectedType = isLast && entry.type !== 'tree' ? 'file' : 'directory';
+        
+          if (existing.type !== expectedType) {
+            throw new Error(
+              `FS conflict: ${entry.path} has ${expectedType} where ${existing.type} already exists`
+            );
+          }
+        } else {
           current.children[part] = this.createFsTableEntry(
             part,
             isLast && entry.type !== 'tree' ? 'file' : 'directory',
             entry.size || 0,
             current.dentry_id
           );
-        }
+        }    
         
-        if (!isLast || entry.type === 'tree') {
+        // Only traverse into directories
+        if (!isLast) {
+          // Ensure the node we're moving into is a directory
+          if (current.children[part].type !== 'directory') {
+            // Convert existing file to directory if needed
+            current.children[part] = {
+              ...current.children[part],
+              type: 'directory',
+              children: {}
+            };
+          }
           current = current.children[part];
         }
       });
