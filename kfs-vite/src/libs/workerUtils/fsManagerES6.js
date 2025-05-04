@@ -95,34 +95,50 @@ class fsManager {
   }
 
   async deleteFS(fsName, fsType) {
-    // Create a unique key for the file system instance
     const key = `${fsName}-${fsType}`;
+    this._log(`Deleting FS: ${key}`);
 
-    // Check if the file system instance exists
-    if (!this.fsInstances.has(key)) {
-      console.warn(`File system ${key} does not exist. Nothing to delete.`);
-      return;
-    }
+    try {
+        // Check if the file system instance exists
+        if (!this.fsInstances.has(key)) {
+            this._log(`File system ${key} does not exist. Nothing to delete.`);
+            return;
+        }
 
-    // Handle deletion based on the file system type
-    if (fsType === "idb") {
-      // Delete the IndexedDB database
-      try {
-        await this.deleteIndexedDB(fsName);
-        consoleDotLog(`IndexedDB file system ${key} deleted successfully.`);
-      } catch (error) {
-        consoleDotError(`Error deleting IndexedDB file system ${key}:`, error);
+        // Get the instance before deleting it
+        const fsInstance = this.fsInstances.get(key);
+
+        // Handle deletion based on the file system type
+        if (fsType === "idb") {
+            try {
+                await this.deleteIndexedDB(fsName);
+                this._log(`IndexedDB file system ${key} deleted successfully.`);
+            } catch (error) {
+                this._error(`Error deleting IndexedDB file system ${key}:`, error);
+                throw error;
+            }
+        } else if (fsType === "memory") {
+            // For memory file systems, we might want to clean up the backend
+            if (fsInstance._backend && fsInstance._backend.close) {
+                try {
+                    await fsInstance._backend.close();
+                    this._log(`Memory backend for ${key} closed successfully.`);
+                } catch (error) {
+                    this._error(`Error closing memory backend for ${key}:`, error);
+                    // Don't throw here as we still want to remove the instance
+                }
+            }
+            this._log(`Memory file system ${key} deleted successfully.`);
+        } else {
+            throw new Error(`Unsupported file system type: ${fsType}`);
+        }
+
+        // Remove the file system instance from the Map
+        this.fsInstances.delete(key);
+    } catch (error) {
+        this._error(`Failed to delete ${key}:`, error);
         throw error;
-      }
-    } else if (fsType === "memory") {
-      // For memory file systems, just remove the instance from the Map
-      consoleDotLog(`Memory file system ${key} deleted successfully.`);
-    } else {
-      throw new Error(`Unsupported file system type: ${fsType}`);
     }
-
-    // Remove the file system instance from the Map
-    this.fsInstances.delete(key);
   }
 
   async deleteIndexedDB(databaseName) {

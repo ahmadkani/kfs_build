@@ -271,7 +271,8 @@ class MemoryFS {
       const exists = await this.workerThread.execute('isDirectoryDot', { path });
       if (exists.exists) {
         if (exists.isDirectory) {
-          throw new Error(`EEXIST: directory already exists, mkdir '${path}'`);
+          consoleDotError(`EEXIST: directory already exists, mkdir '${path}'`);
+          return -1;
         } else {
           throw new Error(`ENOTDIR: path exists but is not a directory, mkdir '${path}'`);
         }
