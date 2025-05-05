@@ -63,20 +63,20 @@ er.prototype.onInit = function(t) {
     }));
   }.bind(this));
 };
-function Ic(t) {
+function xc(t) {
   var e = new er(t);
   Object.defineProperties(this, { get: { writable: !1, configurable: !1, value: e.get.bind(e) }, set: { writable: !1, configurable: !1, value: e.set.bind(e) } });
 }
-var jo = {}, Fi = {};
-Fi.byteLength = $c;
-Fi.toByteArray = Ac;
-Fi.fromByteArray = Cc;
-var Pt = [], Rt = [], Tc = typeof Uint8Array < "u" ? Uint8Array : Array, Zi = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-for (var vr = 0, Rc = Zi.length; vr < Rc; ++vr)
-  Pt[vr] = Zi[vr], Rt[Zi.charCodeAt(vr)] = vr;
-Rt[45] = 62;
-Rt[95] = 63;
-function zo(t) {
+var Po = {}, Ni = {};
+Ni.byteLength = Rc;
+Ni.toByteArray = Bc;
+Ni.fromByteArray = Oc;
+var Pt = [], Tt = [], Ic = typeof Uint8Array < "u" ? Uint8Array : Array, Gi = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+for (var vr = 0, Tc = Gi.length; vr < Tc; ++vr)
+  Pt[vr] = Gi[vr], Tt[Gi.charCodeAt(vr)] = vr;
+Tt[45] = 62;
+Tt[95] = 63;
+function jo(t) {
   var e = t.length;
   if (e % 4 > 0)
     throw new Error("Invalid string. Length must be a multiple of 4");
@@ -85,30 +85,30 @@ function zo(t) {
   var i = r === e ? 0 : 4 - r % 4;
   return [r, i];
 }
-function $c(t) {
-  var e = zo(t), r = e[0], i = e[1];
+function Rc(t) {
+  var e = jo(t), r = e[0], i = e[1];
   return (r + i) * 3 / 4 - i;
 }
-function Bc(t, e, r) {
+function $c(t, e, r) {
   return (e + r) * 3 / 4 - r;
 }
-function Ac(t) {
-  var e, r = zo(t), i = r[0], n = r[1], a = new Tc(Bc(t, i, n)), o = 0, s = n > 0 ? i - 4 : i, l;
+function Bc(t) {
+  var e, r = jo(t), i = r[0], n = r[1], a = new Ic($c(t, i, n)), o = 0, s = n > 0 ? i - 4 : i, l;
   for (l = 0; l < s; l += 4)
-    e = Rt[t.charCodeAt(l)] << 18 | Rt[t.charCodeAt(l + 1)] << 12 | Rt[t.charCodeAt(l + 2)] << 6 | Rt[t.charCodeAt(l + 3)], a[o++] = e >> 16 & 255, a[o++] = e >> 8 & 255, a[o++] = e & 255;
-  return n === 2 && (e = Rt[t.charCodeAt(l)] << 2 | Rt[t.charCodeAt(l + 1)] >> 4, a[o++] = e & 255), n === 1 && (e = Rt[t.charCodeAt(l)] << 10 | Rt[t.charCodeAt(l + 1)] << 4 | Rt[t.charCodeAt(l + 2)] >> 2, a[o++] = e >> 8 & 255, a[o++] = e & 255), a;
+    e = Tt[t.charCodeAt(l)] << 18 | Tt[t.charCodeAt(l + 1)] << 12 | Tt[t.charCodeAt(l + 2)] << 6 | Tt[t.charCodeAt(l + 3)], a[o++] = e >> 16 & 255, a[o++] = e >> 8 & 255, a[o++] = e & 255;
+  return n === 2 && (e = Tt[t.charCodeAt(l)] << 2 | Tt[t.charCodeAt(l + 1)] >> 4, a[o++] = e & 255), n === 1 && (e = Tt[t.charCodeAt(l)] << 10 | Tt[t.charCodeAt(l + 1)] << 4 | Tt[t.charCodeAt(l + 2)] >> 2, a[o++] = e >> 8 & 255, a[o++] = e & 255), a;
 }
-function Dc(t) {
+function Ac(t) {
   return Pt[t >> 18 & 63] + Pt[t >> 12 & 63] + Pt[t >> 6 & 63] + Pt[t & 63];
 }
-function Oc(t, e, r) {
+function Dc(t, e, r) {
   for (var i, n = [], a = e; a < r; a += 3)
-    i = (t[a] << 16 & 16711680) + (t[a + 1] << 8 & 65280) + (t[a + 2] & 255), n.push(Dc(i));
+    i = (t[a] << 16 & 16711680) + (t[a + 1] << 8 & 65280) + (t[a + 2] & 255), n.push(Ac(i));
   return n.join("");
 }
-function Cc(t) {
+function Oc(t) {
   for (var e, r = t.length, i = r % 3, n = [], a = 16383, o = 0, s = r - i; o < s; o += a)
-    n.push(Oc(t, o, o + a > s ? s : o + a));
+    n.push(Dc(t, o, o + a > s ? s : o + a));
   return i === 1 ? (e = t[r - 1], n.push(
     Pt[e >> 2] + Pt[e << 4 & 63] + "=="
   )) : i === 2 && (e = (t[r - 2] << 8) + t[r - 1], n.push(
@@ -147,7 +147,7 @@ ta.write = function(t, e, r, i, n, a) {
  * @license  MIT
  */
 (function(t) {
-  const e = Fi, r = ta, i = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
+  const e = Ni, r = ta, i = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
   t.Buffer = u, t.SlowBuffer = M, t.INSPECT_MAX_BYTES = 50;
   const n = 2147483647;
   t.kMaxLength = n;
@@ -370,7 +370,7 @@ ta.write = function(t, e, r, i, n, a) {
           return d;
         case "utf8":
         case "utf-8":
-          return xt(k).length;
+          return St(k).length;
         case "ucs2":
         case "ucs-2":
         case "utf16le":
@@ -382,7 +382,7 @@ ta.write = function(t, e, r, i, n, a) {
           return Xe(k).length;
         default:
           if (C)
-            return v ? -1 : xt(k).length;
+            return v ? -1 : St(k).length;
           c = ("" + c).toLowerCase(), C = !0;
       }
   }
@@ -540,10 +540,10 @@ ta.write = function(t, e, r, i, n, a) {
     return F;
   }
   function N(k, c, d, v) {
-    return ut(xt(c, k.length - d), k, d, v);
+    return ut(St(c, k.length - d), k, d, v);
   }
   function J(k, c, d, v) {
-    return ut(It(c), k, d, v);
+    return ut(xt(c), k, d, v);
   }
   function oe(k, c, d, v) {
     return ut(Xe(c), k, d, v);
@@ -988,7 +988,7 @@ ta.write = function(t, e, r, i, n, a) {
       k = k + "=";
     return k;
   }
-  function xt(k, c) {
+  function St(k, c) {
     c = c || 1 / 0;
     let d;
     const v = k.length;
@@ -1042,7 +1042,7 @@ ta.write = function(t, e, r, i, n, a) {
     }
     return x;
   }
-  function It(k) {
+  function xt(k) {
     const c = [];
     for (let d = 0; d < k.length; ++d)
       c.push(k.charCodeAt(d) & 255);
@@ -1085,12 +1085,12 @@ ta.write = function(t, e, r, i, n, a) {
   function it() {
     throw new Error("BigInt not supported");
   }
-})(jo);
-const fe = jo.Buffer;
-function Nc(t) {
+})(Po);
+const fe = Po.Buffer;
+function Cc(t) {
   return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
 }
-var Ho = { exports: {} }, et = Ho.exports = {}, Mt, Lt;
+var zo = { exports: {} }, et = zo.exports = {}, Mt, Lt;
 function Gn() {
   throw new Error("setTimeout has not been defined");
 }
@@ -1109,7 +1109,7 @@ function Zn() {
     Lt = Zn;
   }
 })();
-function Wo(t) {
+function Ho(t) {
   if (Mt === setTimeout)
     return setTimeout(t, 0);
   if ((Mt === Gn || !Mt) && setTimeout)
@@ -1124,7 +1124,7 @@ function Wo(t) {
     }
   }
 }
-function Fc(t) {
+function Nc(t) {
   if (Lt === clearTimeout)
     return clearTimeout(t);
   if ((Lt === Zn || !Lt) && clearTimeout)
@@ -1139,20 +1139,20 @@ function Fc(t) {
     }
   }
 }
-var Zt = [], Sr = !1, pr, Si = -1;
-function Uc() {
-  !Sr || !pr || (Sr = !1, pr.length ? Zt = pr.concat(Zt) : Si = -1, Zt.length && qo());
+var Zt = [], Sr = !1, pr, ki = -1;
+function Fc() {
+  !Sr || !pr || (Sr = !1, pr.length ? Zt = pr.concat(Zt) : ki = -1, Zt.length && Wo());
 }
-function qo() {
+function Wo() {
   if (!Sr) {
-    var t = Wo(Uc);
+    var t = Ho(Fc);
     Sr = !0;
     for (var e = Zt.length; e; ) {
-      for (pr = Zt, Zt = []; ++Si < e; )
-        pr && pr[Si].run();
-      Si = -1, e = Zt.length;
+      for (pr = Zt, Zt = []; ++ki < e; )
+        pr && pr[ki].run();
+      ki = -1, e = Zt.length;
     }
-    pr = null, Sr = !1, Fc(t);
+    pr = null, Sr = !1, Nc(t);
   }
 }
 et.nextTick = function(t) {
@@ -1160,12 +1160,12 @@ et.nextTick = function(t) {
   if (arguments.length > 1)
     for (var r = 1; r < arguments.length; r++)
       e[r - 1] = arguments[r];
-  Zt.push(new Go(t, e)), Zt.length === 1 && !Sr && Wo(qo);
+  Zt.push(new qo(t, e)), Zt.length === 1 && !Sr && Ho(Wo);
 };
-function Go(t, e) {
+function qo(t, e) {
   this.fun = t, this.array = e;
 }
-Go.prototype.run = function() {
+qo.prototype.run = function() {
   this.fun.apply(null, this.array);
 };
 et.title = "browser";
@@ -1200,12 +1200,12 @@ et.chdir = function(t) {
 et.umask = function() {
   return 0;
 };
-var Mc = Ho.exports;
-const gt = /* @__PURE__ */ Nc(Mc);
+var Uc = zo.exports;
+const gt = /* @__PURE__ */ Cc(Uc);
 function Jt(t) {
   return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
 }
-function Lc(t) {
+function Mc(t) {
   if (Object.prototype.hasOwnProperty.call(t, "__esModule")) return t;
   var e = t.default;
   if (typeof e == "function") {
@@ -1224,9 +1224,9 @@ function Lc(t) {
     });
   }), r;
 }
-var Vi, va;
-function Pc() {
-  if (va) return Vi;
+var Zi, va;
+function Lc() {
+  if (va) return Zi;
   va = 1;
   var t = function(e) {
     if (e = e || {}, this.Promise = e.Promise || Promise, this.queues = /* @__PURE__ */ Object.create(null), this.domainReentrant = e.domainReentrant || !1, this.domainReentrant) {
@@ -1322,14 +1322,14 @@ function Pc() {
     } catch (r) {
       return this.Promise.reject(r);
     }
-  }, Vi = t, Vi;
+  }, Zi = t, Zi;
 }
-var Xi, Ea;
-function jc() {
-  return Ea || (Ea = 1, Xi = Pc()), Xi;
+var Vi, Ea;
+function Pc() {
+  return Ea || (Ea = 1, Vi = Lc()), Vi;
 }
-var zc = jc(), Vr = /* @__PURE__ */ Jt(zc), yi = { exports: {} }, ka;
-function Hc() {
+var jc = Pc(), Vr = /* @__PURE__ */ Jt(jc), yi = { exports: {} }, ka;
+function zc() {
   return ka || (ka = 1, typeof Object.create == "function" ? yi.exports = function(e, r) {
     r && (e.super_ = r, e.prototype = Object.create(r.prototype, {
       constructor: {
@@ -1348,8 +1348,8 @@ function Hc() {
     }
   }), yi.exports;
 }
-var _i = { exports: {} }, Yi = {}, Sa;
-function Wc() {
+var _i = { exports: {} }, Xi = {}, Sa;
+function Hc() {
   return Sa || (Sa = 1, function(t) {
     Object.defineProperties(t, { __esModule: { value: !0 }, [Symbol.toStringTag]: { value: "Module" } });
     var e = {}, r = {};
@@ -1674,7 +1674,7 @@ function Wc() {
         for (_ || (_ = "utf8"); ; )
           switch (_) {
             case "hex":
-              return xt(this, w, p);
+              return St(this, w, p);
             case "utf8":
             case "utf-8":
               return Ue(this, w, p);
@@ -1689,7 +1689,7 @@ function Wc() {
             case "ucs-2":
             case "utf16le":
             case "utf-16le":
-              return It(this, w, p);
+              return xt(this, w, p);
             default:
               if ($) throw new TypeError("Unknown encoding: " + _);
               _ = (_ + "").toLowerCase(), $ = !0;
@@ -1932,7 +1932,7 @@ function Wc() {
           $ += String.fromCharCode(_[L]);
         return $;
       }
-      function xt(_, w, p) {
+      function St(_, w, p) {
         const $ = _.length;
         (!w || w < 0) && (w = 0), (!p || p < 0 || p > $) && (p = $);
         let L = "";
@@ -1940,7 +1940,7 @@ function Wc() {
           L += Z[_[G]];
         return L;
       }
-      function It(_, w, p) {
+      function xt(_, w, p) {
         const $ = _.slice(w, p);
         let L = "";
         for (let G = 0; G < $.length - 1; G += 2)
@@ -2368,13 +2368,13 @@ function Wc() {
     })(e);
     const I = e.Buffer;
     t.Blob = e.Blob, t.BlobOptions = e.BlobOptions, t.Buffer = e.Buffer, t.File = e.File, t.FileOptions = e.FileOptions, t.INSPECT_MAX_BYTES = e.INSPECT_MAX_BYTES, t.SlowBuffer = e.SlowBuffer, t.TranscodeEncoding = e.TranscodeEncoding, t.atob = e.atob, t.btoa = e.btoa, t.constants = e.constants, t.default = I, t.isAscii = e.isAscii, t.isUtf8 = e.isUtf8, t.kMaxLength = e.kMaxLength, t.kStringMaxLength = e.kStringMaxLength, t.resolveObjectURL = e.resolveObjectURL, t.transcode = e.transcode;
-  }(Yi)), Yi;
+  }(Xi)), Xi;
 }
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 var xa;
-function Zo() {
+function Go() {
   return xa || (xa = 1, function(t, e) {
-    var r = Wc(), i = r.Buffer;
+    var r = Hc(), i = r.Buffer;
     function n(o, s) {
       for (var l in o)
         s[l] = o[l];
@@ -2403,11 +2403,11 @@ function Zo() {
     };
   }(_i, _i.exports)), _i.exports;
 }
-var Ki, Ia;
-function qc() {
-  if (Ia) return Ki;
+var Yi, Ia;
+function Wc() {
+  if (Ia) return Yi;
   Ia = 1;
-  var t = Zo().Buffer;
+  var t = Go().Buffer;
   function e(r, i) {
     this._block = t.alloc(r), this._finalSize = i, this._blockSize = r, this._len = 0;
   }
@@ -2434,13 +2434,13 @@ function qc() {
     return r ? s.toString(r) : s;
   }, e.prototype._update = function() {
     throw new Error("_update must be implemented by subclass");
-  }, Ki = e, Ki;
+  }, Yi = e, Yi;
 }
-var Ji, Ta;
-function Gc() {
-  if (Ta) return Ji;
+var Ki, Ta;
+function qc() {
+  if (Ta) return Ki;
   Ta = 1;
-  var t = Hc(), e = qc(), r = Zo().Buffer, i = [
+  var t = zc(), e = Wc(), r = Go().Buffer, i = [
     1518500249,
     1859775393,
     -1894007588,
@@ -2475,11 +2475,11 @@ function Gc() {
   }, a.prototype._hash = function() {
     var u = r.allocUnsafe(20);
     return u.writeInt32BE(this._a | 0, 0), u.writeInt32BE(this._b | 0, 4), u.writeInt32BE(this._c | 0, 8), u.writeInt32BE(this._d | 0, 12), u.writeInt32BE(this._e | 0, 16), u;
-  }, Ji = a, Ji;
+  }, Ki = a, Ki;
 }
-var Zc = Gc(), Vo = /* @__PURE__ */ Jt(Zc), Qi, Ra;
-function Vc() {
-  if (Ra) return Qi;
+var Gc = qc(), Zo = /* @__PURE__ */ Jt(Gc), Ji, Ra;
+function Zc() {
+  if (Ra) return Ji;
   Ra = 1;
   function t(n) {
     if (typeof n != "string")
@@ -2663,12 +2663,12 @@ function Vc() {
     win32: null,
     posix: null
   };
-  return i.posix = i, Qi = i, Qi;
+  return i.posix = i, Ji = i, Ji;
 }
-var ee = Vc(), en = {};
+var ee = Zc(), Qi = {};
 /*! crc32.js (C) 2014-present SheetJS -- http://sheetjs.com */
 var $a;
-function Xc() {
+function Vc() {
   return $a || ($a = 1, function(t) {
     (function(e) {
       e(typeof DO_NOT_EXPORT_CRC > "u" ? t : {});
@@ -2706,9 +2706,9 @@ function Xc() {
       }
       e.table = i, e.bstr = M, e.buf = U, e.str = B;
     });
-  }(en)), en;
+  }(Qi)), Qi;
 }
-var Yc = Xc(), Kc = /* @__PURE__ */ Jt(Yc), tn = {}, Ba;
+var Xc = Vc(), Yc = /* @__PURE__ */ Jt(Xc), en = {}, Ba;
 function or() {
   return Ba || (Ba = 1, function(t) {
     var e = typeof Uint8Array < "u" && typeof Uint16Array < "u" && typeof Int32Array < "u";
@@ -2760,10 +2760,10 @@ function or() {
     t.setTyped = function(a) {
       a ? (t.Buf8 = Uint8Array, t.Buf16 = Uint16Array, t.Buf32 = Int32Array, t.assign(t, i)) : (t.Buf8 = Array, t.Buf16 = Array, t.Buf32 = Array, t.assign(t, n));
     }, t.setTyped(e);
-  }(tn)), tn;
+  }(en)), en;
 }
-var Er = {}, Dt = {}, lr = {}, Aa;
-function Jc() {
+var Er = {}, At = {}, lr = {}, Aa;
+function Kc() {
   if (Aa) return lr;
   Aa = 1;
   var t = or(), e = 4, r = 0, i = 1, n = 2;
@@ -2949,12 +2949,12 @@ function Jc() {
       /*SMALLEST*/
     ], tt(c, d), je(v, ce, c.bl_count);
   }
-  function xt(c, d, v) {
+  function St(c, d, v) {
     var C, x = -1, F, b = d[0 * 2 + 1], Q = 0, ce = 7, h = 4;
     for (b === 0 && (ce = 138, h = 3), d[(v + 1) * 2 + 1] = 65535, C = 0; C <= v; C++)
       F = b, b = d[(C + 1) * 2 + 1], !(++Q < ce && F === b) && (Q < h ? c.bl_tree[F * 2] += Q : F !== 0 ? (F !== x && c.bl_tree[F * 2]++, c.bl_tree[M * 2]++) : Q <= 10 ? c.bl_tree[U * 2]++ : c.bl_tree[B * 2]++, Q = 0, x = F, b === 0 ? (ce = 138, h = 3) : F === b ? (ce = 6, h = 3) : (ce = 7, h = 4));
   }
-  function It(c, d, v) {
+  function xt(c, d, v) {
     var C, x = -1, F, b = d[0 * 2 + 1], Q = 0, ce = 7, h = 4;
     for (b === 0 && (ce = 138, h = 3), C = 0; C <= v; C++)
       if (F = b, b = d[(C + 1) * 2 + 1], !(++Q < ce && F === b)) {
@@ -2968,7 +2968,7 @@ function Jc() {
   }
   function Fe(c) {
     var d;
-    for (xt(c, c.dyn_ltree, c.l_desc.max_code), xt(c, c.dyn_dtree, c.d_desc.max_code), lt(c, c.bl_desc), d = A - 1; d >= 3 && c.bl_tree[Y[d] * 2 + 1] === 0; d--)
+    for (St(c, c.dyn_ltree, c.l_desc.max_code), St(c, c.dyn_dtree, c.d_desc.max_code), lt(c, c.bl_desc), d = A - 1; d >= 3 && c.bl_tree[Y[d] * 2 + 1] === 0; d--)
       ;
     return c.opt_len += 3 * (d + 1) + 5 + 5 + 4, d;
   }
@@ -2976,7 +2976,7 @@ function Jc() {
     var x;
     for (ke(c, d - 257, 5), ke(c, v - 1, 5), ke(c, C - 4, 4), x = 0; x < C; x++)
       ke(c, c.bl_tree[Y[x] * 2 + 1], 3);
-    It(c, c.dyn_ltree, d - 1), It(c, c.dyn_dtree, v - 1);
+    xt(c, c.dyn_ltree, d - 1), xt(c, c.dyn_dtree, v - 1);
   }
   function ut(c) {
     var d = 4093624447, v;
@@ -3009,9 +3009,9 @@ function Jc() {
   }
   return lr._tr_init = vt, lr._tr_stored_block = Et, lr._tr_flush_block = it, lr._tr_tally = k, lr._tr_align = Le, lr;
 }
-var rn, Da;
-function Xo() {
-  if (Da) return rn;
+var tn, Da;
+function Vo() {
+  if (Da) return tn;
   Da = 1;
   function t(e, r, i, n) {
     for (var a = e & 65535 | 0, o = e >>> 16 & 65535 | 0, s = 0; i !== 0; ) {
@@ -3023,11 +3023,11 @@ function Xo() {
     }
     return a | o << 16 | 0;
   }
-  return rn = t, rn;
+  return tn = t, tn;
 }
-var nn, Oa;
-function Yo() {
-  if (Oa) return nn;
+var rn, Oa;
+function Xo() {
+  if (Oa) return rn;
   Oa = 1;
   function t() {
     for (var i, n = [], a = 0; a < 256; a++) {
@@ -3046,11 +3046,11 @@ function Yo() {
       i = i >>> 8 ^ s[(i ^ n[f]) & 255];
     return i ^ -1;
   }
-  return nn = r, nn;
+  return rn = r, rn;
 }
-var an, Ca;
+var nn, Ca;
 function ra() {
-  return Ca || (Ca = 1, an = {
+  return Ca || (Ca = 1, nn = {
     2: "need dictionary",
     /* Z_NEED_DICT       2  */
     1: "stream end",
@@ -3069,13 +3069,13 @@ function ra() {
     /* Z_BUF_ERROR     (-5) */
     "-6": "incompatible version"
     /* Z_VERSION_ERROR (-6) */
-  }), an;
+  }), nn;
 }
 var Na;
-function Qc() {
-  if (Na) return Dt;
+function Jc() {
+  if (Na) return At;
   Na = 1;
-  var t = or(), e = Jc(), r = Xo(), i = Yo(), n = ra(), a = 0, o = 1, s = 3, l = 4, f = 5, u = 0, m = 1, g = -2, y = -3, E = -5, A = -1, R = 1, I = 2, T = 3, D = 4, P = 0, M = 2, U = 8, B = 9, O = 15, W = 8, z = 29, Y = 256, N = Y + 1 + z, J = 30, oe = 19, _e = 2 * N + 1, re = 15, X = 3, ie = 258, de = ie + X + 1, Se = 32, Re = 42, be = 69, Ae = 73, ye = 91, $e = 103, ke = 113, Ee = 666, De = 1, Ge = 2, tt = 3, je = 4, we = 3;
+  var t = or(), e = Kc(), r = Vo(), i = Xo(), n = ra(), a = 0, o = 1, s = 3, l = 4, f = 5, u = 0, m = 1, g = -2, y = -3, E = -5, A = -1, R = 1, I = 2, T = 3, D = 4, P = 0, M = 2, U = 8, B = 9, O = 15, W = 8, z = 29, Y = 256, N = Y + 1 + z, J = 30, oe = 19, _e = 2 * N + 1, re = 15, X = 3, ie = 258, de = ie + X + 1, Se = 32, Re = 42, be = 69, Ae = 73, ye = 91, $e = 103, ke = 113, Ee = 666, De = 1, Ge = 2, tt = 3, je = 4, we = 3;
   function Oe(h, q) {
     return h.msg = n[q], q;
   }
@@ -3099,11 +3099,11 @@ function Qc() {
   function lt(h, q) {
     h.pending_buf[h.pending++] = q >>> 8 & 255, h.pending_buf[h.pending++] = q & 255;
   }
-  function xt(h, q, V, S) {
+  function St(h, q, V, S) {
     var j = h.avail_in;
     return j > S && (j = S), j === 0 ? 0 : (h.avail_in -= j, t.arraySet(q, h.input, h.next_in, j, V), h.state.wrap === 1 ? h.adler = r(h.adler, q, j, V) : h.state.wrap === 2 && (h.adler = i(h.adler, q, j, V)), h.next_in += j, h.total_in += j, j);
   }
-  function It(h, q) {
+  function xt(h, q) {
     var V = h.max_chain_length, S = h.strstart, j, Z, he = h.prev_length, ue = h.nice_match, _ = h.strstart > h.w_size - de ? h.strstart - (h.w_size - de) : 0, w = h.window, p = h.w_mask, $ = h.prev, L = h.strstart + ie, G = w[S + he - 1], K = w[S + he];
     h.prev_length >= h.good_match && (V >>= 2), ue > h.lookahead && (ue = h.lookahead);
     do
@@ -3137,7 +3137,7 @@ function Qc() {
       }
       if (h.strm.avail_in === 0)
         break;
-      if (S = xt(h.strm, h.window, h.strstart + h.lookahead, Z), h.lookahead += S, h.lookahead + h.insert >= X)
+      if (S = St(h.strm, h.window, h.strstart + h.lookahead, Z), h.lookahead += S, h.lookahead + h.insert >= X)
         for (he = h.strstart - h.insert, h.ins_h = h.window[he], h.ins_h = (h.ins_h << h.hash_shift ^ h.window[he + 1]) & h.hash_mask; h.insert && (h.ins_h = (h.ins_h << h.hash_shift ^ h.window[he + X - 1]) & h.hash_mask, h.prev[he & h.w_mask] = h.head[h.ins_h], h.head[h.ins_h] = he, he++, h.insert--, !(h.lookahead + h.insert < X)); )
           ;
     } while (h.lookahead < de && h.strm.avail_in !== 0);
@@ -3166,7 +3166,7 @@ function Qc() {
         if (h.lookahead === 0)
           break;
       }
-      if (V = 0, h.lookahead >= X && (h.ins_h = (h.ins_h << h.hash_shift ^ h.window[h.strstart + X - 1]) & h.hash_mask, V = h.prev[h.strstart & h.w_mask] = h.head[h.ins_h], h.head[h.ins_h] = h.strstart), V !== 0 && h.strstart - V <= h.w_size - de && (h.match_length = It(h, V)), h.match_length >= X)
+      if (V = 0, h.lookahead >= X && (h.ins_h = (h.ins_h << h.hash_shift ^ h.window[h.strstart + X - 1]) & h.hash_mask, V = h.prev[h.strstart & h.w_mask] = h.head[h.ins_h], h.head[h.ins_h] = h.strstart), V !== 0 && h.strstart - V <= h.w_size - de && (h.match_length = xt(h, V)), h.match_length >= X)
         if (S = e._tr_tally(h, h.strstart - h.match_start, h.match_length - X), h.lookahead -= h.match_length, h.match_length <= h.max_lazy_match && h.lookahead >= X) {
           h.match_length--;
           do
@@ -3190,7 +3190,7 @@ function Qc() {
         if (h.lookahead === 0)
           break;
       }
-      if (V = 0, h.lookahead >= X && (h.ins_h = (h.ins_h << h.hash_shift ^ h.window[h.strstart + X - 1]) & h.hash_mask, V = h.prev[h.strstart & h.w_mask] = h.head[h.ins_h], h.head[h.ins_h] = h.strstart), h.prev_length = h.match_length, h.prev_match = h.match_start, h.match_length = X - 1, V !== 0 && h.prev_length < h.max_lazy_match && h.strstart - V <= h.w_size - de && (h.match_length = It(h, V), h.match_length <= 5 && (h.strategy === R || h.match_length === X && h.strstart - h.match_start > 4096) && (h.match_length = X - 1)), h.prev_length >= X && h.match_length <= h.prev_length) {
+      if (V = 0, h.lookahead >= X && (h.ins_h = (h.ins_h << h.hash_shift ^ h.window[h.strstart + X - 1]) & h.hash_mask, V = h.prev[h.strstart & h.w_mask] = h.head[h.ins_h], h.head[h.ins_h] = h.strstart), h.prev_length = h.match_length, h.prev_match = h.match_start, h.match_length = X - 1, V !== 0 && h.prev_length < h.max_lazy_match && h.strstart - V <= h.w_size - de && (h.match_length = xt(h, V), h.match_length <= 5 && (h.strategy === R || h.match_length === X && h.strstart - h.match_start > 4096) && (h.match_length = X - 1)), h.prev_length >= X && h.match_length <= h.prev_length) {
         j = h.strstart + h.lookahead - X, S = e._tr_tally(h, h.strstart - 1 - h.prev_match, h.prev_length - X), h.lookahead -= h.prev_length - 1, h.prev_length -= 2;
         do
           ++h.strstart <= j && (h.ins_h = (h.ins_h << h.hash_shift ^ h.window[h.strstart + X - 1]) & h.hash_mask, V = h.prev[h.strstart & h.w_mask] = h.head[h.ins_h], h.head[h.ins_h] = h.strstart);
@@ -3376,10 +3376,10 @@ function Qc() {
     }
     return S.strstart += S.lookahead, S.block_start = S.strstart, S.insert = S.lookahead, S.lookahead = 0, S.match_length = S.prev_length = X - 1, S.match_available = 0, h.next_in = _, h.input = w, h.avail_in = ue, S.wrap = he, u;
   }
-  return Dt.deflateInit = F, Dt.deflateInit2 = x, Dt.deflateReset = v, Dt.deflateResetKeep = d, Dt.deflateSetHeader = C, Dt.deflate = b, Dt.deflateEnd = Q, Dt.deflateSetDictionary = ce, Dt.deflateInfo = "pako deflate (from Nodeca project)", Dt;
+  return At.deflateInit = F, At.deflateInit2 = x, At.deflateReset = v, At.deflateResetKeep = d, At.deflateSetHeader = C, At.deflate = b, At.deflateEnd = Q, At.deflateSetDictionary = ce, At.deflateInfo = "pako deflate (from Nodeca project)", At;
 }
 var ur = {}, Fa;
-function Ko() {
+function Yo() {
   if (Fa) return ur;
   Fa = 1;
   var t = or(), e = !0, r = !0;
@@ -3443,20 +3443,20 @@ function Ko() {
     return l < 0 || l === 0 ? s : l + i[o[l]] > s ? l : s;
   }, ur;
 }
-var on, Ua;
-function Jo() {
-  if (Ua) return on;
+var an, Ua;
+function Ko() {
+  if (Ua) return an;
   Ua = 1;
   function t() {
     this.input = null, this.next_in = 0, this.avail_in = 0, this.total_in = 0, this.output = null, this.next_out = 0, this.avail_out = 0, this.total_out = 0, this.msg = "", this.state = null, this.data_type = 2, this.adler = 0;
   }
-  return on = t, on;
+  return an = t, an;
 }
 var Ma;
-function el() {
+function Qc() {
   if (Ma) return Er;
   Ma = 1;
-  var t = Qc(), e = or(), r = Ko(), i = ra(), n = Jo(), a = Object.prototype.toString, o = 0, s = 4, l = 0, f = 1, u = 2, m = -1, g = 0, y = 8;
+  var t = Jc(), e = or(), r = Yo(), i = ra(), n = Ko(), a = Object.prototype.toString, o = 0, s = 4, l = 0, f = 1, u = 2, m = -1, g = 0, y = 8;
   function E(T) {
     if (!(this instanceof E)) return new E(T);
     this.options = e.assign({
@@ -3517,12 +3517,12 @@ function el() {
   }
   return Er.Deflate = E, Er.deflate = A, Er.deflateRaw = R, Er.gzip = I, Er;
 }
-var kr = {}, Tt = {}, sn, La;
-function tl() {
-  if (La) return sn;
+var kr = {}, It = {}, on, La;
+function el() {
+  if (La) return on;
   La = 1;
   var t = 30, e = 12;
-  return sn = function(i, n) {
+  return on = function(i, n) {
     var a, o, s, l, f, u, m, g, y, E, A, R, I, T, D, P, M, U, B, O, W, z, Y, N, J;
     a = i.state, o = i.next_in, N = i.input, s = o + (i.avail_in - 5), l = i.next_out, J = i.output, f = l - (n - i.avail_out), u = l + (i.avail_out - 257), m = a.dmax, g = a.wsize, y = a.whave, E = a.wnext, A = a.window, R = a.hold, I = a.bits, T = a.lencode, D = a.distcode, P = (1 << a.lenbits) - 1, M = (1 << a.distbits) - 1;
     e:
@@ -3608,11 +3608,11 @@ function tl() {
           }
       } while (o < s && l < u);
     O = I >> 3, o -= O, I -= O << 3, R &= (1 << I) - 1, i.next_in = o, i.next_out = l, i.avail_in = o < s ? 5 + (s - o) : 5 - (o - s), i.avail_out = l < u ? 257 + (u - l) : 257 - (l - u), a.hold = R, a.bits = I;
-  }, sn;
+  }, on;
 }
-var cn, Pa;
-function rl() {
-  if (Pa) return cn;
+var sn, Pa;
+function tl() {
+  if (Pa) return sn;
   Pa = 1;
   var t = or(), e = 15, r = 852, i = 592, n = 0, a = 1, o = 2, s = [
     /* Length codes 257..285 base */
@@ -3749,7 +3749,7 @@ function rl() {
     64,
     64
   ];
-  return cn = function(g, y, E, A, R, I, T, D) {
+  return sn = function(g, y, E, A, R, I, T, D) {
     var P = D.bits, M = 0, U = 0, B = 0, O = 0, W = 0, z = 0, Y = 0, N = 0, J = 0, oe = 0, _e, re, X, ie, de, Se = null, Re = 0, be, Ae = new t.Buf16(e + 1), ye = new t.Buf16(e + 1), $e = null, ke = 0, Ee, De, Ge;
     for (M = 0; M <= e; M++)
       Ae[M] = 0;
@@ -3793,26 +3793,26 @@ function rl() {
       }
     }
     return oe !== 0 && (R[de + oe] = M - Y << 24 | 64 << 16 | 0), D.bits = W, 0;
-  }, cn;
+  }, sn;
 }
 var ja;
-function il() {
-  if (ja) return Tt;
+function rl() {
+  if (ja) return It;
   ja = 1;
-  var t = or(), e = Xo(), r = Yo(), i = tl(), n = rl(), a = 0, o = 1, s = 2, l = 4, f = 5, u = 6, m = 0, g = 1, y = 2, E = -2, A = -3, R = -4, I = -5, T = 8, D = 1, P = 2, M = 3, U = 4, B = 5, O = 6, W = 7, z = 8, Y = 9, N = 10, J = 11, oe = 12, _e = 13, re = 14, X = 15, ie = 16, de = 17, Se = 18, Re = 19, be = 20, Ae = 21, ye = 22, $e = 23, ke = 24, Ee = 25, De = 26, Ge = 27, tt = 28, je = 29, we = 30, Oe = 31, Ve = 32, Ue = 852, ze = 592, Ce = 15, xe = Ce;
+  var t = or(), e = Vo(), r = Xo(), i = el(), n = tl(), a = 0, o = 1, s = 2, l = 4, f = 5, u = 6, m = 0, g = 1, y = 2, E = -2, A = -3, R = -4, I = -5, T = 8, D = 1, P = 2, M = 3, U = 4, B = 5, O = 6, W = 7, z = 8, Y = 9, N = 10, J = 11, oe = 12, _e = 13, re = 14, X = 15, ie = 16, de = 17, Se = 18, Re = 19, be = 20, Ae = 21, ye = 22, $e = 23, ke = 24, Ee = 25, De = 26, Ge = 27, tt = 28, je = 29, we = 30, Oe = 31, Ve = 32, Ue = 852, ze = 592, Ce = 15, xe = Ce;
   function lt(x) {
     return (x >>> 24 & 255) + (x >>> 8 & 65280) + ((x & 65280) << 8) + ((x & 255) << 24);
   }
-  function xt() {
+  function St() {
     this.mode = 0, this.last = !1, this.wrap = 0, this.havedict = !1, this.flags = 0, this.dmax = 0, this.check = 0, this.total = 0, this.head = null, this.wbits = 0, this.wsize = 0, this.whave = 0, this.wnext = 0, this.window = null, this.hold = 0, this.bits = 0, this.length = 0, this.offset = 0, this.extra = 0, this.lencode = null, this.distcode = null, this.lenbits = 0, this.distbits = 0, this.ncode = 0, this.nlen = 0, this.ndist = 0, this.have = 0, this.next = null, this.lens = new t.Buf16(320), this.work = new t.Buf16(288), this.lendyn = null, this.distdyn = null, this.sane = 0, this.back = 0, this.was = 0;
   }
-  function It(x) {
+  function xt(x) {
     var F;
     return !x || !x.state ? E : (F = x.state, x.total_in = x.total_out = F.total = 0, x.msg = "", F.wrap && (x.adler = F.wrap & 1), F.mode = D, F.last = 0, F.havedict = 0, F.dmax = 32768, F.head = null, F.hold = 0, F.bits = 0, F.lencode = F.lendyn = new t.Buf32(Ue), F.distcode = F.distdyn = new t.Buf32(ze), F.sane = 1, F.back = -1, m);
   }
   function Fe(x) {
     var F;
-    return !x || !x.state ? E : (F = x.state, F.wsize = 0, F.whave = 0, F.wnext = 0, It(x));
+    return !x || !x.state ? E : (F = x.state, F.wsize = 0, F.whave = 0, F.wnext = 0, xt(x));
   }
   function Xe(x, F) {
     var b, Q;
@@ -3820,7 +3820,7 @@ function il() {
   }
   function ut(x, F) {
     var b, Q;
-    return x ? (Q = new xt(), x.state = Q, Q.window = null, b = Xe(x, F), b !== m && (x.state = null), b) : E;
+    return x ? (Q = new St(), x.state = Q, Q.window = null, b = Xe(x, F), b !== m && (x.state = null), b) : E;
   }
   function Ze(x) {
     return ut(x, xe);
@@ -4311,11 +4311,11 @@ function il() {
     var b = F.length, Q, ce, h;
     return !x || !x.state || (Q = x.state, Q.wrap !== 0 && Q.mode !== J) ? E : Q.mode === J && (ce = 1, ce = e(ce, F, b, 0), ce !== Q.check) ? A : (h = k(x, F, b, b), h ? (Q.mode = Oe, R) : (Q.havedict = 1, m));
   }
-  return Tt.inflateReset = Fe, Tt.inflateReset2 = Xe, Tt.inflateResetKeep = It, Tt.inflateInit = Ze, Tt.inflateInit2 = ut, Tt.inflate = c, Tt.inflateEnd = d, Tt.inflateGetHeader = v, Tt.inflateSetDictionary = C, Tt.inflateInfo = "pako inflate (from Nodeca project)", Tt;
+  return It.inflateReset = Fe, It.inflateReset2 = Xe, It.inflateResetKeep = xt, It.inflateInit = Ze, It.inflateInit2 = ut, It.inflate = c, It.inflateEnd = d, It.inflateGetHeader = v, It.inflateSetDictionary = C, It.inflateInfo = "pako inflate (from Nodeca project)", It;
 }
-var ln, za;
-function Qo() {
-  return za || (za = 1, ln = {
+var cn, za;
+function Jo() {
+  return za || (za = 1, cn = {
     /* Allowed flush values; see deflate() and inflate() below for details */
     Z_NO_FLUSH: 0,
     Z_PARTIAL_FLUSH: 1,
@@ -4354,22 +4354,22 @@ function Qo() {
     /* The deflate compression method */
     Z_DEFLATED: 8
     //Z_NULL:                 null // Use -1 or null inline, depending on var type
-  }), ln;
+  }), cn;
 }
-var un, Ha;
-function nl() {
-  if (Ha) return un;
+var ln, Ha;
+function il() {
+  if (Ha) return ln;
   Ha = 1;
   function t() {
     this.text = 0, this.time = 0, this.xflags = 0, this.os = 0, this.extra = null, this.extra_len = 0, this.name = "", this.comment = "", this.hcrc = 0, this.done = !1;
   }
-  return un = t, un;
+  return ln = t, ln;
 }
 var Wa;
-function al() {
+function nl() {
   if (Wa) return kr;
   Wa = 1;
-  var t = il(), e = or(), r = Ko(), i = Qo(), n = ra(), a = Jo(), o = nl(), s = Object.prototype.toString;
+  var t = rl(), e = or(), r = Yo(), i = Jo(), n = ra(), a = Ko(), o = il(), s = Object.prototype.toString;
   function l(m) {
     if (!(this instanceof l)) return new l(m);
     this.options = e.assign({
@@ -4415,16 +4415,16 @@ function al() {
   }
   return kr.Inflate = l, kr.inflate = f, kr.inflateRaw = u, kr.ungzip = f, kr;
 }
-var fn, qa;
-function ol() {
-  if (qa) return fn;
+var un, qa;
+function al() {
+  if (qa) return un;
   qa = 1;
-  var t = or().assign, e = el(), r = al(), i = Qo(), n = {};
-  return t(n, e, r, i), fn = n, fn;
+  var t = or().assign, e = Qc(), r = nl(), i = Jo(), n = {};
+  return t(n, e, r, i), un = n, un;
 }
-var sl = ol(), ia = /* @__PURE__ */ Jt(sl), hn, Ga;
-function cl() {
-  if (Ga) return hn;
+var ol = al(), ia = /* @__PURE__ */ Jt(ol), fn, Ga;
+function sl() {
+  if (Ga) return fn;
   Ga = 1;
   const t = (e, r) => function(...i) {
     const n = r.promiseModule;
@@ -4436,7 +4436,7 @@ function cl() {
       }) : i.push(a), e.apply(this, i);
     });
   };
-  return hn = (e, r) => {
+  return fn = (e, r) => {
     r = Object.assign({
       exclude: [/.+(Sync|Stream)$/],
       errorFirst: !0,
@@ -4458,11 +4458,11 @@ function cl() {
       a[o] = typeof s == "function" && n(o) ? t(s, r) : s;
     }
     return a;
-  }, hn;
+  }, fn;
 }
-var ll = cl(), dn = /* @__PURE__ */ Jt(ll), wn, Za;
-function ul() {
-  if (Za) return wn;
+var cl = sl(), hn = /* @__PURE__ */ Jt(cl), dn, Za;
+function ll() {
+  if (Za) return dn;
   Za = 1;
   function t(re) {
     return Array.isArray(re) ? re : [re];
@@ -4754,18 +4754,18 @@ function ul() {
     }
   }
   const oe = (re) => new J(re), _e = (re) => Y(re && Y.convert(re), re, A);
-  if (oe.isPathValid = _e, oe.default = oe, wn = oe, // Detect `process` so that it can run in browsers.
+  if (oe.isPathValid = _e, oe.default = oe, dn = oe, // Detect `process` so that it can run in browsers.
   typeof gt < "u" && (gt.env && gt.env.IGNORE_TEST_WIN32 || gt.platform === "win32")) {
     const re = (ie) => /^\\\\\?\\/.test(ie) || /["<>|\u0000-\u001F]+/u.test(ie) ? ie : ie.replace(/\\/g, "/");
     Y.convert = re;
     const X = /^[a-z]:\//i;
     Y.isNotRelative = (ie) => X.test(ie) || N(ie);
   }
-  return wn;
+  return dn;
 }
-var fl = ul(), hl = /* @__PURE__ */ Jt(fl), pn, Va;
-function dl() {
-  if (Va) return pn;
+var ul = ll(), fl = /* @__PURE__ */ Jt(ul), wn, Va;
+function hl() {
+  if (Va) return wn;
   Va = 1;
   function t(i) {
     return i.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -4780,11 +4780,11 @@ function dl() {
       return n = e(n, "./", "/"), n = e(n, "..", "."), n = e(n, " ", "-"), n = e(n, /^[~^:?*\\\-]/g, ""), n = e(n, /[~^:?*\\]/g, "-"), n = e(n, /[~^:?*\\\-]$/g, ""), n = e(n, "@{", "-"), n = e(n, /\.$/g, ""), n = e(n, /\/$/g, ""), n = e(n, /\.lock$/g, ""), n;
     }
   };
-  return pn = r, pn;
+  return wn = r, wn;
 }
-var wl = dl(), zt = /* @__PURE__ */ Jt(wl), mn, Xa;
-function pl() {
-  return Xa || (Xa = 1, mn = function(t, e) {
+var dl = hl(), zt = /* @__PURE__ */ Jt(dl), pn, Xa;
+function wl() {
+  return Xa || (Xa = 1, pn = function(t, e) {
     var r = t, i = e, n = r.length, a = i.length, o = !1, s = null, l = n + 1, f = [], u = [], m = [], g = "", y = -1, E = 0, A = 1, R, I, T = function() {
       n >= a && (R = r, I = n, r = i, i = R, n = a, a = I, o = !0, l = n + 1);
     }, D = function(B, O, W) {
@@ -4839,13 +4839,13 @@ function pl() {
         U(N);
       }
     };
-  }), mn;
+  }), pn;
 }
-var gn, Ya;
-function ml() {
-  if (Ya) return gn;
+var mn, Ya;
+function pl() {
+  if (Ya) return mn;
   Ya = 1;
-  var t = pl();
+  var t = wl();
   function e(a, o) {
     var s = new t(a, o);
     s.compose();
@@ -4957,9 +4957,9 @@ function ml() {
     }
     return g(), l;
   }
-  return gn = n, gn;
+  return mn = n, mn;
 }
-var gl = ml(), yl = /* @__PURE__ */ Jt(gl);
+var ml = pl(), gl = /* @__PURE__ */ Jt(ml);
 class Ne extends Error {
   constructor(e) {
     super(e), this.caller = "";
@@ -5066,13 +5066,13 @@ class jt {
     return this._start += 4, r;
   }
 }
-function Ui(t, e) {
+function Fi(t, e) {
   return -(t < e) || +(t > e);
 }
-function es(t, e) {
-  return Ui(t.path, e.path);
+function Qo(t, e) {
+  return Fi(t.path, e.path);
 }
-function ts(t) {
+function es(t) {
   let e = t > 0 ? t >> 12 : 0;
   e !== 4 && e !== 8 && e !== 10 && e !== 14 && (e = 8);
   let r = t & 511;
@@ -5105,7 +5105,7 @@ function xr(t) {
     mtimeNanoseconds: n % Ut,
     dev: t.dev % Ut,
     ino: t.ino % Ut,
-    mode: ts(t.mode % Ut),
+    mode: es(t.mode % Ut),
     uid: t.uid % Ut,
     gid: t.gid % Ut,
     // size of -1 happens over a BrowserFS HTTP Backend that doesn't serve Content-Length headers
@@ -5113,31 +5113,31 @@ function xr(t) {
     size: t.size > -1 ? t.size % Ut : 0
   };
 }
-function _l(t) {
+function yl(t) {
   let e = "";
   for (const r of new Uint8Array(t))
     r < 16 && (e += "0"), e += r.toString(16);
   return e;
 }
-let yn = null;
+let gn = null;
 async function Xt(t) {
-  return yn === null && (yn = await vl()), yn ? rs(t) : bl(t);
+  return gn === null && (gn = await bl()), gn ? ts(t) : _l(t);
 }
-function bl(t) {
-  return new Vo().update(t).digest("hex");
+function _l(t) {
+  return new Zo().update(t).digest("hex");
 }
-async function rs(t) {
+async function ts(t) {
   const e = await crypto.subtle.digest("SHA-1", t);
-  return _l(e);
+  return yl(e);
 }
-async function vl() {
+async function bl() {
   try {
-    if (await rs(new Uint8Array([])) === "da39a3ee5e6b4b0d3255bfef95601890afd80709") return !0;
+    if (await ts(new Uint8Array([])) === "da39a3ee5e6b4b0d3255bfef95601890afd80709") return !0;
   } catch {
   }
   return !1;
 }
-function El(t) {
+function vl(t) {
   return {
     assumeValid: !!(t & 32768),
     extended: !!(t & 16384),
@@ -5145,7 +5145,7 @@ function El(t) {
     nameLength: t & 4095
   };
 }
-function kl(t) {
+function El(t) {
   const e = t.flags;
   return e.extended = !1, e.nameLength = Math.min(fe.from(t.path).length, 4095), (e.assumeValid ? 32768 : 0) + (e.extended ? 16384 : 0) + ((e.stage & 3) << 12) + (e.nameLength & 4095);
 }
@@ -5192,7 +5192,7 @@ class wr {
       const u = {};
       u.ctimeSeconds = i.readUInt32BE(), u.ctimeNanoseconds = i.readUInt32BE(), u.mtimeSeconds = i.readUInt32BE(), u.mtimeNanoseconds = i.readUInt32BE(), u.dev = i.readUInt32BE(), u.ino = i.readUInt32BE(), u.mode = i.readUInt32BE(), u.uid = i.readUInt32BE(), u.gid = i.readUInt32BE(), u.size = i.readUInt32BE(), u.oid = i.slice(20).toString("hex");
       const m = i.readUInt16BE();
-      u.flags = El(m);
+      u.flags = vl(m);
       const g = e.indexOf(0, i.tell() + 1) - i.tell();
       if (g < 1)
         throw new Te(`Got a path length of: ${g}`);
@@ -5216,7 +5216,7 @@ class wr {
     return [...this._unmergedPaths];
   }
   get entries() {
-    return [...this._entries.values()].sort(es);
+    return [...this._entries.values()].sort(Qo);
   }
   get entriesMap() {
     return this._entries;
@@ -5287,7 +5287,7 @@ class wr {
   }
   static async _entryToBuffer(e) {
     const r = fe.from(e.path), i = Math.ceil((62 + r.length + 1) / 8) * 8, n = fe.alloc(i), a = new jt(n), o = xr(e);
-    return a.writeUInt32BE(o.ctimeSeconds), a.writeUInt32BE(o.ctimeNanoseconds), a.writeUInt32BE(o.mtimeSeconds), a.writeUInt32BE(o.mtimeNanoseconds), a.writeUInt32BE(o.dev), a.writeUInt32BE(o.ino), a.writeUInt32BE(o.mode), a.writeUInt32BE(o.uid), a.writeUInt32BE(o.gid), a.writeUInt32BE(o.size), a.write(e.oid, 20, "hex"), a.writeUInt16BE(kl(e)), a.write(e.path, r.length, "utf8"), n;
+    return a.writeUInt32BE(o.ctimeSeconds), a.writeUInt32BE(o.ctimeNanoseconds), a.writeUInt32BE(o.mtimeSeconds), a.writeUInt32BE(o.mtimeNanoseconds), a.writeUInt32BE(o.dev), a.writeUInt32BE(o.ino), a.writeUInt32BE(o.mode), a.writeUInt32BE(o.uid), a.writeUInt32BE(o.gid), a.writeUInt32BE(o.size), a.write(e.oid, 20, "hex"), a.writeUInt16BE(El(e)), a.write(e.path, r.length, "utf8"), n;
   }
   async toObject() {
     const e = fe.alloc(12), r = new jt(e);
@@ -5302,31 +5302,31 @@ class wr {
     return fe.concat([a, fe.from(o, "hex")]);
   }
 }
-function Ii(t, e, r = !0, i = !0) {
+function xi(t, e, r = !0, i = !0) {
   const n = xr(t), a = xr(e);
   return r && n.mode !== a.mode || n.mtimeSeconds !== a.mtimeSeconds || n.ctimeSeconds !== a.ctimeSeconds || n.uid !== a.uid || n.gid !== a.gid || i && n.ino !== a.ino || n.size !== a.size;
 }
-let _n = null;
-const bn = Symbol("IndexCache");
-function Sl() {
+let yn = null;
+const _n = Symbol("IndexCache");
+function kl() {
   return {
     map: /* @__PURE__ */ new Map(),
     stats: /* @__PURE__ */ new Map()
   };
 }
-async function xl(t, e, r) {
+async function Sl(t, e, r) {
   const [i, n] = await Promise.all([
     t.lstat(e),
     t.read(e)
   ]), a = await wr.from(n);
   r.map.set(e, a), r.stats.set(e, i);
 }
-async function Il(t, e, r) {
+async function xl(t, e, r) {
   const i = r.stats.get(e);
   if (i === void 0) return !0;
   if (i === null) return !1;
   const n = await t.lstat(e);
-  return n === null ? !1 : Ii(i, n);
+  return n === null ? !1 : xi(i, n);
 }
 class at {
   /**
@@ -5339,13 +5339,13 @@ class at {
    * @param {function(GitIndex): any} closure
    */
   static async acquire({ fs: e, gitdir: r, cache: i, allowUnmerged: n = !0 }, a) {
-    i[bn] || (i[bn] = Sl());
+    i[_n] || (i[_n] = kl());
     const o = `${r}/index`;
-    _n === null && (_n = new Vr({ maxPending: 1 / 0 }));
+    yn === null && (yn = new Vr({ maxPending: 1 / 0 }));
     let s, l = [];
-    return await _n.acquire(o, async () => {
-      const f = i[bn];
-      await Il(e, o, f) && await xl(e, o, f);
+    return await yn.acquire(o, async () => {
+      const f = i[_n];
+      await xl(e, o, f) && await Sl(e, o, f);
       const u = f.map.get(o);
       if (l = u.unmergedPaths, l.length && !n)
         throw new Jr(l);
@@ -5356,7 +5356,7 @@ class at {
     }), s;
   }
 }
-function Ti(t) {
+function Ii(t) {
   const e = Math.max(t.lastIndexOf("/"), t.lastIndexOf("\\"));
   return e > -1 && (t = t.slice(e + 1)), t;
 }
@@ -5364,13 +5364,13 @@ function Ir(t) {
   const e = Math.max(t.lastIndexOf("/"), t.lastIndexOf("\\"));
   return e === -1 ? "." : e === 0 ? "/" : t.slice(0, e);
 }
-function is(t) {
+function rs(t) {
   const e = /* @__PURE__ */ new Map(), r = function(n) {
     if (!e.has(n)) {
       const a = {
         type: "tree",
         fullpath: n,
-        basename: Ti(n),
+        basename: Ii(n),
         metadata: {},
         children: []
       };
@@ -5382,7 +5382,7 @@ function is(t) {
       const o = {
         type: "blob",
         fullpath: n,
-        basename: Ti(n),
+        basename: Ii(n),
         metadata: a,
         // This recursively generates any missing parent folders.
         parent: r(Ir(n)),
@@ -5397,7 +5397,7 @@ function is(t) {
     i(n.path, n);
   return e;
 }
-function Tl(t) {
+function Il(t) {
   switch (t) {
     case 16384:
       return "tree";
@@ -5412,12 +5412,12 @@ function Tl(t) {
   }
   throw new Te(`Unexpected GitTree entry mode: ${t.toString(8)}`);
 }
-class Rl {
+class Tl {
   constructor({ fs: e, gitdir: r, cache: i }) {
     this.treePromise = at.acquire(
       { fs: e, gitdir: r, cache: i },
       async function(a) {
-        return is(a.entries);
+        return rs(a.entries);
       }
     );
     const n = this;
@@ -5448,7 +5448,7 @@ class Rl {
     if (n.type !== "tree")
       throw new Error(`ENOTDIR: not a directory, scandir '${r}'`);
     const a = n.children.map((o) => o.fullpath);
-    return a.sort(Ui), a;
+    return a.sort(Fi), a;
   }
   async type(e) {
     return e._type === !1 && await e.stat(), e._type;
@@ -5464,7 +5464,7 @@ class Rl {
           `ENOENT: no such file or directory, lstat '${e._fullpath}'`
         );
       const n = i.type === "tree" ? {} : xr(i.metadata);
-      e._type = i.type === "tree" ? "tree" : Tl(n.mode), e._mode = n.mode, i.type === "tree" ? e._stat = void 0 : e._stat = n;
+      e._type = i.type === "tree" ? "tree" : Il(n.mode), e._mode = n.mode, i.type === "tree" ? e._stat = void 0 : e._stat = n;
     }
     return e._stat;
   }
@@ -5478,12 +5478,12 @@ class Rl {
     return e._oid;
   }
 }
-const Mi = Symbol("GitWalkSymbol");
+const Ui = Symbol("GitWalkSymbol");
 function Nr() {
   const t = /* @__PURE__ */ Object.create(null);
-  return Object.defineProperty(t, Mi, {
+  return Object.defineProperty(t, Ui, {
     value: function({ fs: e, gitdir: r, cache: i }) {
-      return new Rl({ fs: e, gitdir: r, cache: i });
+      return new Tl({ fs: e, gitdir: r, cache: i });
     }
   }), Object.freeze(t), t;
 }
@@ -5531,7 +5531,7 @@ class Qr extends Ne {
   }
 }
 Qr.code = "NoRefspecError";
-class Ri {
+class Ti {
   constructor(e) {
     if (this.refs = /* @__PURE__ */ new Map(), this.parsedConfig = [], e) {
       let r = null;
@@ -5552,7 +5552,7 @@ class Ri {
     return this;
   }
   static from(e) {
-    return new Ri(e);
+    return new Ti(e);
   }
   delete(e) {
     this.parsedConfig = this.parsedConfig.filter((r) => r.ref !== e), this.refs.delete(e);
@@ -5563,7 +5563,7 @@ class Ri {
 `;
   }
 }
-class $i {
+class Ri {
   constructor({ remotePath: e, localPath: r, force: i, matchPrefix: n }) {
     Object.assign(this, {
       remotePath: e,
@@ -5582,7 +5582,7 @@ class $i {
     ] = e.match(/^(\+?)(.*?)(\*?):(.*?)(\*?)$/).slice(1), s = r === "+", l = n === "*";
     if (l !== (o === "*"))
       throw new Te("Invalid refspec");
-    return new $i({
+    return new Ri({
       remotePath: i,
       localPath: a,
       force: s,
@@ -5611,11 +5611,11 @@ class na {
   static from(e) {
     const r = [];
     for (const i of e)
-      r.push($i.from(i));
+      r.push(Ri.from(i));
     return new na(r);
   }
   add(e) {
-    const r = $i.from(e);
+    const r = Ri.from(e);
     this.rules.push(r);
   }
   translate(e) {
@@ -5639,11 +5639,11 @@ class na {
     return this.rules.filter((e) => e.matchPrefix).map((e) => e.localPath.replace(/\/$/, ""));
   }
 }
-function $l(t, e) {
+function Rl(t, e) {
   const r = t.replace(/\^\{\}$/, ""), i = e.replace(/\^\{\}$/, ""), n = -(r < i) || +(r > i);
   return n === 0 ? t.endsWith("^{}") ? 1 : -1 : n;
 }
-const Bl = (t) => {
+const $l = (t) => {
   if (typeof t == "number")
     return t;
   t = t.toLowerCase();
@@ -5664,29 +5664,29 @@ const Bl = (t) => {
     logallrefupdates: qr,
     symlinks: qr,
     ignorecase: qr,
-    bigFileThreshold: Bl
+    bigFileThreshold: $l
   }
-}, Al = /^\[([A-Za-z0-9-.]+)(?: "(.*)")?\]$/, Dl = /^[A-Za-z0-9-.]+$/, Ol = /^([A-Za-z][A-Za-z-]*)(?: *= *(.*))?$/, Cl = /^[A-Za-z][A-Za-z-]*$/, Nl = /^(.*?)( *[#;].*)$/, Fl = (t) => {
-  const e = Al.exec(t);
+}, Bl = /^\[([A-Za-z0-9-.]+)(?: "(.*)")?\]$/, Al = /^[A-Za-z0-9-.]+$/, Dl = /^([A-Za-z][A-Za-z-]*)(?: *= *(.*))?$/, Ol = /^[A-Za-z][A-Za-z-]*$/, Cl = /^(.*?)( *[#;].*)$/, Nl = (t) => {
+  const e = Bl.exec(t);
   if (e != null) {
     const [r, i] = e.slice(1);
     return [r, i];
   }
   return null;
-}, Ul = (t) => {
-  const e = Ol.exec(t);
+}, Fl = (t) => {
+  const e = Dl.exec(t);
   if (e != null) {
-    const [r, i = "true"] = e.slice(1), n = Ml(i), a = Ll(n);
+    const [r, i = "true"] = e.slice(1), n = Ul(i), a = Ml(n);
     return [r, a];
   }
   return null;
-}, Ml = (t) => {
-  const e = Nl.exec(t);
+}, Ul = (t) => {
+  const e = Cl.exec(t);
   if (e == null)
     return t;
   const [r, i] = e.slice(1);
   return Qa(r) && Qa(i) ? `${r}${i}` : r;
-}, Qa = (t) => (t.match(/(?:^|[^\\])"/g) || []).length % 2 !== 0, Ll = (t) => t.split("").reduce((e, r, i, n) => {
+}, Qa = (t) => (t.match(/(?:^|[^\\])"/g) || []).length % 2 !== 0, Ml = (t) => t.split("").reduce((e, r, i, n) => {
   const a = r === '"' && n[i - 1] !== "\\", o = r === "\\" && n[i + 1] === '"';
   return a || o ? e : e + r;
 }, ""), eo = (t) => t != null ? t.toLowerCase() : null, Vn = (t, e, r) => [eo(t), e, eo(r)].filter((i) => i != null).join("."), to = (t) => {
@@ -5699,18 +5699,18 @@ const Bl = (t) => {
     sectionPath: Vn(r, n, null),
     isSection: !!r
   };
-}, Pl = (t, e) => t.reduce((r, i, n) => e(i) ? n : r, -1);
+}, Ll = (t, e) => t.reduce((r, i, n) => e(i) ? n : r, -1);
 class aa {
   constructor(e) {
     let r = null, i = null;
     this.parsedConfig = e ? e.split(`
 `).map((n) => {
       let a = null, o = null;
-      const s = n.trim(), l = Fl(s), f = l != null;
+      const s = n.trim(), l = Nl(s), f = l != null;
       if (f)
         [r, i] = l;
       else {
-        const m = Ul(s);
+        const m = Fl(s);
         m != null && ([a, o] = m);
       }
       const u = Vn(r, i, a);
@@ -5749,7 +5749,7 @@ class aa {
       path: s,
       sectionPath: l,
       isSection: f
-    } = to(e), u = Pl(
+    } = to(e), u = Ll(
       this.parsedConfig,
       (m) => m.path === s
     );
@@ -5773,7 +5773,7 @@ class aa {
         modified: !0,
         path: s
       };
-      if (Dl.test(n) && Cl.test(o))
+      if (Al.test(n) && Ol.test(o))
         if (m >= 0)
           this.parsedConfig.splice(m + 1, 0, g);
         else {
@@ -5811,10 +5811,10 @@ const bi = (t) => [
   `refs/heads/${t}`,
   `refs/remotes/${t}`,
   `refs/remotes/${t}/HEAD`
-], jl = ["config", "description", "index", "shallow", "commondir"];
-let vn;
+], Pl = ["config", "description", "index", "shallow", "commondir"];
+let bn;
 async function Qt(t, e) {
-  return vn === void 0 && (vn = new Vr()), vn.acquire(t, e);
+  return bn === void 0 && (bn = new Vr()), bn.acquire(t, e);
 }
 class ae {
   static async updateRemoteRefs({
@@ -5914,7 +5914,7 @@ class ae {
       "packed-refs",
       async () => e.read(`${r}/packed-refs`, { encoding: "utf8" })
     );
-    const a = Ri.from(n), o = a.refs.size;
+    const a = Ti.from(n), o = a.refs.size;
     for (const s of i)
       a.refs.has(s) && a.delete(s);
     a.refs.size < o && (n = a.toString(), await Qt(
@@ -5937,7 +5937,7 @@ class ae {
       return i = i.slice(5), ae.resolve({ fs: e, gitdir: r, ref: i, depth: n });
     if (i.length === 40 && /[0-9a-f]{40}/.test(i))
       return i;
-    const a = await ae.packedRefs({ fs: e, gitdir: r }), o = bi(i).filter((s) => !jl.includes(s));
+    const a = await ae.packedRefs({ fs: e, gitdir: r }), o = bi(i).filter((s) => !Pl.includes(s));
     for (const s of o) {
       const l = await Qt(
         s,
@@ -5997,7 +5997,7 @@ class ae {
       "packed-refs",
       async () => e.read(`${r}/packed-refs`, { encoding: "utf8" })
     );
-    return Ri.from(i).refs;
+    return Ti.from(i).refs;
   }
   // List all the refs that match the `filepath` prefix
   static async listRefs({ fs: e, gitdir: r, filepath: i }) {
@@ -6010,7 +6010,7 @@ class ae {
     }
     for (let o of (await n).keys())
       o.startsWith(i) && (o = o.replace(i + "/", ""), a.includes(o) || a.push(o));
-    return a.sort($l), a;
+    return a.sort(Rl), a;
   }
   static async listBranches({ fs: e, gitdir: r, remote: i }) {
     return i ? ae.listRefs({
@@ -6027,13 +6027,13 @@ class ae {
     })).filter((n) => !n.endsWith("^{}"));
   }
 }
-function zl(t, e) {
-  return Ui(ro(t), ro(e));
+function jl(t, e) {
+  return Fi(ro(t), ro(e));
 }
 function ro(t) {
   return t.mode === "040000" ? t.path + "/" : t.path;
 }
-function ns(t) {
+function is(t) {
   switch (t) {
     case "040000":
       return "tree";
@@ -6048,7 +6048,7 @@ function ns(t) {
   }
   throw new Te(`Unexpected GitTree entry mode: ${t}`);
 }
-function Hl(t) {
+function zl(t) {
   const e = [];
   let r = 0;
   for (; r < t.length; ) {
@@ -6064,7 +6064,7 @@ function Hl(t) {
       );
     let a = t.slice(r, i).toString("utf8");
     a === "40000" && (a = "040000");
-    const o = ns(a), s = t.slice(i + 1, n).toString("utf8");
+    const o = is(a), s = t.slice(i + 1, n).toString("utf8");
     if (s.includes("\\") || s.includes("/"))
       throw new Cr(s);
     const l = t.slice(n + 1, n + 21).toString("hex");
@@ -6072,7 +6072,7 @@ function Hl(t) {
   }
   return e;
 }
-function Wl(t) {
+function Hl(t) {
   if (typeof t == "number" && (t = t.toString(8)), t.match(/^0?4.*/)) return "040000";
   if (t.match(/^1006.*/)) return "100644";
   if (t.match(/^1007.*/)) return "100755";
@@ -6080,18 +6080,18 @@ function Wl(t) {
   if (t.match(/^160.*/)) return "160000";
   throw new Te(`Could not understand file mode: ${t}`);
 }
-function ql(t) {
-  return !t.oid && t.sha && (t.oid = t.sha), t.mode = Wl(t.mode), t.type || (t.type = ns(t.mode)), t;
+function Wl(t) {
+  return !t.oid && t.sha && (t.oid = t.sha), t.mode = Hl(t.mode), t.type || (t.type = is(t.mode)), t;
 }
 class _t {
   constructor(e) {
     if (fe.isBuffer(e))
-      this._entries = Hl(e);
+      this._entries = zl(e);
     else if (Array.isArray(e))
-      this._entries = e.map(ql);
+      this._entries = e.map(Wl);
     else
       throw new Te("invalid type passed to GitTree constructor");
-    this._entries.sort(es);
+    this._entries.sort(Qo);
   }
   static from(e) {
     return new _t(e);
@@ -6102,7 +6102,7 @@ class _t {
   }
   toObject() {
     const e = [...this._entries];
-    return e.sort(zl), fe.concat(
+    return e.sort(jl), fe.concat(
       e.map((r) => {
         const i = fe.from(r.mode.replace(/^0/, "")), n = fe.from(" "), a = fe.from(r.path, "utf8"), o = fe.from([0]), s = fe.from(r.oid, "hex");
         return fe.concat([i, n, a, o, s]);
@@ -6139,11 +6139,11 @@ class Fr {
     };
   }
 }
-async function as({ fs: t, gitdir: e, oid: r }) {
+async function ns({ fs: t, gitdir: e, oid: r }) {
   const i = `objects/${r.slice(0, 2)}/${r.slice(2)}`, n = await t.read(`${e}/${i}`);
   return n ? { object: n, format: "deflated", source: i } : null;
 }
-function Gl(t, e) {
+function ql(t, e) {
   const r = new jt(t), i = io(r);
   if (i !== e.byteLength)
     throw new Te(
@@ -6189,7 +6189,7 @@ function ao(t, e) {
   } else
     return t.slice(r);
 }
-function Zl(t) {
+function Gl(t) {
   let e = [t];
   return {
     next() {
@@ -6203,14 +6203,14 @@ function Zl(t) {
     }
   };
 }
-function os(t) {
-  return t[Symbol.asyncIterator] ? t[Symbol.asyncIterator]() : t[Symbol.iterator] ? t[Symbol.iterator]() : t.next ? t : Zl(t);
+function as(t) {
+  return t[Symbol.asyncIterator] ? t[Symbol.asyncIterator]() : t[Symbol.iterator] ? t[Symbol.iterator]() : t.next ? t : Gl(t);
 }
-class ss {
+class os {
   constructor(e) {
     if (typeof fe > "u")
       throw new Error("Missing Buffer dependency");
-    this.stream = os(e), this.buffer = null, this.cursor = 0, this.undoCursor = 0, this.started = !1, this._ended = !1, this._discardedBytes = 0;
+    this.stream = as(e), this.buffer = null, this.cursor = 0, this.undoCursor = 0, this.started = !1, this._ended = !1, this._discardedBytes = 0;
   }
   eof() {
     return this._ended && this.cursor === this.buffer.length;
@@ -6250,7 +6250,7 @@ class ss {
   async _accumulate(e) {
     if (this._ended) return;
     const r = [this.buffer];
-    for (; this.cursor + e > Vl(r); ) {
+    for (; this.cursor + e > Zl(r); ) {
       const i = await this._next();
       if (this._ended) break;
       r.push(i);
@@ -6264,11 +6264,11 @@ class ss {
     this.buffer = await this._next();
   }
 }
-function Vl(t) {
+function Zl(t) {
   return t.reduce((e, r) => e + r.length, 0);
 }
-async function Xl(t, e) {
-  const r = new ss(t);
+async function Vl(t, e) {
+  const r = new os(t);
   let i = await r.read(4);
   if (i = i.toString("utf8"), i !== "PACK")
     throw new Te(`Invalid PACK header '${i}'`);
@@ -6278,7 +6278,7 @@ async function Xl(t, e) {
   let a = await r.read(4);
   if (a = a.readUInt32BE(0), !(a < 1))
     for (; !r.eof() && a--; ) {
-      const o = r.tell(), { type: s, length: l, ofs: f, reference: u } = await Yl(r), m = new ia.Inflate();
+      const o = r.tell(), { type: s, length: l, ofs: f, reference: u } = await Xl(r), m = new ia.Inflate();
       for (; !m.result; ) {
         const g = await r.chunk();
         if (!g) break;
@@ -6304,7 +6304,7 @@ async function Xl(t, e) {
       }
     }
 }
-async function Yl(t) {
+async function Xl(t) {
   let e = await t.byte();
   const r = e >> 4 & 7;
   let i = e & 15;
@@ -6326,10 +6326,10 @@ async function Yl(t) {
   }
   return r === 7 && (a = await t.read(20)), { type: r, length: i, ofs: n, reference: a };
 }
-async function cs(t) {
+async function ss(t) {
   return ia.inflate(t);
 }
-function Kl(t) {
+function Yl(t) {
   const e = [];
   let r = 0, i = 0;
   do {
@@ -6339,7 +6339,7 @@ function Kl(t) {
   } while (i);
   return e.reduce((n, a) => n + 1 << 7 | a, -1);
 }
-function Jl(t, e) {
+function Kl(t, e) {
   let r = e, i = 4, n = null;
   do
     n = t.readUInt8(), r |= (n & 127) << i, i += 7;
@@ -6392,7 +6392,7 @@ class Tr {
       7: "ref-delta"
     }, a = {}, o = e.slice(-20).toString("hex"), s = [], l = {}, f = /* @__PURE__ */ new Map();
     let u = null, m = null;
-    await Xl([e], async ({ data: R, type: I, reference: T, offset: D, num: P }) => {
+    await Vl([e], async ({ data: R, type: I, reference: T, offset: D, num: P }) => {
       u === null && (u = P);
       const M = Math.floor(
         (u - P) * 100 / u
@@ -6414,7 +6414,7 @@ class Tr {
     });
     const g = Object.keys(a).map(Number);
     for (const [R, I] of g.entries()) {
-      const T = R + 1 === g.length ? e.byteLength - 20 : g[R + 1], D = a[I], P = Kc.buf(e.slice(I, T)) >>> 0;
+      const T = R + 1 === g.length ? e.byteLength - 20 : g[R + 1], D = a[I], P = Yc.buf(e.slice(I, T)) >>> 0;
       D.end = T, D.crc = P;
     }
     const y = new Tr({
@@ -6513,10 +6513,10 @@ class Tr {
       throw new Te("Unrecognized type: 0b" + o.toString(2));
     const l = a & 15;
     let f = l;
-    a & 128 && (f = Jl(n, l));
+    a & 128 && (f = Kl(n, l));
     let m = null, g = null;
     if (s === "ofs_delta") {
-      const E = Kl(n), A = e - E;
+      const E = Yl(n), A = e - E;
       ({ object: m, type: s } = await this.readSlice({ start: A }));
     }
     if (s === "ref_delta") {
@@ -6524,15 +6524,15 @@ class Tr {
       ({ object: m, type: s } = await this.read({ oid: E }));
     }
     const y = i.slice(n.tell());
-    if (g = fe.from(await cs(y)), g.byteLength !== f)
+    if (g = fe.from(await ss(y)), g.byteLength !== f)
       throw new Te(
         `Packfile told us object would have length ${f} but it had length ${g.byteLength}`
       );
-    return m && (g = fe.from(Gl(g, m))), this.readDepth > 3 && (this.offsetCache[e] = { type: s, object: g }), { type: s, format: "content", object: g };
+    return m && (g = fe.from(ql(g, m))), this.readDepth > 3 && (this.offsetCache[e] = { type: s, object: g }), { type: s, format: "content", object: g };
   }
 }
 const vi = Symbol("PackfileCache");
-async function Ql({
+async function Jl({
   fs: t,
   filename: e,
   getExternalRefDelta: r,
@@ -6552,7 +6552,7 @@ function oa({
 }) {
   e[vi] || (e[vi] = /* @__PURE__ */ new Map());
   let o = e[vi].get(r);
-  return o || (o = Ql({
+  return o || (o = Jl({
     fs: t,
     filename: r,
     getExternalRefDelta: i,
@@ -6560,7 +6560,7 @@ function oa({
     emitterPrefix: a
   }), e[vi].set(r, o)), o;
 }
-async function eu({
+async function Ql({
   fs: t,
   cache: e,
   gitdir: r,
@@ -6598,8 +6598,8 @@ async function Je({
 }) {
   const a = (u) => Je({ fs: t, cache: e, gitdir: r, oid: u });
   let o;
-  if (i === "4b825dc642cb6eb9a060e54bf8d69288fbee4904" && (o = { format: "wrapped", object: fe.from("tree 0\0") }), o || (o = await as({ fs: t, gitdir: r, oid: i })), !o) {
-    if (o = await eu({
+  if (i === "4b825dc642cb6eb9a060e54bf8d69288fbee4904" && (o = { format: "wrapped", object: fe.from("tree 0\0") }), o || (o = await ns({ fs: t, gitdir: r, oid: i })), !o) {
+    if (o = await Ql({
       fs: t,
       cache: e,
       gitdir: r,
@@ -6609,7 +6609,7 @@ async function Je({
       throw new Pe(i);
     return o;
   }
-  if (n === "deflated" || (o.format === "deflated" && (o.object = fe.from(await cs(o.object)), o.format = "wrapped"), n === "wrapped"))
+  if (n === "deflated" || (o.format === "deflated" && (o.object = fe.from(await ss(o.object)), o.format = "wrapped"), n === "wrapped"))
     return o;
   const s = await Xt(o.object);
   if (s !== i)
@@ -6887,7 +6887,7 @@ class hi extends Ne {
   }
 }
 hi.code = "NoCommitError";
-var tu = /* @__PURE__ */ Object.freeze({
+var eu = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   AlreadyExistsError: Nt,
   AmbiguousError: ei,
@@ -6923,27 +6923,27 @@ var tu = /* @__PURE__ */ Object.freeze({
   NoCommitError: hi
 });
 function Xn({ name: t, email: e, timestamp: r, timezoneOffset: i }) {
-  return i = ru(i), `${t} <${e}> ${r} ${i}`;
+  return i = tu(i), `${t} <${e}> ${r} ${i}`;
 }
-function ru(t) {
-  const e = iu(nu(t));
+function tu(t) {
+  const e = ru(iu(t));
   t = Math.abs(t);
   const r = Math.floor(t / 60);
   t -= r * 60;
   let i = String(r), n = String(t);
   return i.length < 2 && (i = "0" + i), n.length < 2 && (n = "0" + n), (e === -1 ? "-" : "+") + i + n;
 }
-function iu(t) {
+function ru(t) {
   return Math.sign(t) || (Object.is(t, -0) ? -1 : 1);
 }
-function nu(t) {
+function iu(t) {
   return t === 0 ? t : -t;
 }
 function Gt(t) {
   return t = t.replace(/\r/g, ""), t = t.replace(/^\n+/, ""), t = t.replace(/\n+$/, "") + `
 `, t;
 }
-function Bi(t) {
+function $i(t) {
   const [, e, r, i, n] = t.match(
     /^(.*) <(.*)> (.*) (.*)$/
   );
@@ -6951,14 +6951,14 @@ function Bi(t) {
     name: e,
     email: r,
     timestamp: Number(i),
-    timezoneOffset: au(n)
+    timezoneOffset: nu(n)
   };
 }
-function au(t) {
+function nu(t) {
   let [, e, r, i] = t.match(/(\+|-)(\d\d)(\d\d)/);
-  return i = (e === "+" ? 1 : -1) * (Number(r) * 60 + Number(i)), ou(i);
+  return i = (e === "+" ? 1 : -1) * (Number(r) * 60 + Number(i)), au(i);
 }
-function ou(t) {
+function au(t) {
   return t === 0 ? t : -t;
 }
 class wt {
@@ -7017,7 +7017,7 @@ ${e.gpgsig ? e.gpgsig : ""}`;
       const a = n.slice(0, n.indexOf(" ")), o = n.slice(n.indexOf(" ") + 1);
       Array.isArray(i[a]) ? i[a].push(o) : i[a] = o;
     }
-    return i.tagger && (i.tagger = Bi(i.tagger)), i.committer && (i.committer = Bi(i.committer)), i;
+    return i.tagger && (i.tagger = $i(i.tagger)), i.committer && (i.committer = $i(i.committer)), i;
   }
   withoutSignature() {
     const e = Gt(this._tag);
@@ -7049,13 +7049,13 @@ ${e.gpgsig ? e.gpgsig : ""}`;
     return wt.from(o);
   }
 }
-function En(t) {
+function vn(t) {
   return t.trim().split(`
 `).map((e) => " " + e).join(`
 `) + `
 `;
 }
-function su(t) {
+function ou(t) {
   return t.split(`
 `).map((e) => e.replace(/^ /, "")).join(`
 `);
@@ -7074,7 +7074,7 @@ class Ye {
   static fromPayloadSignature({ payload: e, signature: r }) {
     const i = Ye.justHeaders(e), n = Ye.justMessage(e), a = Gt(
       i + `
-gpgsig` + En(r) + `
+gpgsig` + vn(r) + `
 ` + n
     );
     return new Ye(a);
@@ -7119,7 +7119,7 @@ gpgsig` + En(r) + `
       const a = n.slice(0, n.indexOf(" ")), o = n.slice(n.indexOf(" ") + 1);
       Array.isArray(i[a]) ? i[a].push(o) : i[a] = o;
     }
-    return i.author && (i.author = Bi(i.author)), i.committer && (i.committer = Bi(i.committer)), i;
+    return i.author && (i.author = $i(i.author)), i.committer && (i.committer = $i(i.committer)), i;
   }
   static renderHeaders(e) {
     let r = "";
@@ -7137,7 +7137,7 @@ gpgsig` + En(r) + `
 `;
     const n = e.committer || e.author;
     return r += `committer ${Xn(n)}
-`, e.gpgsig && (r += "gpgsig" + En(e.gpgsig)), r;
+`, e.gpgsig && (r += "gpgsig" + vn(e.gpgsig)), r;
   }
   static render(e) {
     return Ye.renderHeaders(e) + `
@@ -7163,14 +7163,14 @@ gpgsig`)), i = e.slice(
       this._commit.indexOf("-----BEGIN PGP SIGNATURE-----"),
       this._commit.indexOf("-----END PGP SIGNATURE-----") + 27
     );
-    return su(e);
+    return ou(e);
   }
   static async sign(e, r, i) {
     const n = e.withoutSignature(), a = Ye.justMessage(e._commit);
     let { signature: o } = await r({ payload: n, secretKey: i });
     o = Gt(o);
     const l = Ye.justHeaders(e._commit) + `
-gpgsig` + En(o) + `
+gpgsig` + vn(o) + `
 ` + a;
     return Ye.from(l);
   }
@@ -7187,7 +7187,7 @@ async function Br({ fs: t, cache: e, gitdir: r, oid: i }) {
     throw new pt(i, n, "tree");
   return { tree: _t.from(a), oid: i };
 }
-class cu {
+class su {
   constructor({ fs: e, gitdir: r, ref: i, cache: n }) {
     this.fs = e, this.cache = n, this.gitdir = r, this.mapPromise = (async () => {
       const o = /* @__PURE__ */ new Map();
@@ -7247,7 +7247,7 @@ class cu {
   async mode(e) {
     if (e._mode === !1) {
       const r = await this.mapPromise, { mode: i } = r.get(e._fullpath);
-      e._mode = ts(parseInt(i, 8));
+      e._mode = es(parseInt(i, 8));
     }
     return e._mode;
   }
@@ -7268,15 +7268,15 @@ class cu {
     return e._oid;
   }
 }
-function $t({ ref: t = "HEAD" } = {}) {
+function Rt({ ref: t = "HEAD" } = {}) {
   const e = /* @__PURE__ */ Object.create(null);
-  return Object.defineProperty(e, Mi, {
+  return Object.defineProperty(e, Ui, {
     value: function({ fs: r, gitdir: i, cache: n }) {
-      return new cu({ fs: r, gitdir: i, ref: t, cache: n });
+      return new su({ fs: r, gitdir: i, ref: t, cache: n });
     }
   }), Object.freeze(e), e;
 }
-class lu {
+class cu {
   constructor({ fs: e, dir: r, gitdir: i, cache: n }) {
     this.fs = e, this.cache = n, this.dir = r, this.gitdir = i, this.config = null;
     const a = this;
@@ -7342,11 +7342,11 @@ class lu {
       let o;
       await at.acquire({ fs: i, gitdir: n, cache: a }, async function(s) {
         const l = s.entriesMap.get(e._fullpath), f = await e.stat(), m = await (await r._getGitConfig(i, n)).get("core.filemode"), g = typeof gt < "u" ? gt.platform !== "win32" : !0;
-        if (!l || Ii(f, l, m, g)) {
+        if (!l || xi(f, l, m, g)) {
           const y = await e.content();
           y === void 0 ? o = void 0 : (o = await Xt(
             Fr.wrap({ type: "blob", object: y })
-          ), l && o === l.oid && (!m || f.mode === l.mode) && Ii(f, l, m, g) && s.insert({
+          ), l && o === l.oid && (!m || f.mode === l.mode) && xi(f, l, m, g) && s.insert({
             filepath: e._fullpath,
             stats: f,
             oid: o
@@ -7363,18 +7363,18 @@ class lu {
 }
 function di() {
   const t = /* @__PURE__ */ Object.create(null);
-  return Object.defineProperty(t, Mi, {
+  return Object.defineProperty(t, Ui, {
     value: function({ fs: e, dir: r, gitdir: i, cache: n }) {
-      return new lu({ fs: e, dir: r, gitdir: i, cache: n });
+      return new cu({ fs: e, dir: r, gitdir: i, cache: n });
     }
   }), Object.freeze(t), t;
 }
-function uu(t, e) {
+function lu(t, e) {
   const r = e - t;
   return Array.from({ length: r }, (i, n) => t + n);
 }
-const ls = typeof Array.prototype.flat > "u" ? (t) => t.reduce((e, r) => e.concat(r), []) : (t) => t.flat();
-class fu {
+const cs = typeof Array.prototype.flat > "u" ? (t) => t.reduce((e, r) => e.concat(r), []) : (t) => t.flat();
+class uu {
   constructor() {
     this.value = null;
   }
@@ -7385,8 +7385,8 @@ class fu {
     this.value = null;
   }
 }
-function* hu(t) {
-  const e = new fu();
+function* fu(t) {
+  const e = new uu();
   let r;
   const i = [], n = t.length;
   for (let a = 0; a < n; a++)
@@ -7410,15 +7410,15 @@ async function nr({
   map: a = async (l, f) => f,
   // The default reducer is a flatmap that filters out undefineds.
   reduce: o = async (l, f) => {
-    const u = ls(f);
+    const u = cs(f);
     return l !== void 0 && u.unshift(l), u;
   },
   // The default iterate function walks all children concurrently
   iterate: s = (l, f) => Promise.all([...f].map(l))
 }) {
   const l = n.map(
-    (y) => y[Mi]({ fs: t, dir: r, gitdir: i, cache: e })
-  ), f = new Array(l.length).fill("."), u = uu(0, l.length), m = async (y) => {
+    (y) => y[Ui]({ fs: t, dir: r, gitdir: i, cache: e })
+  ), f = new Array(l.length).fill("."), u = lu(0, l.length), m = async (y) => {
     u.map((R) => {
       const I = y[R];
       y[R] = I && new l[R].ConstructEntry(I);
@@ -7431,7 +7431,7 @@ async function nr({
     )).map((R) => (R === null ? [] : R)[Symbol.iterator]());
     return {
       entries: y,
-      children: hu(A)
+      children: fu(A)
     };
   }, g = async (y) => {
     const { entries: E, children: A } = await m(y), R = E.find((T) => T && T._fullpath)._fullpath, I = await a(R, E);
@@ -7454,17 +7454,17 @@ async function Yn(t, e) {
     })
   ).then(() => t.rmdir(e)) : await t.rmdir(e);
 }
-function du(t) {
-  return wu(t) && oo(t.then) && oo(t.catch);
+function hu(t) {
+  return du(t) && oo(t.then) && oo(t.catch);
 }
-function wu(t) {
+function du(t) {
   return t && typeof t == "object";
 }
 function oo(t) {
   return typeof t == "function";
 }
 function so(t) {
-  return du(((r) => {
+  return hu(((r) => {
     try {
       return r.readFile().catch((i) => i);
     } catch (i) {
@@ -7490,8 +7490,8 @@ function lo(t, e) {
       t[`_${r}`] = e[r].bind(e);
   else
     for (const r of co)
-      t[`_${r}`] = dn(e[r].bind(e));
-  so(e) ? e.rm ? t._rm = e.rm.bind(e) : e.rmdir.length > 1 ? t._rm = e.rmdir.bind(e) : t._rm = Yn.bind(null, t) : e.rm ? t._rm = dn(e.rm.bind(e)) : e.rmdir.length > 2 ? t._rm = dn(e.rmdir.bind(e)) : t._rm = Yn.bind(null, t);
+      t[`_${r}`] = hn(e[r].bind(e));
+  so(e) ? e.rm ? t._rm = e.rm.bind(e) : e.rmdir.length > 1 ? t._rm = e.rmdir.bind(e) : t._rm = Yn.bind(null, t) : e.rm ? t._rm = hn(e.rm.bind(e)) : e.rmdir.length > 2 ? t._rm = hn(e.rmdir.bind(e)) : t._rm = Yn.bind(null, t);
 }
 class me {
   constructor(e) {
@@ -7592,7 +7592,7 @@ class me {
   async readdir(e) {
     try {
       const r = await this._readdir(e);
-      return r.sort(Ui), r;
+      return r.sort(Fi), r;
     } catch (r) {
       return r.code === "ENOTDIR" ? null : [];
     }
@@ -7650,10 +7650,10 @@ function H(t, e) {
   if (e === void 0)
     throw new yt(t);
 }
-async function Ai(t, e) {
+async function Bi(t, e) {
   return !t && !e ? !1 : t && !e || !t && e ? !0 : !(await t.type() === "tree" && await e.type() === "tree" || await t.type() === await e.type() && await t.mode() === await e.mode() && await t.oid() === await e.oid());
 }
-async function pu({
+async function wu({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -7662,7 +7662,7 @@ async function pu({
 }) {
   try {
     H("fs", t), H("dir", e), H("gitdir", r);
-    const a = new me(t), o = [$t({ ref: i }), di(), Nr()];
+    const a = new me(t), o = [Rt({ ref: i }), di(), Nr()];
     let s = [];
     await at.acquire({ fs: a, gitdir: r, cache: n }, async function(f) {
       s = f.unmergedPaths;
@@ -7674,7 +7674,7 @@ async function pu({
       gitdir: r,
       trees: o,
       map: async function(f, [u, m, g]) {
-        const y = !await Ai(m, g), E = s.includes(f), A = !await Ai(g, u);
+        const y = !await Bi(m, g), E = s.includes(f), A = !await Bi(g, u);
         if (y || E)
           return u ? {
             path: f,
@@ -7710,7 +7710,7 @@ async function pu({
 }
 class Pr {
   static async isIgnored({ fs: e, dir: r, gitdir: i = ee.join(r, ".git"), filepath: n }) {
-    if (Ti(n) === ".git") return !0;
+    if (Ii(n) === ".git") return !0;
     if (n === ".") return !1;
     let a = "";
     const o = ee.join(i, "info", "exclude");
@@ -7736,7 +7736,7 @@ class Pr {
       } catch (E) {
         if (E.code === "NOENT") continue;
       }
-      const g = hl().add(a);
+      const g = fl().add(a);
       g.add(m);
       const y = Ir(u.filepath);
       if (y !== "." && g.ignores(y)) return !0;
@@ -7745,19 +7745,19 @@ class Pr {
     return f;
   }
 }
-async function mu({ fs: t, gitdir: e, object: r, format: i, oid: n }) {
+async function pu({ fs: t, gitdir: e, object: r, format: i, oid: n }) {
   const a = `objects/${n.slice(0, 2)}/${n.slice(2)}`, o = `${e}/${a}`;
   await t.exists(o) || await t.write(o, r);
 }
-let kn = null;
-async function us(t) {
-  return kn === null && (kn = yu()), kn ? gu(t) : ia.deflate(t);
+let En = null;
+async function ls(t) {
+  return En === null && (En = gu()), En ? mu(t) : ia.deflate(t);
 }
-async function gu(t) {
+async function mu(t) {
   const e = new CompressionStream("deflate"), r = new Blob([t]).stream().pipeThrough(e);
   return new Uint8Array(await new Response(r).arrayBuffer());
 }
-function yu() {
+function gu() {
   try {
     return new CompressionStream("deflate").writable.close(), new Blob([]).stream().cancel(), !0;
   } catch {
@@ -7773,14 +7773,14 @@ async function bt({
   oid: a = void 0,
   dryRun: o = !1
 }) {
-  return n !== "deflated" && (n !== "wrapped" && (i = Fr.wrap({ type: r, object: i })), a = await Xt(i), i = fe.from(await us(i))), o || await mu({ fs: t, gitdir: e, object: i, format: "deflated", oid: a }), a;
+  return n !== "deflated" && (n !== "wrapped" && (i = Fr.wrap({ type: r, object: i })), a = await Xt(i), i = fe.from(await ls(i))), o || await pu({ fs: t, gitdir: e, object: i, format: "deflated", oid: a }), a;
 }
-function fs(t) {
+function us(t) {
   let e;
   for (; ~(e = t.indexOf(92)); ) t[e] = 47;
   return t;
 }
-async function _u({
+async function yu({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -7859,7 +7859,7 @@ async function Kn({
             autocrlf: s
           });
     } else {
-      const E = y.isSymbolicLink() ? await r.readlink(ee.join(t, g)).then(fs) : await r.read(ee.join(t, g), { autocrlf: s });
+      const E = y.isSymbolicLink() ? await r.readlink(ee.join(t, g)).then(us) : await r.read(ee.join(t, g), { autocrlf: s });
       if (E === null) throw new Pe(g);
       const A = await bt({ fs: r, gitdir: e, type: "blob", object: E });
       n.insert({ filepath: g, stats: y, oid: A });
@@ -7874,7 +7874,7 @@ async function Kn({
 async function Xr({ fs: t, gitdir: e, path: r }) {
   return (await rt.get({ fs: t, gitdir: e })).get(r);
 }
-function hs(t, ...e) {
+function fs(t, ...e) {
   for (const r of e)
     if (r)
       for (const i of Object.keys(r)) {
@@ -7890,7 +7890,7 @@ async function ar({ fs: t, gitdir: e, author: r, commit: i }) {
     // author.email is allowed to be empty string
     timestamp: n,
     timezoneOffset: new Date(n * 1e3).getTimezoneOffset()
-  }, o = hs(
+  }, o = fs(
     {},
     a,
     i ? i.author : void 0,
@@ -7912,7 +7912,7 @@ async function Ar({
     // committer.email is allowed to be empty string
     timestamp: a,
     timezoneOffset: new Date(a * 1e3).getTimezoneOffset()
-  }, s = hs(
+  }, s = fs(
     {},
     o,
     n ? n.committer : void 0,
@@ -7922,16 +7922,16 @@ async function Ar({
   if (s.name !== void 0)
     return s;
 }
-async function ds({ fs: t, cache: e, gitdir: r, oid: i }) {
+async function hs({ fs: t, cache: e, gitdir: r, oid: i }) {
   const { type: n, object: a } = await Je({ fs: t, cache: e, gitdir: r, oid: i });
   if (n === "tag")
-    return i = wt.from(a).parse().object, ds({ fs: t, cache: e, gitdir: r, oid: i });
+    return i = wt.from(a).parse().object, hs({ fs: t, cache: e, gitdir: r, oid: i });
   if (n !== "commit")
     throw new pt(i, n, "commit");
   return { commit: Ye.from(a), oid: i };
 }
 async function Dr({ fs: t, cache: e, gitdir: r, oid: i }) {
-  const { commit: n, oid: a } = await ds({
+  const { commit: n, oid: a } = await hs({
     fs: t,
     cache: e,
     gitdir: r,
@@ -7943,7 +7943,7 @@ async function Dr({ fs: t, cache: e, gitdir: r, oid: i }) {
     payload: n.withoutSignature()
   };
 }
-async function Li({
+async function Mi({
   fs: t,
   cache: e,
   onSign: r,
@@ -8001,8 +8001,8 @@ async function Li({
   return at.acquire(
     { fs: t, gitdir: i, cache: e, allowUnmerged: !1 },
     async function(D) {
-      const M = is(D.entries).get(".");
-      if (y || (y = await ws({ fs: t, gitdir: i, inode: M, dryRun: f })), g ? g = await Promise.all(
+      const M = rs(D.entries).get(".");
+      if (y || (y = await ds({ fs: t, gitdir: i, inode: M, dryRun: f })), g ? g = await Promise.all(
         g.map((O) => ae.resolve({ fs: t, gitdir: i, ref: O }))
       ) : l ? g = R.commit.parent : g = A ? [A] : [], !n)
         if (l)
@@ -8033,10 +8033,10 @@ async function Li({
     }
   );
 }
-async function ws({ fs: t, gitdir: e, inode: r, dryRun: i }) {
+async function ds({ fs: t, gitdir: e, inode: r, dryRun: i }) {
   const n = r.children;
   for (const l of n)
-    l.type === "tree" && (l.metadata.mode = "040000", l.metadata.oid = await ws({ fs: t, gitdir: e, inode: l, dryRun: i }));
+    l.type === "tree" && (l.metadata.mode = "040000", l.metadata.oid = await ds({ fs: t, gitdir: e, inode: l, dryRun: i }));
   const a = n.map((l) => ({
     mode: l.metadata.mode,
     path: l.basename,
@@ -8061,7 +8061,7 @@ async function wi({ fs: t, cache: e, gitdir: r, oid: i, filepath: n }) {
     i = o.oid;
   else {
     const l = n.split("/");
-    i = await ps({
+    i = await ws({
       fs: t,
       cache: e,
       gitdir: r,
@@ -8073,7 +8073,7 @@ async function wi({ fs: t, cache: e, gitdir: r, oid: i, filepath: n }) {
   }
   return i;
 }
-async function ps({
+async function ws({
   fs: t,
   cache: e,
   gitdir: r,
@@ -8096,7 +8096,7 @@ async function ps({
         });
         if (f !== "tree")
           throw new pt(a, f, "tree", o);
-        return i = _t.from(u), ps({
+        return i = _t.from(u), ws({
           fs: t,
           cache: e,
           gitdir: r,
@@ -8133,7 +8133,7 @@ async function pi({ fs: t, gitdir: e, tree: r }) {
     format: "content"
   });
 }
-async function bu({
+async function _u({
   fs: t,
   cache: e,
   onSign: r,
@@ -8179,7 +8179,7 @@ async function bu({
     gitdir: i,
     tree: y
   });
-  return await Li({
+  return await Mi({
     fs: t,
     cache: e,
     onSign: r,
@@ -8194,7 +8194,7 @@ async function bu({
     signingKey: u
   });
 }
-async function vu({
+async function bu({
   fs: t,
   onSign: e,
   dir: r,
@@ -8219,7 +8219,7 @@ async function vu({
       committer: f
     });
     if (!E) throw new ft("committer");
-    return await bu({
+    return await _u({
       fs: new me(g),
       cache: m,
       onSign: e,
@@ -8236,7 +8236,7 @@ async function vu({
     throw g.caller = "git.addNote", g;
   }
 }
-async function ms({ fs: t, gitdir: e, remote: r, url: i, force: n }) {
+async function ps({ fs: t, gitdir: e, remote: r, url: i, force: n }) {
   if (r !== zt.clean(r))
     throw new Ct(r, zt.clean(r));
   const a = await rt.get({ fs: t, gitdir: e });
@@ -8247,7 +8247,7 @@ async function ms({ fs: t, gitdir: e, remote: r, url: i, force: n }) {
     `+refs/heads/*:refs/remotes/${r}/*`
   ), await rt.save({ fs: t, gitdir: e, config: a });
 }
-async function Eu({
+async function vu({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -8256,7 +8256,7 @@ async function Eu({
   force: a = !1
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("remote", i), H("url", n), await ms({
+    return H("fs", t), H("gitdir", r), H("remote", i), H("url", n), await ps({
       fs: new me(t),
       gitdir: r,
       remote: i,
@@ -8267,7 +8267,7 @@ async function Eu({
     throw o.caller = "git.addRemote", o;
   }
 }
-async function ku({
+async function Eu({
   fs: t,
   cache: e,
   onSign: r,
@@ -8304,7 +8304,7 @@ async function ku({
   });
   await ae.writeRef({ fs: t, gitdir: i, ref: n, value: E });
 }
-async function Su({
+async function ku({
   fs: t,
   onSign: e,
   dir: r,
@@ -8322,7 +8322,7 @@ async function Su({
     H("fs", t), H("gitdir", i), H("ref", n), f && H("onSign", e);
     const g = new me(t), y = await ar({ fs: g, gitdir: i, author: a });
     if (!y) throw new ft("tagger");
-    return await ku({
+    return await Eu({
       fs: g,
       cache: m,
       onSign: e,
@@ -8339,7 +8339,7 @@ async function Su({
     throw g.caller = "git.annotatedTag", g;
   }
 }
-async function xu({
+async function Su({
   fs: t,
   gitdir: e,
   ref: r,
@@ -8364,7 +8364,7 @@ async function xu({
     value: o
   });
 }
-async function Iu({
+async function xu({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -8374,7 +8374,7 @@ async function Iu({
   force: o = !1
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("ref", i), await xu({
+    return H("fs", t), H("gitdir", r), H("ref", i), await Su({
       fs: new me(t),
       gitdir: r,
       ref: i,
@@ -8386,7 +8386,7 @@ async function Iu({
     throw s.caller = "git.branch", s;
   }
 }
-const gs = (t, e) => t === "." || e == null || e.length === 0 || e === "." ? !0 : e.length >= t.length ? e.startsWith(t) : t.startsWith(e);
+const ms = (t, e) => t === "." || e == null || e.length === 0 || e === "." ? !0 : e.length >= t.length ? e.startsWith(t) : t.startsWith(e);
 async function sa({
   fs: t,
   cache: e,
@@ -8434,7 +8434,7 @@ async function sa({
   if (!f) {
     let R;
     try {
-      R = await Tu({
+      R = await Iu({
         fs: t,
         cache: e,
         onProgress: r,
@@ -8555,7 +8555,7 @@ async function sa({
     }) : await ae.writeRef({ fs: t, gitdir: a, ref: "HEAD", value: A });
   }
 }
-async function Tu({
+async function Iu({
   fs: t,
   cache: e,
   onProgress: r,
@@ -8571,10 +8571,10 @@ async function Tu({
     cache: e,
     dir: i,
     gitdir: n,
-    trees: [$t({ ref: a }), di(), Nr()],
+    trees: [Rt({ ref: a }), di(), Nr()],
     map: async function(f, [u, m, g]) {
       if (f === ".") return;
-      if (s && !s.some((E) => gs(f, E)))
+      if (s && !s.some((E) => ms(f, E)))
         return null;
       switch (r && await r({ phase: "Analyzing workdir", loaded: ++l }), [!!g, !!u, !!m].map(Number).join("")) {
         // Impossible case.
@@ -8725,11 +8725,11 @@ async function Tu({
     },
     // Modify the default flat mapping
     reduce: async function(f, u) {
-      return u = ls(u), f ? f && f[0] === "rmdir" ? (u.push(f), u) : (u.unshift(f), u) : u;
+      return u = cs(u), f ? f && f[0] === "rmdir" ? (u.push(f), u) : (u.unshift(f), u) : u;
     }
   });
 }
-async function ys({
+async function gs({
   fs: t,
   onProgress: e,
   onPostCheckout: r,
@@ -8768,9 +8768,9 @@ async function ys({
     throw E.caller = "git.checkout", E;
   }
 }
-const Ru = new RegExp("^refs/(heads/|tags/|remotes/)?(.*)");
+const Tu = new RegExp("^refs/(heads/|tags/|remotes/)?(.*)");
 function mr(t) {
-  const e = Ru.exec(t);
+  const e = Tu.exec(t);
   return e ? e[1] === "remotes/" && t.endsWith("/HEAD") ? e[2].slice(0, -5) : e[2] : t;
 }
 async function sr({
@@ -8794,21 +8794,21 @@ async function sr({
   if (n.startsWith("refs/"))
     return r ? n : mr(n);
 }
-function $u(t) {
+function Ru(t) {
   return t = t.replace(/^git@([^:]+):/, "https://$1/"), t = t.replace(/^ssh:\/\//, "https://"), t;
 }
-function _s({ username: t = "", password: e = "" }) {
+function ys({ username: t = "", password: e = "" }) {
   return `Basic ${fe.from(`${t}:${e}`).toString("base64")}`;
 }
 async function mi(t, e) {
-  const r = os(t);
+  const r = as(t);
   for (; ; ) {
     const { value: i, done: n } = await r.next();
     if (i && await e(i), n) break;
   }
   r.return && r.return();
 }
-async function Di(t) {
+async function Ai(t) {
   let e = 0;
   const r = [];
   await mi(t, (a) => {
@@ -8844,7 +8844,7 @@ class Qe {
     return fe.concat([fe.from(i, "utf8"), e]);
   }
   static streamReader(e) {
-    const r = new ss(e);
+    const r = new os(e);
     return async function() {
       try {
         let n = await r.read(4);
@@ -8887,14 +8887,14 @@ async function ho(t, { service: e }) {
   if (s === !0) return { capabilities: r, refs: i, symrefs: n };
   if (s = s.toString("utf8"), s.includes("version 2"))
     return fo(a);
-  const [l, f] = Sn(s, "\0", "\\x00");
+  const [l, f] = kn(s, "\0", "\\x00");
   if (f.split(" ").map((u) => r.add(u)), l !== "0000000000000000000000000000000000000000 capabilities^{}") {
-    const [u, m] = Sn(l, " ", " ");
+    const [u, m] = kn(l, " ", " ");
     for (i.set(m, u); ; ) {
       const g = await a();
       if (g === !0) break;
       if (g !== null) {
-        const [y, E] = Sn(g.toString("utf8"), " ", " ");
+        const [y, E] = kn(g.toString("utf8"), " ", " ");
         i.set(E, y);
       }
     }
@@ -8906,7 +8906,7 @@ async function ho(t, { service: e }) {
     }
   return { protocolVersion: 1, capabilities: r, refs: i, symrefs: n };
 }
-function Sn(t, e, r) {
+function kn(t, e, r) {
   const i = t.trim().split(e);
   if (i.length !== 2)
     throw new yr(
@@ -8916,16 +8916,16 @@ function Sn(t, e, r) {
   return i;
 }
 const wo = (t, e) => t.endsWith("?") ? `${t}${e}` : `${t}/${e.replace(/^https?:\/\//, "")}`, po = (t, e) => {
-  (e.username || e.password) && (t.Authorization = _s(e)), e.headers && Object.assign(t, e.headers);
-}, xn = async (t) => {
+  (e.username || e.password) && (t.Authorization = ys(e)), e.headers && Object.assign(t, e.headers);
+}, Sn = async (t) => {
   try {
-    const e = fe.from(await Di(t.body)), r = e.toString("utf8");
+    const e = fe.from(await Ai(t.body)), r = e.toString("utf8");
     return { preview: r.length < 256 ? r : r.slice(0, 256) + "...", response: r, data: e };
   } catch {
     return {};
   }
 };
-class Oi {
+class Di {
   static async capabilities() {
     return ["discover", "connect"];
   }
@@ -8956,7 +8956,7 @@ class Oi {
   }) {
     let { url: m, auth: g } = uo(l);
     const y = o ? wo(o, m) : m;
-    (g.username || g.password) && (f.Authorization = _s(g)), u === 2 && (f["Git-Protocol"] = "version=2");
+    (g.username || g.password) && (f.Authorization = ys(g)), u === 2 && (f["Git-Protocol"] = "version=2");
     let E, A, R = !1;
     do
       if (E = await e.request({
@@ -8977,14 +8977,14 @@ class Oi {
       } else E.statusCode === 200 && R && n && await n(m, g);
     while (A);
     if (E.statusCode !== 200) {
-      const { response: I } = await xn(E);
+      const { response: I } = await Sn(E);
       throw new Rr(E.statusCode, E.statusMessage, I);
     }
     if (E.headers["content-type"] === `application/x-${s}-advertisement`) {
       const I = await ho(E.body, { service: s });
       return I.auth = g, I;
     } else {
-      const { preview: I, response: T, data: D } = await xn(E);
+      const { preview: I, response: T, data: D } = await Sn(E);
       try {
         const P = await ho([D], { service: s });
         return P.auth = g, P;
@@ -9024,13 +9024,13 @@ class Oi {
       headers: l
     });
     if (u.statusCode !== 200) {
-      const { response: m } = xn(u);
+      const { response: m } = Sn(u);
       throw new Rr(u.statusCode, u.statusMessage, m);
     }
     return u;
   }
 }
-function Bu({ url: t }) {
+function $u({ url: t }) {
   if (t.startsWith("git@"))
     return {
       transport: "ssh",
@@ -9050,11 +9050,11 @@ function Bu({ url: t }) {
       };
   }
 }
-class Pi {
+class Li {
   static getRemoteHelperFor({ url: e }) {
     const r = /* @__PURE__ */ new Map();
-    r.set("http", Oi), r.set("https", Oi);
-    const i = Bu({ url: e });
+    r.set("http", Di), r.set("https", Di);
+    const i = $u({ url: e });
     if (!i)
       throw new ui(e);
     if (r.has(i.transport))
@@ -9062,7 +9062,7 @@ class Pi {
     throw new li(
       e,
       i.transport,
-      i.transport === "ssh" ? $u(e) : void 0
+      i.transport === "ssh" ? Ru(e) : void 0
     );
   }
 }
@@ -9096,11 +9096,11 @@ class Yr {
       });
   }
 }
-async function Au({ fs: t, gitdir: e, oid: r }) {
+async function Bu({ fs: t, gitdir: e, oid: r }) {
   const i = `objects/${r.slice(0, 2)}/${r.slice(2)}`;
   return t.exists(`${e}/${i}`);
 }
-async function Du({
+async function Au({
   fs: t,
   cache: e,
   gitdir: r,
@@ -9130,8 +9130,8 @@ async function mo({
   format: n = "content"
 }) {
   const a = (s) => Je({ fs: t, cache: e, gitdir: r, oid: s });
-  let o = await Au({ fs: t, gitdir: r, oid: i });
-  return o || (o = await Du({
+  let o = await Bu({ fs: t, gitdir: r, oid: i });
+  return o || (o = await Au({
     fs: t,
     cache: e,
     gitdir: r,
@@ -9139,23 +9139,23 @@ async function mo({
     getExternalRefDelta: a
   })), o;
 }
-function Ou(t) {
+function Du(t) {
   const n = "5041434b" + "00000002" + "00000000";
   return t.slice(0, 12).toString("hex") === n;
 }
-function bs(t, e) {
+function _s(t, e) {
   const r = t.map((i) => i.split("=", 1)[0]);
   return e.filter((i) => {
     const n = i.split("=", 1)[0];
     return r.includes(n);
   });
 }
-const ji = {
+const Pi = {
   name: "isomorphic-git",
   version: "1.30.1",
   agent: "git/isomorphic-git@1.30.1"
 };
-class xi {
+class Si {
   constructor() {
     this._queue = [];
   }
@@ -9191,25 +9191,25 @@ class xi {
     });
   }
 }
-function Cu(t) {
+function Ou(t) {
   const e = t.indexOf("\r"), r = t.indexOf(`
 `);
   return e === -1 && r === -1 ? -1 : e === -1 ? r + 1 : r === -1 ? e + 1 : r === e + 1 ? r + 1 : Math.min(e, r) + 1;
 }
-function vs(t) {
-  const e = new xi();
+function bs(t) {
+  const e = new Si();
   let r = "";
   return (async () => (await mi(t, (i) => {
     for (i = i.toString("utf8"), r += i; ; ) {
-      const n = Cu(r);
+      const n = Ou(r);
       if (n === -1) break;
       e.write(r.slice(0, n)), r = r.slice(n);
     }
   }), r.length > 0 && e.write(r), e.end()))(), e;
 }
-class Es {
+class vs {
   static demux(e) {
-    const r = Qe.streamReader(e), i = new xi(), n = new xi(), a = new xi(), o = async function() {
+    const r = Qe.streamReader(e), i = new Si(), n = new Si(), a = new Si(), o = async function() {
       const s = await r();
       if (s === null) return o();
       if (s === !0) {
@@ -9309,8 +9309,8 @@ class Es {
   //   return output
   // }
 }
-async function Nu(t) {
-  const { packetlines: e, packfile: r, progress: i } = Es.demux(t), n = [], a = [], o = [];
+async function Cu(t) {
+  const { packetlines: e, packfile: r, progress: i } = vs.demux(t), n = [], a = [], o = [];
   let s = !1, l = !1;
   return new Promise((f, u) => {
     mi(e, (m) => {
@@ -9331,7 +9331,7 @@ async function Nu(t) {
     });
   });
 }
-function Fu({
+function Nu({
   capabilities: t = [],
   wants: e = [],
   haves: r = [],
@@ -9394,7 +9394,7 @@ async function ca({
     throw new yt("remote OR url");
   const Y = u || B && await O.get(`branch.${B}.merge`) || f || "HEAD";
   y === void 0 && (y = await O.get("http.corsProxy"));
-  const N = Pi.getRemoteHelperFor({ url: z }), J = await N.discover({
+  const N = Li.getRemoteHelperFor({ url: z }), J = await N.discover({
     http: r,
     onAuth: a,
     onAuthSuccess: o,
@@ -9425,7 +9425,7 @@ async function ca({
   });
   for (const we of _e.keys())
     we === X || we === "HEAD" || we.startsWith("refs/heads/") || T && we.startsWith("refs/tags/") || _e.delete(we);
-  const ie = bs(
+  const ie = _s(
     [...J.capabilities],
     [
       "multi_ack_detailed",
@@ -9437,7 +9437,7 @@ async function ca({
       // isomorphic-git is perfectly happy with thin packfiles in .git/objects/pack but
       // canonical git it turns out is NOT.
       "ofs-delta",
-      `agent=${ji.agent}`
+      `agent=${Pi.agent}`
     ]
   );
   I && ie.push("deepen-relative");
@@ -9455,7 +9455,7 @@ async function ca({
     } catch {
     }
   Re = [...new Set(Re)];
-  const be = await Yr.read({ fs: t, gitdir: l }), Ae = J.capabilities.has("shallow") ? [...be] : [], ye = Fu({
+  const be = await Yr.read({ fs: t, gitdir: l }), Ae = J.capabilities.has("shallow") ? [...be] : [], ye = Nu({
     capabilities: ie,
     wants: de,
     haves: Re,
@@ -9463,7 +9463,7 @@ async function ca({
     depth: E,
     since: A,
     exclude: R
-  }), $e = fe.from(await Di(ye)), ke = await N.connect({
+  }), $e = fe.from(await Ai(ye)), ke = await N.connect({
     http: r,
     onProgress: i,
     corsProxy: y,
@@ -9472,7 +9472,7 @@ async function ca({
     auth: oe,
     body: [$e],
     headers: P
-  }), Ee = await Nu(ke.body);
+  }), Ee = await Cu(ke.body);
   ke.headers && (Ee.headers = ke.headers);
   for (const we of Ee.shallows)
     if (!be.has(we))
@@ -9535,7 +9535,7 @@ async function ca({
     oid: re,
     description: `${De} '${mr(X)}' of ${z}`
   }, i || n) {
-    const we = vs(Ee.progress);
+    const we = bs(Ee.progress);
     mi(we, async (Oe) => {
       if (n && await n(Oe), i) {
         const Ve = Oe.match(/([^:]*).*\((\d+?)\/(\d+?)\)/);
@@ -9547,14 +9547,14 @@ async function ca({
       }
     });
   }
-  const Ge = fe.from(await Di(Ee.packfile));
+  const Ge = fe.from(await Ai(Ee.packfile));
   if (ke.body.error) throw ke.body.error;
   const tt = Ge.slice(-20).toString("hex"), je = {
     defaultBranch: Ee.HEAD,
     fetchHead: Ee.FETCH_HEAD.oid,
     fetchHeadDescription: Ee.FETCH_HEAD.description
   };
-  if (Ee.headers && (je.headers = Ee.headers), M && (je.pruned = Ee.pruned), tt !== "" && !Ou(Ge)) {
+  if (Ee.headers && (je.headers = Ee.headers), M && (je.pruned = Ee.pruned), tt !== "" && !Du(Ge)) {
     je.packfile = `objects/pack/pack-${tt}.pack`;
     const we = ee.join(l, je.packfile);
     await t.write(we, Ge);
@@ -9567,7 +9567,7 @@ async function ca({
   }
   return je;
 }
-async function ks({
+async function Es({
   fs: t,
   bare: e = !1,
   dir: r,
@@ -9599,7 +9599,7 @@ async function ks({
   ), await t.write(i + "/HEAD", `ref: refs/heads/${n}
 `);
 }
-async function Uu({
+async function Fu({
   fs: t,
   cache: e,
   http: r,
@@ -9625,7 +9625,7 @@ async function Uu({
   headers: U
 }) {
   try {
-    if (await ks({ fs: t, gitdir: u }), await ms({ fs: t, gitdir: u, remote: E, url: m, force: !1 }), g) {
+    if (await Es({ fs: t, gitdir: u }), await ps({ fs: t, gitdir: u, remote: E, url: m, force: !1 }), g) {
       const W = await rt.get({ fs: t, gitdir: u });
       await W.set("http.corsProxy", g), await rt.save({ fs: t, gitdir: u, config: W });
     }
@@ -9667,7 +9667,7 @@ async function Uu({
     }), B;
   }
 }
-async function Mu({
+async function Uu({
   fs: t,
   http: e,
   onProgress: r,
@@ -9693,7 +9693,7 @@ async function Mu({
   cache: U = {}
 }) {
   try {
-    return H("fs", t), H("http", e), H("gitdir", f), D || H("dir", l), H("url", u), await Uu({
+    return H("fs", t), H("http", e), H("gitdir", f), D || H("dir", l), H("url", u), await Fu({
       fs: new me(t),
       cache: U,
       http: e,
@@ -9722,7 +9722,7 @@ async function Mu({
     throw B.caller = "git.clone", B;
   }
 }
-async function Lu({
+async function Mu({
   fs: t,
   onSign: e,
   dir: r,
@@ -9742,7 +9742,7 @@ async function Lu({
   try {
     H("fs", t), l || H("message", n), s && H("onSign", e);
     const A = new me(t);
-    return await Li({
+    return await Mi({
       fs: A,
       cache: E,
       onSign: e,
@@ -9762,7 +9762,7 @@ async function Lu({
     throw A.caller = "git.commit", A;
   }
 }
-async function Pu({
+async function Lu({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -9780,7 +9780,7 @@ async function Pu({
     throw a.caller = "git.currentBranch", a;
   }
 }
-async function ju({ fs: t, gitdir: e, ref: r }) {
+async function Pu({ fs: t, gitdir: e, ref: r }) {
   if (r = r.startsWith("refs/heads/") ? r : `refs/heads/${r}`, !await ae.exists({ fs: t, gitdir: e, ref: r }))
     throw new Pe(r);
   const n = await ae.expand({ fs: t, gitdir: e, ref: r }), a = await sr({ fs: t, gitdir: e, fullname: !0 });
@@ -9792,14 +9792,14 @@ async function ju({ fs: t, gitdir: e, ref: r }) {
   const o = mr(r), s = await rt.get({ fs: t, gitdir: e });
   await s.deleteSection("branch", o), await rt.save({ fs: t, gitdir: e, config: s });
 }
-async function zu({
+async function ju({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
   ref: i
 }) {
   try {
-    return H("fs", t), H("ref", i), await ju({
+    return H("fs", t), H("ref", i), await Pu({
       fs: new me(t),
       gitdir: r,
       ref: i
@@ -9808,25 +9808,25 @@ async function zu({
     throw n.caller = "git.deleteBranch", n;
   }
 }
-async function Hu({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), ref: i }) {
+async function zu({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), ref: i }) {
   try {
     H("fs", t), H("ref", i), await ae.deleteRef({ fs: new me(t), gitdir: r, ref: i });
   } catch (n) {
     throw n.caller = "git.deleteRef", n;
   }
 }
-async function Wu({ fs: t, gitdir: e, remote: r }) {
+async function Hu({ fs: t, gitdir: e, remote: r }) {
   const i = await rt.get({ fs: t, gitdir: e });
   await i.deleteSection("remote", r), await rt.save({ fs: t, gitdir: e, config: i });
 }
-async function qu({
+async function Wu({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
   remote: i
 }) {
   try {
-    return H("fs", t), H("remote", i), await Wu({
+    return H("fs", t), H("remote", i), await Hu({
       fs: new me(t),
       gitdir: r,
       remote: i
@@ -9835,12 +9835,12 @@ async function qu({
     throw n.caller = "git.deleteRemote", n;
   }
 }
-async function Gu({ fs: t, gitdir: e, ref: r }) {
+async function qu({ fs: t, gitdir: e, ref: r }) {
   r = r.startsWith("refs/tags/") ? r : `refs/tags/${r}`, await ae.deleteRef({ fs: t, gitdir: e, ref: r });
 }
-async function Zu({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), ref: i }) {
+async function Gu({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), ref: i }) {
   try {
-    return H("fs", t), H("ref", i), await Gu({
+    return H("fs", t), H("ref", i), await qu({
       fs: new me(t),
       gitdir: r,
       ref: i
@@ -9849,11 +9849,11 @@ async function Zu({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), ref: i }) {
     throw n.caller = "git.deleteTag", n;
   }
 }
-async function Vu({ fs: t, gitdir: e, oid: r }) {
+async function Zu({ fs: t, gitdir: e, oid: r }) {
   const i = r.slice(0, 2);
   return (await t.readdir(`${e}/objects/${i}`)).map((a) => `${i}${a}`).filter((a) => a.startsWith(r));
 }
-async function Xu({
+async function Vu({
   fs: t,
   cache: e,
   gitdir: r,
@@ -9876,8 +9876,8 @@ async function Xu({
   }
   return a;
 }
-async function Yu({ fs: t, cache: e, gitdir: r, oid: i }) {
-  const n = (s) => Je({ fs: t, cache: e, gitdir: r, oid: s }), a = await Vu({ fs: t, gitdir: r, oid: i }), o = await Xu({
+async function Xu({ fs: t, cache: e, gitdir: r, oid: i }) {
+  const n = (s) => Je({ fs: t, cache: e, gitdir: r, oid: s }), a = await Zu({ fs: t, gitdir: r, oid: i }), o = await Vu({
     fs: t,
     cache: e,
     gitdir: r,
@@ -9890,7 +9890,7 @@ async function Yu({ fs: t, cache: e, gitdir: r, oid: i }) {
     return a[0];
   throw a.length > 1 ? new ei("oids", i, a) : new Pe(`an object matching "${i}"`);
 }
-async function Ku({
+async function Yu({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -9898,7 +9898,7 @@ async function Ku({
   cache: n = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("oid", i), await Yu({
+    return H("fs", t), H("gitdir", r), H("oid", i), await Xu({
       fs: new me(t),
       cache: n,
       gitdir: r,
@@ -9908,7 +9908,7 @@ async function Ku({
     throw a.caller = "git.expandOid", a;
   }
 }
-async function Ju({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), ref: i }) {
+async function Ku({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), ref: i }) {
   try {
     return H("fs", t), H("gitdir", r), H("ref", i), await ae.expand({
       fs: new me(t),
@@ -9940,9 +9940,9 @@ async function la({ fs: t, cache: e, gitdir: r, oids: i }) {
   }
   return [];
 }
-const In = /^.*(\r?\n|$)/gm;
-function Qu({ branches: t, contents: e }) {
-  const r = t[1], i = t[2], n = e[0], a = e[1], o = e[2], s = a.match(In), l = n.match(In), f = o.match(In), u = yl(s, l, f), m = 7;
+const xn = /^.*(\r?\n|$)/gm;
+function Ju({ branches: t, contents: e }) {
+  const r = t[1], i = t[2], n = e[0], a = e[1], o = e[2], s = a.match(xn), l = n.match(xn), f = o.match(xn), u = gl(s, l, f), m = 7;
   let g = "", y = !0;
   for (const E of u)
     E.ok && (g += E.ok.join("")), E.conflict && (y = !1, g += `${"<".repeat(m)} ${r}
@@ -9951,7 +9951,7 @@ function Qu({ branches: t, contents: e }) {
 `);
   return { cleanMerge: y, mergedText: g };
 }
-async function ef({
+async function Qu({
   fs: t,
   cache: e,
   dir: r,
@@ -9967,14 +9967,14 @@ async function ef({
   abortOnConflict: g = !0,
   mergeDriver: y
 }) {
-  const E = $t({ ref: a }), A = $t({ ref: o }), R = $t({ ref: s }), I = [], T = [], D = [], P = [], M = await nr({
+  const E = Rt({ ref: a }), A = Rt({ ref: o }), R = Rt({ ref: s }), I = [], T = [], D = [], P = [], M = await nr({
     fs: t,
     cache: e,
     dir: r,
     gitdir: i,
     trees: [E, A, R],
     map: async function(U, [B, O, W]) {
-      const z = Ti(U), Y = await Ai(B, O), N = await Ai(W, O);
+      const z = Ii(U), Y = await Bi(B, O), N = await Bi(W, O);
       switch (`${Y}-${N}`) {
         case "false-false":
           return {
@@ -9999,7 +9999,7 @@ async function ef({
           } : void 0;
         case "true-true": {
           if (B && O && W && await B.type() === "blob" && await O.type() === "blob" && await W.type() === "blob")
-            return tf({
+            return ef({
               fs: t,
               gitdir: i,
               path: z,
@@ -10075,7 +10075,7 @@ async function ef({
     cache: e,
     dir: r,
     gitdir: i,
-    trees: [$t({ ref: M.oid })],
+    trees: [Rt({ ref: M.oid })],
     map: async function(U, [B]) {
       const O = `${r}/${U}`;
       if (await B.type() === "blob") {
@@ -10091,7 +10091,7 @@ async function ef({
     P
   )) : M.oid;
 }
-async function tf({
+async function ef({
   fs: t,
   gitdir: e,
   path: r,
@@ -10102,7 +10102,7 @@ async function tf({
   theirName: s,
   baseName: l,
   dryRun: f,
-  mergeDriver: u = Qu
+  mergeDriver: u = Ju
 }) {
   const m = "blob", g = await n.mode() === await i.mode() ? await a.mode() : await i.mode();
   if (await i.oid() === await a.oid())
@@ -10133,7 +10133,7 @@ async function tf({
   });
   return { cleanMerge: I, mergeResult: { mode: g, path: r, oid: T, type: m } };
 }
-async function Ss({
+async function ks({
   fs: t,
   cache: e,
   dir: r,
@@ -10193,7 +10193,7 @@ async function Ss({
       throw new ni();
     const M = await at.acquire(
       { fs: t, gitdir: i, cache: e, allowUnmerged: !1 },
-      async (B) => ef({
+      async (B) => Qu({
         fs: t,
         cache: e,
         dir: r,
@@ -10214,7 +10214,7 @@ async function Ss({
     return m || (m = `Merge branch '${mr(a)}' into ${mr(
       n
     )}`), {
-      oid: await Li({
+      oid: await Mi({
         fs: t,
         cache: e,
         gitdir: i,
@@ -10234,7 +10234,7 @@ async function Ss({
     };
   }
 }
-async function xs({
+async function Ss({
   fs: t,
   cache: e,
   http: r,
@@ -10287,7 +10287,7 @@ async function xs({
       prune: E,
       pruneTags: A
     });
-    await Ss({
+    await ks({
       fs: t,
       cache: e,
       gitdir: f,
@@ -10315,7 +10315,7 @@ async function xs({
     throw O.caller = "git.pull", O;
   }
 }
-async function rf({
+async function tf({
   fs: t,
   http: e,
   onProgress: r,
@@ -10342,7 +10342,7 @@ async function rf({
       timestamp: Date.now(),
       timezoneOffset: 0
     };
-    return await xs({
+    return await Ss({
       fs: new me(t),
       cache: R,
       http: e,
@@ -10368,7 +10368,7 @@ async function rf({
     throw I.caller = "git.fastForward", I;
   }
 }
-async function nf({
+async function rf({
   fs: t,
   http: e,
   onProgress: r,
@@ -10424,7 +10424,7 @@ async function nf({
     throw O.caller = "git.fetch", O;
   }
 }
-async function af({
+async function nf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -10442,24 +10442,24 @@ async function af({
     throw a.caller = "git.findMergeBase", a;
   }
 }
-async function Is({ fs: t, filepath: e }) {
+async function xs({ fs: t, filepath: e }) {
   if (await t.exists(ee.join(e, ".git")))
     return e;
   {
     const r = Ir(e);
     if (r === e)
       throw new Pe(`git root for ${e}`);
-    return Is({ fs: t, filepath: r });
+    return xs({ fs: t, filepath: r });
   }
 }
-async function of({ fs: t, filepath: e }) {
+async function af({ fs: t, filepath: e }) {
   try {
-    return H("fs", t), H("filepath", e), await Is({ fs: new me(t), filepath: e });
+    return H("fs", t), H("filepath", e), await xs({ fs: new me(t), filepath: e });
   } catch (r) {
     throw r.caller = "git.findRoot", r;
   }
 }
-async function sf({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), path: i }) {
+async function of({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), path: i }) {
   try {
     return H("fs", t), H("gitdir", r), H("path", i), await Xr({
       fs: new me(t),
@@ -10470,17 +10470,17 @@ async function sf({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), path: i }) {
     throw n.caller = "git.getConfig", n;
   }
 }
-async function cf({ fs: t, gitdir: e, path: r }) {
+async function sf({ fs: t, gitdir: e, path: r }) {
   return (await rt.get({ fs: t, gitdir: e })).getall(r);
 }
-async function lf({
+async function cf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
   path: i
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("path", i), await cf({
+    return H("fs", t), H("gitdir", r), H("path", i), await sf({
       fs: new me(t),
       gitdir: r,
       path: i
@@ -10489,7 +10489,7 @@ async function lf({
     throw n.caller = "git.getConfigAll", n;
   }
 }
-async function uf({
+async function lf({
   http: t,
   onAuth: e,
   onAuthSuccess: r,
@@ -10501,7 +10501,7 @@ async function uf({
 }) {
   try {
     H("http", t), H("url", a);
-    const f = await Pi.getRemoteHelperFor({ url: a }).discover({
+    const f = await Li.getRemoteHelperFor({ url: a }).discover({
       http: t,
       onAuth: e,
       onAuthSuccess: r,
@@ -10533,7 +10533,7 @@ async function uf({
     throw l.caller = "git.getRemoteInfo", l;
   }
 }
-function Ts(t, e, r, i) {
+function Is(t, e, r, i) {
   const n = [];
   for (const [a, o] of t.refs) {
     if (e && !a.startsWith(e)) continue;
@@ -10551,7 +10551,7 @@ function Ts(t, e, r, i) {
   }
   return n;
 }
-async function ff({
+async function uf({
   http: t,
   onAuth: e,
   onAuthSuccess: r,
@@ -10564,7 +10564,7 @@ async function ff({
 }) {
   try {
     H("http", t), H("url", a);
-    const u = await Pi.getRemoteHelperFor({ url: a }).discover({
+    const u = await Li.getRemoteHelperFor({ url: a }).discover({
       http: t,
       onAuth: e,
       onAuthSuccess: r,
@@ -10588,13 +10588,13 @@ async function ff({
     return {
       protocolVersion: 1,
       capabilities: m,
-      refs: Ts(u, void 0, !0, !0)
+      refs: Is(u, void 0, !0, !0)
     };
   } catch (f) {
     throw f.caller = "git.getRemoteInfo2", f;
   }
 }
-async function hf({
+async function ff({
   type: t,
   object: e,
   format: r = "content",
@@ -10602,10 +10602,10 @@ async function hf({
 }) {
   return r !== "deflated" && (r !== "wrapped" && (e = Fr.wrap({ type: t, object: e })), i = await Xt(e)), { oid: i, object: e };
 }
-async function df({ object: t }) {
+async function hf({ object: t }) {
   try {
     H("object", t), typeof t == "string" ? t = fe.from(t, "utf8") : t = fe.from(t);
-    const e = "blob", { oid: r, object: i } = await hf({
+    const e = "blob", { oid: r, object: i } = await ff({
       type: "blob",
       format: "content",
       object: t
@@ -10615,7 +10615,7 @@ async function df({ object: t }) {
     throw e.caller = "git.hashBlob", e;
   }
 }
-async function wf({
+async function df({
   fs: t,
   cache: e,
   onProgress: r,
@@ -10637,7 +10637,7 @@ async function wf({
     throw o.caller = "git.indexPack", o;
   }
 }
-async function pf({
+async function wf({
   fs: t,
   onProgress: e,
   dir: r,
@@ -10646,7 +10646,7 @@ async function pf({
   cache: a = {}
 }) {
   try {
-    return H("fs", t), H("dir", r), H("gitdir", r), H("filepath", n), await wf({
+    return H("fs", t), H("dir", r), H("gitdir", r), H("filepath", n), await df({
       fs: new me(t),
       cache: a,
       onProgress: e,
@@ -10658,7 +10658,7 @@ async function pf({
     throw o.caller = "git.indexPack", o;
   }
 }
-async function mf({
+async function pf({
   fs: t,
   bare: e = !1,
   dir: r,
@@ -10666,7 +10666,7 @@ async function mf({
   defaultBranch: n = "master"
 }) {
   try {
-    return H("fs", t), H("gitdir", i), e || H("dir", r), await ks({
+    return H("fs", t), H("gitdir", i), e || H("dir", r), await Es({
       fs: new me(t),
       bare: e,
       dir: r,
@@ -10677,7 +10677,7 @@ async function mf({
     throw a.caller = "git.init", a;
   }
 }
-async function Rs({
+async function Ts({
   fs: t,
   cache: e,
   gitdir: r,
@@ -10713,7 +10713,7 @@ async function Rs({
   }
   return !1;
 }
-async function gf({
+async function mf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -10723,7 +10723,7 @@ async function gf({
   cache: o = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("oid", i), H("ancestor", n), await Rs({
+    return H("fs", t), H("gitdir", r), H("oid", i), H("ancestor", n), await Ts({
       fs: new me(t),
       cache: o,
       gitdir: r,
@@ -10735,7 +10735,7 @@ async function gf({
     throw s.caller = "git.isDescendent", s;
   }
 }
-async function yf({
+async function gf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -10752,7 +10752,7 @@ async function yf({
     throw n.caller = "git.isIgnored", n;
   }
 }
-async function _f({
+async function yf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -10768,10 +10768,10 @@ async function _f({
     throw n.caller = "git.listBranches", n;
   }
 }
-async function bf({ fs: t, gitdir: e, ref: r, cache: i }) {
+async function _f({ fs: t, gitdir: e, ref: r, cache: i }) {
   if (r) {
     const n = await ae.resolve({ gitdir: e, fs: t, ref: r }), a = [];
-    return await $s({
+    return await Rs({
       fs: t,
       cache: i,
       gitdir: e,
@@ -10784,7 +10784,7 @@ async function bf({ fs: t, gitdir: e, ref: r, cache: i }) {
       return n.entries.map((a) => a.path);
     });
 }
-async function $s({
+async function Rs({
   fs: t,
   cache: e,
   gitdir: r,
@@ -10794,7 +10794,7 @@ async function $s({
 }) {
   const { tree: o } = await jr({ fs: t, cache: e, gitdir: r, oid: i });
   for (const s of o)
-    s.type === "tree" ? await $s({
+    s.type === "tree" ? await Rs({
       fs: t,
       cache: e,
       gitdir: r,
@@ -10803,7 +10803,7 @@ async function $s({
       prefix: ee.join(a, s.path)
     }) : n.push(ee.join(a, s.path));
 }
-async function vf({
+async function bf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -10811,7 +10811,7 @@ async function vf({
   cache: n = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), await bf({
+    return H("fs", t), H("gitdir", r), await _f({
       fs: new me(t),
       cache: n,
       gitdir: r,
@@ -10821,7 +10821,7 @@ async function vf({
     throw a.caller = "git.listFiles", a;
   }
 }
-async function Ef({ fs: t, cache: e, gitdir: r, ref: i }) {
+async function vf({ fs: t, cache: e, gitdir: r, ref: i }) {
   let n;
   try {
     n = await ae.resolve({ gitdir: r, fs: t, ref: i });
@@ -10839,7 +10839,7 @@ async function Ef({ fs: t, cache: e, gitdir: r, ref: i }) {
     note: s.oid
   }));
 }
-async function kf({
+async function Ef({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -10847,7 +10847,7 @@ async function kf({
   cache: n = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("ref", i), await Ef({
+    return H("fs", t), H("gitdir", r), H("ref", i), await vf({
       fs: new me(t),
       cache: n,
       gitdir: r,
@@ -10857,7 +10857,7 @@ async function kf({
     throw a.caller = "git.listNotes", a;
   }
 }
-async function Sf({
+async function kf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -10869,7 +10869,7 @@ async function Sf({
     throw n.caller = "git.listRefs", n;
   }
 }
-async function xf({ fs: t, gitdir: e }) {
+async function Sf({ fs: t, gitdir: e }) {
   const r = await rt.get({ fs: t, gitdir: e }), i = await r.getSubsections("remote");
   return Promise.all(
     i.map(async (a) => {
@@ -10878,9 +10878,9 @@ async function xf({ fs: t, gitdir: e }) {
     })
   );
 }
-async function If({ fs: t, dir: e, gitdir: r = ee.join(e, ".git") }) {
+async function xf({ fs: t, dir: e, gitdir: r = ee.join(e, ".git") }) {
   try {
-    return H("fs", t), H("gitdir", r), await xf({
+    return H("fs", t), H("gitdir", r), await Sf({
       fs: new me(t),
       gitdir: r
     });
@@ -10888,7 +10888,7 @@ async function If({ fs: t, dir: e, gitdir: r = ee.join(e, ".git") }) {
     throw i.caller = "git.listRemotes", i;
   }
 }
-async function Tf(t) {
+async function If(t) {
   const e = Qe.streamReader(t), r = [];
   let i;
   for (; i = await e(), i !== !0; ) {
@@ -10903,13 +10903,13 @@ async function Tf(t) {
   }
   return r;
 }
-async function Rf({ prefix: t, symrefs: e, peelTags: r }) {
+async function Tf({ prefix: t, symrefs: e, peelTags: r }) {
   const i = [];
   return i.push(Qe.encode(`command=ls-refs
-`)), i.push(Qe.encode(`agent=${ji.agent}
+`)), i.push(Qe.encode(`agent=${Pi.agent}
 `)), (r || e || t) && i.push(Qe.delim()), r && i.push(Qe.encode("peel")), e && i.push(Qe.encode("symrefs")), t && i.push(Qe.encode(`ref-prefix ${t}`)), i.push(Qe.flush()), i;
 }
-async function $f({
+async function Rf({
   http: t,
   onAuth: e,
   onAuthSuccess: r,
@@ -10925,7 +10925,7 @@ async function $f({
 }) {
   try {
     H("http", t), H("url", a);
-    const g = await Oi.discover({
+    const g = await Di.discover({
       http: t,
       onAuth: e,
       onAuthSuccess: r,
@@ -10937,8 +10937,8 @@ async function $f({
       protocolVersion: l
     });
     if (g.protocolVersion === 1)
-      return Ts(g, f, u, m);
-    const y = await Rf({ prefix: f, symrefs: u, peelTags: m }), E = await Oi.connect({
+      return Is(g, f, u, m);
+    const y = await Tf({ prefix: f, symrefs: u, peelTags: m }), E = await Di.connect({
       http: t,
       auth: g.auth,
       headers: o,
@@ -10947,28 +10947,28 @@ async function $f({
       url: a,
       body: y
     });
-    return Tf(E.body);
+    return If(E.body);
   } catch (g) {
     throw g.caller = "git.listServerRefs", g;
   }
 }
-async function Bf({ fs: t, dir: e, gitdir: r = ee.join(e, ".git") }) {
+async function $f({ fs: t, dir: e, gitdir: r = ee.join(e, ".git") }) {
   try {
     return H("fs", t), H("gitdir", r), ae.listTags({ fs: new me(t), gitdir: r });
   } catch (i) {
     throw i.caller = "git.listTags", i;
   }
 }
-function Af(t, e) {
+function Bf(t, e) {
   return t.committer.timestamp - e.committer.timestamp;
 }
-const Df = "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391";
+const Af = "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391";
 async function go({ fs: t, cache: e, gitdir: r, oid: i, fileId: n }) {
-  if (n === Df) return;
+  if (n === Af) return;
   const a = i;
   let o;
   const s = await Br({ fs: t, cache: e, gitdir: r, oid: i }), l = s.tree;
-  return n === s.oid ? o = s.path : (o = await Bs({
+  return n === s.oid ? o = s.path : (o = await $s({
     fs: t,
     cache: e,
     gitdir: r,
@@ -10977,7 +10977,7 @@ async function go({ fs: t, cache: e, gitdir: r, oid: i, fileId: n }) {
     oid: a
   }), Array.isArray(o) && (o.length === 0 ? o = void 0 : o.length === 1 && (o = o[0]))), o;
 }
-async function Bs({
+async function $s({
   fs: t,
   cache: e,
   gitdir: r,
@@ -10995,7 +10995,7 @@ async function Bs({
       gitdir: r,
       oid: f.oid
     }).then(function({ object: m }) {
-      return Bs({
+      return $s({
         fs: t,
         cache: e,
         gitdir: r,
@@ -11009,7 +11009,7 @@ async function Bs({
   });
   return await Promise.all(l), o;
 }
-async function Of({
+async function Df({
   fs: t,
   cache: e,
   gitdir: r,
@@ -11087,11 +11087,11 @@ async function Of({
         const P = await Dr({ fs: t, cache: e, gitdir: r, oid: D });
         y.map((M) => M.oid).includes(P.oid) || y.push(P);
       }
-    y.length === 0 && I(T), y.sort((D, P) => Af(D.commit, P.commit));
+    y.length === 0 && I(T), y.sort((D, P) => Bf(D.commit, P.commit));
   }
   return u;
 }
-async function Cf({
+async function Of({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11105,7 +11105,7 @@ async function Cf({
   cache: f = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("ref", n), await Of({
+    return H("fs", t), H("gitdir", r), H("ref", n), await Df({
       fs: new me(t),
       cache: f,
       gitdir: r,
@@ -11120,7 +11120,7 @@ async function Cf({
     throw u.caller = "git.log", u;
   }
 }
-async function Nf({
+async function Cf({
   fs: t,
   onSign: e,
   dir: r,
@@ -11152,7 +11152,7 @@ async function Nf({
     });
     if (!D && (!s || !o))
       throw new ft("committer");
-    return await Ss({
+    return await ks({
       fs: I,
       cache: A,
       dir: r,
@@ -11175,7 +11175,7 @@ async function Nf({
     throw I.caller = "git.merge", I;
   }
 }
-const Ff = {
+const Nf = {
   commit: 16,
   tree: 32,
   blob: 48,
@@ -11183,27 +11183,27 @@ const Ff = {
   ofs_delta: 96,
   ref_delta: 112
 };
-async function As({
+async function Bs({
   fs: t,
   cache: e,
   dir: r,
   gitdir: i = ee.join(r, ".git"),
   oids: n
 }) {
-  const a = new Vo(), o = [];
+  const a = new Zo(), o = [];
   function s(u, m) {
     const g = fe.from(u, m);
     o.push(g), a.update(g);
   }
   async function l({ stype: u, object: m }) {
-    const g = Ff[u];
+    const g = Nf[u];
     let y = m.length, E = y > 15 ? 128 : 0;
     const A = y & 15;
     y = y >>> 4;
     let R = (E | g | A).toString(16);
     for (s(R, "hex"); E; )
       E = y > 127 ? 128 : 0, R = E | y & 127, s(Jn(2, R), "hex"), y = y >>> 7;
-    s(fe.from(await us(m)));
+    s(fe.from(await ls(m)));
   }
   s("PACK"), s("00000002", "hex"), s(Jn(8, n.length), "hex");
   for (const u of n) {
@@ -11213,14 +11213,14 @@ async function As({
   const f = a.digest();
   return o.push(f), o;
 }
-async function Uf({ fs: t, cache: e, gitdir: r, oids: i, write: n }) {
-  const a = await As({ fs: t, cache: e, gitdir: r, oids: i }), o = fe.from(await Di(a)), l = `pack-${o.slice(-20).toString("hex")}.pack`;
+async function Ff({ fs: t, cache: e, gitdir: r, oids: i, write: n }) {
+  const a = await Bs({ fs: t, cache: e, gitdir: r, oids: i }), o = fe.from(await Ai(a)), l = `pack-${o.slice(-20).toString("hex")}.pack`;
   return n ? (await t.write(ee.join(r, `objects/pack/${l}`), o), { filename: l }) : {
     filename: l,
     packfile: new Uint8Array(o)
   };
 }
-async function Mf({
+async function Uf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11229,7 +11229,7 @@ async function Mf({
   cache: a = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("oids", i), await Uf({
+    return H("fs", t), H("gitdir", r), H("oids", i), await Ff({
       fs: new me(t),
       cache: a,
       gitdir: r,
@@ -11240,7 +11240,7 @@ async function Mf({
     throw o.caller = "git.packObjects", o;
   }
 }
-async function Lf({
+async function Mf({
   fs: t,
   http: e,
   onProgress: r,
@@ -11277,7 +11277,7 @@ async function Lf({
       committer: M
     });
     if (!z) throw new ft("committer");
-    return await xs({
+    return await Ss({
       fs: O,
       cache: B,
       http: e,
@@ -11307,7 +11307,7 @@ async function Lf({
     throw O.caller = "git.pull", O;
   }
 }
-async function Pf({
+async function Lf({
   fs: t,
   cache: e,
   dir: r,
@@ -11344,7 +11344,7 @@ async function Pf({
     await u(m);
   return f;
 }
-async function Tn({
+async function In({
   fs: t,
   cache: e,
   dir: r,
@@ -11372,7 +11372,7 @@ async function Tn({
     await o(s);
   return a;
 }
-async function jf(t) {
+async function Pf(t) {
   const e = {};
   let r = "";
   const i = Qe.streamReader(t);
@@ -11398,7 +11398,7 @@ async function jf(t) {
   }
   return e;
 }
-async function zf({
+async function jf({
   capabilities: t = [],
   triplets: e = []
 }) {
@@ -11413,7 +11413,7 @@ async function zf({
     ), i = "";
   return r.push(Qe.flush()), r;
 }
-async function Hf({
+async function zf({
   fs: t,
   cache: e,
   http: r,
@@ -11445,7 +11445,7 @@ async function Hf({
   if (typeof P > "u")
     throw new yt("remoteRef");
   R === void 0 && (R = await D.get("http.corsProxy"));
-  const U = await ae.expand({ fs: t, gitdir: f, ref: T }), B = A ? "0000000000000000000000000000000000000000" : await ae.resolve({ fs: t, gitdir: f, ref: U }), O = Pi.getRemoteHelperFor({ url: P }), W = await O.discover({
+  const U = await ae.expand({ fs: t, gitdir: f, ref: T }), B = A ? "0000000000000000000000000000000000000000" : await ae.resolve({ fs: t, gitdir: f, ref: U }), O = Li.getRemoteHelperFor({ url: P }), W = await O.discover({
     http: r,
     onAuth: a,
     onAuthSuccess: o,
@@ -11492,17 +11492,17 @@ async function Hf({
         oids: [B, N]
       });
       for (const $e of ye) be.push($e);
-      J && (Ae = await Tn({ fs: t, cache: e, gitdir: f, oids: ye }));
+      J && (Ae = await In({ fs: t, cache: e, gitdir: f, oids: ye }));
     }
     if (!be.includes(B)) {
-      const ye = await Pf({
+      const ye = await Lf({
         fs: t,
         cache: e,
         gitdir: f,
         start: [B],
         finish: be
       });
-      oe = await Tn({ fs: t, cache: e, gitdir: f, oids: ye });
+      oe = await In({ fs: t, cache: e, gitdir: f, oids: ye });
     }
     if (J) {
       try {
@@ -11516,7 +11516,7 @@ async function Hf({
           fullref: ye,
           map: W.refs
         }), ke = [$e];
-        for (const Ee of await Tn({ fs: t, cache: e, gitdir: f, oids: ke }))
+        for (const Ee of await In({ fs: t, cache: e, gitdir: f, oids: ke }))
           Ae.add(Ee);
       } catch {
       }
@@ -11526,7 +11526,7 @@ async function Hf({
     if (B === N && (E = !0), !E) {
       if (U.startsWith("refs/tags") && N !== "0000000000000000000000000000000000000000")
         throw new $r("tag-exists");
-      if (B !== "0000000000000000000000000000000000000000" && N !== "0000000000000000000000000000000000000000" && !await Rs({
+      if (B !== "0000000000000000000000000000000000000000" && N !== "0000000000000000000000000000000000000000" && !await Ts({
         fs: t,
         cache: e,
         gitdir: f,
@@ -11537,13 +11537,13 @@ async function Hf({
         throw new $r("not-fast-forward");
     }
   }
-  const _e = bs(
+  const _e = _s(
     [...W.capabilities],
-    ["report-status", "side-band-64k", `agent=${ji.agent}`]
-  ), re = await zf({
+    ["report-status", "side-band-64k", `agent=${Pi.agent}`]
+  ), re = await jf({
     capabilities: _e,
     triplets: [{ oldoid: N, oid: B, fullRef: Y }]
-  }), X = A ? [] : await As({
+  }), X = A ? [] : await Bs({
     fs: t,
     cache: e,
     gitdir: f,
@@ -11557,14 +11557,14 @@ async function Hf({
     auth: z,
     headers: I,
     body: [...re, ...X]
-  }), { packfile: de, progress: Se } = await Es.demux(ie.body);
+  }), { packfile: de, progress: Se } = await vs.demux(ie.body);
   if (n) {
-    const be = vs(Se);
+    const be = bs(Se);
     mi(be, async (Ae) => {
       await n(Ae);
     });
   }
-  const Re = await jf(de);
+  const Re = await Pf(de);
   if (ie.headers && (Re.headers = ie.headers), g && Re.ok && Re.refs[Y].ok && !U.startsWith("refs/tags")) {
     const be = `refs/remotes/${g}/${Y.replace(
       "refs/heads",
@@ -11580,7 +11580,7 @@ async function Hf({
     throw new ai(be, Re);
   }
 }
-async function Wf({
+async function Hf({
   fs: t,
   http: e,
   onProgress: r,
@@ -11602,7 +11602,7 @@ async function Wf({
   cache: T = {}
 }) {
   try {
-    return H("fs", t), H("http", e), H("gitdir", f), await Hf({
+    return H("fs", t), H("http", e), H("gitdir", f), await zf({
       fs: new me(t),
       cache: T,
       http: e,
@@ -11626,29 +11626,29 @@ async function Wf({
     throw D.caller = "git.push", D;
   }
 }
-async function Ds({ fs: t, cache: e, gitdir: r, oid: i }) {
+async function As({ fs: t, cache: e, gitdir: r, oid: i }) {
   const { type: n, object: a } = await Je({ fs: t, cache: e, gitdir: r, oid: i });
   if (n === "tag")
-    return i = wt.from(a).parse().object, Ds({ fs: t, cache: e, gitdir: r, oid: i });
+    return i = wt.from(a).parse().object, As({ fs: t, cache: e, gitdir: r, oid: i });
   if (n !== "blob")
     throw new pt(i, n, "blob");
   return { oid: i, blob: new Uint8Array(a) };
 }
-async function Os({
+async function Ds({
   fs: t,
   cache: e,
   gitdir: r,
   oid: i,
   filepath: n = void 0
 }) {
-  return n !== void 0 && (i = await wi({ fs: t, cache: e, gitdir: r, oid: i, filepath: n })), await Ds({
+  return n !== void 0 && (i = await wi({ fs: t, cache: e, gitdir: r, oid: i, filepath: n })), await As({
     fs: t,
     cache: e,
     gitdir: r,
     oid: i
   });
 }
-async function qf({
+async function Wf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11657,7 +11657,7 @@ async function qf({
   cache: a = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("oid", i), await Os({
+    return H("fs", t), H("gitdir", r), H("oid", i), await Ds({
       fs: new me(t),
       cache: a,
       gitdir: r,
@@ -11668,7 +11668,7 @@ async function qf({
     throw o.caller = "git.readBlob", o;
   }
 }
-async function Cs({
+async function Os({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11686,14 +11686,14 @@ async function Cs({
     throw a.caller = "git.readCommit", a;
   }
 }
-async function Gf({
+async function qf({
   fs: t,
   cache: e,
   gitdir: r,
   ref: i = "refs/notes/commits",
   oid: n
 }) {
-  const a = await ae.resolve({ gitdir: r, fs: t, ref: i }), { blob: o } = await Os({
+  const a = await ae.resolve({ gitdir: r, fs: t, ref: i }), { blob: o } = await Ds({
     fs: t,
     cache: e,
     gitdir: r,
@@ -11702,7 +11702,7 @@ async function Gf({
   });
   return o;
 }
-async function Zf({
+async function Gf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11711,7 +11711,7 @@ async function Zf({
   cache: a = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("ref", i), H("oid", n), await Gf({
+    return H("fs", t), H("gitdir", r), H("ref", i), H("oid", n), await qf({
       fs: new me(t),
       cache: a,
       gitdir: r,
@@ -11722,7 +11722,7 @@ async function Zf({
     throw o.caller = "git.readNote", o;
   }
 }
-async function Vf({
+async function Zf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11776,7 +11776,7 @@ async function Vf({
     throw l.caller = "git.readObject", l;
   }
 }
-async function Xf({ fs: t, cache: e, gitdir: r, oid: i }) {
+async function Vf({ fs: t, cache: e, gitdir: r, oid: i }) {
   const { type: n, object: a } = await Je({
     fs: t,
     cache: e,
@@ -11793,7 +11793,7 @@ async function Xf({ fs: t, cache: e, gitdir: r, oid: i }) {
     payload: o.payload()
   };
 }
-async function Yf({
+async function Xf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11801,7 +11801,7 @@ async function Yf({
   cache: n = {}
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("oid", i), await Xf({
+    return H("fs", t), H("gitdir", r), H("oid", i), await Vf({
       fs: new me(t),
       cache: n,
       gitdir: r,
@@ -11811,7 +11811,7 @@ async function Yf({
     throw a.caller = "git.readTag", a;
   }
 }
-async function Kf({
+async function Yf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11831,7 +11831,7 @@ async function Kf({
     throw o.caller = "git.readTree", o;
   }
 }
-async function Jf({
+async function Kf({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11849,7 +11849,7 @@ async function Jf({
     throw a.caller = "git.remove", a;
   }
 }
-async function Qf({
+async function Jf({
   fs: t,
   cache: e,
   onSign: r,
@@ -11878,7 +11878,7 @@ async function Qf({
     gitdir: i,
     tree: m
   });
-  return await Li({
+  return await Mi({
     fs: t,
     cache: e,
     onSign: r,
@@ -11893,7 +11893,7 @@ async function Qf({
     signingKey: l
   });
 }
-async function eh({
+async function Qf({
   fs: t,
   onSign: e,
   dir: r,
@@ -11916,7 +11916,7 @@ async function eh({
       committer: s
     });
     if (!g) throw new ft("committer");
-    return await Qf({
+    return await Jf({
       fs: u,
       cache: f,
       onSign: e,
@@ -11931,7 +11931,7 @@ async function eh({
     throw u.caller = "git.removeNote", u;
   }
 }
-async function th({
+async function eh({
   fs: t,
   gitdir: e,
   oldref: r,
@@ -11964,7 +11964,7 @@ async function th({
     value: o
   });
 }
-async function rh({
+async function th({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -11973,7 +11973,7 @@ async function rh({
   checkout: a = !1
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("ref", i), H("oldref", n), await th({
+    return H("fs", t), H("gitdir", r), H("ref", i), H("oldref", n), await eh({
       fs: new me(t),
       gitdir: r,
       ref: i,
@@ -11984,10 +11984,10 @@ async function rh({
     throw o.caller = "git.renameBranch", o;
   }
 }
-async function Ns({ gitdir: t, type: e, object: r }) {
+async function Cs({ gitdir: t, type: e, object: r }) {
   return Xt(Fr.wrap({ type: e, object: r }));
 }
-async function ih({
+async function rh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12028,7 +12028,7 @@ async function ih({
       size: 0
     };
     const u = e && await o.read(ee.join(e, i));
-    u && (l = await Ns({
+    u && (l = await Cs({
       gitdir: r,
       type: "blob",
       object: u
@@ -12039,7 +12039,7 @@ async function ih({
     throw o.caller = "git.reset", o;
   }
 }
-async function nh({
+async function ih({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12057,7 +12057,7 @@ async function nh({
     throw a.caller = "git.resolveRef", a;
   }
 }
-async function ah({
+async function nh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12073,7 +12073,7 @@ async function ah({
     throw o.caller = "git.setConfig", o;
   }
 }
-async function Fs({ fs: t, gitdir: e, commit: r }) {
+async function Ns({ fs: t, gitdir: e, commit: r }) {
   const i = Ye.from(r).toObject();
   return await bt({
     fs: t,
@@ -12083,14 +12083,14 @@ async function Fs({ fs: t, gitdir: e, commit: r }) {
     format: "content"
   });
 }
-class Ci {
+class Oi {
   // constructor removed
   static get timezoneOffsetForRefLogEntry() {
     const e = (/* @__PURE__ */ new Date()).getTimezoneOffset(), r = Math.abs(Math.floor(e / 60)), i = Math.abs(e % 60).toString().padStart(2, "0");
     return `${e > 0 ? "-" : "+"}${r.toString().padStart(2, "0")}${i}`;
   }
   static createStashReflogEntry(e, r, i) {
-    const n = e.name.replace(/\s/g, ""), a = "0000000000000000000000000000000000000000", o = Math.floor(Date.now() / 1e3), s = Ci.timezoneOffsetForRefLogEntry;
+    const n = e.name.replace(/\s/g, ""), a = "0000000000000000000000000000000000000000", o = Math.floor(Date.now() / 1e3), s = Oi.timezoneOffsetForRefLogEntry;
     return `${a} ${r} ${n} ${e.email} ${o} ${s}	${i}
 `;
   }
@@ -12101,30 +12101,30 @@ class Ci {
     );
   }
 }
-const oh = {
+const ah = {
   stage: Nr,
   workdir: di
 };
-let Rn;
+let Tn;
 async function Or(t, e) {
-  return Rn === void 0 && (Rn = new Vr()), Rn.acquire(t, e);
+  return Tn === void 0 && (Tn = new Vr()), Tn.acquire(t, e);
 }
-async function sh(t, e, r, i, n = null) {
+async function oh(t, e, r, i, n = null) {
   const a = ee.join(r, i), o = await t.lstat(a);
   if (!o) throw new Pe(a);
   if (o.isDirectory())
     throw new Te(
       `${a}: file expected, but found directory`
     );
-  const s = n ? await as({ fs: t, gitdir: e, oid: n }) : void 0;
+  const s = n ? await ns({ fs: t, gitdir: e, oid: n }) : void 0;
   let l = s ? n : void 0;
   return s || await Or({ fs: t, gitdir: e, currentFilepath: a }, async () => {
-    const f = o.isSymbolicLink() ? await t.readlink(a).then(fs) : await t.read(a);
+    const f = o.isSymbolicLink() ? await t.readlink(a).then(us) : await t.read(a);
     if (f === null) throw new Pe(a);
     l = await bt({ fs: t, gitdir: e, type: "blob", object: f });
   }), l;
 }
-async function ch({ fs: t, dir: e, gitdir: r, entries: i }) {
+async function sh({ fs: t, dir: e, gitdir: r, entries: i }) {
   async function n(a) {
     if (a.type === "tree") {
       if (!a.oid) {
@@ -12135,7 +12135,7 @@ async function ch({ fs: t, dir: e, gitdir: r, entries: i }) {
           tree: o
         }), a.mode = 16384;
       }
-    } else a.type === "blob" && (a.oid = await sh(
+    } else a.type === "blob" && (a.oid = await oh(
       t,
       r,
       e,
@@ -12153,7 +12153,7 @@ async function yo({
   treePair: i
   // [TREE({ ref: 'HEAD' }), 'STAGE'] would be the equivalent of `git write-tree`
 }) {
-  const n = i[1] === "stage", a = i.map((y) => typeof y == "string" ? oh[y]() : y), o = [], u = await nr({
+  const n = i[1] === "stage", a = i.map((y) => typeof y == "string" ? ah[y]() : y), o = [], u = await nr({
     fs: t,
     cache: {},
     dir: e,
@@ -12180,7 +12180,7 @@ async function yo({
   });
   if (o.length === 0 || u.length === 0)
     return null;
-  const g = (await ch({
+  const g = (await sh({
     fs: t,
     dir: e,
     gitdir: r,
@@ -12193,7 +12193,7 @@ async function yo({
   }));
   return pi({ fs: t, gitdir: r, tree: g });
 }
-async function lh({
+async function ch({
   fs: t,
   dir: e,
   gitdir: r,
@@ -12206,7 +12206,7 @@ async function lh({
     cache: {},
     dir: e,
     gitdir: r,
-    trees: [$t({ ref: n }), $t({ ref: i })],
+    trees: [Rt({ ref: n }), Rt({ ref: i })],
     map: async (f, [u, m]) => {
       if (f === "." || await Pr.isIgnored({ fs: t, dir: e, gitdir: r, filepath: f }))
         return;
@@ -12298,7 +12298,7 @@ class Vt {
     return await this.fs.exists(this.refStashPath) ? (r || await this.readStashReflogs({ parsed: !1 }))[e].split(" ")[1] : null;
   }
   async writeStashCommit({ message: e, tree: r, parent: i }) {
-    return Fs({
+    return Ns({
       fs: this.fs,
       gitdir: this.gitdir,
       commit: {
@@ -12334,7 +12334,7 @@ class Vt {
     });
   }
   async writeStashReflogEntry({ stashCommit: e, message: r }) {
-    const i = await this.getAuthor(), n = Ci.createStashReflogEntry(
+    const i = await this.getAuthor(), n = Oi.createStashReflogEntry(
       i,
       e,
       r
@@ -12348,10 +12348,10 @@ class Vt {
     if (!await this.fs.exists(this.refLogsStashPath))
       return [];
     const i = (await this.fs.read(this.refLogsStashPath)).toString();
-    return Ci.getStashReflogEntry(i, e);
+    return Oi.getStashReflogEntry(i, e);
   }
 }
-async function uh({ fs: t, dir: e, gitdir: r, message: i = "" }) {
+async function lh({ fs: t, dir: e, gitdir: r, message: i = "" }) {
   const n = new Vt({ fs: t, dir: e, gitdir: r });
   await n.getAuthor();
   const a = await sr({
@@ -12362,13 +12362,13 @@ async function uh({ fs: t, dir: e, gitdir: r, message: i = "" }) {
     fs: t,
     gitdir: r,
     ref: "HEAD"
-  }), l = (await Cs({ fs: t, dir: e, gitdir: r, oid: o })).commit.message, f = [o];
-  let u = null, m = $t({ ref: "HEAD" });
+  }), l = (await Os({ fs: t, dir: e, gitdir: r, oid: o })).commit.message, f = [o];
+  let u = null, m = Rt({ ref: "HEAD" });
   const g = await yo({
     fs: t,
     dir: e,
     gitdir: r,
-    treePair: [$t({ ref: "HEAD" }), "stage"]
+    treePair: [Rt({ ref: "HEAD" }), "stage"]
   });
   if (g) {
     const R = await n.writeStashCommit({
@@ -12403,7 +12403,7 @@ async function uh({ fs: t, dir: e, gitdir: r, message: i = "" }) {
   return await n.writeStashRef(A), await n.writeStashReflogEntry({
     stashCommit: A,
     message: E
-  }), await ys({
+  }), await gs({
     fs: t,
     dir: e,
     gitdir: r,
@@ -12413,7 +12413,7 @@ async function uh({ fs: t, dir: e, gitdir: r, message: i = "" }) {
     // force checkout to discard changes
   }), A;
 }
-async function Us({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
+async function Fs({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
   const a = await new Vt({ fs: t, dir: e, gitdir: r }).readStashCommit(i), { parent: o = null } = a.commit ? a.commit : {};
   if (!(!o || !Array.isArray(o)))
     for (let s = 0; s < o.length - 1; s++) {
@@ -12423,7 +12423,7 @@ async function Us({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
         gitdir: r,
         oid: o[s + 1]
       })).commit.message.startsWith("stash-Index");
-      await lh({
+      await ch({
         fs: t,
         dir: e,
         gitdir: r,
@@ -12433,7 +12433,7 @@ async function Us({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
       });
     }
 }
-async function Ms({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
+async function Us({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
   const n = new Vt({ fs: t, dir: e, gitdir: r });
   if (!(await n.readStashCommit(i)).commit)
     return;
@@ -12458,10 +12458,10 @@ async function Ms({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
       await t.rm(l);
   });
 }
-async function fh({ fs: t, dir: e, gitdir: r }) {
+async function uh({ fs: t, dir: e, gitdir: r }) {
   return new Vt({ fs: t, dir: e, gitdir: r }).readStashReflogs({ parsed: !0 });
 }
-async function hh({ fs: t, dir: e, gitdir: r }) {
+async function fh({ fs: t, dir: e, gitdir: r }) {
   const i = new Vt({ fs: t, dir: e, gitdir: r }), n = [i.refStashPath, i.refLogsStashPath];
   await Or(n, async () => {
     await Promise.all(
@@ -12472,10 +12472,10 @@ async function hh({ fs: t, dir: e, gitdir: r }) {
     );
   });
 }
-async function dh({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
-  await Us({ fs: t, dir: e, gitdir: r, refIdx: i }), await Ms({ fs: t, dir: e, gitdir: r, refIdx: i });
+async function hh({ fs: t, dir: e, gitdir: r, refIdx: i = 0 }) {
+  await Fs({ fs: t, dir: e, gitdir: r, refIdx: i }), await Us({ fs: t, dir: e, gitdir: r, refIdx: i });
 }
-async function wh({
+async function dh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12485,12 +12485,12 @@ async function wh({
 }) {
   H("fs", t), H("dir", e), H("gitdir", r), H("op", i);
   const o = {
-    push: uh,
-    apply: Us,
-    drop: Ms,
-    list: fh,
-    clear: hh,
-    pop: dh
+    push: lh,
+    apply: Fs,
+    drop: Us,
+    list: uh,
+    clear: fh,
+    pop: hh
   }, s = ["apply", "drop", "pop"];
   try {
     const l = new me(t);
@@ -12511,7 +12511,7 @@ async function wh({
     throw l.caller = "git.stash", l;
   }
 }
-async function ph({
+async function wh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12528,7 +12528,7 @@ async function ph({
       filepath: i
     }))
       return "ignored";
-    const s = await mh({ fs: a, cache: n, gitdir: r }), l = await Ls({
+    const s = await ph({ fs: a, cache: n, gitdir: r }), l = await Ms({
       fs: a,
       cache: n,
       gitdir: r,
@@ -12542,10 +12542,10 @@ async function ph({
         return null;
       }
     ), u = await a.lstat(ee.join(e, i)), m = l !== null, g = f !== null, y = u !== null, E = async () => {
-      if (g && !Ii(f, u))
+      if (g && !xi(f, u))
         return f.oid;
       {
-        const A = await a.read(ee.join(e, i)), R = await Ns({
+        const A = await a.read(ee.join(e, i)), R = await Cs({
           gitdir: r,
           type: "blob",
           object: A
@@ -12573,7 +12573,7 @@ async function ph({
     throw a.caller = "git.status", a;
   }
 }
-async function Ls({ fs: t, cache: e, gitdir: r, tree: i, path: n }) {
+async function Ms({ fs: t, cache: e, gitdir: r, tree: i, path: n }) {
   typeof n == "string" && (n = n.split("/"));
   const a = n.shift();
   for (const o of i)
@@ -12588,14 +12588,14 @@ async function Ls({ fs: t, cache: e, gitdir: r, tree: i, path: n }) {
       });
       if (s === "tree") {
         const f = _t.from(l);
-        return Ls({ fs: t, cache: e, gitdir: r, tree: f, path: n });
+        return Ms({ fs: t, cache: e, gitdir: r, tree: f, path: n });
       }
       if (s === "blob")
         throw new pt(o.oid, s, "blob", n.join("/"));
     }
   return null;
 }
-async function mh({ fs: t, cache: e, gitdir: r }) {
+async function ph({ fs: t, cache: e, gitdir: r }) {
   let i;
   try {
     i = await ae.resolve({ fs: t, gitdir: r, ref: "HEAD" });
@@ -12606,7 +12606,7 @@ async function mh({ fs: t, cache: e, gitdir: r }) {
   const { tree: n } = await jr({ fs: t, cache: e, gitdir: r, oid: i });
   return n;
 }
-async function gh({
+async function mh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12624,13 +12624,13 @@ async function gh({
       cache: o,
       dir: e,
       gitdir: r,
-      trees: [$t({ ref: i }), di(), Nr()],
+      trees: [Rt({ ref: i }), di(), Nr()],
       map: async function(f, [u, m, g]) {
         if (!u && !g && m && !s && await Pr.isIgnored({
           fs: l,
           dir: e,
           filepath: f
-        }) || !n.some((U) => gs(f, U)))
+        }) || !n.some((U) => ms(f, U)))
           return null;
         if (a && !a(f))
           return;
@@ -12656,7 +12656,7 @@ async function gh({
     throw l.caller = "git.statusMatrix", l;
   }
 }
-async function yh({
+async function gh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12682,7 +12682,7 @@ async function yh({
     throw o.caller = "git.tag", o;
   }
 }
-async function _h({
+async function yh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12761,14 +12761,14 @@ async function _h({
     throw u.caller = "git.updateIndex", u;
   }
 }
-function bh() {
+function _h() {
   try {
-    return ji.version;
+    return Pi.version;
   } catch (t) {
     throw t.caller = "git.version", t;
   }
 }
-async function vh({
+async function bh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12793,7 +12793,7 @@ async function vh({
     throw l.caller = "git.walk", l;
   }
 }
-async function Eh({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), blob: i }) {
+async function vh({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), blob: i }) {
   try {
     return H("fs", t), H("gitdir", r), H("blob", i), await bt({
       fs: new me(t),
@@ -12806,14 +12806,14 @@ async function Eh({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), blob: i }) {
     throw n.caller = "git.writeBlob", n;
   }
 }
-async function kh({
+async function Eh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
   commit: i
 }) {
   try {
-    return H("fs", t), H("gitdir", r), H("commit", i), await Fs({
+    return H("fs", t), H("gitdir", r), H("commit", i), await Ns({
       fs: new me(t),
       gitdir: r,
       commit: i
@@ -12822,7 +12822,7 @@ async function kh({
     throw n.caller = "git.writeCommit", n;
   }
 }
-async function Sh({
+async function kh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12865,7 +12865,7 @@ async function Sh({
     throw l.caller = "git.writeObject", l;
   }
 }
-async function xh({
+async function Sh({
   fs: t,
   dir: e,
   gitdir: r = ee.join(e, ".git"),
@@ -12900,7 +12900,7 @@ async function xh({
     throw s.caller = "git.writeRef", s;
   }
 }
-async function Ih({ fs: t, gitdir: e, tag: r }) {
+async function xh({ fs: t, gitdir: e, tag: r }) {
   const i = wt.from(r).toObject();
   return await bt({
     fs: t,
@@ -12910,9 +12910,9 @@ async function Ih({ fs: t, gitdir: e, tag: r }) {
     format: "content"
   });
 }
-async function Th({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), tag: i }) {
+async function Ih({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), tag: i }) {
   try {
-    return H("fs", t), H("gitdir", r), H("tag", i), await Ih({
+    return H("fs", t), H("gitdir", r), H("tag", i), await xh({
       fs: new me(t),
       gitdir: r,
       tag: i
@@ -12921,7 +12921,7 @@ async function Th({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), tag: i }) {
     throw n.caller = "git.writeTag", n;
   }
 }
-async function Rh({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), tree: i }) {
+async function Th({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), tree: i }) {
   try {
     return H("fs", t), H("gitdir", r), H("tree", i), await pi({
       fs: new me(t),
@@ -12933,78 +12933,78 @@ async function Rh({ fs: t, dir: e, gitdir: r = ee.join(e, ".git"), tree: i }) {
   }
 }
 var ne = {
-  Errors: tu,
+  Errors: eu,
   STAGE: Nr,
-  TREE: $t,
+  TREE: Rt,
   WORKDIR: di,
-  add: _u,
-  abortMerge: pu,
-  addNote: vu,
-  addRemote: Eu,
-  annotatedTag: Su,
-  branch: Iu,
-  checkout: ys,
-  clone: Mu,
-  commit: Lu,
-  getConfig: sf,
-  getConfigAll: lf,
-  setConfig: ah,
-  currentBranch: Pu,
-  deleteBranch: zu,
-  deleteRef: Hu,
-  deleteRemote: qu,
-  deleteTag: Zu,
-  expandOid: Ku,
-  expandRef: Ju,
-  fastForward: rf,
-  fetch: nf,
-  findMergeBase: af,
-  findRoot: of,
-  getRemoteInfo: uf,
-  getRemoteInfo2: ff,
-  hashBlob: df,
-  indexPack: pf,
-  init: mf,
-  isDescendent: gf,
-  isIgnored: yf,
-  listBranches: _f,
-  listFiles: vf,
-  listNotes: kf,
-  listRefs: Sf,
-  listRemotes: If,
-  listServerRefs: $f,
-  listTags: Bf,
-  log: Cf,
-  merge: Nf,
-  packObjects: Mf,
-  pull: Lf,
-  push: Wf,
-  readBlob: qf,
-  readCommit: Cs,
-  readNote: Zf,
-  readObject: Vf,
-  readTag: Yf,
-  readTree: Kf,
-  remove: Jf,
-  removeNote: eh,
-  renameBranch: rh,
-  resetIndex: ih,
-  updateIndex: _h,
-  resolveRef: nh,
-  status: ph,
-  statusMatrix: gh,
-  tag: yh,
-  version: bh,
-  walk: vh,
-  writeBlob: Eh,
-  writeCommit: kh,
-  writeObject: Sh,
-  writeRef: xh,
-  writeTag: Th,
-  writeTree: Rh,
-  stash: wh
+  add: yu,
+  abortMerge: wu,
+  addNote: bu,
+  addRemote: vu,
+  annotatedTag: ku,
+  branch: xu,
+  checkout: gs,
+  clone: Uu,
+  commit: Mu,
+  getConfig: of,
+  getConfigAll: cf,
+  setConfig: nh,
+  currentBranch: Lu,
+  deleteBranch: ju,
+  deleteRef: zu,
+  deleteRemote: Wu,
+  deleteTag: Gu,
+  expandOid: Yu,
+  expandRef: Ku,
+  fastForward: tf,
+  fetch: rf,
+  findMergeBase: nf,
+  findRoot: af,
+  getRemoteInfo: lf,
+  getRemoteInfo2: uf,
+  hashBlob: hf,
+  indexPack: wf,
+  init: pf,
+  isDescendent: mf,
+  isIgnored: gf,
+  listBranches: yf,
+  listFiles: bf,
+  listNotes: Ef,
+  listRefs: kf,
+  listRemotes: xf,
+  listServerRefs: Rf,
+  listTags: $f,
+  log: Of,
+  merge: Cf,
+  packObjects: Uf,
+  pull: Mf,
+  push: Hf,
+  readBlob: Wf,
+  readCommit: Os,
+  readNote: Gf,
+  readObject: Zf,
+  readTag: Xf,
+  readTree: Yf,
+  remove: Kf,
+  removeNote: Qf,
+  renameBranch: th,
+  resetIndex: rh,
+  updateIndex: yh,
+  resolveRef: ih,
+  status: wh,
+  statusMatrix: mh,
+  tag: gh,
+  version: _h,
+  walk: bh,
+  writeBlob: vh,
+  writeCommit: Eh,
+  writeObject: kh,
+  writeRef: Sh,
+  writeTag: Ih,
+  writeTree: Th,
+  stash: dh
 };
-function $h(t) {
+function Rh(t) {
   let e = [t];
   return {
     next() {
@@ -13018,21 +13018,21 @@ function $h(t) {
     }
   };
 }
-function Bh(t) {
-  return t[Symbol.asyncIterator] ? t[Symbol.asyncIterator]() : t[Symbol.iterator] ? t[Symbol.iterator]() : t.next ? t : $h(t);
+function $h(t) {
+  return t[Symbol.asyncIterator] ? t[Symbol.asyncIterator]() : t[Symbol.iterator] ? t[Symbol.iterator]() : t.next ? t : Rh(t);
 }
-async function Ah(t, e) {
-  const r = Bh(t);
+async function Bh(t, e) {
+  const r = $h(t);
   for (; ; ) {
     const { value: i, done: n } = await r.next();
     if (i && await e(i), n) break;
   }
   r.return && r.return();
 }
-async function Dh(t) {
+async function Ah(t) {
   let e = 0;
   const r = [];
-  await Ah(t, (a) => {
+  await Bh(t, (a) => {
     r.push(a), e += a.byteLength;
   });
   const i = new Uint8Array(e);
@@ -13041,7 +13041,7 @@ async function Dh(t) {
     i.set(a, n), n += a.byteLength;
   return i;
 }
-function Oh(t) {
+function Dh(t) {
   if (t[Symbol.asyncIterator]) return t;
   const e = t.getReader();
   return {
@@ -13056,15 +13056,15 @@ function Oh(t) {
     }
   };
 }
-async function Ch({
+async function Oh({
   onProgress: t,
   url: e,
   method: r = "GET",
   headers: i = {},
   body: n
 }) {
-  n && (n = await Dh(n));
-  const a = await fetch(e, { method: r, headers: i, body: n }), o = a.body && a.body.getReader ? Oh(a.body) : [new Uint8Array(await a.arrayBuffer())];
+  n && (n = await Ah(n));
+  const a = await fetch(e, { method: r, headers: i, body: n }), o = a.body && a.body.getReader ? Dh(a.body) : [new Uint8Array(await a.arrayBuffer())];
   i = {};
   for (const [s, l] of a.headers.entries())
     i[s] = l;
@@ -13077,7 +13077,7 @@ async function Ch({
     headers: i
   };
 }
-var Bt = { request: Ch };
+var $t = { request: Oh };
 class gi {
   constructor(e = !0, r = !1) {
     this.on = e, this.trace = r;
@@ -13092,19 +13092,19 @@ class gi {
 const zr = {
   corsProxy: "http://localhost:9000/",
   logging: {
-    fsManagerES6: !1,
-    swUtils: !1,
-    memoryBackendES6: !1,
-    dotGit: !1
+    fsManagerES6: !0,
+    swUtils: !0,
+    memoryBackendES6: !0,
+    dotGit: !0
   }
-}, Ps = new gi(zr.logging.swUtils);
+}, Ls = new gi(zr.logging.swUtils);
 function hr(...t) {
-  Ps.consoleDotLog("[ SWUtils ]", ...t);
+  Ls.consoleDotLog("[ SWUtils ]", ...t);
 }
 function Ei(...t) {
-  Ps.consoleDotError("[ SWUtils ]", ...t);
+  Ls.consoleDotError("[ SWUtils ]", ...t);
 }
-class js {
+class Ps {
   constructor() {
   }
   async fetchWithServiceWorker(e, r) {
@@ -13172,20 +13172,20 @@ class js {
     });
   }
 }
-const zs = new gi(zr.logging.memoryBackendES6);
+const js = new gi(zr.logging.memoryBackendES6);
 function st(...t) {
-  zs.consoleDotLog("[MemoryBackend ES6]", ...t);
+  js.consoleDotLog("[MemoryBackend ES6]", ...t);
 }
 function Gr(...t) {
-  zs.consoleDotError("[MemoryBackend ES6]", ...t);
+  js.consoleDotError("[MemoryBackend ES6]", ...t);
 }
-function Nh() {
+function Ch() {
   return "tab-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
 }
 st("Loading memoryBackend module");
-class Fh {
+class Nh {
   constructor(e = {}, r = "default") {
-    this.dbName = r, this.options = e, this.deviceId = e.deviceId || Nh(), this._files = /* @__PURE__ */ new Map(), this.versionVector = { [this.deviceId]: 0 }, this.swUtilsInstance = new js(), this.channel = null, this.isProcessing = !1, this.pendingUpdates = [], this.processingQueue = !1, this._initializeRoot(), this.options?.supportsServiceWorker && this.options?.useSW && this._setupReceiveChannel(), Promise.resolve().then(() => this._requestInitialSync()), st(`Initialized with dbName: ${this.dbName}, deviceId: ${this.deviceId}`);
+    this.dbName = r, this.options = e, this.deviceId = e.deviceId || Ch(), this._files = /* @__PURE__ */ new Map(), this.versionVector = { [this.deviceId]: 0 }, this.swUtilsInstance = new Ps(), this.channel = null, this.isProcessing = !1, this.pendingUpdates = [], this.processingQueue = !1, this._initializeRoot(), this.options?.supportsServiceWorker && this.options?.useSW && this._setupReceiveChannel(), Promise.resolve().then(() => this._requestInitialSync()), st(`Initialized with dbName: ${this.dbName}, deviceId: ${this.deviceId}`);
   }
   _initializeRoot() {
     this._files.set("/", {
@@ -13394,10 +13394,10 @@ class Fh {
   async loadSuperblock() {
   }
 }
-var $n, _o;
-function Uh() {
-  if (_o) return $n;
-  _o = 1, $n = t;
+var Rn, _o;
+function Fh() {
+  if (_o) return Rn;
+  _o = 1, Rn = t;
   function t(e) {
     var r, i;
     if (typeof e != "function")
@@ -13406,10 +13406,10 @@ function Uh() {
       return r || (r = !0, i = e.apply(this, arguments)), i;
     };
   }
-  return $n;
+  return Rn;
 }
-var Bn = {}, bo;
-function Mh() {
+var $n = {}, bo;
+function Uh() {
   return bo || (bo = 1, function(t) {
     function e(I, T) {
       var D;
@@ -13506,19 +13506,19 @@ function Mh() {
       var D;
       return I instanceof Uint8Array ? D = I : I.buffer instanceof ArrayBuffer ? D = new Uint8Array(I.buffer) : D = new Uint8Array(I), y(D, this.encoding);
     }, t.TextEncoder = t.TextEncoder || f, t.TextDecoder = t.TextDecoder || R;
-  }(typeof window < "u" ? window : typeof globalThis < "u" ? globalThis : Bn)), Bn;
+  }(typeof window < "u" ? window : typeof globalThis < "u" ? globalThis : $n)), $n;
 }
-var An, vo;
-function Lh() {
-  return vo || (vo = 1, Mh(), An = {
+var Bn, vo;
+function Mh() {
+  return vo || (vo = 1, Uh(), Bn = {
     encode: (t) => new TextEncoder().encode(t),
     decode: (t) => new TextDecoder().decode(t)
-  }), An;
+  }), Bn;
 }
-var Dn, Eo;
-function Ph() {
-  if (Eo) return Dn;
-  Eo = 1, Dn = t;
+var An, Eo;
+function Lh() {
+  if (Eo) return An;
+  Eo = 1, An = t;
   function t(e, r, i) {
     var n;
     return function() {
@@ -13532,11 +13532,11 @@ function Ph() {
         return e.apply(this, arguments);
     };
   }
-  return Dn;
+  return An;
 }
-var On, ko;
+var Dn, ko;
 function ua() {
-  if (ko) return On;
+  if (ko) return Dn;
   ko = 1;
   function t(s) {
     if (s.length === 0)
@@ -13586,18 +13586,18 @@ function ua() {
     }
     return s.push(l), s;
   }
-  return On = {
+  return Dn = {
     join: r,
     normalize: t,
     split: i,
     basename: a,
     dirname: n,
     resolve: e
-  }, On;
+  }, Dn;
 }
-var Cn, So;
-function Hs() {
-  if (So) return Cn;
+var On, So;
+function zs() {
+  if (So) return On;
   So = 1;
   function t(o) {
     return class extends Error {
@@ -13607,14 +13607,14 @@ function Hs() {
     };
   }
   const e = t("EEXIST"), r = t("ENOENT"), i = t("ENOTDIR"), n = t("ENOTEMPTY"), a = t("ETIMEDOUT");
-  return Cn = { EEXIST: e, ENOENT: r, ENOTDIR: i, ENOTEMPTY: n, ETIMEDOUT: a }, Cn;
+  return On = { EEXIST: e, ENOENT: r, ENOTDIR: i, ENOTEMPTY: n, ETIMEDOUT: a }, On;
 }
-var Nn, xo;
-function jh() {
-  if (xo) return Nn;
+var Cn, xo;
+function Ph() {
+  if (xo) return Cn;
   xo = 1;
-  const t = ua(), { EEXIST: e, ENOENT: r, ENOTDIR: i, ENOTEMPTY: n } = Hs(), a = 0;
-  return Nn = class {
+  const t = ua(), { EEXIST: e, ENOENT: r, ENOTDIR: i, ENOTEMPTY: n } = zs(), a = 0;
+  return Cn = class {
     constructor() {
     }
     _makeRoot(s = /* @__PURE__ */ new Map()) {
@@ -13787,9 +13787,9 @@ function jh() {
       let l = this._lookup(s);
       return this._du(l);
     }
-  }, Nn;
+  }, Cn;
 }
-class Ws {
+class Hs {
   constructor(e = "keyval-store", r = "keyval") {
     this.storeName = r, this._dbName = e, this._storeName = r, this._init();
   }
@@ -13813,22 +13813,22 @@ class Ws {
     });
   }
 }
-let Fn;
+let Nn;
 function _r() {
-  return Fn || (Fn = new Ws()), Fn;
+  return Nn || (Nn = new Hs()), Nn;
 }
-function zh(t, e = _r()) {
+function jh(t, e = _r()) {
   let r;
   return e._withIDBStore("readwrite", (i) => {
     r = i.get(t);
   }).then(() => r.result);
 }
-function Hh(t, e, r = _r()) {
+function zh(t, e, r = _r()) {
   return r._withIDBStore("readwrite", (i) => {
     i.put(e, t);
   });
 }
-function Wh(t, e, r = _r()) {
+function Hh(t, e, r = _r()) {
   return r._withIDBStore("readwrite", (i) => {
     const n = i.get(t);
     n.onsuccess = () => {
@@ -13836,17 +13836,17 @@ function Wh(t, e, r = _r()) {
     };
   });
 }
-function qh(t, e = _r()) {
+function Wh(t, e = _r()) {
   return e._withIDBStore("readwrite", (r) => {
     r.delete(t);
   });
 }
-function Gh(t = _r()) {
+function qh(t = _r()) {
   return t._withIDBStore("readwrite", (e) => {
     e.clear();
   });
 }
-function Zh(t = _r()) {
+function Gh(t = _r()) {
   const e = [];
   return t._withIDBStore("readwrite", (r) => {
     (r.openKeyCursor || r.openCursor).call(r).onsuccess = function() {
@@ -13854,25 +13854,25 @@ function Zh(t = _r()) {
     };
   }).then(() => e);
 }
-function Vh(t = _r()) {
+function Zh(t = _r()) {
   return t._close();
 }
-var Xh = /* @__PURE__ */ Object.freeze({
+var Vh = /* @__PURE__ */ Object.freeze({
   __proto__: null,
-  Store: Ws,
-  clear: Gh,
-  close: Vh,
-  del: qh,
-  get: zh,
-  keys: Zh,
-  set: Hh,
-  update: Wh
-}), qs = /* @__PURE__ */ Lc(Xh), Un, Io;
-function Yh() {
-  if (Io) return Un;
+  Store: Hs,
+  clear: qh,
+  close: Zh,
+  del: Wh,
+  get: jh,
+  keys: Gh,
+  set: zh,
+  update: Hh
+}), Ws = /* @__PURE__ */ Mc(Vh), Fn, Io;
+function Xh() {
+  if (Io) return Fn;
   Io = 1;
-  const t = qs;
-  return Un = class {
+  const t = Ws;
+  return Fn = class {
     constructor(r, i) {
       this._database = r, this._storename = i, this._store = new t.Store(this._database, this._storename);
     }
@@ -13897,11 +13897,11 @@ function Yh() {
     close() {
       return t.close(this._store);
     }
-  }, Un;
+  }, Fn;
 }
-var Mn, To;
-function Kh() {
-  return To || (To = 1, Mn = class {
+var Un, To;
+function Yh() {
+  return To || (To = 1, Un = class {
     constructor(e) {
       this._url = e;
     }
@@ -13920,14 +13920,14 @@ function Kh() {
         return r.headers.get("content-length");
       throw new Error("ENOENT");
     }
-  }), Mn;
+  }), Un;
 }
-var Ln, Ro;
-function Jh() {
-  if (Ro) return Ln;
+var Mn, Ro;
+function Kh() {
+  if (Ro) return Mn;
   Ro = 1;
-  const t = qs, e = (r) => new Promise((i) => setTimeout(i, r));
-  return Ln = class {
+  const t = Ws, e = (r) => new Promise((i) => setTimeout(i, r));
+  return Mn = class {
     constructor(i, n) {
       this._id = Math.random(), this._database = i, this._storename = n, this._store = new t.Store(this._database, this._storename), this._lock = null;
     }
@@ -13973,11 +13973,11 @@ function Jh() {
       }
       return n;
     }
-  }, Ln;
+  }, Mn;
 }
-var Pn, $o;
-function Qh() {
-  return $o || ($o = 1, Pn = class {
+var Ln, $o;
+function Jh() {
+  return $o || ($o = 1, Ln = class {
     constructor(e) {
       this._id = Math.random(), this._database = e, this._has = !1, this._release = null;
     }
@@ -14007,14 +14007,14 @@ function Qh() {
     async release({ force: e = !1 } = {}) {
       this._has = !1, this._release ? this._release() : e && navigator.locks.request(this._database + "_lock", { steal: !0 }, (r) => !0);
     }
-  }), Pn;
+  }), Ln;
 }
-var jn, Bo;
-function ed() {
-  if (Bo) return jn;
+var Pn, Bo;
+function Qh() {
+  if (Bo) return Pn;
   Bo = 1;
-  const { encode: t, decode: e } = Lh(), r = Ph(), i = jh(), { ENOENT: n, ENOTEMPTY: a, ETIMEDOUT: o } = Hs(), s = Yh(), l = Kh(), f = Jh(), u = Qh(), m = ua();
-  return jn = class {
+  const { encode: t, decode: e } = Mh(), r = Lh(), i = Ph(), { ENOENT: n, ENOTEMPTY: a, ETIMEDOUT: o } = zs(), s = Xh(), l = Yh(), f = Kh(), u = Jh(), m = ua();
+  return Pn = class {
     constructor() {
       this.saveSuperblock = r(() => {
         this.flush();
@@ -14138,11 +14138,11 @@ function ed() {
     flush() {
       return this._saveSuperblock();
     }
-  }, jn;
+  }, Pn;
 }
-var zn, Ao;
-function td() {
-  return Ao || (Ao = 1, zn = class {
+var jn, Ao;
+function ed() {
+  return Ao || (Ao = 1, jn = class {
     constructor(e) {
       this.type = e.type, this.mode = e.mode, this.size = e.size, this.ino = e.ino, this.mtimeMs = e.mtimeMs, this.ctimeMs = e.ctimeMs || e.mtimeMs, this.uid = 1, this.gid = 1, this.dev = 1;
     }
@@ -14155,13 +14155,13 @@ function td() {
     isSymbolicLink() {
       return this.type === "symlink";
     }
-  }), zn;
+  }), jn;
 }
-var Hn, Do;
-function rd() {
-  if (Do) return Hn;
+var zn, Do;
+function td() {
+  if (Do) return zn;
   Do = 1;
-  const t = ed(), e = td(), r = ua();
+  const t = Qh(), e = ed(), r = ua();
   function i(o, s, ...l) {
     return o = r.normalize(o), (typeof s > "u" || typeof s == "function") && (s = {}), typeof s == "string" && (s = {
       encoding: s
@@ -14175,7 +14175,7 @@ function rd() {
   function a(o, s, ...l) {
     return [r.normalize(o), r.normalize(s), ...l];
   }
-  return Hn = class {
+  return zn = class {
     constructor(s, l = {}) {
       this.init = this.init.bind(this), this.readFile = this._wrap(this.readFile, i, !1), this.writeFile = this._wrap(this.writeFile, n, !0), this.unlink = this._wrap(this.unlink, i, !0), this.readdir = this._wrap(this.readdir, i, !1), this.mkdir = this._wrap(this.mkdir, i, !0), this.rmdir = this._wrap(this.rmdir, i, !0), this.rename = this._wrap(this.rename, a, !0), this.stat = this._wrap(this.stat, i, !1), this.lstat = this._wrap(this.lstat, i, !1), this.readlink = this._wrap(this.readlink, i, !1), this.symlink = this._wrap(this.symlink, a, !0), this.backFile = this._wrap(this.backFile, i, !0), this.du = this._wrap(this.du, i, !1), this._deactivationPromise = null, this._deactivationTimeout = null, this._activationPromise = null, this._operations = /* @__PURE__ */ new Set(), s && this.init(s, l);
     }
@@ -14253,17 +14253,17 @@ function rd() {
     async flush() {
       return this._backend.flush();
     }
-  }, Hn;
+  }, zn;
 }
-var Wn, Oo;
-function id() {
-  if (Oo) return Wn;
+var Hn, Oo;
+function rd() {
+  if (Oo) return Hn;
   Oo = 1;
-  const t = Uh(), e = rd();
+  const t = Fh(), e = td();
   function r(i, n) {
     return typeof i == "function" && (n = i), n = t(n), [(...o) => n(null, ...o), n];
   }
-  return Wn = class {
+  return Hn = class {
     constructor(...n) {
       this.promises = new e(...n), this.init = this.init.bind(this), this.readFile = this.readFile.bind(this), this.writeFile = this.writeFile.bind(this), this.unlink = this.unlink.bind(this), this.readdir = this.readdir.bind(this), this.mkdir = this.mkdir.bind(this), this.rmdir = this.rmdir.bind(this), this.rename = this.rename.bind(this), this.stat = this.stat.bind(this), this.lstat = this.lstat.bind(this), this.readlink = this.readlink.bind(this), this.symlink = this.symlink.bind(this), this.backFile = this.backFile.bind(this), this.du = this.du.bind(this), this.flush = this.flush.bind(this);
     }
@@ -14326,38 +14326,38 @@ function id() {
       const [a, o] = r(n);
       this.promises.flush().then(a).catch(o);
     }
-  }, Wn;
+  }, Hn;
 }
-var nd = id(), Co = /* @__PURE__ */ Jt(nd);
-const Gs = new gi(zr.logging.fsManagerES6);
-function kt(...t) {
-  Gs.consoleDotLog("[fsManagerES6] ", ...t);
+var id = rd(), Co = /* @__PURE__ */ Jt(id);
+const qs = new gi(zr.logging.fsManagerES6);
+function Dt(...t) {
+  qs.consoleDotLog("[fsManagerES6] ", ...t);
 }
-function ki(...t) {
-  Gs.consoleDotError("[fsManagerES6] ", ...t);
+function Wn(...t) {
+  qs.consoleDotError("[fsManagerES6] ", ...t);
 }
-kt("Loading fsmanagerES6.");
-class Zs {
+Dt("Loading fsmanagerES6.");
+class Gs {
   constructor(e = { supportsServiceWorker: !0, useSW: !0 }) {
     this.fsInstances = /* @__PURE__ */ new Map(), this.initializationLocks = /* @__PURE__ */ new Map(), this.debug = !0, this.options = e;
   }
   _log(...e) {
-    this.debug && kt("[fsManager]", ...e);
+    this.debug && Dt("[fsManager]", ...e);
   }
   _error(...e) {
-    ki("[fsManager]", ...e);
+    Wn("[fsManager]", ...e);
   }
   async initializeFS(e, r) {
     const i = `${e}-${r}`;
     this._log(`Initializing FS: ${i}`);
     try {
-      if (kt("Initializing."), this.fsInstances.has(i))
+      if (Dt("Initializing."), this.fsInstances.has(i))
         return this._log(`FS ${i} already exists`), this.fsInstances.get(i);
       let n;
       if (r === "memory") {
-        kt(`Creating memory FS for ${i}`);
-        const a = new Fh(this.options, e);
-        kt(`Memory backend created for ${i} backend: `, a), n = new Co(e, { backend: a }), kt(`Memory FS created for ${i}`), this._log(`Created memory FS with backend for ${i}`);
+        Dt(`Creating memory FS for ${i}`);
+        const a = new Nh(this.options, e);
+        Dt(`Memory backend created for ${i} backend: `, a), n = new Co(e, { backend: a }), Dt(`Memory FS created for ${i}`), this._log(`Created memory FS with backend for ${i}`);
       } else if (r === "idb")
         n = new Co(e), this._log(`Created IDB FS for ${i}`);
       else
@@ -14382,29 +14382,41 @@ class Zs {
   }
   async deleteFS(e, r) {
     const i = `${e}-${r}`;
-    if (!this.fsInstances.has(i)) {
-      console.warn(`File system ${i} does not exist. Nothing to delete.`);
-      return;
-    }
-    if (r === "idb")
-      try {
-        await this.deleteIndexedDB(e), kt(`IndexedDB file system ${i} deleted successfully.`);
-      } catch (n) {
-        throw ki(`Error deleting IndexedDB file system ${i}:`, n), n;
+    this._log(`Deleting FS: ${i}`);
+    try {
+      if (!this.fsInstances.has(i)) {
+        this._log(`File system ${i} does not exist. Nothing to delete.`);
+        return;
       }
-    else if (r === "memory")
-      kt(`Memory file system ${i} deleted successfully.`);
-    else
-      throw new Error(`Unsupported file system type: ${r}`);
-    this.fsInstances.delete(i);
+      const n = this.fsInstances.get(i);
+      if (r === "idb")
+        try {
+          await this.deleteIndexedDB(e), this._log(`IndexedDB file system ${i} deleted successfully.`);
+        } catch (a) {
+          throw this._error(`Error deleting IndexedDB file system ${i}:`, a), a;
+        }
+      else if (r === "memory") {
+        if (n._backend && n._backend.close)
+          try {
+            await n._backend.close(), this._log(`Memory backend for ${i} closed successfully.`);
+          } catch (a) {
+            this._error(`Error closing memory backend for ${i}:`, a);
+          }
+        this._log(`Memory file system ${i} deleted successfully.`);
+      } else
+        throw new Error(`Unsupported file system type: ${r}`);
+      this.fsInstances.delete(i);
+    } catch (n) {
+      throw this._error(`Failed to delete ${i}:`, n), n;
+    }
   }
   async deleteIndexedDB(e) {
     return new Promise((r, i) => {
       const n = indexedDB.deleteDatabase(e);
       n.onsuccess = () => {
-        kt(`Deleted database ${e} successfully`), r();
+        Dt(`Deleted database ${e} successfully`), r();
       }, n.onerror = (a) => {
-        ki(`Error deleting database ${e}:`, a), i(a);
+        Wn(`Error deleting database ${e}:`, a), i(a);
       }, n.onblocked = () => {
         console.warn(`Delete database ${e} blocked`);
       };
@@ -14417,13 +14429,13 @@ class Zs {
     if (r === "idb")
       try {
         const n = await this.getFileStoresFromDatabases();
-        return kt(`File store names for ${i}:`, n), n;
+        return Dt(`File store names for ${i}:`, n), n;
       } catch (n) {
-        throw ki(`Error retrieving file store names for ${i}:`, n), n;
+        throw Wn(`Error retrieving file store names for ${i}:`, n), n;
       }
     else {
       if (r === "memory")
-        return kt(`Memory file system ${i} does not have persistent file stores.`), [];
+        return Dt(`Memory file system ${i} does not have persistent file stores.`), [];
       throw new Error(`Unsupported file system type: ${r}`);
     }
   }
@@ -14433,10 +14445,10 @@ class Zs {
       const n = typeof i == "string" ? i : i.name, o = (await this.openDatabase(n)).objectStoreNames, s = Array.from(o).filter((l) => l.startsWith("fs_")).map((l) => ({ database: n, fileStore: l }));
       r.push(...s);
     }
-    return kt("Processing database list:", r), r;
+    return Dt("Processing database list:", r), r;
   }
   async openDatabase(e) {
-    return kt("Opening database:", e), new Promise((r, i) => {
+    return Dt("Opening database:", e), new Promise((r, i) => {
       const n = indexedDB.open(e);
       n.onsuccess = (a) => {
         const o = a.target.result;
@@ -14497,7 +14509,7 @@ const pe = new gi(zr.logging.dotGit), dr = /* @__PURE__ */ new Map();
 function mt(...t) {
   pe.consoleDotLog("[DotGit] ", ...t);
 }
-function ad(...t) {
+function nd(...t) {
   pe.consoleDotError("[DotGit] ", ...t);
 }
 var Wt = {
@@ -14922,7 +14934,7 @@ var Wt = {
         hasChildren: !1
       };
     } catch (i) {
-      return ad("[isDirectoryDot] Error checking directory:", i), {
+      return nd("[isDirectoryDot] Error checking directory:", i), {
         exists: !1,
         isDirectory: !1,
         hasChildren: !1
@@ -15135,15 +15147,15 @@ var Wt = {
 self.onerror = (t) => {
   console.error("Worker initialization error:", t);
 };
-const od = new Ic(self), Vs = new gi(zr.logging.dotGit), fa = new Zs(), Xs = new js();
+const ad = new xc(self), Zs = new gi(zr.logging.dotGit), fa = new Gs(), Vs = new Ps();
 function te(...t) {
-  Vs.consoleDotLog(...t);
+  Zs.consoleDotLog(...t);
 }
 function ge(...t) {
-  Vs.consoleDotError(...t);
+  Zs.consoleDotError(...t);
 }
 te("gitWorker loaded.");
-let le = "/", ht, dt, We = "main", ct = "", qe = "origin", Yt = 10, zi = "testUser", Hi = "testUser@example.com", Ys = {}, se = null, Qn = "/settings", ha = {}, Ot = !0, da, gr, St = zr.corsProxy, Ht = !1;
+let le = "/", ht, dt, We = "main", ct = "", qe = "origin", Yt = 10, ji = "testUser", zi = "testUser@example.com", Xs = {}, se = null, Qn = "/settings", ha = {}, Ot = !0, da, gr, kt = zr.corsProxy, Ht = !1;
 const Ke = {
   async fill() {
     return te("authenticate", ht, dt), { username: ht, password: dt };
@@ -15154,7 +15166,7 @@ const Ke = {
   }
 };
 async function cr(t) {
-  Ht && Ot ? await Xs.sendMessageToChannel(t) : te("This browser doesn't support service worker");
+  Ht && Ot ? await Vs.sendMessageToChannel(t) : te("This browser doesn't support service worker");
 }
 self.setAuthParams = async function() {
   await cr({
@@ -15181,55 +15193,55 @@ self.setRepoDir = async function() {
   await cr({ operation: "setRepoDir", data: le });
 };
 self.setSettingsAddresses = async function() {
-  await cr({ operation: "setSettingsAddresses", data: Ys });
+  await cr({ operation: "setSettingsAddresses", data: Xs });
 };
 async function Hr(t, e) {
   if (Ht && Ot)
-    return await Xs.fetchWithServiceWorker(t, e);
+    return await Vs.fetchWithServiceWorker(t, e);
   te("This browser doesn't support service worker");
 }
-async function sd(t, e = Ot) {
+async function od(t, e = Ot) {
   Ht = t, Ot = e, fa.options = { supportsServiceWorker: Ht, useSW: Ot };
 }
-async function cd(t) {
+async function sd(t) {
   le = t, await self.setDir();
 }
-function ld(t) {
+function cd(t) {
   return /^https?:\/\/.+/.test(t);
 }
 async function br(t) {
-  if (te("seturl url ", t), !ld(t))
+  if (te("seturl url ", t), !cd(t))
     throw new Error("Invalid Git URL format.");
   ct = t;
 }
 async function ea(t) {
   We = t, await self.setRef();
 }
-async function Ks(t) {
+async function Ys(t) {
   Yt = t, await self.setDepth();
 }
-async function ud(t) {
-  St = t;
+async function ld(t) {
+  kt = t;
 }
-async function fd(t, e) {
+async function ud(t, e) {
   ht = t, dt = e, await self.setAuthParams();
 }
-async function Js(t) {
+async function Ks(t) {
   qe = t, await self.setRemote();
 }
-async function hd() {
+async function fd() {
   return qe;
 }
-async function dd() {
+async function hd() {
   try {
-    const t = await tc("library");
+    const t = await ec("library");
     te("libs", t);
     const e = await _a();
     if (te("directories", e), t && e)
       for (const [r, i] of Object.entries(t)) {
         if (!e[i])
           throw new Error(`File not found: ${i}`);
-        return Ys[i] = {
+        return Xs[i] = {
           fileName: r,
           filePath: i
         }, console.log(`File mapped: ${i}`), await self.setSettingsAddresses(), { success: !0 };
@@ -15240,10 +15252,10 @@ async function dd() {
     console.error(`Error in setSettingsAddresses: ${t.message}`);
   }
 }
-async function wd(t, e) {
+async function dd(t, e) {
   return te("entering getFileStoresFromDatabases object"), fa.getFileStoreNames(t, e);
 }
-async function pd({ fsName: t, fsType: e }) {
+async function wd({ fsName: t, fsType: e }) {
   try {
     if (te("Initializing FS with:", { _fsName: t, _fsType: e }), !t || !e)
       throw new Error("fsName and fsType are required");
@@ -15254,30 +15266,30 @@ async function pd({ fsName: t, fsType: e }) {
     throw ge("Error initializing file system:", r), r;
   }
 }
-async function md(t) {
+async function pd(t) {
   let e = await Kr();
   te("current branch", e), te("ref", We), te("_ref", t);
   let r = await wa();
-  if (te("branchesList", r), r.includes(t) || await Qs({ ref: t }), We === t || e === t) {
+  if (te("branchesList", r), r.includes(t) || await Js({ ref: t }), We === t || e === t) {
     te(`you are already on the branch ${t}`);
     return;
   } else {
     let i = await tw();
     if (Object.keys(i).length === 0) {
-      await gd({ ref: t, noCheckout: !1, noUpdateHead: !1 }), We = t, await rc({ url: ct }), te("done");
+      await md({ ref: t, noCheckout: !1, noUpdateHead: !1 }), We = t, await tc({ url: ct }), te("done");
       return;
     } else
       return te("failed"), 0;
   }
 }
-async function Qs(t) {
+async function Js(t) {
   return await ne.branch({
     ...t,
     fs: se,
     dir: le
   });
 }
-async function gd(t) {
+async function md(t) {
   return await ne.checkout({
     ...t,
     fs: se,
@@ -15291,7 +15303,7 @@ async function wa() {
     dir: le
   });
 }
-async function ec() {
+async function Qs() {
   try {
     return await ne.listBranches({ fs: se, dir: le, remote: qe });
   } catch (t) {
@@ -15305,11 +15317,11 @@ async function Kr() {
     fullname: !1
   });
 }
-async function yd() {
+async function gd() {
   const t = await Kr();
-  return await _c(`branch.${t}.remote`);
+  return await yc(`branch.${t}.remote`);
 }
-function _d(t) {
+function yd(t) {
   const e = {};
   let r = null;
   return t.split(/\r?\n/).forEach((i) => {
@@ -15322,7 +15334,7 @@ function _d(t) {
       }
   }), e;
 }
-function bd(t) {
+function _d(t) {
   let e = "";
   return Object.keys(t).forEach((r) => {
     e += `[${r}]
@@ -15333,12 +15345,12 @@ function bd(t) {
 `;
   }), e;
 }
-async function tc(t = null, e = null) {
+async function ec(t = null, e = null) {
   try {
     if (!await se.promises.lstat(Qn).catch(() => null))
       return ge("Settings file does not exist yet."), {};
     if ((await se.promises.readdir(`${le}`)).includes("settings")) {
-      const n = await ya({ filePath: Qn }), a = _d(n);
+      const n = await ya({ filePath: Qn }), a = yd(n);
       return te("settingsData,", a), t && e ? a[t] && a[t][e] ? a[t][e] : null : t ? a[t] ? a[t] : null : a;
     } else {
       ge("The settings file dosen't exist yet!");
@@ -15349,33 +15361,33 @@ async function tc(t = null, e = null) {
     throw r;
   }
 }
-async function vd(t) {
-  const e = bd(t);
-  await Gi({ filePath: Qn, fileContents: e });
+async function bd(t) {
+  const e = _d(t);
+  await qi({ filePath: Qn, fileContents: e });
 }
-async function Ed(t, e, r) {
+async function vd(t, e, r) {
   let i = {};
   try {
-    i = await tc(), te(i), i || (i = {}, te("No past data is available. New file will be created.")), i[t] || (i[t] = {}), i[t][e] = r, te("settingsData", i), await vd(i), te("done");
+    i = await ec(), te(i), i || (i = {}, te("No past data is available. New file will be created.")), i[t] || (i[t] = {}), i[t][e] = r, te("settingsData", i), await bd(i), te("done");
   } catch {
     te("No past data is available.");
   }
 }
-async function kd(t) {
+async function Ed(t) {
   try {
-    return await qi(t), await ga(t), await pa(t);
+    return await Wi(t), await ga(t), await pa(t);
   } catch (e) {
     te("Something bad happened pushing your file: ", e);
   }
 }
-async function Sd(t) {
+async function kd(t) {
   try {
-    return await vc(), await ga(t), await pa(t);
+    return await bc(), await ga(t), await pa(t);
   } catch (e) {
     te("Something bad happened pushing your files: ", e);
   }
 }
-async function rc(t) {
+async function tc(t) {
   let e = t.attempt || 0;
   t[e] = e;
   const r = 1;
@@ -15388,15 +15400,14 @@ async function rc(t) {
         return te("Service Worker fetch failed, falling back to Web Worker", i), await ne.fetch({
           ...t,
           fs: se,
-          http: Bt,
+          http: $t,
           dir: le,
-          corsProxy: St,
+          corsProxy: kt,
           ref: We,
           remote: qe,
           depth: Yt,
-          singleBranch: !1,
           tags: !1,
-          headers: At(ht, dt),
+          headers: Bt(ht, dt),
           onAuth() {
             return Ke.fill();
           },
@@ -15409,15 +15420,14 @@ async function rc(t) {
       return te("Service Worker not supported, using Web Worker directly"), await ne.fetch({
         ...t,
         fs: se,
-        http: Bt,
+        http: $t,
         dir: le,
-        corsProxy: St,
+        corsProxy: kt,
         ref: We,
         remote: qe,
         depth: Yt,
-        singleBranch: !1,
         tags: !1,
-        headers: At(ht, dt),
+        headers: Bt(ht, dt),
         onAuth() {
           return Ke.fill();
         },
@@ -15429,13 +15439,13 @@ async function rc(t) {
     return ge("some error happend while fetching: ", i), await Wr(i, t, "doFetch", r), { success: !1 };
   }
 }
-async function ic(t) {
+async function rc(t) {
   let e = t.attempt || 0;
   t[e] = e;
   const r = 1;
   !ct && await br(t?.url);
   try {
-    await Wi(t);
+    await Hi(t);
     try {
       if (Ht && Ot)
         try {
@@ -15447,11 +15457,11 @@ async function ic(t) {
             ...t,
             fs: se,
             url: ct,
-            http: Bt,
+            http: $t,
             dir: le,
-            corsProxy: St,
+            corsProxy: kt,
             remote: qe,
-            headers: At(ht, dt),
+            headers: Bt(ht, dt),
             onAuth() {
               return Ke.fill();
             },
@@ -15467,11 +15477,11 @@ async function ic(t) {
           ...t,
           fs: se,
           url: ct,
-          http: Bt,
+          http: $t,
           dir: le,
-          corsProxy: St,
+          corsProxy: kt,
           remote: qe,
-          headers: At(ht, dt),
+          headers: Bt(ht, dt),
           onAuth() {
             return Ke.fill();
           },
@@ -15488,9 +15498,9 @@ async function ic(t) {
     return ge("some error happened while listing server refs: ", i), await Wr(i, t, "listServerRefs", r), { success: !1, error: i.message };
   }
 }
-async function nc(t) {
+async function ic(t) {
   te("getLatestRemoteCommit args:", t);
-  const e = t?.url || e, r = await ic({ ...t, url: e });
+  const e = t?.url || e, r = await rc({ ...t, url: e });
   te("getLatestRemoteCommit result:", r);
   const i = t?.ref || We || "HEAD";
   if (te("getLatestRemoteCommit _ref:", i), !r.success)
@@ -15502,9 +15512,9 @@ async function nc(t) {
     commit: a
   }) : (ge("Could not determine latest remote commit."), { success: !1, error: `No HEAD or ${We} main/master ref found` });
 }
-async function ac(t = ct) {
+async function nc(t = ct) {
   try {
-    const e = await oc(), r = t || r || await yc() || "", i = await nc({ url: r });
+    const e = await ac(), r = t || r || await gc() || "", i = await ic({ url: r });
     if (!i.success)
       return ge("Failed to get latest remote commit:", i.error), !0;
     const n = i.commit;
@@ -15516,7 +15526,7 @@ async function ac(t = ct) {
     ), !1;
   }
 }
-async function xd() {
+async function Sd() {
   try {
     return (await ne.resolveRef({ fs: se, dir: le, ref: `/refs/remotes/${qe}/${We}` }))?.trim();
   } catch (t) {
@@ -15526,7 +15536,7 @@ async function xd() {
     );
   }
 }
-async function oc(t) {
+async function ac(t) {
   try {
     const e = t || We || "HEAD";
     return te("branch", e), (await ne.resolveRef({ fs: se, dir: le, ref: `refs/heads/${e}` }))?.trim();
@@ -15537,9 +15547,9 @@ async function oc(t) {
     );
   }
 }
-async function sc(t = ct, e = qe) {
+async function oc(t = ct, e = qe) {
   try {
-    return await Js(e), await ne.addRemote({
+    return await Ks(e), await ne.addRemote({
       url: t,
       force: !0,
       fs: se,
@@ -15550,7 +15560,7 @@ async function sc(t = ct, e = qe) {
     te("some error happend while adding remote: ", r);
   }
 }
-async function Id(t = qe) {
+async function xd(t = qe) {
   try {
     return await ne.deleteRemote({
       fs: se,
@@ -15561,24 +15571,24 @@ async function Id(t = qe) {
     te("some error happend while adding remote: ", e);
   }
 }
-async function cc() {
+async function sc() {
   return await ne.listRemotes({
     fs: se,
     dir: le
   });
 }
-async function Td(t) {
+async function Id(t) {
   try {
     const e = ct || t?.url, r = qe || t?.remote;
-    te("handleNoRef args: ", t, e, r, ct, qe), await sc(e, r);
-    let i = await ec() || [];
+    te("handleNoRef args: ", t, e, r, ct, qe), await oc(e, r);
+    let i = await Qs() || [];
     if (te(i), i.length == 0)
       return !1;
   } catch (e) {
     throw ge("Error handling no ref:", e), e;
   }
 }
-async function Rd() {
+async function Td() {
   try {
     await ne.init({
       fs: se,
@@ -15588,9 +15598,9 @@ async function Rd() {
     te("something went wrong while initing the repo: ", t);
   }
 }
-async function $d() {
+async function Rd() {
   try {
-    const t = await se.promises.readdir(le), e = await cc();
+    const t = await se.promises.readdir(le), e = await sc();
     let r = [];
     return e.forEach((i) => r.push(i.url)), te("urls:", r, e, t), !(r.length > 0 && !r.includes(ct) || t.length === 0 || r.length === 0);
   } catch (t) {
@@ -15599,7 +15609,7 @@ async function $d() {
     throw ge("Error checking directory existence:", t), t;
   }
 }
-async function Bd(t) {
+async function $d(t) {
   try {
     return await ne.findMergeBase({
       fs: se,
@@ -15610,7 +15620,7 @@ async function Bd(t) {
     ge("Error finding merge base:", e);
   }
 }
-async function lc() {
+async function cc() {
   console.log("🔍 Checking status matrix...");
   const t = await ne.statusMatrix({ fs: se, dir: le });
   console.log("📊 Status Matrix:", t);
@@ -15650,15 +15660,15 @@ async function Wr(t, e, r, i = 1, n = 0) {
   if (a || o)
     throw te("Authentication or network error detected. Not deleting the repository."), t;
   if (s) {
-    te("Merge conflicts resolved."), await lc(), te("Merge conflicts resolved.");
+    te("Merge conflicts resolved."), await cc(), te("Merge conflicts resolved.");
     return;
   }
   const l = e.attempt || 0;
   if (l < 1) {
     if (l < i)
       if (n) {
-        const f = await ac(0);
-        !f && await Ad({ ...e, attempt: l + 1 }), f && await qn({ ...e, attempt: l + 1 });
+        const f = await nc(0);
+        !f && await Bd({ ...e, attempt: l + 1 }), f && await qn({ ...e, attempt: l + 1 });
       } else
         await qn({ ...e, attempt: l + 1 });
   } else if (l >= 1)
@@ -15666,11 +15676,11 @@ async function Wr(t, e, r, i = 1, n = 0) {
   else
     throw new Error(`${r} wasn't successful: ${t}`);
 }
-async function Ad(t) {
+async function Bd(t) {
   const e = t?.attempt + 1 || 1;
   te(`Attempting hard reset for ${gr}. Attempt: ${e}`);
   try {
-    return await dc({ dir: le, ref: "HEAD~1", branch: We }), te(`Hard reset to HEAD~1 successful for ${gr}`), e;
+    return await hc({ dir: le, ref: "HEAD~1", branch: We }), te(`Hard reset to HEAD~1 successful for ${gr}`), e;
   } catch (r) {
     throw ge(`Error during hard reset for ${gr}: `, r), r;
   }
@@ -15678,49 +15688,50 @@ async function Ad(t) {
 async function qn(t) {
   const e = t?.attempt + 1 || 1;
   try {
-    await Zs.deleteFs(gr, da), await uc({ ...t, url: t.url, attempt: e });
+    await Gs.deleteFs(gr, da), await lc({ ...t, url: t.url, attempt: e });
     return;
   } catch (r) {
     ge(`Error during delete, close, and reclone process for ${gr}: `, r);
   }
 }
-async function uc(t) {
+async function lc(t) {
   te("doCloneAndStuff args: ", t);
   let e = !1, r = t.attempt || 0;
   t[r] = r;
   const i = 1;
-  !ct && await br(t?.url), await Ks(Yt);
+  !ct && await br(t?.url), await Ys(Yt);
   try {
-    let n = !0, a = await $d();
+    let n = !0, a = await Rd();
     if (te("dirExists", a), a && !e) {
       te("Directory already exists. Using existing directory...");
       let o = await Kr();
       return await ea(o), { handleNoRefResult: n, message: "exists", success: !0 };
     } else {
       te("Cloning repository ...");
-      const o = await Od(t);
+      const o = await Dd(t);
+      te("executing clone with args: ", t);
       let s = await Kr();
-      await ea(s), te(o, s), o?.data && o?.data?.isCacheUsed && await bc({
+      await ea(s), te(o, s), o?.data && o?.data?.isCacheUsed && await _c({
         url: t.url
-      }), n = await Td(t), await Dd();
+      }), n = await Id(t), await Ad();
     }
     return { handleNoRefResult: n, message: "notExist", success: !0 };
   } catch (n) {
     return await Wr(n, t, "doCloneAndStuff", i), { handleNoRefResult: !1, message: "error", success: !1 };
   }
 }
-async function Ni(t) {
+async function Ci(t) {
   return (await se.promises.lstat(t)).isDirectory();
 }
-async function fc(t) {
+async function uc(t) {
   try {
-    if (!await Ni(t))
+    if (!await Ci(t))
       await No(t);
     else {
       const e = await se.promises.readdir(t);
       for (const r of e) {
         const i = `${t}/${r}`;
-        await Ni(i) ? (await fc(i), await se.promises.rmdir(i)) : await No(i), await se.promises.rmdir(t);
+        await Ci(i) ? (await uc(i), await se.promises.rmdir(i)) : await No(i), await se.promises.rmdir(t);
       }
     }
   } catch (e) {
@@ -15731,19 +15742,19 @@ async function fc(t) {
     ge("Error while removing directory contents:", e);
   }
 }
-async function Dd() {
+async function Ad() {
   try {
-    let t = await ec(), e = await wa();
+    let t = await Qs(), e = await wa();
     te("remoteBranches", t), te("localBranches", e), e.push("HEAD");
     const r = t.filter((n) => !e.includes(n));
     te("filteredBranches", r);
     let i = le === "/" ? "" : le;
     await Promise.all(
       r.map(async (n) => {
-        await Qs({
+        await Js({
           ref: n,
           object: i + `/.git/refs/remotes/${qe}/${n}`
-        }), await Gi({
+        }), await qi({
           filePath: i + `/.git/refs/heads/${n}`,
           fileContents: await ya({ filePath: i + `/.git/refs/remotes/${qe}/${n}` })
         });
@@ -15753,12 +15764,12 @@ async function Dd() {
     throw ge("Error initializing local branches:", t), t;
   }
 }
-function At(t, e) {
+function Bt(t, e) {
   return !t && !e ? (te("No username or password provided. Returning empty headers."), {}) : {
     authorization: `Basic ${btoa(`${t}:${e}`)}`
   };
 }
-async function Od(t) {
+async function Dd(t) {
   try {
     let e;
     if (Ht && Ot)
@@ -15768,13 +15779,14 @@ async function Od(t) {
         te("Service Worker clone failed, falling back to Web Worker", r), e = await ne.clone({
           ...t,
           fs: se,
-          http: Bt,
+          http: $t,
           dir: le,
           remote: qe,
           ref: We,
-          corsProxy: St,
+          corsProxy: kt,
           depth: Yt,
-          headers: At(ht, dt),
+          noCheckout: !0,
+          headers: Bt(ht, dt),
           onAuth() {
             return Ke.fill();
           },
@@ -15787,13 +15799,14 @@ async function Od(t) {
       te("Service Worker not supported, using Web Worker directly"), e = await ne.clone({
         ...t,
         fs: se,
-        http: Bt,
+        http: $t,
         dir: le,
         remote: qe,
         ref: We,
-        corsProxy: St,
+        corsProxy: kt,
         depth: Yt,
-        headers: At(ht, dt),
+        noCheckout: !0,
+        headers: Bt(ht, dt),
         onAuth() {
           return Ke.fill();
         },
@@ -15806,18 +15819,18 @@ async function Od(t) {
     throw ge("Some error happened while cloning:", e), e;
   }
 }
-async function hc(t) {
+async function fc(t) {
   let e = t.split("/").filter((i) => i.trim() !== ""), r = le.split("/").filter((i) => i.trim() !== "").join("").length;
   return e = e.join("/"), e = le === "/" ? e : e.slice(r + 1), e;
 }
-async function Cd(t) {
+async function Od(t) {
   try {
-    let e = await hc(t.filePath);
+    let e = await fc(t.filePath);
     await ne.remove({
       fs: se,
       dir: le,
       filepath: e
-    }), await fc(t.filePath);
+    }), await uc(t.filePath);
   } catch (e) {
     ge("Error while removing the file:", e);
   }
@@ -15829,7 +15842,7 @@ async function No(t) {
     ge("Error occured while unlinking:", e);
   }
 }
-async function Nd(t, e) {
+async function Cd(t, e) {
   try {
     if (t === e)
       return;
@@ -15838,7 +15851,7 @@ async function Nd(t, e) {
     ge("Error occured while renaming filePath:", r);
   }
 }
-async function Fd(t = {}) {
+async function Nd(t = {}) {
   try {
     te("Attempting to retrieve log with the following args:", { ...t, fs: se, depth: Yt, dir: le, ref: We });
     const e = await ne.log({ ...t, fs: se, depth: Yt, dir: le, ref: We });
@@ -15854,7 +15867,7 @@ async function pa(t) {
   const r = 1, i = t?.force || !0;
   !ct && await br(t?.url);
   try {
-    await Wi(t);
+    await Hi(t);
     try {
       if (Ht && Ot)
         try {
@@ -15863,13 +15876,13 @@ async function pa(t) {
           return te("Service Worker push failed, falling back to Web Worker", n), await ne.push({
             ...t,
             fs: se,
-            http: Bt,
+            http: $t,
             dir: le,
-            corsProxy: St,
+            corsProxy: kt,
             remote: qe,
             ref: We,
             force: i,
-            headers: At(ht, dt),
+            headers: Bt(ht, dt),
             onAuth() {
               return Ke.fill();
             },
@@ -15882,13 +15895,13 @@ async function pa(t) {
         return te("Service Worker not supported, using Web Worker directly"), await ne.push({
           ...t,
           fs: se,
-          http: Bt,
+          http: $t,
           dir: le,
-          corsProxy: St,
+          corsProxy: kt,
           remote: qe,
           ref: We,
           force: !0,
-          headers: At(ht, dt),
+          headers: Bt(ht, dt),
           onAuth() {
             return Ke.fill();
           },
@@ -15903,9 +15916,9 @@ async function pa(t) {
     return ge("some error happend while pushing: ", n), await Wr(n, t, "push", r), { success: !1 };
   }
 }
-async function Ud(t = "push") {
+async function Fd(t = "push") {
   try {
-    await mc() && await gc() || (await wc({ username: zi }), await pc({ email: Hi })), await ne.stash({
+    await pc() && await mc() || (await dc({ username: ji }), await wc({ email: zi })), await ne.stash({
       fs: se,
       dir: le,
       op: t
@@ -15914,20 +15927,20 @@ async function Ud(t = "push") {
     ge("An error occurred while stashing:", e);
   }
 }
-async function Md(t) {
+async function Ud(t) {
   return await ne.status({
     fs: se,
     dir: le,
     filepath: t?.filePath
   });
 }
-async function Ld(t, e = We = "HEAD") {
+async function Md(t, e = We = "HEAD") {
   se.writeFile(le + `/.git/refs/heads/${e}`, t, (r) => {
     if (r) throw r;
     console.log("git reset has successfully done.");
   });
 }
-async function dc({ dir: t, ref: e, branch: r }) {
+async function hc({ dir: t, ref: e, branch: r }) {
   var i = /^HEAD~([0-9]+)$/, n = e.match(i);
   if (n) {
     var a = +n[1], o = await ne.log({ fs: se, dir: t, depth: a + 1 }), s = o.pop().oid;
@@ -15945,10 +15958,10 @@ async function dc({ dir: t, ref: e, branch: r }) {
   }
   return Promise.reject(`Wrong ref ${e}`);
 }
-async function wc(t) {
+async function dc(t) {
   try {
     const e = t?.name ? t?.name : "sampleUser";
-    zi = e, await ne.setConfig({
+    ji = e, await ne.setConfig({
       fs: se,
       dir: le,
       path: "user.name",
@@ -15958,10 +15971,10 @@ async function wc(t) {
     ge("An error occurred while setting user name:", e);
   }
 }
-async function pc(t) {
+async function wc(t) {
   try {
     const e = t?.email ? t?.email : "sampleUser";
-    Hi = e, await ne.setConfig({
+    zi = e, await ne.setConfig({
       fs: se,
       dir: le,
       path: "user.email",
@@ -15971,7 +15984,7 @@ async function pc(t) {
     ge("An error occurred while setting email:", e);
   }
 }
-async function mc() {
+async function pc() {
   try {
     const t = await ne.getConfig({
       fs: se,
@@ -15983,7 +15996,7 @@ async function mc() {
     ge("An error occurred while getting email:", t);
   }
 }
-async function gc() {
+async function mc() {
   try {
     const t = await ne.getConfig({
       fs: se,
@@ -15995,7 +16008,7 @@ async function gc() {
     ge("An error occurred while getting username:", t);
   }
 }
-async function yc(t = qe) {
+async function gc(t = qe) {
   try {
     return await ne.getConfig({
       fs: se,
@@ -16006,7 +16019,7 @@ async function yc(t = qe) {
     ge("An error occurred while getting remote url:", e);
   }
 }
-async function Pd(t = ct, e = qe) {
+async function Ld(t = ct, e = qe) {
   try {
     await ne.setConfig({
       fs: se,
@@ -16018,7 +16031,7 @@ async function Pd(t = ct, e = qe) {
     ge("An error occurred while setting remote url:", r);
   }
 }
-async function _c(t) {
+async function yc(t) {
   try {
     const e = await ne.getConfig({
       fs: se,
@@ -16030,7 +16043,7 @@ async function _c(t) {
     ge("An error occurred while getting config:", e);
   }
 }
-async function jd(t, e) {
+async function Pd(t, e) {
   try {
     await ne.setConfig({
       fs: se,
@@ -16042,35 +16055,35 @@ async function jd(t, e) {
     ge("An error occurred while setting config:", r);
   }
 }
-async function Wi(t) {
+async function Hi(t) {
   try {
-    await wc(t), await pc(t);
+    await dc(t), await wc(t);
   } catch (e) {
     ge("An error occurred while setting configs:", e);
   }
 }
-async function zd(t = "HEAD") {
+async function jd(t = "HEAD") {
   return await ne.resolveRef({
     fs: se,
     dir: le,
     ref: t
   });
 }
-async function Hd(t) {
+async function zd(t) {
   return await ne.readCommit({
     fs: se,
     dir: le,
     oid: t
   });
 }
-async function Wd(t) {
+async function Hd(t) {
   await ne.writeCommit({
     fs: se,
     dir: le,
     commit: t
   });
 }
-async function qd(t) {
+async function Wd(t) {
   await ne.writeRef({
     fs: se,
     dir: le,
@@ -16078,10 +16091,10 @@ async function qd(t) {
     value: t
   });
 }
-async function Gd(t = "") {
+async function qd(t = "") {
   await Wt.commitStagedChanges(se, le);
 }
-async function Zd(t, e = "staged") {
+async function Gd(t, e = "staged") {
   try {
     te(`[GITWorker] Reading file: ${t}`), te("Current FS state:", { fs: se, fsName: gr, fsType: da, fsArgs: ha });
     const r = await se.promises.readdir("/");
@@ -16092,7 +16105,7 @@ async function Zd(t, e = "staged") {
     throw ge(`[GITWorker] Failed to read file ${t}:`, r), new Error(`Failed to read file: ${r.message}`);
   }
 }
-async function Vd(t, e, r = 1) {
+async function Zd(t, e, r = 1) {
   try {
     te(`[GITWorker] Writing to file: ${t}`);
     const i = await Wt.writeFileDot(
@@ -16100,8 +16113,8 @@ async function Vd(t, e, r = 1) {
       le,
       t,
       e,
+      ji,
       zi,
-      Hi,
       r
     );
     return te(`[GITWorker] Successfully wrote to file: ${t}`), i;
@@ -16136,10 +16149,10 @@ async function Mo(t = 1) {
     throw ge("[GITWorker] Failed to list files:", e), new Error(`Failed to list files: ${e.message}`);
   }
 }
-async function Lo(t, e = 1) {
+async function Vd(t, e = 1) {
   try {
     te(`[GITWorker] Creating directory: ${t}`);
-    const r = await Wt.mkdirDot(se, le, t, zi, Hi, e);
+    const r = await Wt.mkdirDot(se, le, t, ji, zi, e);
     return te(`[GITWorker] Successfully created directory: ${t}`), r;
   } catch (r) {
     throw ge(`[GITWorker] Failed to create directory ${t}:`, r), new Error(`Failed to create directory: ${r.message}`);
@@ -16190,7 +16203,7 @@ async function Jd(t) {
   const r = 1;
   !ct && await br(t?.url);
   try {
-    await Wi(t);
+    await Hi(t);
     try {
       if (Ht && Ot)
         try {
@@ -16199,15 +16212,14 @@ async function Jd(t) {
           return te("Service Worker pull failed, falling back to Web Worker", i), await ne.pull({
             ...t,
             fs: se,
-            http: Bt,
+            http: $t,
             dir: le,
-            corsProxy: St,
+            corsProxy: kt,
             remote: qe,
             remoteRef: We,
             fastForward: !0,
             forced: !0,
-            singleBranch: !0,
-            headers: At(ht, dt),
+            headers: Bt(ht, dt),
             onAuth() {
               return Ke.fill();
             },
@@ -16220,15 +16232,14 @@ async function Jd(t) {
         return te("Service Worker not supported, using Web Worker directly"), await ne.pull({
           ...t,
           fs: se,
-          http: Bt,
+          http: $t,
           dir: le,
-          corsProxy: St,
+          corsProxy: kt,
           remote: qe,
           remoteRef: We,
           fastForward: !0,
           forced: !0,
-          singleBranch: !0,
-          headers: At(ht, dt),
+          headers: Bt(ht, dt),
           onAuth() {
             return Ke.fill();
           },
@@ -16243,7 +16254,7 @@ async function Jd(t) {
     return ge("some error happend while pulling: ", i), await Wr(i, t, "pull", r), { success: !1 };
   }
 }
-async function bc(t) {
+async function _c(t) {
   let e = t.attempt || 0;
   t[e] = e;
   const r = 1;
@@ -16256,15 +16267,14 @@ async function bc(t) {
           ...t,
           fs: se,
           cache,
-          http: Bt,
+          http: $t,
           dir: le,
           remote: qe,
-          corsProxy: St,
+          corsProxy: kt,
           ref: We,
           remoteref: We,
           forced: !0,
-          singleBranch: !1,
-          headers: At(ht, dt),
+          headers: Bt(ht, dt),
           onAuth() {
             return Ke.fill();
           },
@@ -16278,15 +16288,14 @@ async function bc(t) {
         ...t,
         fs: se,
         cache,
-        http: Bt,
+        http: $t,
         dir: le,
         remote: qe,
-        corsProxy: St,
+        corsProxy: kt,
         ref: We,
         remoteref: We,
         forced: !0,
-        singleBranch: !1,
-        headers: At(ht, dt),
+        headers: Bt(ht, dt),
         onAuth() {
           return Ke.fill();
         },
@@ -16298,10 +16307,10 @@ async function bc(t) {
     return te("This error occured while fast-forwarding: ", i), await Wr(i, t, "fastForward", r), { success: !1 };
   }
 }
-async function qi(t) {
+async function Wi(t) {
   try {
     te("addFile log", t);
-    let e = await hc(t.filePath);
+    let e = await fc(t.filePath);
     await ne.add({
       fs: se,
       dir: le,
@@ -16311,19 +16320,19 @@ async function qi(t) {
     ge("An error occurred while adding the file(s):", e);
   }
 }
-async function vc() {
+async function bc() {
   try {
-    const t = await Ec();
+    const t = await vc();
     te("changedFiles", t);
     for (let e in t)
-      t[e].includes("deleted") ? await Cd({ filePath: e }) : await qi({ filePath: e });
+      t[e].includes("deleted") ? await Od({ filePath: e }) : await Wi({ filePath: e });
   } catch (t) {
     ge("Error adding all changed files:", t);
   }
 }
 async function Qd(t) {
   try {
-    await Gi(t), await qi(t);
+    await qi(t), await Wi(t);
   } catch (e) {
     ge("Error adding file to staging area:", e);
   }
@@ -16361,28 +16370,28 @@ async function _a(t = le) {
   try {
     let e = t, r = await se.promises.readdir(t), i = {};
     for (const n of r)
-      e !== "/" ? t = e + "/" + n : t = e + n, await Ni(t) ? i = Object.assign(await _a(t), i) : i[t] = n;
+      e !== "/" ? t = e + "/" + n : t = e + n, await Ci(t) ? i = Object.assign(await _a(t), i) : i[t] = n;
     return te("result", i), i;
   } catch (e) {
     throw ge("Error listing files:", e), e;
   }
 }
-async function Gi(t) {
+async function qi(t) {
   try {
     await ma(t.filePath), await se.promises.writeFile(t.filePath, t.fileContents, "utf8");
   } catch (e) {
     ge("an error happend while writing to file:", e);
   }
 }
-async function Ec() {
+async function vc() {
   let i = await ne.statusMatrix({ fs: se, dir: le });
-  return i = i.filter((n) => n[1] !== n[2] || n[1] !== n[3]), await kc(i);
+  return i = i.filter((n) => n[1] !== n[2] || n[1] !== n[3]), await Ec(i);
 }
 async function tw() {
   let i = await ne.statusMatrix({ fs: se, dir: le });
-  return i = i.filter((n) => n[2] !== n[3] || n[1] !== n[3]), await kc(i);
+  return i = i.filter((n) => n[2] !== n[3] || n[1] !== n[3]), await Ec(i);
 }
-async function kc(t) {
+async function Ec(t) {
   const r = {
     "003": "added, staged, deleted unstaged",
     "020": "new, untracked",
@@ -16429,92 +16438,91 @@ function Zr(t) {
     return t;
   }
 }
-const Po = {
-  setFs: pd,
-  doCloneAndStuff: uc,
-  doFetch: rc,
-  doPushFile: kd,
-  doPushAll: Sd,
-  addFile: ({ filePath: t }) => qi({ filePath: t }),
+const Lo = {
+  setFs: wd,
+  doCloneAndStuff: lc,
+  doFetch: tc,
+  doPushFile: Ed,
+  doPushAll: kd,
+  addFile: ({ filePath: t }) => Wi({ filePath: t }),
   commit: ({ username: t, email: e, commitMessage: r }) => ga({ username: t, email: e, commitMessage: r }),
   push: ({ url: t, remote: e, ref: r, force: i = !0 }) => pa({ url: t, remote: e, ref: r, force: i }),
   pull: ({ url: t, remote: e, ref: r }) => Jd({ url: t, remote: e, ref: r }),
-  addDot: vc,
+  addDot: bc,
   addFileToStaging: Qd,
-  commitStagedChanges: Gd,
-  status: Md,
-  log: Fd,
+  commitStagedChanges: qd,
+  status: Ud,
+  log: Nd,
   listFiles: ({ filePath: t }) => _a(t),
   listFilesDot: ({ filePath: t }) => Mo(t),
-  listRemotes: cc,
+  listRemotes: sc,
   listBranches: wa,
-  checkoutBranch: ({ ref: t }) => md(t),
+  checkoutBranch: ({ ref: t }) => pd(t),
   currentBranch: Kr,
-  currentRemote: yd,
-  setRemote: ({ remote: t }) => Js(t),
-  setRemoteUrl: ({ url: t, remote: e }) => Pd(t, e),
-  getRemoteUrl: ({ remote: t }) => yc(t),
-  getRemote: ({ remote: t }) => hd(),
-  getRemoteCommitInLocalRepo: ({ remote: t }) => xd(),
-  getChangedFilesList: Ec,
-  getLatestRemoteCommit: ({ url: t, remote: e }) => nc({ url: t, remote: e }),
-  getLastLocalCommit: ({ ref: t }) => oc(t),
-  isSync: ({ url: t }) => ac(t),
-  hardReset: dc,
-  softReset: ({ commitHash: t, branch: e }) => Ld(t, e),
-  addRemote: ({ url: t, remote: e }) => sc(t, e),
-  deleteRemote: ({ remote: t }) => Id(t),
-  findMergeBase: ({ oids: t }) => Bd(t),
+  currentRemote: gd,
+  setRemote: ({ remote: t }) => Ks(t),
+  setRemoteUrl: ({ url: t, remote: e }) => Ld(t, e),
+  getRemoteUrl: ({ remote: t }) => gc(t),
+  getRemote: ({ remote: t }) => fd(),
+  getRemoteCommitInLocalRepo: ({ remote: t }) => Sd(),
+  getChangedFilesList: vc,
+  getLatestRemoteCommit: ({ url: t, remote: e }) => ic({ url: t, remote: e }),
+  getLastLocalCommit: ({ ref: t }) => ac(t),
+  isSync: ({ url: t }) => nc(t),
+  hardReset: hc,
+  softReset: ({ commitHash: t, branch: e }) => Md(t, e),
+  addRemote: ({ url: t, remote: e }) => oc(t, e),
+  deleteRemote: ({ remote: t }) => xd(t),
+  findMergeBase: ({ oids: t }) => $d(t),
   findInGitHistory: Kd,
-  resolveMergeConflict: lc,
-  fastForward: bc,
-  setConfigs: Wi,
+  resolveMergeConflict: cc,
+  fastForward: _c,
+  setConfigs: Hi,
   setUrl: ({ url: t }) => br(t),
-  setCorsProxy: ({ corsProxy: t }) => ud(t),
-  setSWUsage: ({ useSW: t }) => sd(t),
-  setDir: ({ dir: t }) => cd(t),
-  setDepth: ({ depth: t }) => Ks(t),
+  setCorsProxy: ({ corsProxy: t }) => ld(t),
+  setSWUsage: ({ useSW: t }) => od(t),
+  setDir: ({ dir: t }) => sd(t),
+  setDepth: ({ depth: t }) => Ys(t),
   setRef: ({ ref: t }) => ea(t),
-  setAuthParams: ({ username: t, password: e }) => fd(t, e),
-  setSettingsAddresses: dd,
-  addToSetting: Ed,
-  stash: ({ operation: t }) => Ud(t),
+  setAuthParams: ({ username: t, password: e }) => ud(t, e),
+  setSettingsAddresses: hd,
+  addToSetting: vd,
+  stash: ({ operation: t }) => Fd(t),
   readFile: ({ filePath: t }) => ya({ filePath: t }),
-  readFileDot: ({ filePath: t, commitOid: e = "staged" }) => Zd(t, e),
-  writeFileDot: ({ filePath: t, fileContent: e, doCommit: r = 1 }) => Vd(t, e, r),
-  writeFile: ({ filePath: t, fileContents: e }) => Gi({ filePath: t, fileContents: e }),
+  readFileDot: ({ filePath: t, commitOid: e = "staged" }) => Gd(t, e),
+  writeFileDot: ({ filePath: t, fileContent: e, doCommit: r = 1 }) => Zd(t, e, r),
+  writeFile: ({ filePath: t, fileContents: e }) => qi({ filePath: t, fileContents: e }),
   readDirDot: ({ path: t, commitOid: e = "staged" }) => Fo(t, e),
   isDirectoryDot: ({ path: t }) => Uo(t),
   listFilesDot: ({ listDirs: t = 1 }) => Mo(t),
-  mkdirDot: ({ dirPath: t, doCommit: e = 1 }) => Lo(t, e),
+  mkdirDot: ({ dirPath: t, doCommit: e = 1 }) => Vd(t, e),
   removeDirDot: ({ dirPath: t, doCommit: e = 1 }) => Xd(t, e),
   removeFileDot: ({ filePath: t, doCommit: e = 1 }) => Yd(t, e),
-  rename: ({ oldPath: t, newPath: e }) => Nd(t, e),
+  rename: ({ oldPath: t, newPath: e }) => Cd(t, e),
   mkdirRecursive: ({ path: t }) => ma(t),
-  mkdirDot: ({ path: t }) => Lo(t),
-  listServerRefs: ({ args: t }) => ic(t),
-  getUsername: gc,
-  getEmail: mc,
-  getConfig: ({ path: t }) => _c(t),
-  setConfig: ({ path: t, value: e }) => jd(t, e),
-  resolveRef: ({ ref: t }) => zd(t),
-  readCommit: ({ head: t }) => Hd(t),
-  writeCommit: Wd,
-  writeRef: qd,
-  init: Rd,
-  isDirectory: ({ path: t }) => Ni(t),
+  listServerRefs: ({ args: t }) => rc(t),
+  getUsername: mc,
+  getEmail: pc,
+  getConfig: ({ path: t }) => yc(t),
+  setConfig: ({ path: t, value: e }) => Pd(t, e),
+  resolveRef: ({ ref: t }) => jd(t),
+  readCommit: ({ head: t }) => zd(t),
+  writeCommit: Hd,
+  writeRef: Wd,
+  init: Td,
+  isDirectory: ({ path: t }) => Ci(t),
   isDirectoryDot: ({ path: t }) => Uo(t),
   readdir: ({ path: t }) => ew(t),
   readDirDot: ({ path: t }) => Fo(t),
-  getFileStoresFromDatabases: wd
+  getFileStoresFromDatabases: dd
 };
-let Sc;
+let kc;
 const iw = new Promise((t) => {
-  Sc = t;
-}), xc = {
+  kc = t;
+}), Sc = {
   execute: async (t, e = {}) => {
     try {
-      const r = Po[t];
+      const r = Lo[t];
       if (!r) throw new Error(`Unknown operation: ${t}`);
       const i = Zr(e), n = await r(i);
       return Zr(n);
@@ -16527,13 +16535,13 @@ const iw = new Promise((t) => {
   // Maintain backward compatibility with direct method calls
   // by proxying them to execute()
   ...Object.fromEntries(
-    Object.keys(Po).map((t) => [
+    Object.keys(Lo).map((t) => [
       t,
-      async (e) => xc.execute(t, e)
+      async (e) => Sc.execute(t, e)
     ])
   )
 };
-Sc();
-od.set("workerThread", xc);
+kc();
+ad.set("workerThread", Sc);
 te("Worker initialized and ready");
 //# sourceMappingURL=gitWorker.js.map

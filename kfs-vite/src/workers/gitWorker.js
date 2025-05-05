@@ -492,7 +492,6 @@ async function doFetch(args) {
           ref,
           remote,
           depth,
-          singleBranch: false,
           tags: false,
           headers: buildHeaders(username, password),
           onAuth() {
@@ -515,7 +514,6 @@ async function doFetch(args) {
         ref,
         remote,
         depth,
-        singleBranch: false,
         tags: false,
         headers: buildHeaders(username, password),
         onAuth() {
@@ -968,6 +966,7 @@ async function doCloneAndStuff(args) {
     } else {
       consoleDotLog(`Cloning repository ...`);
       const cloneResult = await clone(args);
+      consoleDotLog('executing clone with args: ', args)
       // let ref = cloneResult?.data?.ref;
       let head = await currentBranch();
       await setRef(head);
@@ -1077,6 +1076,7 @@ async function clone(args) {
           ref,
           corsProxy,
           depth,
+          noCheckout: true,
           headers: buildHeaders(username, password),
           onAuth() {
               return authenticate.fill();
@@ -1097,6 +1097,7 @@ async function clone(args) {
         ref,
         corsProxy,
         depth,
+        noCheckout: true,
         headers: buildHeaders(username, password),
         onAuth() {
             return authenticate.fill();
@@ -1661,7 +1662,6 @@ async function pull(args) {
             remoteRef: ref,
             fastForward: true,
             forced: true,
-            singleBranch: true,
             headers: buildHeaders(username, password),
             onAuth() {
               return authenticate.fill();
@@ -1684,7 +1684,6 @@ async function pull(args) {
           remoteRef: ref,
           fastForward: true,
           forced: true,
-          singleBranch: true,
           headers: buildHeaders(username, password),
           onAuth() {
             return authenticate.fill();
@@ -1730,7 +1729,6 @@ async function fastForward(args) {
           ref,
           remoteref: ref,
           forced: true,
-          singleBranch: false,
           headers: buildHeaders(username, password),
           onAuth() {
             return authenticate.fill();
@@ -1754,7 +1752,6 @@ async function fastForward(args) {
         ref,
         remoteref: ref,
         forced: true,
-        singleBranch: false,
         headers: buildHeaders(username, password),
         onAuth() {
           return authenticate.fill();

@@ -1,8 +1,16 @@
 {
-  "name": "kfs-vite",
-  "private": true,
-  "version": "0.0.0",
+  "name": "js-kfs",
+  "description": "A lightweight, fast, and efficient pure JavaScript library for managing files and directories in a browser.",
+  "author": "Kani",
+  "license": "MIT",
+  "main": "dist/kfs.js",
+  "module": "dist/kfs.js",
+  "private": false,
+  "version": "0.1.2",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
