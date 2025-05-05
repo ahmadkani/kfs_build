@@ -22,6 +22,7 @@ export class KFS {
     this.versioningManager = new VersioningManager(this.vfs);
     this.mergingManager = new MergingManager(this.vfs);    
     this.commitCount = 0;
+    this.mountPaths = null;
   }
   
   // -------------------------------
@@ -70,6 +71,7 @@ export class KFS {
 
       this.fsInstance = mountData.fsInstance;
       const root = await this.read(`${path}/${fsName}`);
+      await this.vfs.getMountPaths();
       consoleDotLog('Mount successful, root:', root);
       return mountData;
     } catch (error) {
@@ -141,6 +143,12 @@ export class KFS {
       }
   
       path = this._normalizePath(path);
+
+      if (this.mountPaths.includes(path)) {
+        throw new Error(`Cannot write directly to mount path (${path}). Use mount() instead.`);
+      }
+
+
       const { fs, relativePath, versioning } = await this.vfs.resolveFS(path);
   
       if (type === 'file') {
@@ -225,6 +233,10 @@ export class KFS {
   async remove(path) {
     try {
       path = this._normalizePath(path);
+
+      if (this.mountPaths.includes(path)) {
+        throw new Error(`Cannot remove path (${path}) directly. Use unmount() instead.`);
+      }
       const { fs, relativePath, versioning } = await this.vfs.resolveFS(path);
 
       const stats = await fs.fsInstance.fs_stat(relativePath);

@@ -311,6 +311,10 @@ export class VFS {
     }
   }
 
+  async getMountPaths() {
+    return Object.keys(this.mounts);
+  }
+
   async unmount(path, fsName) {
     const fsPath = path + '/' + fsName;
     consoleDotLog(`Unmounting filesystem at ${fsPath}`);
@@ -321,6 +325,8 @@ export class VFS {
       throw new Error(errorMsg);
     }
   
+    const mountData = this.mounts[fsPath];
+
     try {
       if (this.mounts[fsPath].fsInstance) {
         consoleDotLog(`Closing all files for mount at ${fsPath}`);
@@ -333,7 +339,7 @@ export class VFS {
   
       if (Object.keys(this.mounts).length === 0 && this.VFSutils) {
         consoleDotLog('Terminating VFSutils instance (no more mounts)');
-        await this.VFSutils.terminate();
+        await this.VFSutils.terminate(mountData.fsName, mountData.fsType);
         this.VFSutils = null;
       }
   
@@ -351,7 +357,7 @@ export class VFS {
     try {
       if (this.VFSutils) {
         consoleDotLog('Terminating existing VFSutils instance');
-        await this.VFSutils.terminate();
+        await this.VFSutils.terminate(fsName, fsType);
         this.VFSutils = null;
       }
 
@@ -378,7 +384,7 @@ export class VFS {
       consoleDotError(`Fetch operation failed (method: ${fetchMethod}):`, error);
       if (this.VFSutils) {
         consoleDotLog('Cleaning up VFSutils after fetch failure');
-        await this.VFSutils.terminate();
+        await this.VFSutils.terminate(fsName, fsType);
         this.VFSutils = null;
       }
       throw error;

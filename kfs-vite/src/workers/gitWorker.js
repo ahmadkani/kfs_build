@@ -873,9 +873,9 @@ async function handleGitError(error, args, operationName, maxDeleteRetries = 1, 
   consoleDotError(`Some error happened while ${operationName}: `, error);
   
   const isAuthError = error && (error.toString().includes('401') || error.toString().includes('403'));
-  const isNetworkError = error && error.toString().toLowerCase().includes('network') || error.toString().toLowerCase().includes('fetch');
+  const isNetworkError = ''//error && error.toString().toLowerCase().includes('network') || error.toString().toLowerCase().includes('fetch');
   const isConflictError = error && error.toString().includes('CheckoutConflictError') || error.toString().toLowerCase().includes('MergeConflictError');
-
+  const noHeadError = error & error.toString().includes('NotFoundError') || error.toString().toLowerCase().includes('Could not find HEAD');
 
   if (isAuthError || isNetworkError) {
     consoleDotLog(`Authentication or network error detected. Not deleting the repository.`);
@@ -894,7 +894,7 @@ async function handleGitError(error, args, operationName, maxDeleteRetries = 1, 
   if (attempt < 1) {
     if (attempt < maxDeleteRetries) {
       if (tryReset) {
-        const isSyncResult = await isSync(0);
+        const isSyncResult = await isSync();
         !isSyncResult && await handleHardReset({...args, attempt: attempt + 1});
         isSyncResult && await handleDeleteCloseAndReclone({...args, attempt: attempt + 1});
       } else {
@@ -931,10 +931,13 @@ async function handleHardReset(args) {
 
 async function handleDeleteCloseAndReclone(args) {
   const attempt = args?.attempt + 1 || 1;
+  const reclone = args?.reclone || false;
+  const _fsName = args?.fsName || fsName;
+  const _fsType = args?.fsType || fsType;
 
   try {
-    await fsManager.deleteFs(fsName, fsType);
-    await doCloneAndStuff({ ...args, url: args.url, attempt });
+    await FSManager.deleteFS(_fsName, _fsType);
+    reclone && await doCloneAndStuff({ ...args, url: args.url, attempt });
     return;
 
   } catch (error) {
@@ -2010,6 +2013,7 @@ const operationHandlers = {
   getChangedFilesList: getChangedFilesList,
   getLatestRemoteCommit: ({ url, remote }) => getLatestRemoteCommit({url, remote}),
   getLastLocalCommit: ({ ref }) => getLastLocalCommit (ref),
+  handleDeleteCloseAndReclone: ( {args} ) => handleDeleteCloseAndReclone(args),
   isSync: ({ url }) => isSync(url),
   hardReset: hardReset,
   softReset: ({ commitHash, branch }) => softReset(commitHash, branch),
