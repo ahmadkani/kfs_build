@@ -490,6 +490,7 @@ async function doFetch(args) {
           dir,
           corsProxy,
           ref,
+          url,
           remote,
           depth,
           singleBranch: false,
@@ -513,6 +514,7 @@ async function doFetch(args) {
         dir,
         corsProxy,
         ref,
+        url,
         remote,
         depth,
         singleBranch: false,
@@ -935,7 +937,7 @@ async function handleDeleteCloseAndReclone(args) {
   const attempt = args?.attempt + 1 || 1;
 
   try {
-    await fsManager.deleteFs(fsName, fsType);
+    await FSManager.deleteFS(fsName, fsType);
     await doCloneAndStuff({ ...args, url: args.url, attempt });
     return;
 
@@ -968,6 +970,17 @@ async function doCloneAndStuff(args) {
     } else {
       consoleDotLog(`Cloning repository ...`);
       const cloneResult = await clone(args);
+      await FSManager.createBackupFS(fsName, fsType);
+      consoleDotLog('createBackupFS created backup')
+      await setFs({ fsName: `${fsName}_replica`, fsType });
+      await setDir(dir);
+      consoleDotLog('doing it')
+      await new Promise(r => setTimeout(r, 10000));
+      await pull({url});
+      const res = await readFileDot('/hi')
+      const root = await readDirDot('/')
+      consoleDotLog('its done.', res, root);
+
       // let ref = cloneResult?.data?.ref;
       let head = await currentBranch();
       await setRef(head);
@@ -1658,6 +1671,7 @@ async function pull(args) {
             dir,
             corsProxy,
             remote,
+            url,
             remoteRef: ref,
             fastForward: true,
             forced: true,

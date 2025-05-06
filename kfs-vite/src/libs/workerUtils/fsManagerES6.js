@@ -95,35 +95,232 @@ class fsManager {
   }
 
   async deleteFS(fsName, fsType) {
-    // Create a unique key for the file system instance
     const key = `${fsName}-${fsType}`;
+    const instance = this.fsInstances.get(key);
 
-    // Check if the file system instance exists
-    if (!this.fsInstances.has(key)) {
+    if (!instance) {
       console.warn(`File system ${key} does not exist. Nothing to delete.`);
       return;
     }
 
-    // Handle deletion based on the file system type
-    if (fsType === "idb") {
-      // Delete the IndexedDB database
+    if (fsType === "memory") {
+      try {
+        const backend = instance.getBackend?.();
+        if (backend?.getFiles && backend._files) {
+          backend._files.clear(); // Remove all files
+          this._log(`Cleared memory FS data for ${key}`);
+        }
+      } catch (err) {
+        this._error(`Error clearing memory FS ${key}:`, err);
+      }
+    } else if (fsType === "idb") {
       try {
         await this.deleteIndexedDB(fsName);
-        consoleDotLog(`IndexedDB file system ${key} deleted successfully.`);
-      } catch (error) {
-        consoleDotError(`Error deleting IndexedDB file system ${key}:`, error);
-        throw error;
+        this._log(`Deleted IndexedDB for ${key}`);
+      } catch (err) {
+        this._error(`Error deleting IndexedDB for ${key}:`, err);
+        throw err;
       }
-    } else if (fsType === "memory") {
-      // For memory file systems, just remove the instance from the Map
-      consoleDotLog(`Memory file system ${key} deleted successfully.`);
     } else {
-      throw new Error(`Unsupported file system type: ${fsType}`);
+      throw new Error(`Unsupported FS type: ${fsType}`);
     }
 
-    // Remove the file system instance from the Map
     this.fsInstances.delete(key);
+    this._log(`Deleted FS instance for ${key}`);
   }
+
+  // Add this method to your fsManager class
+  async createBackupFS(originalName, fsType, backupSuffix = '_replica') {
+    const backupName = `${originalName}${backupSuffix}`;
+    const originalKey = `${originalName}-${fsType}`;
+    const backupKey = `${backupName}-${fsType}`;
+    
+    this._log(`Creating backup of ${originalKey} as ${backupKey}`);
+    
+    try {
+        // Get the original filesystem instance (wait for initialization if needed)
+        const originalFS = await this.getFS(originalName, fsType);
+        
+        // Ensure the FS is fully initialized
+        if (fsType === 'memory') {
+            // Wait briefly to ensure backend initialization completes
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            if (!originalFS._backend || !(originalFS._backend._files instanceof Map)) {
+                // Try to manually initialize if needed
+                if (originalFS._backend && typeof originalFS._backend._initializeRoot === 'function') {
+                    originalFS._backend._initializeRoot();
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+                
+                // Check again after attempted initialization
+                if (!originalFS._backend || !(originalFS._backend._files instanceof Map)) {
+                    throw new Error('Memory backend not properly initialized. Missing _files Map.');
+                }
+            }
+            
+            // Create new memory backend for replica with same options
+            const backend = new memoryBackend({
+                ...this.options,
+                deviceId: `${this.options.deviceId || 'default'}-${Date.now()}`
+            }, backupName);
+            
+            // Wait for backend to initialize
+            await new Promise(resolve => setTimeout(resolve, 10));
+            
+            // Ensure the new backend is initialized
+            if (!backend._files) {
+                backend._initializeRoot();
+            }
+            
+            // Deep clone the files Map
+            const originalFiles = originalFS._backend._files;
+            for (const [path, fileData] of originalFiles) {
+                backend._files.set(path, {...fileData});
+            }
+            
+            // Create new FS instance with copied data
+            const backupFS = new LightningFS(backupName, { backend });
+            this.fsInstances.set(backupKey, backupFS);
+            
+        } else if (fsType === 'idb') {
+            // [Previous IDB backup implementation remains the same]
+            const backupFS = new LightningFS(backupName);
+            this.fsInstances.set(backupKey, backupFS);
+            await this._copyIDBContents(originalFS, backupFS, '/');
+        } else {
+            throw new Error(`Unsupported FS type for backup: ${fsType}`);
+        }
+        
+        // Register the backup mount
+        await this._registerBackupMount(originalName, backupName);
+        
+        this._log(`Backup created successfully: ${backupKey}`);
+        return this.fsInstances.get(backupKey);
+        
+    } catch (error) {
+        this._error(`Failed to create backup ${backupKey}:`, error);
+        
+        // Clean up if partially created
+        if (this.fsInstances.has(backupKey)) {
+            this.fsInstances.delete(backupKey);
+        }
+        
+        throw error;
+    }
+}
+
+// Helper method to recursively copy IDB contents
+async _copyIDBContents(sourceFS, targetFS, path) {
+  try {
+      const files = await sourceFS.promises.readdir(path);
+      
+      for (const file of files) {
+          const fullPath = path === '/' ? `/${file}` : `${path}/${file}`;
+          
+          const stat = await sourceFS.promises.stat(fullPath);
+          
+          if (stat.isDirectory()) {
+              // Create directory in target
+              await targetFS.promises.mkdir(fullPath);
+              // Recursively copy contents
+              await this._copyIDBContents(sourceFS, targetFS, fullPath);
+          } else {
+              // Read file content and write to target
+              const content = await sourceFS.promises.readFile(fullPath);
+              await targetFS.promises.writeFile(fullPath, content);
+          }
+      }
+  } catch (error) {
+      // Handle case where path doesn't exist or other errors
+      this._error(`Error copying path ${path}:`, error);
+      throw error;
+  }
+}
+
+async _registerBackupMount(originalName, backupName, options = {}) {
+  const defaultOptions = {
+      readOnly: true,          // Backups are typically read-only
+      hidden: false,           // Whether to hide from normal listings
+      preserveOriginal: true,  // Keep original metadata
+      mountPath: `/${backupName}` // Customizable mount path
+  };
+  
+  const finalOptions = { ...defaultOptions, ...options };
+  const { mountPath } = finalOptions;
+
+  this._log(`Registering backup mount from ${originalName} to ${mountPath}`);
+
+  try {
+      // Initialize mounts object if it doesn't exist
+      if (typeof this.mounts !== 'object') {
+          this.mounts = {};
+      }
+
+      // Initialize backup registry if it doesn't exist
+      if (!this.backupRegistry) {
+          this.backupRegistry = new Map();
+      }
+
+      // Check for existing mount
+      if (this.mounts[mountPath]) {
+          throw new Error(`Mount path ${mountPath} already in use`);
+      }
+
+      // Get original mount details if available
+      const originalMount = this.mounts[`/${originalName}`] || {};
+
+      // Create backup mount entry
+      this.mounts[mountPath] = {
+          ...(finalOptions.preserveOriginal ? originalMount : {}),
+          fsName: backupName,
+          isBackup: true,
+          originalFsName: originalName,
+          createdAt: new Date().toISOString(),
+          lastAccessed: null,
+          accessCount: 0,
+          metadata: {
+              ...(originalMount.metadata || {}),
+              backupType: 'full', // could be 'incremental' or 'differential'
+              backupVersion: 1,
+              ...finalOptions
+          }
+      };
+
+      // Add to backup registry
+      this.backupRegistry.set(backupName, {
+          original: originalName,
+          mountPoint: mountPath,
+          createdAt: this.mounts[mountPath].createdAt,
+          options: finalOptions,
+          stats: {
+              fileCount: 0,    // Could be populated during backup
+              totalSize: 0,    // Could be populated during backup
+              lastVerified: null
+          }
+      });
+
+      this._log(`Successfully registered backup mount at ${mountPath}`);
+      return {
+          mountPath,
+          backupName,
+          originalName,
+          details: this.mounts[mountPath]
+      };
+  } catch (error) {
+      this._error(`Failed to register backup mount:`, error);
+      
+      // Clean up if partially created
+      if (this.mounts && this.mounts[mountPath]) {
+          delete this.mounts[mountPath];
+      }
+      if (this.backupRegistry && this.backupRegistry.has(backupName)) {
+          this.backupRegistry.delete(backupName);
+      }
+      
+      throw error;
+  }
+}
 
   async deleteIndexedDB(databaseName) {
     return new Promise((resolve, reject) => {

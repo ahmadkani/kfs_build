@@ -94,6 +94,15 @@ class MemoryBackend {
     }
   }
 
+  async getFiles() {
+    const files = new Map(
+      Array.from(this._files.entries()).map(([key, value]) => {
+        return [key, { ...value }];
+      })
+    );
+    return files;
+  }
+
   async sendFilesToSW(targetId = null) {
     const update = {
       operation: "memorySync",
