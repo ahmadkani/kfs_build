@@ -101,7 +101,7 @@ class MemoryBackend {
       })
     );
     return files;
-  }
+  }  
 
   async sendFilesToSW(targetId = null) {
     const update = {
