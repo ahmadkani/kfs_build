@@ -975,14 +975,8 @@ async function doCloneAndStuff(args) {
       consoleDotLog('createBackupFS created backup')
       await setFs({ fsName: `${fsName}_replica`, fsType });
       await setDir(dir);
-      consoleDotLog('doing it')
-      await new Promise(r => setTimeout(r, 10000));
-      await pull({url});
-      const res = await readFileDot('/hi')
-      const root = await readDirDot('/')
-      consoleDotLog('its done.', res, root);
-
-      // let ref = cloneResult?.data?.ref;
+      await doFetch({url});
+      await setFs({ fsName, fsType });
       let head = await currentBranch();
       await setRef(head);
       consoleDotLog(cloneResult, head)

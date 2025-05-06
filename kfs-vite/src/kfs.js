@@ -71,7 +71,7 @@ export class KFS {
 
       this.fsInstance = mountData.fsInstance;
       const root = await this.read(`${path}/${fsName}`);
-      await this.vfs.getMountPaths();
+      this.mountPaths = await this.vfs.getMountPaths();
       consoleDotLog('Mount successful, root:', root);
       return mountData;
     } catch (error) {
