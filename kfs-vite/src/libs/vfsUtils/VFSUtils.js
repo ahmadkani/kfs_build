@@ -65,8 +65,18 @@ export class VFSutils {
     }
   }
 
-  async terminate() {
+  async terminate(fsName, fsType) {
     try {
+      try {
+        await this.workerThread.execute('handleDeleteCloseAndReclone', {
+          fsName: fsName,
+          fsType: fsType,
+          reclone: true,
+        })
+      } catch (error) {
+        consoleDotError(`Some error happend while terminating VFS: `, error);
+        throw error;
+      }
       if (this.workerEntry) {
         await workerPool.releaseWorker(this.fsName);
         this.workerEntry = null;

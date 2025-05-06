@@ -1,7 +1,7 @@
 var as = (i, e) => () => (e || i((e = { exports: {} }).exports, e), e.exports);
 import { g as Wt, B as ne, L as fn } from "./index-jVhJ2jaE.js";
-import { L as Pr, c as Mr } from "./configES6-BSLDCkRC.js";
-var ll = as((Ar, Ki) => {
+import { L as Fr, c as Pr } from "./configES6-BnlXWGoZ.js";
+var ll = as((Tr, Ki) => {
   function ss(i) {
     return i && i.__esModule && Object.prototype.hasOwnProperty.call(i, "default") ? i.default : i;
   }
@@ -54,18 +54,18 @@ var ll = as((Ar, Ki) => {
       }
     }
   }
-  var It = [], Yt = !1, Ut, Ir = -1;
+  var It = [], Yt = !1, Ut, Sr = -1;
   function cs() {
-    !Yt || !Ut || (Yt = !1, Ut.length ? It = Ut.concat(It) : Ir = -1, It.length && wa());
+    !Yt || !Ut || (Yt = !1, Ut.length ? It = Ut.concat(It) : Sr = -1, It.length && wa());
   }
   function wa() {
     if (!Yt) {
       var i = da(cs);
       Yt = !0;
       for (var e = It.length; e; ) {
-        for (Ut = It, It = []; ++Ir < e; )
-          Ut && Ut[Ir].run();
-        Ir = -1, e = It.length;
+        for (Ut = It, It = []; ++Sr < e; )
+          Ut && Ut[Sr].run();
+        Sr = -1, e = It.length;
       }
       Ut = null, Yt = !1, os(i);
     }
@@ -117,9 +117,9 @@ var ll = as((Ar, Ki) => {
   };
   var ls = ha.exports;
   const et = /* @__PURE__ */ ss(ls);
-  var ni, hn;
+  var ii, hn;
   function us() {
-    if (hn) return ni;
+    if (hn) return ii;
     hn = 1;
     var i = function(e) {
       if (e = e || {}, this.Promise = e.Promise || Promise, this.queues = /* @__PURE__ */ Object.create(null), this.domainReentrant = e.domainReentrant || !1, this.domainReentrant) {
@@ -215,14 +215,14 @@ var ll = as((Ar, Ki) => {
       } catch (t) {
         return this.Promise.reject(t);
       }
-    }, ni = i, ni;
+    }, ii = i, ii;
   }
-  var ai, dn;
+  var ni, dn;
   function fs() {
-    return dn || (dn = 1, ai = us()), ai;
+    return dn || (dn = 1, ni = us()), ni;
   }
   var hs = fs();
-  const Rr = /* @__PURE__ */ Wt(hs);
+  const Ar = /* @__PURE__ */ Wt(hs);
   var vr = { exports: {} }, wn;
   function ds() {
     return wn || (wn = 1, typeof Object.create == "function" ? vr.exports = function(e, t) {
@@ -243,7 +243,7 @@ var ll = as((Ar, Ki) => {
       }
     }), vr.exports;
   }
-  var br = { exports: {} }, si = {}, pn;
+  var br = { exports: {} }, ai = {}, pn;
   function ws() {
     return pn || (pn = 1, function(i) {
       Object.defineProperties(i, { __esModule: { value: !0 }, [Symbol.toStringTag]: { value: "Module" } });
@@ -968,7 +968,7 @@ var ll = as((Ar, Ki) => {
         }, A.prototype.writeUint32BE = A.prototype.writeUInt32BE = function(c, h, b) {
           return c = +c, h = h >>> 0, b || Pe(this, c, h, 4, 4294967295, 0), this[h] = c >>> 24, this[h + 1] = c >>> 16, this[h + 2] = c >>> 8, this[h + 3] = c & 255, h + 4;
         };
-        function ot(p, c, h, b, B) {
+        function st(p, c, h, b, B) {
           J(c, b, B, p, h, 7);
           let M = Number(c & BigInt(4294967295));
           p[h++] = M, M = M >> 8, p[h++] = M, M = M >> 8, p[h++] = M, M = M >> 8, p[h++] = M;
@@ -983,7 +983,7 @@ var ll = as((Ar, Ki) => {
           return p[h + 3] = q, q = q >> 8, p[h + 2] = q, q = q >> 8, p[h + 1] = q, q = q >> 8, p[h] = q, h + 8;
         }
         A.prototype.writeBigUInt64LE = re(function(c, h = 0) {
-          return ot(this, c, h, BigInt(0), BigInt("0xffffffffffffffff"));
+          return st(this, c, h, BigInt(0), BigInt("0xffffffffffffffff"));
         }), A.prototype.writeBigUInt64BE = re(function(c, h = 0) {
           return Qe(this, c, h, BigInt(0), BigInt("0xffffffffffffffff"));
         }), A.prototype.writeIntLE = function(c, h, b, B) {
@@ -1015,7 +1015,7 @@ var ll = as((Ar, Ki) => {
         }, A.prototype.writeInt32BE = function(c, h, b) {
           return c = +c, h = h >>> 0, b || Pe(this, c, h, 4, 2147483647, -2147483648), c < 0 && (c = 4294967295 + c + 1), this[h] = c >>> 24, this[h + 1] = c >>> 16, this[h + 2] = c >>> 8, this[h + 3] = c & 255, h + 4;
         }, A.prototype.writeBigInt64LE = re(function(c, h = 0) {
-          return ot(this, c, h, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
+          return st(this, c, h, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
         }), A.prototype.writeBigInt64BE = re(function(c, h = 0) {
           return Qe(this, c, h, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
         });
@@ -1023,13 +1023,13 @@ var ll = as((Ar, Ki) => {
           if (h + b > p.length) throw new RangeError("Index out of range");
           if (h < 0) throw new RangeError("Index out of range");
         }
-        function ct(p, c, h, b, B) {
+        function ot(p, c, h, b, B) {
           return c = +c, h = h >>> 0, B || kt(p, c, h, 4), N.write(p, c, h, b, 23, 4), h + 4;
         }
         A.prototype.writeFloatLE = function(c, h, b) {
-          return ct(this, c, h, !0, b);
+          return ot(this, c, h, !0, b);
         }, A.prototype.writeFloatBE = function(c, h, b) {
-          return ct(this, c, h, !1, b);
+          return ot(this, c, h, !1, b);
         };
         function We(p, c, h, b, B) {
           return c = +c, h = h >>> 0, B || kt(p, c, h, 8), N.write(p, c, h, b, 52, 8), h + 8;
@@ -1263,7 +1263,7 @@ var ll = as((Ar, Ki) => {
       })(e);
       const $ = e.Buffer;
       i.Blob = e.Blob, i.BlobOptions = e.BlobOptions, i.Buffer = e.Buffer, i.File = e.File, i.FileOptions = e.FileOptions, i.INSPECT_MAX_BYTES = e.INSPECT_MAX_BYTES, i.SlowBuffer = e.SlowBuffer, i.TranscodeEncoding = e.TranscodeEncoding, i.atob = e.atob, i.btoa = e.btoa, i.constants = e.constants, i.default = $, i.isAscii = e.isAscii, i.isUtf8 = e.isUtf8, i.kMaxLength = e.kMaxLength, i.kStringMaxLength = e.kStringMaxLength, i.resolveObjectURL = e.resolveObjectURL, i.transcode = e.transcode;
-    }(si)), si;
+    }(ai)), ai;
   }
   /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
   var mn;
@@ -1298,9 +1298,9 @@ var ll = as((Ar, Ki) => {
       };
     }(br, br.exports)), br.exports;
   }
-  var oi, _n;
+  var si, _n;
   function ps() {
-    if (_n) return oi;
+    if (_n) return si;
     _n = 1;
     var i = ma().Buffer;
     function e(t, r) {
@@ -1329,11 +1329,11 @@ var ll = as((Ar, Ki) => {
       return t ? o.toString(t) : o;
     }, e.prototype._update = function() {
       throw new Error("_update must be implemented by subclass");
-    }, oi = e, oi;
+    }, si = e, si;
   }
-  var ci, gn;
+  var oi, gn;
   function ms() {
-    if (gn) return ci;
+    if (gn) return oi;
     gn = 1;
     var i = ds(), e = ps(), t = ma().Buffer, r = [
       1518500249,
@@ -1370,13 +1370,13 @@ var ll = as((Ar, Ki) => {
     }, a.prototype._hash = function() {
       var f = t.allocUnsafe(20);
       return f.writeInt32BE(this._a | 0, 0), f.writeInt32BE(this._b | 0, 4), f.writeInt32BE(this._c | 0, 8), f.writeInt32BE(this._d | 0, 12), f.writeInt32BE(this._e | 0, 16), f;
-    }, ci = a, ci;
+    }, oi = a, oi;
   }
   var _s = ms();
   const _a = /* @__PURE__ */ Wt(_s);
-  var li, yn;
+  var ci, yn;
   function gs() {
-    if (yn) return li;
+    if (yn) return ci;
     yn = 1;
     function i(n) {
       if (typeof n != "string")
@@ -1560,9 +1560,9 @@ var ll = as((Ar, Ki) => {
       win32: null,
       posix: null
     };
-    return r.posix = r, li = r, li;
+    return r.posix = r, ci = r, ci;
   }
-  var Re = gs(), ui = {};
+  var Re = gs(), li = {};
   /*! crc32.js (C) 2014-present SheetJS -- http://sheetjs.com */
   var vn;
   function ys() {
@@ -1603,11 +1603,11 @@ var ll = as((Ar, Ki) => {
         }
         e.table = r, e.bstr = D, e.buf = F, e.str = I;
       });
-    }(ui)), ui;
+    }(li)), li;
   }
   var vs = ys();
   const bs = /* @__PURE__ */ Wt(vs);
-  var fi = {}, bn;
+  var ui = {}, bn;
   function Ot() {
     return bn || (bn = 1, function(i) {
       var e = typeof Uint8Array < "u" && typeof Uint16Array < "u" && typeof Int32Array < "u";
@@ -1659,9 +1659,9 @@ var ll = as((Ar, Ki) => {
       i.setTyped = function(a) {
         a ? (i.Buf8 = Uint8Array, i.Buf16 = Uint16Array, i.Buf32 = Int32Array, i.assign(i, r)) : (i.Buf8 = Array, i.Buf16 = Array, i.Buf32 = Array, i.assign(i, n));
       }, i.setTyped(e);
-    }(fi)), fi;
+    }(ui)), ui;
   }
-  var Gt = {}, lt = {}, Nt = {}, En;
+  var Gt = {}, ct = {}, Nt = {}, En;
   function Es() {
     if (En) return Nt;
     En = 1;
@@ -1877,7 +1877,7 @@ var ll = as((Ar, Ki) => {
         we(v, v.bl_tree[G[O] * 2 + 1], 3);
       wt(v, v.dyn_ltree, Y - 1), wt(v, v.dyn_dtree, J - 1);
     }
-    function ot(v) {
+    function st(v) {
       var Y = 4093624447, J;
       for (J = 0; J <= 31; J++, Y >>>= 1)
         if (Y & 1 && v.dyn_ltree[J * 2] !== 0)
@@ -1893,7 +1893,7 @@ var ll = as((Ar, Ki) => {
     function kt(v) {
       Qe || (ae(), Qe = !0), v.l_desc = new ve(v.dyn_ltree, de), v.d_desc = new ve(v.dyn_dtree, _e), v.bl_desc = new ve(v.bl_tree, ue), v.bi_buf = 0, v.bi_valid = 0, ke(v);
     }
-    function ct(v, Y, J, ee) {
+    function ot(v, Y, J, ee) {
       we(v, (s << 1) + (ee ? 1 : 0), 3), Ce(v, Y, J);
     }
     function We(v) {
@@ -1901,16 +1901,16 @@ var ll = as((Ar, Ki) => {
     }
     function Ve(v, Y, J, ee) {
       var O, W, _ = 0;
-      v.level > 0 ? (v.strm.data_type === n && (v.strm.data_type = ot(v)), Je(v, v.l_desc), Je(v, v.d_desc), _ = Te(v), O = v.opt_len + 3 + 7 >>> 3, W = v.static_len + 3 + 7 >>> 3, W <= O && (O = W)) : O = W = J + 5, J + 4 <= O && Y !== -1 ? ct(v, Y, J, ee) : v.strategy === e || W === O ? (we(v, (o << 1) + (ee ? 1 : 0), 3), pe(v, Z, Q)) : (we(v, (u << 1) + (ee ? 1 : 0), 3), Pe(v, v.l_desc.max_code + 1, v.d_desc.max_code + 1, _ + 1), pe(v, v.dyn_ltree, v.dyn_dtree)), ke(v), ee && De(v);
+      v.level > 0 ? (v.strm.data_type === n && (v.strm.data_type = st(v)), Je(v, v.l_desc), Je(v, v.d_desc), _ = Te(v), O = v.opt_len + 3 + 7 >>> 3, W = v.static_len + 3 + 7 >>> 3, W <= O && (O = W)) : O = W = J + 5, J + 4 <= O && Y !== -1 ? ot(v, Y, J, ee) : v.strategy === e || W === O ? (we(v, (o << 1) + (ee ? 1 : 0), 3), pe(v, Z, Q)) : (we(v, (u << 1) + (ee ? 1 : 0), 3), Pe(v, v.l_desc.max_code + 1, v.d_desc.max_code + 1, _ + 1), pe(v, v.dyn_ltree, v.dyn_dtree)), ke(v), ee && De(v);
     }
     function pt(v, Y, J) {
       return v.pending_buf[v.d_buf + v.last_lit * 2] = Y >>> 8 & 255, v.pending_buf[v.d_buf + v.last_lit * 2 + 1] = Y & 255, v.pending_buf[v.l_buf + v.last_lit] = J & 255, v.last_lit++, Y === 0 ? v.dyn_ltree[J * 2]++ : (v.matches++, Y--, v.dyn_ltree[(X[J] + m + 1) * 2]++, v.dyn_dtree[be(Y) * 2]++), v.last_lit === v.lit_bufsize - 1;
     }
-    return Nt._tr_init = kt, Nt._tr_stored_block = ct, Nt._tr_flush_block = Ve, Nt._tr_tally = pt, Nt._tr_align = We, Nt;
+    return Nt._tr_init = kt, Nt._tr_stored_block = ot, Nt._tr_flush_block = Ve, Nt._tr_tally = pt, Nt._tr_align = We, Nt;
   }
-  var hi, kn;
+  var fi, kn;
   function ga() {
-    if (kn) return hi;
+    if (kn) return fi;
     kn = 1;
     function i(e, t, r, n) {
       for (var a = e & 65535 | 0, s = e >>> 16 & 65535 | 0, o = 0; r !== 0; ) {
@@ -1922,11 +1922,11 @@ var ll = as((Ar, Ki) => {
       }
       return a | s << 16 | 0;
     }
-    return hi = i, hi;
+    return fi = i, fi;
   }
-  var di, xn;
+  var hi, xn;
   function ya() {
-    if (xn) return di;
+    if (xn) return hi;
     xn = 1;
     function i() {
       for (var r, n = [], a = 0; a < 256; a++) {
@@ -1945,11 +1945,11 @@ var ll = as((Ar, Ki) => {
         r = r >>> 8 ^ o[(r ^ n[d]) & 255];
       return r ^ -1;
     }
-    return di = t, di;
+    return hi = t, hi;
   }
-  var wi, Sn;
+  var di, Sn;
   function Ji() {
-    return Sn || (Sn = 1, wi = {
+    return Sn || (Sn = 1, di = {
       2: "need dictionary",
       /* Z_NEED_DICT       2  */
       1: "stream end",
@@ -1968,11 +1968,11 @@ var ll = as((Ar, Ki) => {
       /* Z_BUF_ERROR     (-5) */
       "-6": "incompatible version"
       /* Z_VERSION_ERROR (-6) */
-    }), wi;
+    }), di;
   }
   var In;
   function ks() {
-    if (In) return lt;
+    if (In) return ct;
     In = 1;
     var i = Ot(), e = Es(), t = ga(), r = ya(), n = Ji(), a = 0, s = 1, o = 3, u = 4, d = 5, f = 0, w = 1, m = -2, y = -3, k = -5, x = -1, E = 1, $ = 2, T = 3, S = 4, N = 0, D = 2, F = 8, I = 9, R = 15, U = 8, P = 29, G = 256, A = G + 1 + P, Z = 30, Q = 19, ce = 2 * A + 1, X = 15, H = 3, K = 258, ie = K + H + 1, de = 32, _e = 42, ue = 69, ve = 73, be = 91, Be = 103, we = 113, he = 666, Ee = 1, Ne = 2, Ge = 3, Le = 4, ae = 3;
     function ke(l, L) {
@@ -2057,7 +2057,7 @@ var ll = as((Ar, Ki) => {
       }
       return l.insert = 0, L === u ? (Ie(l, !0), l.strm.avail_out === 0 ? Ge : Le) : (l.strstart > l.block_start && (Ie(l, !1), l.strm.avail_out === 0), Ee);
     }
-    function ot(l, L) {
+    function st(l, L) {
       for (var j, g; ; ) {
         if (l.lookahead < ie) {
           if (Te(l), l.lookahead < ie && L === a)
@@ -2124,7 +2124,7 @@ var ll = as((Ar, Ki) => {
       }
       return l.insert = 0, L === u ? (Ie(l, !0), l.strm.avail_out === 0 ? Ge : Le) : l.last_lit && (Ie(l, !1), l.strm.avail_out === 0) ? Ee : Ne;
     }
-    function ct(l, L) {
+    function ot(l, L) {
       for (var j; ; ) {
         if (l.lookahead === 0 && (Te(l), l.lookahead === 0)) {
           if (L === a)
@@ -2144,11 +2144,11 @@ var ll = as((Ar, Ki) => {
       /*      good lazy nice chain */
       new We(0, 0, 0, 0, Pe),
       /* 0 store only */
-      new We(4, 4, 8, 4, ot),
+      new We(4, 4, 8, 4, st),
       /* 1 max speed, no lazy matches */
-      new We(4, 5, 16, 8, ot),
+      new We(4, 5, 16, 8, st),
       /* 2 */
-      new We(4, 6, 32, 32, ot),
+      new We(4, 6, 32, 32, st),
       /* 3 */
       new We(4, 4, 16, 16, Qe),
       /* 4 lazy matches */
@@ -2250,7 +2250,7 @@ var ll = as((Ar, Ki) => {
       if (g.status === he && l.avail_in !== 0)
         return ke(l, k);
       if (l.avail_in !== 0 || g.lookahead !== 0 || L !== a && g.status !== he) {
-        var p = g.strategy === $ ? ct(g, L) : g.strategy === T ? kt(g, L) : Ve[g.level].func(g, L);
+        var p = g.strategy === $ ? ot(g, L) : g.strategy === T ? kt(g, L) : Ve[g.level].func(g, L);
         if ((p === Ge || p === Le) && (g.status = he), p === Ee || p === Ge)
           return l.avail_out === 0 && (g.last_flush = -1), f;
         if (p === Ne && (L === s ? e._tr_align(g) : L !== d && (e._tr_stored_block(g, 0, 0, !1), L === o && (Ce(g.head), g.lookahead === 0 && (g.strstart = 0, g.block_start = 0, g.insert = 0))), je(l), l.avail_out === 0))
@@ -2275,7 +2275,7 @@ var ll = as((Ar, Ki) => {
       }
       return g.strstart += g.lookahead, g.block_start = g.strstart, g.insert = g.lookahead, g.lookahead = 0, g.match_length = g.prev_length = H - 1, g.match_available = 0, l.next_in = p, l.input = c, l.avail_in = te, g.wrap = re, f;
     }
-    return lt.deflateInit = W, lt.deflateInit2 = O, lt.deflateReset = J, lt.deflateResetKeep = Y, lt.deflateSetHeader = ee, lt.deflate = _, lt.deflateEnd = V, lt.deflateSetDictionary = le, lt.deflateInfo = "pako deflate (from Nodeca project)", lt;
+    return ct.deflateInit = W, ct.deflateInit2 = O, ct.deflateReset = J, ct.deflateResetKeep = Y, ct.deflateSetHeader = ee, ct.deflate = _, ct.deflateEnd = V, ct.deflateSetDictionary = le, ct.deflateInfo = "pako deflate (from Nodeca project)", ct;
   }
   var Dt = {}, Tn;
   function va() {
@@ -2342,14 +2342,14 @@ var ll = as((Ar, Ki) => {
       return u < 0 || u === 0 ? o : u + r[s[u]] > o ? u : o;
     }, Dt;
   }
-  var pi, An;
+  var wi, An;
   function ba() {
-    if (An) return pi;
+    if (An) return wi;
     An = 1;
     function i() {
       this.input = null, this.next_in = 0, this.avail_in = 0, this.total_in = 0, this.output = null, this.next_out = 0, this.avail_out = 0, this.total_out = 0, this.msg = "", this.state = null, this.data_type = 2, this.adler = 0;
     }
-    return pi = i, pi;
+    return wi = i, wi;
   }
   var Rn;
   function xs() {
@@ -2416,12 +2416,12 @@ var ll = as((Ar, Ki) => {
     }
     return Gt.Deflate = k, Gt.deflate = x, Gt.deflateRaw = E, Gt.gzip = $, Gt;
   }
-  var Vt = {}, at = {}, mi, $n;
+  var Vt = {}, nt = {}, pi, $n;
   function Ss() {
-    if ($n) return mi;
+    if ($n) return pi;
     $n = 1;
     var i = 30, e = 12;
-    return mi = function(r, n) {
+    return pi = function(r, n) {
       var a, s, o, u, d, f, w, m, y, k, x, E, $, T, S, N, D, F, I, R, U, P, G, A, Z;
       a = r.state, s = r.next_in, A = r.input, o = s + (r.avail_in - 5), u = r.next_out, Z = r.output, d = u - (n - r.avail_out), f = u + (r.avail_out - 257), w = a.dmax, m = a.wsize, y = a.whave, k = a.wnext, x = a.window, E = a.hold, $ = a.bits, T = a.lencode, S = a.distcode, N = (1 << a.lenbits) - 1, D = (1 << a.distbits) - 1;
       e:
@@ -2507,11 +2507,11 @@ var ll = as((Ar, Ki) => {
             }
         } while (s < o && u < f);
       R = $ >> 3, s -= R, $ -= R << 3, E &= (1 << $) - 1, r.next_in = s, r.next_out = u, r.avail_in = s < o ? 5 + (o - s) : 5 - (s - o), r.avail_out = u < f ? 257 + (f - u) : 257 - (u - f), a.hold = E, a.bits = $;
-    }, mi;
+    }, pi;
   }
-  var _i, Bn;
+  var mi, Bn;
   function Is() {
-    if (Bn) return _i;
+    if (Bn) return mi;
     Bn = 1;
     var i = Ot(), e = 15, t = 852, r = 592, n = 0, a = 1, s = 2, o = [
       /* Length codes 257..285 base */
@@ -2648,7 +2648,7 @@ var ll = as((Ar, Ki) => {
       64,
       64
     ];
-    return _i = function(m, y, k, x, E, $, T, S) {
+    return mi = function(m, y, k, x, E, $, T, S) {
       var N = S.bits, D = 0, F = 0, I = 0, R = 0, U = 0, P = 0, G = 0, A = 0, Z = 0, Q = 0, ce, X, H, K, ie, de = null, _e = 0, ue, ve = new i.Buf16(e + 1), be = new i.Buf16(e + 1), Be = null, we = 0, he, Ee, Ne;
       for (D = 0; D <= e; D++)
         ve[D] = 0;
@@ -2692,11 +2692,11 @@ var ll = as((Ar, Ki) => {
         }
       }
       return Q !== 0 && (E[ie + Q] = D - G << 24 | 64 << 16 | 0), S.bits = U, 0;
-    }, _i;
+    }, mi;
   }
   var Cn;
   function Ts() {
-    if (Cn) return at;
+    if (Cn) return nt;
     Cn = 1;
     var i = Ot(), e = ga(), t = ya(), r = Ss(), n = Is(), a = 0, s = 1, o = 2, u = 4, d = 5, f = 6, w = 0, m = 1, y = 2, k = -2, x = -3, E = -4, $ = -5, T = 8, S = 1, N = 2, D = 3, F = 4, I = 5, R = 6, U = 7, P = 8, G = 9, A = 10, Z = 11, Q = 12, ce = 13, X = 14, H = 15, K = 16, ie = 17, de = 18, _e = 19, ue = 20, ve = 21, be = 22, Be = 23, we = 24, he = 25, Ee = 26, Ne = 27, Ge = 28, Le = 29, ae = 30, ke = 31, De = 32, Ce = 852, je = 592, Ie = 15, pe = Ie;
     function Je(O) {
@@ -2717,18 +2717,18 @@ var ll = as((Ar, Ki) => {
       var _, V;
       return !O || !O.state || (V = O.state, W < 0 ? (_ = 0, W = -W) : (_ = (W >> 4) + 1, W < 48 && (W &= 15)), W && (W < 8 || W > 15)) ? k : (V.window !== null && V.wbits !== W && (V.window = null), V.wrap = _, V.wbits = W, Te(O));
     }
-    function ot(O, W) {
+    function st(O, W) {
       var _, V;
       return O ? (V = new $t(), O.state = V, V.window = null, _ = Pe(O, W), _ !== w && (O.state = null), _) : k;
     }
     function Qe(O) {
-      return ot(O, pe);
+      return st(O, pe);
     }
-    var kt = !0, ct, We;
+    var kt = !0, ot, We;
     function Ve(O) {
       if (kt) {
         var W;
-        for (ct = new i.Buf32(512), We = new i.Buf32(32), W = 0; W < 144; )
+        for (ot = new i.Buf32(512), We = new i.Buf32(32), W = 0; W < 144; )
           O.lens[W++] = 8;
         for (; W < 256; )
           O.lens[W++] = 9;
@@ -2736,11 +2736,11 @@ var ll = as((Ar, Ki) => {
           O.lens[W++] = 7;
         for (; W < 288; )
           O.lens[W++] = 8;
-        for (n(s, O.lens, 0, 288, ct, 0, O.work, { bits: 9 }), W = 0; W < 32; )
+        for (n(s, O.lens, 0, 288, ot, 0, O.work, { bits: 9 }), W = 0; W < 32; )
           O.lens[W++] = 5;
         n(o, O.lens, 0, 32, We, 0, O.work, { bits: 5 }), kt = !1;
       }
-      O.lencode = ct, O.lenbits = 9, O.distcode = We, O.distbits = 5;
+      O.lencode = ot, O.lenbits = 9, O.distcode = We, O.distbits = 5;
     }
     function pt(O, W, _, V) {
       var le, l = O.state;
@@ -3210,11 +3210,11 @@ var ll = as((Ar, Ki) => {
       var _ = W.length, V, le, l;
       return !O || !O.state || (V = O.state, V.wrap !== 0 && V.mode !== Z) ? k : V.mode === Z && (le = 1, le = e(le, W, _, 0), le !== V.check) ? x : (l = pt(O, W, _, _), l ? (V.mode = ke, E) : (V.havedict = 1, w));
     }
-    return at.inflateReset = Te, at.inflateReset2 = Pe, at.inflateResetKeep = wt, at.inflateInit = Qe, at.inflateInit2 = ot, at.inflate = v, at.inflateEnd = Y, at.inflateGetHeader = J, at.inflateSetDictionary = ee, at.inflateInfo = "pako inflate (from Nodeca project)", at;
+    return nt.inflateReset = Te, nt.inflateReset2 = Pe, nt.inflateResetKeep = wt, nt.inflateInit = Qe, nt.inflateInit2 = st, nt.inflate = v, nt.inflateEnd = Y, nt.inflateGetHeader = J, nt.inflateSetDictionary = ee, nt.inflateInfo = "pako inflate (from Nodeca project)", nt;
   }
-  var gi, On;
+  var _i, On;
   function Ea() {
-    return On || (On = 1, gi = {
+    return On || (On = 1, _i = {
       /* Allowed flush values; see deflate() and inflate() below for details */
       Z_NO_FLUSH: 0,
       Z_PARTIAL_FLUSH: 1,
@@ -3253,16 +3253,16 @@ var ll = as((Ar, Ki) => {
       /* The deflate compression method */
       Z_DEFLATED: 8
       //Z_NULL:                 null // Use -1 or null inline, depending on var type
-    }), gi;
+    }), _i;
   }
-  var yi, Nn;
+  var gi, Nn;
   function As() {
-    if (Nn) return yi;
+    if (Nn) return gi;
     Nn = 1;
     function i() {
       this.text = 0, this.time = 0, this.xflags = 0, this.os = 0, this.extra = null, this.extra_len = 0, this.name = "", this.comment = "", this.hcrc = 0, this.done = !1;
     }
-    return yi = i, yi;
+    return gi = i, gi;
   }
   var Dn;
   function Rs() {
@@ -3314,18 +3314,18 @@ var ll = as((Ar, Ki) => {
     }
     return Vt.Inflate = u, Vt.inflate = d, Vt.inflateRaw = f, Vt.ungzip = d, Vt;
   }
-  var vi, Fn;
+  var yi, Fn;
   function $s() {
-    if (Fn) return vi;
+    if (Fn) return yi;
     Fn = 1;
     var i = Ot().assign, e = xs(), t = Rs(), r = Ea(), n = {};
-    return i(n, e, t, r), vi = n, vi;
+    return i(n, e, t, r), yi = n, yi;
   }
   var Bs = $s();
   const Qi = /* @__PURE__ */ Wt(Bs);
-  var bi, Pn;
+  var vi, Pn;
   function Cs() {
-    if (Pn) return bi;
+    if (Pn) return vi;
     Pn = 1;
     const i = (e, t) => function(...r) {
       const n = t.promiseModule;
@@ -3337,7 +3337,7 @@ var ll = as((Ar, Ki) => {
         }) : r.push(a), e.apply(this, r);
       });
     };
-    return bi = (e, t) => {
+    return vi = (e, t) => {
       t = Object.assign({
         exclude: [/.+(Sync|Stream)$/],
         errorFirst: !0,
@@ -3359,13 +3359,13 @@ var ll = as((Ar, Ki) => {
         a[s] = typeof o == "function" && n(s) ? i(o, t) : o;
       }
       return a;
-    }, bi;
+    }, vi;
   }
   var Os = Cs();
-  const Ei = /* @__PURE__ */ Wt(Os);
-  var ki, Mn;
+  const bi = /* @__PURE__ */ Wt(Os);
+  var Ei, Mn;
   function Ns() {
-    if (Mn) return ki;
+    if (Mn) return Ei;
     Mn = 1;
     function i(X) {
       return Array.isArray(X) ? X : [X];
@@ -3657,19 +3657,19 @@ var ll = as((Ar, Ki) => {
       }
     }
     const Q = (X) => new Z(X), ce = (X) => G(X && G.convert(X), X, x);
-    if (Q.isPathValid = ce, Q.default = Q, ki = Q, // Detect `process` so that it can run in browsers.
+    if (Q.isPathValid = ce, Q.default = Q, Ei = Q, // Detect `process` so that it can run in browsers.
     typeof et < "u" && (et.env && et.env.IGNORE_TEST_WIN32 || et.platform === "win32")) {
       const X = (K) => /^\\\\\?\\/.test(K) || /["<>|\u0000-\u001F]+/u.test(K) ? K : K.replace(/\\/g, "/");
       G.convert = X;
       const H = /^[a-z]:\//i;
       G.isNotRelative = (K) => H.test(K) || A(K);
     }
-    return ki;
+    return Ei;
   }
   Ns();
-  var xi, Un;
+  var ki, Un;
   function Ds() {
-    if (Un) return xi;
+    if (Un) return ki;
     Un = 1;
     function i(r) {
       return r.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -3684,13 +3684,13 @@ var ll = as((Ar, Ki) => {
         return n = e(n, "./", "/"), n = e(n, "..", "."), n = e(n, " ", "-"), n = e(n, /^[~^:?*\\\-]/g, ""), n = e(n, /[~^:?*\\]/g, "-"), n = e(n, /[~^:?*\\\-]$/g, ""), n = e(n, "@{", "-"), n = e(n, /\.$/g, ""), n = e(n, /\/$/g, ""), n = e(n, /\.lock$/g, ""), n;
       }
     };
-    return xi = t, xi;
+    return ki = t, ki;
   }
   var Fs = Ds();
   const zn = /* @__PURE__ */ Wt(Fs);
-  var Si, Ln;
+  var xi, Ln;
   function Ps() {
-    return Ln || (Ln = 1, Si = function(i, e) {
+    return Ln || (Ln = 1, xi = function(i, e) {
       var t = i, r = e, n = t.length, a = r.length, s = !1, o = null, u = n + 1, d = [], f = [], w = [], m = "", y = -1, k = 0, x = 1, E, $, T = function() {
         n >= a && (E = t, $ = n, t = r, r = E, n = a, a = $, s = !0, u = n + 1);
       }, S = function(I, R, U) {
@@ -3745,11 +3745,11 @@ var ll = as((Ar, Ki) => {
           F(A);
         }
       };
-    }), Si;
+    }), xi;
   }
-  var Ii, jn;
+  var Si, jn;
   function Ms() {
-    if (jn) return Ii;
+    if (jn) return Si;
     jn = 1;
     var i = Ps();
     function e(a, s) {
@@ -3863,7 +3863,7 @@ var ll = as((Ar, Ki) => {
       }
       return m(), u;
     }
-    return Ii = n, Ii;
+    return Si = n, Si;
   }
   var Us = Ms();
   const zs = /* @__PURE__ */ Wt(Us);
@@ -3888,17 +3888,17 @@ var ll = as((Ar, Ki) => {
       return !0;
     }
   }
-  class Ur extends xe {
+  class Mr extends xe {
     /**
      * @param {Array<string>} filepaths
      */
     constructor(e) {
       super(
         `Modifying the index is not possible because you have unmerged files: ${e.toString}. Fix them up in the work tree, and then use 'git add/rm as appropriate to mark resolution and make a commit.`
-      ), this.code = this.name = Ur.code, this.data = { filepaths: e };
+      ), this.code = this.name = Mr.code, this.data = { filepaths: e };
     }
   }
-  Ur.code = "UnmergedPathsError";
+  Mr.code = "UnmergedPathsError";
   class ye extends xe {
     /**
      * @param {string} message
@@ -3973,11 +3973,11 @@ var ll = as((Ar, Ki) => {
       return this._start += 4, t;
     }
   }
-  function zr(i, e) {
+  function Ur(i, e) {
     return -(i < e) || +(i > e);
   }
   function ka(i, e) {
-    return zr(i.path, e.path);
+    return Ur(i.path, e.path);
   }
   function xa(i) {
     let e = i > 0 ? i >> 12 : 0;
@@ -4026,9 +4026,9 @@ var ll = as((Ar, Ki) => {
       t < 16 && (e += "0"), e += t.toString(16);
     return e;
   }
-  let Ti = null;
+  let Ii = null;
   async function jt(i) {
-    return Ti === null && (Ti = await Hs()), Ti ? Sa(i) : js(i);
+    return Ii === null && (Ii = await Hs()), Ii ? Sa(i) : js(i);
   }
   function js(i) {
     return new _a().update(i).digest("hex");
@@ -4213,8 +4213,8 @@ var ll = as((Ar, Ki) => {
     const n = Kt(i), a = Kt(e);
     return t && n.mode !== a.mode || n.mtimeSeconds !== a.mtimeSeconds || n.ctimeSeconds !== a.ctimeSeconds || n.uid !== a.uid || n.gid !== a.gid || r && n.ino !== a.ino || n.size !== a.size;
   }
-  let Ai = null;
-  const Ri = Symbol("IndexCache");
+  let Ti = null;
+  const Ai = Symbol("IndexCache");
   function Zs() {
     return {
       map: /* @__PURE__ */ new Map(),
@@ -4246,16 +4246,16 @@ var ll = as((Ar, Ki) => {
      * @param {function(GitIndex): any} closure
      */
     static async acquire({ fs: e, gitdir: t, cache: r, allowUnmerged: n = !0 }, a) {
-      r[Ri] || (r[Ri] = Zs());
+      r[Ai] || (r[Ai] = Zs());
       const s = `${t}/index`;
-      Ai === null && (Ai = new Rr({ maxPending: 1 / 0 }));
+      Ti === null && (Ti = new Ar({ maxPending: 1 / 0 }));
       let o, u = [];
-      return await Ai.acquire(s, async () => {
-        const d = r[Ri];
+      return await Ti.acquire(s, async () => {
+        const d = r[Ai];
         await Vs(e, s, d) && await Gs(e, s, d);
         const f = d.map.get(s);
         if (u = f.unmergedPaths, u.length && !n)
-          throw new Ur(u);
+          throw new Mr(u);
         if (o = await a(f), f._dirty) {
           const w = await f.toObject();
           await e.write(s, w), d.stats.set(s, await e.lstat(s)), f._dirty = !1;
@@ -4267,7 +4267,7 @@ var ll = as((Ar, Ki) => {
     const e = Math.max(i.lastIndexOf("/"), i.lastIndexOf("\\"));
     return e > -1 && (i = i.slice(e + 1)), i;
   }
-  function $r(i) {
+  function Rr(i) {
     const e = Math.max(i.lastIndexOf("/"), i.lastIndexOf("\\"));
     return e === -1 ? "." : e === 0 ? "/" : i.slice(0, e);
   }
@@ -4281,7 +4281,7 @@ var ll = as((Ar, Ki) => {
           metadata: {},
           children: []
         };
-        e.set(n, a), a.parent = t($r(n)), a.parent && a.parent !== a && a.parent.children.push(a);
+        e.set(n, a), a.parent = t(Rr(n)), a.parent && a.parent !== a && a.parent.children.push(a);
       }
       return e.get(n);
     }, r = function(n, a) {
@@ -4292,7 +4292,7 @@ var ll = as((Ar, Ki) => {
           basename: Li(n),
           metadata: a,
           // This recursively generates any missing parent folders.
-          parent: t($r(n)),
+          parent: t(Rr(n)),
           children: []
         };
         s.parent && s.parent.children.push(s), e.set(n, s);
@@ -4355,7 +4355,7 @@ var ll = as((Ar, Ki) => {
       if (n.type !== "tree")
         throw new Error(`ENOTDIR: not a directory, scandir '${t}'`);
       const a = n.children.map((s) => s.fullpath);
-      return a.sort(zr), a;
+      return a.sort(Ur), a;
     }
     async type(e) {
       return e._type === !1 && await e.stat(), e._type;
@@ -4385,24 +4385,24 @@ var ll = as((Ar, Ki) => {
       return e._oid;
     }
   }
-  const Lr = Symbol("GitWalkSymbol");
+  const zr = Symbol("GitWalkSymbol");
   function Ks() {
     const i = /* @__PURE__ */ Object.create(null);
-    return Object.defineProperty(i, Lr, {
+    return Object.defineProperty(i, zr, {
       value: function({ fs: e, gitdir: t, cache: r }) {
         return new Ys({ fs: e, gitdir: t, cache: r });
       }
     }), Object.freeze(i), i;
   }
-  class rt extends xe {
+  class tt extends xe {
     /**
      * @param {string} what
      */
     constructor(e) {
-      super(`Could not find ${e}.`), this.code = this.name = rt.code, this.data = { what: e };
+      super(`Could not find ${e}.`), this.code = this.name = tt.code, this.data = { what: e };
     }
   }
-  rt.code = "NotFoundError";
+  tt.code = "NotFoundError";
   class Rt extends xe {
     /**
      * @param {string} oid
@@ -4426,7 +4426,7 @@ var ll = as((Ar, Ki) => {
     }
   }
   Ht.code = "InvalidOidError";
-  class jr extends xe {
+  class Lr extends xe {
     /**
      * @param {string} remote
      */
@@ -4434,11 +4434,11 @@ var ll = as((Ar, Ki) => {
       super(`Could not find a fetch refspec for remote "${e}". Make sure the config file has an entry like the following:
 [remote "${e}"]
 	fetch = +refs/heads/*:refs/remotes/origin/*
-`), this.code = this.name = jr.code, this.data = { remote: e };
+`), this.code = this.name = Lr.code, this.data = { remote: e };
     }
   }
-  jr.code = "NoRefspecError";
-  class Br {
+  Lr.code = "NoRefspecError";
+  class $r {
     constructor(e) {
       if (this.refs = /* @__PURE__ */ new Map(), this.parsedConfig = [], e) {
         let t = null;
@@ -4459,7 +4459,7 @@ var ll = as((Ar, Ki) => {
       return this;
     }
     static from(e) {
-      return new Br(e);
+      return new $r(e);
     }
     delete(e) {
       this.parsedConfig = this.parsedConfig.filter((t) => t.ref !== e), this.refs.delete(e);
@@ -4470,7 +4470,7 @@ var ll = as((Ar, Ki) => {
 `;
     }
   }
-  class Cr {
+  class Br {
     constructor({ remotePath: e, localPath: t, force: r, matchPrefix: n }) {
       Object.assign(this, {
         remotePath: e,
@@ -4489,7 +4489,7 @@ var ll = as((Ar, Ki) => {
       ] = e.match(/^(\+?)(.*?)(\*?):(.*?)(\*?)$/).slice(1), o = t === "+", u = n === "*";
       if (u !== (s === "*"))
         throw new ye("Invalid refspec");
-      return new Cr({
+      return new Br({
         remotePath: r,
         localPath: a,
         force: o,
@@ -4518,11 +4518,11 @@ var ll = as((Ar, Ki) => {
     static from(e) {
       const t = [];
       for (const r of e)
-        t.push(Cr.from(r));
+        t.push(Br.from(r));
       return new en(t);
     }
     add(e) {
-      const t = Cr.from(e);
+      const t = Br.from(e);
       this.rules.push(t);
     }
     translate(e) {
@@ -4719,9 +4719,9 @@ var ll = as((Ar, Ki) => {
     `refs/remotes/${i}`,
     `refs/remotes/${i}/HEAD`
   ], uo = ["config", "description", "index", "shallow", "commondir"];
-  let $i;
+  let Ri;
   async function Bt(i, e) {
-    return $i === void 0 && ($i = new Rr()), $i.acquire(i, e);
+    return Ri === void 0 && (Ri = new Ar()), Ri.acquire(i, e);
   }
   class se {
     static async updateRemoteRefs({
@@ -4741,7 +4741,7 @@ var ll = as((Ar, Ki) => {
       const f = await ft.get({ fs: e, gitdir: t });
       if (!o) {
         if (o = await f.getall(`remote.${r}.fetch`), o.length === 0)
-          throw new jr(r);
+          throw new Lr(r);
         o.unshift(`+HEAD:refs/remotes/${r}/HEAD`);
       }
       const w = en.from(o), m = /* @__PURE__ */ new Map();
@@ -4821,7 +4821,7 @@ var ll = as((Ar, Ki) => {
         "packed-refs",
         async () => e.read(`${t}/packed-refs`, { encoding: "utf8" })
       );
-      const a = Br.from(n), s = a.refs.size;
+      const a = $r.from(n), s = a.refs.size;
       for (const o of r)
         a.refs.has(o) && a.delete(o);
       a.refs.size < s && (n = a.toString(), await Bt(
@@ -4853,7 +4853,7 @@ var ll = as((Ar, Ki) => {
         if (u)
           return se.resolve({ fs: e, gitdir: t, ref: u.trim(), depth: n });
       }
-      throw new rt(r);
+      throw new tt(r);
     }
     static async exists({ fs: e, gitdir: t, ref: r }) {
       try {
@@ -4871,13 +4871,13 @@ var ll = as((Ar, Ki) => {
           s,
           async () => e.exists(`${t}/${s}`)
         ) || n.has(s)) return s;
-      throw new rt(r);
+      throw new tt(r);
     }
     static async expandAgainstMap({ ref: e, map: t }) {
       const r = Er(e);
       for (const n of r)
         if (await t.has(n)) return n;
-      throw new rt(e);
+      throw new tt(e);
     }
     static resolveAgainstMap({ ref: e, fullref: t = e, depth: r = void 0, map: n }) {
       if (r !== void 0 && (r--, r === -1))
@@ -4897,14 +4897,14 @@ var ll = as((Ar, Ki) => {
             map: n
           });
       }
-      throw new rt(e);
+      throw new tt(e);
     }
     static async packedRefs({ fs: e, gitdir: t }) {
       const r = await Bt(
         "packed-refs",
         async () => e.read(`${t}/packed-refs`, { encoding: "utf8" })
       );
-      return Br.from(r).refs;
+      return $r.from(r).refs;
     }
     // List all the refs that match the `filepath` prefix
     static async listRefs({ fs: e, gitdir: t, filepath: r }) {
@@ -4935,7 +4935,7 @@ var ll = as((Ar, Ki) => {
     }
   }
   function fo(i, e) {
-    return zr(Vn(i), Vn(e));
+    return Ur(Vn(i), Vn(e));
   }
   function Vn(i) {
     return i.mode === "040000" ? i.path + "/" : i.path;
@@ -5027,7 +5027,7 @@ var ll = as((Ar, Ki) => {
         yield e;
     }
   }
-  class Hr {
+  class jr {
     static wrap({ type: e, object: t }) {
       return ne.concat([
         ne.from(`${e} ${t.byteLength.toString()}\0`),
@@ -5349,7 +5349,7 @@ var ll = as((Ar, Ki) => {
             y.readDepth = 0, y.externalReadDepth = 0;
             const { type: S, object: N } = await y.readSlice({ start: E });
             x[y.readDepth] += 1;
-            const D = await jt(Hr.wrap({ type: S, object: N }));
+            const D = await jt(jr.wrap({ type: S, object: N }));
             T.oid = D, o.push(D), d.set(D, E), u[D] = T.crc;
           } catch {
             continue;
@@ -5513,7 +5513,7 @@ var ll = as((Ar, Ki) => {
         oid: r,
         getExternalRefDelta: a
       }), !s)
-        throw new rt(r);
+        throw new tt(r);
       return s;
     }
     if (n === "deflated" || (s.format === "deflated" && (s.object = ne.from(await $a(s.object)), s.format = "wrapped"), n === "wrapped"))
@@ -5523,12 +5523,12 @@ var ll = as((Ar, Ki) => {
       throw new ye(
         `SHA check failed! Expected ${r}, computed ${o}`
       );
-    const { object: u, type: d } = Hr.unwrap(s.object);
+    const { object: u, type: d } = jr.unwrap(s.object);
     if (s.type = d, s.object = u, s.format = "content", n === "content")
       return s;
     throw new ye(`invalid requested format "${n}"`);
   }
-  class qr extends xe {
+  class Hr extends xe {
     /**
      * @param {'note'|'remote'|'tag'|'branch'} noun
      * @param {string} where
@@ -5537,10 +5537,10 @@ var ll = as((Ar, Ki) => {
     constructor(e, t, r = !0) {
       super(
         `Failed to create ${e} at ${t} because it already exists.${r ? ` (Hint: use 'force: true' parameter to overwrite existing ${e}.)` : ""}`
-      ), this.code = this.name = qr.code, this.data = { noun: e, where: t, canForce: r };
+      ), this.code = this.name = Hr.code, this.data = { noun: e, where: t, canForce: r };
     }
   }
-  qr.code = "AlreadyExistsError";
+  Hr.code = "AlreadyExistsError";
   class rn extends xe {
     /**
      * @param {'oids'|'refs'} nouns
@@ -5556,7 +5556,7 @@ var ll = as((Ar, Ki) => {
     }
   }
   rn.code = "AmbiguousError";
-  class Wr extends xe {
+  class qr extends xe {
     /**
      * @param {string[]} filepaths
      */
@@ -5565,11 +5565,11 @@ var ll = as((Ar, Ki) => {
         `Your local changes to the following files would be overwritten by checkout: ${e.join(
           ", "
         )}`
-      ), this.code = this.name = Wr.code, this.data = { filepaths: e };
+      ), this.code = this.name = qr.code, this.data = { filepaths: e };
     }
   }
-  Wr.code = "CheckoutConflictError";
-  class Zr extends xe {
+  qr.code = "CheckoutConflictError";
+  class Wr extends xe {
     /**
      * @param {string} ref
      * @param {string} oid
@@ -5577,32 +5577,32 @@ var ll = as((Ar, Ki) => {
     constructor(e, t) {
       super(
         `Failed to checkout "${e}" because commit ${t} is not available locally. Do a git fetch to make the branch available locally.`
-      ), this.code = this.name = Zr.code, this.data = { ref: e, oid: t };
+      ), this.code = this.name = Wr.code, this.data = { ref: e, oid: t };
     }
   }
-  Zr.code = "CommitNotFetchedError";
+  Wr.code = "CommitNotFetchedError";
+  class Zr extends xe {
+    constructor() {
+      super("Empty response from git server."), this.code = this.name = Zr.code, this.data = {};
+    }
+  }
+  Zr.code = "EmptyServerResponseError";
   class Gr extends xe {
     constructor() {
-      super("Empty response from git server."), this.code = this.name = Gr.code, this.data = {};
+      super("A simple fast-forward merge was not possible."), this.code = this.name = Gr.code, this.data = {};
     }
   }
-  Gr.code = "EmptyServerResponseError";
+  Gr.code = "FastForwardError";
   class Vr extends xe {
-    constructor() {
-      super("A simple fast-forward merge was not possible."), this.code = this.name = Vr.code, this.data = {};
-    }
-  }
-  Vr.code = "FastForwardError";
-  class Xr extends xe {
     /**
      * @param {string} prettyDetails
      * @param {PushResult} result
      */
     constructor(e, t) {
-      super(`One or more branches were not updated: ${e}`), this.code = this.name = Xr.code, this.data = { prettyDetails: e, result: t };
+      super(`One or more branches were not updated: ${e}`), this.code = this.name = Vr.code, this.data = { prettyDetails: e, result: t };
     }
   }
-  Xr.code = "GitPushError";
+  Vr.code = "GitPushError";
   class lr extends xe {
     /**
      * @param {number} statusCode
@@ -5624,7 +5624,7 @@ var ll = as((Ar, Ki) => {
     }
   }
   ur.code = "InvalidFilepathError";
-  class Yr extends xe {
+  class Xr extends xe {
     /**
      * @param {string} ref
      * @param {string} suggestion
@@ -5633,19 +5633,19 @@ var ll = as((Ar, Ki) => {
     constructor(e, t) {
       super(
         `"${e}" would be an invalid git reference. (Hint: a valid alternative would be "${t}".)`
-      ), this.code = this.name = Yr.code, this.data = { ref: e, suggestion: t };
+      ), this.code = this.name = Xr.code, this.data = { ref: e, suggestion: t };
     }
   }
-  Yr.code = "InvalidRefNameError";
-  class Kr extends xe {
+  Xr.code = "InvalidRefNameError";
+  class Yr extends xe {
     /**
      * @param {number} depth
      */
     constructor(e) {
-      super(`Maximum search depth of ${e} exceeded.`), this.code = this.name = Kr.code, this.data = { depth: e };
+      super(`Maximum search depth of ${e} exceeded.`), this.code = this.name = Yr.code, this.data = { depth: e };
     }
   }
-  Kr.code = "MaxDepthError";
+  Yr.code = "MaxDepthError";
   class mr extends xe {
     constructor() {
       super("Merges with conflicts are not supported yet."), this.code = this.name = mr.code, this.data = {};
@@ -5732,7 +5732,7 @@ var ll = as((Ar, Ki) => {
     }
   }
   zt.code = "RemoteCapabilityError";
-  class Jr extends xe {
+  class Kr extends xe {
     /**
      * @param {string} preview
      * @param {string} response
@@ -5740,11 +5740,11 @@ var ll = as((Ar, Ki) => {
     constructor(e, t) {
       super(
         `Remote did not reply using the "smart" HTTP protocol. Expected "001e# service=git-upload-pack" but received: ${e}`
-      ), this.code = this.name = Jr.code, this.data = { preview: e, response: t };
+      ), this.code = this.name = Kr.code, this.data = { preview: e, response: t };
     }
   }
-  Jr.code = "SmartHttpError";
-  class Qr extends xe {
+  Kr.code = "SmartHttpError";
+  class Jr extends xe {
     /**
      * @param {string} url
      * @param {string} transport
@@ -5753,19 +5753,19 @@ var ll = as((Ar, Ki) => {
     constructor(e, t, r) {
       super(
         `Git remote "${e}" uses an unrecognized transport protocol: "${t}"`
-      ), this.code = this.name = Qr.code, this.data = { url: e, transport: t, suggestion: r };
+      ), this.code = this.name = Jr.code, this.data = { url: e, transport: t, suggestion: r };
     }
   }
-  Qr.code = "UnknownTransportError";
-  class ei extends xe {
+  Jr.code = "UnknownTransportError";
+  class Qr extends xe {
     /**
      * @param {string} url
      */
     constructor(e) {
-      super(`Cannot parse remote URL: "${e}"`), this.code = this.name = ei.code, this.data = { url: e };
+      super(`Cannot parse remote URL: "${e}"`), this.code = this.name = Qr.code, this.data = { url: e };
     }
   }
-  ei.code = "UrlParseError";
+  Qr.code = "UrlParseError";
   class gr extends xe {
     constructor() {
       super("The operation was canceled."), this.code = this.name = gr.code, this.data = {};
@@ -5783,17 +5783,17 @@ var ll = as((Ar, Ki) => {
     }
   }
   an.code = "IndexResetError";
-  class ti extends xe {
+  class ei extends xe {
     /**
      * @param {string} ref
      */
     constructor(e) {
       super(
         `"${e}" does not point to any commit. You're maybe working on a repository with no commits yet. `
-      ), this.code = this.name = ti.code, this.data = { ref: e };
+      ), this.code = this.name = ei.code, this.data = { ref: e };
     }
   }
-  ti.code = "NoCommitError";
+  ei.code = "NoCommitError";
   function Hi({ name: i, email: e, timestamp: t, timezoneOffset: r }) {
     return r = Io(r), `${i} <${e}> ${t} ${r}`;
   }
@@ -5815,7 +5815,7 @@ var ll = as((Ar, Ki) => {
     return i = i.replace(/\r/g, ""), i = i.replace(/^\n+/, ""), i = i.replace(/\n+$/, "") + `
 `, i;
   }
-  function Or(i) {
+  function Cr(i) {
     const [, e, t, r, n] = i.match(
       /^(.*) <(.*)> (.*) (.*)$/
     );
@@ -5889,7 +5889,7 @@ ${e.gpgsig ? e.gpgsig : ""}`;
         const a = n.slice(0, n.indexOf(" ")), s = n.slice(n.indexOf(" ") + 1);
         Array.isArray(r[a]) ? r[a].push(s) : r[a] = s;
       }
-      return r.tagger && (r.tagger = Or(r.tagger)), r.committer && (r.committer = Or(r.committer)), r;
+      return r.tagger && (r.tagger = Cr(r.tagger)), r.committer && (r.committer = Cr(r.committer)), r;
     }
     withoutSignature() {
       const e = St(this._tag);
@@ -5921,7 +5921,7 @@ ${e.gpgsig ? e.gpgsig : ""}`;
       return Ct.from(s);
     }
   }
-  function Bi(i) {
+  function $i(i) {
     return i.trim().split(`
 `).map((e) => " " + e).join(`
 `) + `
@@ -5946,7 +5946,7 @@ ${e.gpgsig ? e.gpgsig : ""}`;
     static fromPayloadSignature({ payload: e, signature: t }) {
       const r = Me.justHeaders(e), n = Me.justMessage(e), a = St(
         r + `
-gpgsig` + Bi(t) + `
+gpgsig` + $i(t) + `
 ` + n
       );
       return new Me(a);
@@ -5991,7 +5991,7 @@ gpgsig` + Bi(t) + `
         const a = n.slice(0, n.indexOf(" ")), s = n.slice(n.indexOf(" ") + 1);
         Array.isArray(r[a]) ? r[a].push(s) : r[a] = s;
       }
-      return r.author && (r.author = Or(r.author)), r.committer && (r.committer = Or(r.committer)), r;
+      return r.author && (r.author = Cr(r.author)), r.committer && (r.committer = Cr(r.committer)), r;
     }
     static renderHeaders(e) {
       let t = "";
@@ -6009,7 +6009,7 @@ gpgsig` + Bi(t) + `
 `;
       const n = e.committer || e.author;
       return t += `committer ${Hi(n)}
-`, e.gpgsig && (t += "gpgsig" + Bi(e.gpgsig)), t;
+`, e.gpgsig && (t += "gpgsig" + $i(e.gpgsig)), t;
     }
     static render(e) {
       return Me.renderHeaders(e) + `
@@ -6042,7 +6042,7 @@ gpgsig`)), r = e.slice(
       let { signature: s } = await t({ payload: n, secretKey: r });
       s = St(s);
       const u = Me.justHeaders(e._commit) + `
-gpgsig` + Bi(s) + `
+gpgsig` + $i(s) + `
 ` + a;
       return Me.from(u);
     }
@@ -6067,7 +6067,7 @@ gpgsig` + Bi(s) + `
         try {
           o = await se.resolve({ fs: e, gitdir: t, ref: r });
         } catch (d) {
-          d instanceof rt && (o = "4b825dc642cb6eb9a060e54bf8d69288fbee4904");
+          d instanceof tt && (o = "4b825dc642cb6eb9a060e54bf8d69288fbee4904");
         }
         const u = await hr({ fs: e, cache: this.cache, gitdir: t, oid: o });
         return u.type = "tree", u.mode = "40000", s.set(".", u), s;
@@ -6142,7 +6142,7 @@ gpgsig` + Bi(s) + `
   }
   function or({ ref: i = "HEAD" } = {}) {
     const e = /* @__PURE__ */ Object.create(null);
-    return Object.defineProperty(e, Lr, {
+    return Object.defineProperty(e, zr, {
       value: function({ fs: t, gitdir: r, cache: n }) {
         return new Co({ fs: t, gitdir: r, ref: i, cache: n });
       }
@@ -6217,7 +6217,7 @@ gpgsig` + Bi(s) + `
           if (!u || zi(d, u, w, m)) {
             const y = await e.content();
             y === void 0 ? s = void 0 : (s = await jt(
-              Hr.wrap({ type: "blob", object: y })
+              jr.wrap({ type: "blob", object: y })
             ), u && s === u.oid && (!w || d.mode === u.mode) && zi(d, u, w, m) && o.insert({
               filepath: e._fullpath,
               stats: d,
@@ -6235,7 +6235,7 @@ gpgsig` + Bi(s) + `
   }
   function No() {
     const i = /* @__PURE__ */ Object.create(null);
-    return Object.defineProperty(i, Lr, {
+    return Object.defineProperty(i, zr, {
       value: function({ fs: e, dir: t, gitdir: r, cache: n }) {
         return new Oo({ fs: e, dir: t, gitdir: r, cache: n });
       }
@@ -6289,7 +6289,7 @@ gpgsig` + Bi(s) + `
     iterate: o = (u, d) => Promise.all([...d].map(u))
   }) {
     const u = n.map(
-      (y) => y[Lr]({ fs: i, dir: t, gitdir: r, cache: e })
+      (y) => y[zr]({ fs: i, dir: t, gitdir: r, cache: e })
     ), d = new Array(u.length).fill("."), f = Do(0, u.length), w = async (y) => {
       f.map((E) => {
         const $ = y[E];
@@ -6362,8 +6362,8 @@ gpgsig` + Bi(s) + `
         i[`_${t}`] = e[t].bind(e);
     else
       for (const t of ea)
-        i[`_${t}`] = Ei(e[t].bind(e));
-    Qn(e) ? e.rm ? i._rm = e.rm.bind(e) : e.rmdir.length > 1 ? i._rm = e.rmdir.bind(e) : i._rm = Wi.bind(null, i) : e.rm ? i._rm = Ei(e.rm.bind(e)) : e.rmdir.length > 2 ? i._rm = Ei(e.rmdir.bind(e)) : i._rm = Wi.bind(null, i);
+        i[`_${t}`] = bi(e[t].bind(e));
+    Qn(e) ? e.rm ? i._rm = e.rm.bind(e) : e.rmdir.length > 1 ? i._rm = e.rmdir.bind(e) : i._rm = Wi.bind(null, i) : e.rm ? i._rm = bi(e.rm.bind(e)) : e.rmdir.length > 2 ? i._rm = bi(e.rmdir.bind(e)) : i._rm = Wi.bind(null, i);
   }
   class Zt {
     constructor(e) {
@@ -6418,7 +6418,7 @@ gpgsig` + Bi(s) + `
         await this._writeFile(e, t, r);
         return;
       } catch {
-        await this.mkdir($r(e)), await this._writeFile(e, t, r);
+        await this.mkdir(Rr(e)), await this._writeFile(e, t, r);
       }
     }
     /**
@@ -6432,7 +6432,7 @@ gpgsig` + Bi(s) + `
         if (r === null || r.code === "EEXIST") return;
         if (t) throw r;
         if (r.code === "ENOENT") {
-          const n = $r(e);
+          const n = Rr(e);
           if (n === "." || n === "/" || n === e) throw r;
           await this.mkdir(n), await this.mkdir(e, !0);
         }
@@ -6464,7 +6464,7 @@ gpgsig` + Bi(s) + `
     async readdir(e) {
       try {
         const t = await this._readdir(e);
-        return t.sort(zr), t;
+        return t.sort(Ur), t;
       } catch (t) {
         return t.code === "ENOTDIR" ? null : [];
       }
@@ -6529,9 +6529,9 @@ gpgsig` + Bi(s) + `
     const a = `objects/${n.slice(0, 2)}/${n.slice(2)}`, s = `${e}/${a}`;
     await i.exists(s) || await i.write(s, t);
   }
-  let Ci = null;
+  let Bi = null;
   async function Oa(i) {
-    return Ci === null && (Ci = jo()), Ci ? Lo(i) : Qi.deflate(i);
+    return Bi === null && (Bi = jo()), Bi ? Lo(i) : Qi.deflate(i);
   }
   async function Lo(i) {
     const e = new CompressionStream("deflate"), t = new Blob([i]).stream().pipeThrough(e);
@@ -6544,7 +6544,7 @@ gpgsig` + Bi(s) + `
       return !1;
     }
   }
-  async function ri({
+  async function ti({
     fs: i,
     gitdir: e,
     type: t,
@@ -6553,9 +6553,9 @@ gpgsig` + Bi(s) + `
     oid: a = void 0,
     dryRun: s = !1
   }) {
-    return n !== "deflated" && (n !== "wrapped" && (r = Hr.wrap({ type: t, object: r })), a = await jt(r), r = ne.from(await Oa(r))), s || await zo({ fs: i, gitdir: e, object: r, format: "deflated", oid: a }), a;
+    return n !== "deflated" && (n !== "wrapped" && (r = jr.wrap({ type: t, object: r })), a = await jt(r), r = ne.from(await Oa(r))), s || await zo({ fs: i, gitdir: e, object: r, format: "deflated", oid: a }), a;
   }
-  async function Nr({ fs: i, gitdir: e, path: t }) {
+  async function Or({ fs: i, gitdir: e, path: t }) {
     return (await ft.get({ fs: i, gitdir: e })).get(t);
   }
   function Na(i, ...e) {
@@ -6569,8 +6569,8 @@ gpgsig` + Bi(s) + `
   }
   async function Zi({ fs: i, gitdir: e, author: t, commit: r }) {
     const n = Math.floor(Date.now() / 1e3), a = {
-      name: await Nr({ fs: i, gitdir: e, path: "user.name" }),
-      email: await Nr({ fs: i, gitdir: e, path: "user.email" }) || "",
+      name: await Or({ fs: i, gitdir: e, path: "user.name" }),
+      email: await Or({ fs: i, gitdir: e, path: "user.email" }) || "",
       // author.email is allowed to be empty string
       timestamp: n,
       timezoneOffset: new Date(n * 1e3).getTimezoneOffset()
@@ -6591,8 +6591,8 @@ gpgsig` + Bi(s) + `
     commit: n
   }) {
     const a = Math.floor(Date.now() / 1e3), s = {
-      name: await Nr({ fs: i, gitdir: e, path: "user.name" }),
-      email: await Nr({ fs: i, gitdir: e, path: "user.email" }) || "",
+      name: await Or({ fs: i, gitdir: e, path: "user.name" }),
+      email: await Or({ fs: i, gitdir: e, path: "user.email" }) || "",
       // committer.email is allowed to be empty string
       timestamp: a,
       timezoneOffset: new Date(a * 1e3).getTimezoneOffset()
@@ -6661,7 +6661,7 @@ gpgsig` + Bi(s) + `
       k = !0;
     }
     if (u && k)
-      throw new ti(w);
+      throw new ei(w);
     const $ = u ? await Zi({
       fs: i,
       gitdir: r,
@@ -6701,7 +6701,7 @@ gpgsig` + Bi(s) + `
           message: n
         });
         o && (F = await Me.sign(F, t, o));
-        const I = await ri({
+        const I = await ti({
           fs: i,
           gitdir: r,
           type: "commit",
@@ -6727,7 +6727,7 @@ gpgsig` + Bi(s) + `
       oid: u.metadata.oid,
       type: u.type
     })), s = Et.from(a);
-    return await ri({
+    return await ti({
       fs: i,
       gitdir: e,
       type: "tree",
@@ -6791,14 +6791,14 @@ gpgsig` + Bi(s) + `
           });
         }
       }
-    throw new rt(`file or directory found at "${a}:${s}"`);
+    throw new tt(`file or directory found at "${a}:${s}"`);
   }
   async function Wo({ fs: i, gitdir: e, remote: t, url: r, force: n }) {
     if (t !== zn.clean(t))
-      throw new Yr(t, zn.clean(t));
+      throw new Xr(t, zn.clean(t));
     const a = await ft.get({ fs: i, gitdir: e });
     if ((await a.getSubsections("remote")).includes(t) && r !== await a.get(`remote.${t}.url`))
-      throw new qr("remote", t);
+      throw new Hr("remote", t);
     await a.set(`remote.${t}.url`, r), await a.set(
       `remote.${t}.fetch`,
       `+refs/heads/*:refs/remotes/${t}/*`
@@ -6863,11 +6863,11 @@ gpgsig` + Bi(s) + `
           filepaths: u
         });
       } catch (D) {
-        throw D instanceof rt && D.data.what === x ? new Zr(o, x) : D;
+        throw D instanceof tt && D.data.what === x ? new Wr(o, x) : D;
       }
       const $ = E.filter(([D]) => D === "conflict").map(([D, F]) => F);
       if ($.length > 0)
-        throw new Wr($);
+        throw new qr($);
       const T = E.filter(([D]) => D === "error").map(([D, F]) => F);
       if (T.length > 0)
         throw new ye(T.join(", "));
@@ -7191,7 +7191,7 @@ gpgsig` + Bi(s) + `
     const e = Xo.exec(i);
     return e ? e[1] === "remotes/" && i.endsWith("/HEAD") ? e[2].slice(0, -5) : e[2] : i;
   }
-  async function ii({
+  async function ri({
     fs: i,
     gitdir: e,
     fullname: t = !1,
@@ -7295,7 +7295,7 @@ gpgsig` + Bi(s) + `
     const t = /* @__PURE__ */ new Set(), r = /* @__PURE__ */ new Map(), n = /* @__PURE__ */ new Map(), a = Ue.streamReader(i);
     let s = await a();
     for (; s === null; ) s = await a();
-    if (s === !0) throw new Gr();
+    if (s === !0) throw new Zr();
     if (s.includes("version 2"))
       return na(a);
     if (s.toString("utf8").replace(/\n$/, "") !== `# service=${e}`)
@@ -7305,14 +7305,14 @@ gpgsig` + Bi(s) + `
     if (o === !0) return { capabilities: t, refs: r, symrefs: n };
     if (o = o.toString("utf8"), o.includes("version 2"))
       return na(a);
-    const [u, d] = Oi(o, "\0", "\\x00");
+    const [u, d] = Ci(o, "\0", "\\x00");
     if (d.split(" ").map((f) => t.add(f)), u !== "0000000000000000000000000000000000000000 capabilities^{}") {
-      const [f, w] = Oi(u, " ", " ");
+      const [f, w] = Ci(u, " ", " ");
       for (r.set(w, f); ; ) {
         const m = await a();
         if (m === !0) break;
         if (m !== null) {
-          const [y, k] = Oi(m.toString("utf8"), " ", " ");
+          const [y, k] = Ci(m.toString("utf8"), " ", " ");
           r.set(k, y);
         }
       }
@@ -7324,7 +7324,7 @@ gpgsig` + Bi(s) + `
       }
     return { protocolVersion: 1, capabilities: t, refs: r, symrefs: n };
   }
-  function Oi(i, e, t) {
+  function Ci(i, e, t) {
     const r = i.trim().split(e);
     if (r.length !== 2)
       throw new Jt(
@@ -7335,7 +7335,7 @@ gpgsig` + Bi(s) + `
   }
   const sa = (i, e) => i.endsWith("?") ? `${i}${e}` : `${i}/${e.replace(/^https?:\/\//, "")}`, oa = (i, e) => {
     (e.username || e.password) && (i.Authorization = Ma(e)), e.headers && Object.assign(i, e.headers);
-  }, Ni = async (i) => {
+  }, Oi = async (i) => {
     try {
       const e = ne.from(await Xi(i.body)), t = e.toString("utf8");
       return { preview: t.length < 256 ? t : t.slice(0, 256) + "...", response: t, data: e };
@@ -7343,7 +7343,7 @@ gpgsig` + Bi(s) + `
       return {};
     }
   };
-  class Dr {
+  class Nr {
     static async capabilities() {
       return ["discover", "connect"];
     }
@@ -7395,19 +7395,19 @@ gpgsig` + Bi(s) + `
         } else k.statusCode === 200 && E && n && await n(w, m);
       while (x);
       if (k.statusCode !== 200) {
-        const { response: $ } = await Ni(k);
+        const { response: $ } = await Oi(k);
         throw new lr(k.statusCode, k.statusMessage, $);
       }
       if (k.headers["content-type"] === `application/x-${o}-advertisement`) {
         const $ = await aa(k.body, { service: o });
         return $.auth = m, $;
       } else {
-        const { preview: $, response: T, data: S } = await Ni(k);
+        const { preview: $, response: T, data: S } = await Oi(k);
         try {
           const N = await aa([S], { service: o });
           return N.auth = m, N;
         } catch {
-          throw new Jr($, T);
+          throw new Kr($, T);
         }
       }
     }
@@ -7442,7 +7442,7 @@ gpgsig` + Bi(s) + `
         headers: u
       });
       if (f.statusCode !== 200) {
-        const { response: w } = Ni(f);
+        const { response: w } = Oi(f);
         throw new lr(f.statusCode, f.statusMessage, w);
       }
       return f;
@@ -7471,13 +7471,13 @@ gpgsig` + Bi(s) + `
   class Ua {
     static getRemoteHelperFor({ url: e }) {
       const t = /* @__PURE__ */ new Map();
-      t.set("http", Dr), t.set("https", Dr);
+      t.set("http", Nr), t.set("https", Nr);
       const r = Ko({ url: e });
       if (!r)
-        throw new ei(e);
+        throw new Qr(e);
       if (t.has(r.transport))
         return t.get(r.transport);
-      throw new Qr(
+      throw new Jr(
         e,
         r.transport,
         r.transport === "ssh" ? Yo(e) : void 0
@@ -7487,7 +7487,7 @@ gpgsig` + Bi(s) + `
   let Ft = null;
   class dr {
     static async read({ fs: e, gitdir: t }) {
-      Ft === null && (Ft = new Rr());
+      Ft === null && (Ft = new Ar());
       const r = Re.join(t, "shallow"), n = /* @__PURE__ */ new Set();
       return await Ft.acquire(r, async function() {
         const a = await e.read(r, { encoding: "utf8" });
@@ -7497,7 +7497,7 @@ gpgsig` + Bi(s) + `
       }), n;
     }
     static async write({ fs: e, gitdir: t, oids: r }) {
-      Ft === null && (Ft = new Rr());
+      Ft === null && (Ft = new Ar());
       const n = Re.join(t, "shallow");
       if (r.size > 0) {
         const a = [...r].join(`
@@ -7571,7 +7571,7 @@ gpgsig` + Bi(s) + `
   const on = {
     agent: "git/isomorphic-git@1.30.1"
   };
-  class Tr {
+  class Ir {
     constructor() {
       this._queue = [];
     }
@@ -7613,7 +7613,7 @@ gpgsig` + Bi(s) + `
     return e === -1 && t === -1 ? -1 : e === -1 ? t + 1 : t === -1 ? e + 1 : t === e + 1 ? t + 1 : Math.min(e, t) + 1;
   }
   function La(i) {
-    const e = new Tr();
+    const e = new Ir();
     let t = "";
     return (async () => (await yr(i, (r) => {
       for (r = r.toString("utf8"), t += r; ; ) {
@@ -7625,7 +7625,7 @@ gpgsig` + Bi(s) + `
   }
   class ja {
     static demux(e) {
-      const t = Ue.streamReader(e), r = new Tr(), n = new Tr(), a = new Tr(), s = async function() {
+      const t = Ue.streamReader(e), r = new Ir(), n = new Ir(), a = new Ir(), s = async function() {
         const o = await t();
         if (o === null) return s();
         if (o === !0) {
@@ -7805,7 +7805,7 @@ gpgsig` + Bi(s) + `
     prune: D = !1,
     pruneTags: F = !1
   }) {
-    const I = d || await ii({ fs: i, gitdir: u, test: !0 }), R = await ft.get({ fs: i, gitdir: u }), U = w || I && await R.get(`branch.${I}.remote`) || "origin", P = m || await R.get(`remote.${U}.url`);
+    const I = d || await ri({ fs: i, gitdir: u, test: !0 }), R = await ft.get({ fs: i, gitdir: u }), U = w || I && await R.get(`branch.${I}.remote`) || "origin", P = m || await R.get(`remote.${U}.url`);
     if (typeof P > "u")
       throw new ut("remote OR url");
     const G = f || I && await R.get(`branch.${I}.merge`) || d || "HEAD";
@@ -8159,9 +8159,9 @@ gpgsig` + Bi(s) + `
     }
     return [];
   }
-  const Di = /^.*(\r?\n|$)/gm;
+  const Ni = /^.*(\r?\n|$)/gm;
   function oc({ branches: i, contents: e }) {
-    const t = i[1], r = i[2], n = e[0], a = e[1], s = e[2], o = a.match(Di), u = n.match(Di), d = s.match(Di), f = zs(o, u, d), w = 7;
+    const t = i[1], r = i[2], n = e[0], a = e[1], s = e[2], o = a.match(Ni), u = n.match(Ni), d = s.match(Ni), f = zs(o, u, d), w = 7;
     let m = "", y = !0;
     for (const k of f)
       k.ok && (m += k.ok.join("")), k.conflict && (y = !1, m += `${"<".repeat(w)} ${t}
@@ -8276,7 +8276,7 @@ gpgsig` + Bi(s) + `
         const R = I.filter(Boolean);
         if (F && !(F && F.type === "tree" && R.length === 0)) {
           if (R.length > 0) {
-            const P = new Et(R).toObject(), G = await ri({
+            const P = new Et(R).toObject(), G = await ti({
               fs: i,
               gitdir: r,
               type: "tree",
@@ -8343,7 +8343,7 @@ gpgsig` + Bi(s) + `
       branches: [u, s, o],
       contents: [k, y, x],
       path: t
-    }), T = await ri({
+    }), T = await ti({
       fs: i,
       gitdir: e,
       type: "blob",
@@ -8371,7 +8371,7 @@ gpgsig` + Bi(s) + `
     onSign: x,
     mergeDriver: E
   }) {
-    n === void 0 && (n = await ii({ fs: i, gitdir: r, fullname: !0 })), n = await se.expand({
+    n === void 0 && (n = await ri({ fs: i, gitdir: r, fullname: !0 })), n = await se.expand({
       fs: i,
       gitdir: r,
       ref: n
@@ -8409,7 +8409,7 @@ gpgsig` + Bi(s) + `
       };
     {
       if (o)
-        throw new Vr();
+        throw new Gr();
       const D = await Lt.acquire(
         { fs: i, gitdir: r, cache: e, allowUnmerged: !1 },
         async (I) => cc({
@@ -8481,7 +8481,7 @@ gpgsig` + Bi(s) + `
   }) {
     try {
       if (!f) {
-        const P = await ii({ fs: i, gitdir: d });
+        const P = await ri({ fs: i, gitdir: d });
         if (!P)
           throw new ut("ref");
         f = P;
@@ -8677,7 +8677,7 @@ gpgsig` + Bi(s) + `
     let d = 0;
     for (; o.length; ) {
       if (d++ === a)
-        throw new Kr(a);
+        throw new Yr(a);
       const f = o.shift(), { type: w, object: m } = await Ke({
         fs: i,
         cache: e,
@@ -8732,7 +8732,7 @@ gpgsig` + Bi(s) + `
   }) {
     try {
       Oe("http", i), Oe("url", a);
-      const m = await Dr.discover({
+      const m = await Nr.discover({
         http: i,
         onAuth: e,
         onAuthSuccess: t,
@@ -8745,7 +8745,7 @@ gpgsig` + Bi(s) + `
       });
       if (m.protocolVersion === 1)
         return dc(m, d, f, w);
-      const y = await mc({ prefix: d, symrefs: f, peelTags: w }), k = await Dr.connect({
+      const y = await mc({ prefix: d, symrefs: f, peelTags: w }), k = await Nr.connect({
         http: i,
         auth: m.auth,
         headers: s,
@@ -8840,7 +8840,7 @@ gpgsig` + Bi(s) + `
             filepath: r
           }), x && k !== S && f.push(x), k = S, x = T, E = !0;
         } catch (N) {
-          if (N instanceof rt) {
+          if (N instanceof tt) {
             let D = u && k;
             if (D && (D = await la({
               fs: i,
@@ -9062,7 +9062,7 @@ gpgsig` + Bi(s) + `
       await f(w);
     return d;
   }
-  async function Fi({
+  async function Di({
     fs: i,
     cache: e,
     dir: t,
@@ -9151,7 +9151,7 @@ gpgsig` + Bi(s) + `
     corsProxy: E,
     headers: $ = {}
   }) {
-    const T = f || await ii({ fs: i, gitdir: d });
+    const T = f || await ri({ fs: i, gitdir: d });
     if (typeof T > "u")
       throw new ut("ref");
     const S = await ft.get({ fs: i, gitdir: d });
@@ -9184,7 +9184,7 @@ gpgsig` + Bi(s) + `
           map: U.refs
         });
       } catch (ue) {
-        if (ue instanceof rt)
+        if (ue instanceof tt)
           G = D.startsWith("refs/") ? D : `refs/heads/${D}`;
         else
           throw ue;
@@ -9210,7 +9210,7 @@ gpgsig` + Bi(s) + `
           oids: [I, A]
         });
         for (const Be of be) ue.push(Be);
-        Z && (ve = await Fi({ fs: i, cache: e, gitdir: d, oids: be }));
+        Z && (ve = await Di({ fs: i, cache: e, gitdir: d, oids: be }));
       }
       if (!ue.includes(I)) {
         const be = await Sc({
@@ -9220,7 +9220,7 @@ gpgsig` + Bi(s) + `
           start: [I],
           finish: ue
         });
-        Q = await Fi({ fs: i, cache: e, gitdir: d, oids: be });
+        Q = await Di({ fs: i, cache: e, gitdir: d, oids: be });
       }
       if (Z) {
         try {
@@ -9234,7 +9234,7 @@ gpgsig` + Bi(s) + `
             fullref: be,
             map: U.refs
           }), we = [Be];
-          for (const he of await Fi({ fs: i, cache: e, gitdir: d, oids: we }))
+          for (const he of await Di({ fs: i, cache: e, gitdir: d, oids: we }))
             ve.add(he);
         } catch {
         }
@@ -9295,7 +9295,7 @@ gpgsig` + Bi(s) + `
     {
       const ue = Object.entries(_e.refs).filter(([ve, be]) => !be.ok).map(([ve, be]) => `
   - ${ve}: ${be.error}`).join("");
-      throw new Xr(ue, _e);
+      throw new Vr(ue, _e);
     }
   }
   async function Rc({
@@ -9424,7 +9424,7 @@ gpgsig` + Bi(s) + `
     request: Za
   }, Symbol.toStringTag, { value: "Module" }));
   (function(i, e) {
-    typeof Ar == "object" && typeof Ki == "object" ? Ki.exports = e() : typeof define == "function" && define.amd ? define([], e) : typeof Ar == "object" ? Ar.LightningFS = e() : i.LightningFS = e();
+    typeof Tr == "object" && typeof Ki == "object" ? Ki.exports = e() : typeof define == "function" && define.amd ? define([], e) : typeof Tr == "object" ? Tr.LightningFS = e() : i.LightningFS = e();
   })(self, function() {
     return function(i) {
       var e = {};
@@ -10234,7 +10234,7 @@ gpgsig` + Bi(s) + `
   });
   const Pc = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null
-  }, Symbol.toStringTag, { value: "Module" })), Ga = new Pr(Mr.logging.swUtils);
+  }, Symbol.toStringTag, { value: "Module" })), Ga = new Fr(Pr.logging.swUtils);
   function Pt(...i) {
     Ga.consoleDotLog("[ SWUtils ]", ...i);
   }
@@ -10309,7 +10309,7 @@ gpgsig` + Bi(s) + `
       });
     }
   }
-  const Va = new Pr(Mr.logging.memoryBackendES6);
+  const Va = new Fr(Pr.logging.memoryBackendES6);
   function Ye(...i) {
     Va.consoleDotLog("[MemoryBackend ES6]", ...i);
   }
@@ -10531,35 +10531,35 @@ gpgsig` + Bi(s) + `
     async loadSuperblock() {
     }
   }
-  const Xa = new Pr(Mr.logging.fsManagerES6);
-  function tt(...i) {
+  const Xa = new Fr(Pr.logging.fsManagerES6);
+  function lt(...i) {
     Xa.consoleDotLog("[fsManagerES6] ", ...i);
   }
-  function Sr(...i) {
+  function Fi(...i) {
     Xa.consoleDotError("[fsManagerES6] ", ...i);
   }
-  tt("Loading fsmanagerES6.");
+  lt("Loading fsmanagerES6.");
   class Lc {
     constructor(e = { supportsServiceWorker: !0, useSW: !0 }) {
       this.fsInstances = /* @__PURE__ */ new Map(), this.initializationLocks = /* @__PURE__ */ new Map(), this.debug = !0, this.options = e;
     }
     _log(...e) {
-      this.debug && tt("[fsManager]", ...e);
+      this.debug && lt("[fsManager]", ...e);
     }
     _error(...e) {
-      Sr("[fsManager]", ...e);
+      Fi("[fsManager]", ...e);
     }
     async initializeFS(e, t) {
       const r = `${e}-${t}`;
       this._log(`Initializing FS: ${r}`);
       try {
-        if (tt("Initializing."), this.fsInstances.has(r))
+        if (lt("Initializing."), this.fsInstances.has(r))
           return this._log(`FS ${r} already exists`), this.fsInstances.get(r);
         let n;
         if (t === "memory") {
-          tt(`Creating memory FS for ${r}`);
+          lt(`Creating memory FS for ${r}`);
           const a = new zc(this.options, e);
-          tt(`Memory backend created for ${r} backend: `, a), n = new fn(e, { backend: a }), tt(`Memory FS created for ${r}`), this._log(`Created memory FS with backend for ${r}`);
+          lt(`Memory backend created for ${r} backend: `, a), n = new fn(e, { backend: a }), lt(`Memory FS created for ${r}`), this._log(`Created memory FS with backend for ${r}`);
         } else if (t === "idb")
           n = new fn(e), this._log(`Created IDB FS for ${r}`);
         else
@@ -10584,29 +10584,41 @@ gpgsig` + Bi(s) + `
     }
     async deleteFS(e, t) {
       const r = `${e}-${t}`;
-      if (!this.fsInstances.has(r)) {
-        console.warn(`File system ${r} does not exist. Nothing to delete.`);
-        return;
-      }
-      if (t === "idb")
-        try {
-          await this.deleteIndexedDB(e), tt(`IndexedDB file system ${r} deleted successfully.`);
-        } catch (n) {
-          throw Sr(`Error deleting IndexedDB file system ${r}:`, n), n;
+      this._log(`Deleting FS: ${r}`);
+      try {
+        if (!this.fsInstances.has(r)) {
+          this._log(`File system ${r} does not exist. Nothing to delete.`);
+          return;
         }
-      else if (t === "memory")
-        tt(`Memory file system ${r} deleted successfully.`);
-      else
-        throw new Error(`Unsupported file system type: ${t}`);
-      this.fsInstances.delete(r);
+        const n = this.fsInstances.get(r);
+        if (t === "idb")
+          try {
+            await this.deleteIndexedDB(e), this._log(`IndexedDB file system ${r} deleted successfully.`);
+          } catch (a) {
+            throw this._error(`Error deleting IndexedDB file system ${r}:`, a), a;
+          }
+        else if (t === "memory") {
+          if (n._backend && n._backend.close)
+            try {
+              await n._backend.close(), this._log(`Memory backend for ${r} closed successfully.`);
+            } catch (a) {
+              this._error(`Error closing memory backend for ${r}:`, a);
+            }
+          this._log(`Memory file system ${r} deleted successfully.`);
+        } else
+          throw new Error(`Unsupported file system type: ${t}`);
+        this.fsInstances.delete(r);
+      } catch (n) {
+        throw this._error(`Failed to delete ${r}:`, n), n;
+      }
     }
     async deleteIndexedDB(e) {
       return new Promise((t, r) => {
         const n = indexedDB.deleteDatabase(e);
         n.onsuccess = () => {
-          tt(`Deleted database ${e} successfully`), t();
+          lt(`Deleted database ${e} successfully`), t();
         }, n.onerror = (a) => {
-          Sr(`Error deleting database ${e}:`, a), r(a);
+          Fi(`Error deleting database ${e}:`, a), r(a);
         }, n.onblocked = () => {
           console.warn(`Delete database ${e} blocked`);
         };
@@ -10619,13 +10631,13 @@ gpgsig` + Bi(s) + `
       if (t === "idb")
         try {
           const n = await this.getFileStoresFromDatabases();
-          return tt(`File store names for ${r}:`, n), n;
+          return lt(`File store names for ${r}:`, n), n;
         } catch (n) {
-          throw Sr(`Error retrieving file store names for ${r}:`, n), n;
+          throw Fi(`Error retrieving file store names for ${r}:`, n), n;
         }
       else {
         if (t === "memory")
-          return tt(`Memory file system ${r} does not have persistent file stores.`), [];
+          return lt(`Memory file system ${r} does not have persistent file stores.`), [];
         throw new Error(`Unsupported file system type: ${t}`);
       }
     }
@@ -10635,10 +10647,10 @@ gpgsig` + Bi(s) + `
         const n = typeof r == "string" ? r : r.name, s = (await this.openDatabase(n)).objectStoreNames, o = Array.from(s).filter((u) => u.startsWith("fs_")).map((u) => ({ database: n, fileStore: u }));
         t.push(...o);
       }
-      return tt("Processing database list:", t), t;
+      return lt("Processing database list:", t), t;
     }
     async openDatabase(e) {
-      return tt("Opening database:", e), new Promise((t, r) => {
+      return lt("Opening database:", e), new Promise((t, r) => {
         const n = indexedDB.open(e);
         n.onsuccess = (a) => {
           const s = a.target.result;
@@ -10671,14 +10683,14 @@ gpgsig` + Bi(s) + `
       });
     }
   }
-  const Ya = new Pr(Mr.logging.serviceWorker);
+  const Ya = new Fr(Pr.logging.serviceWorker);
   function fe(...i) {
     Ya.consoleDotLog("[WorkerPool]", ...i);
   }
   function Fe(...i) {
     Ya.consoleDotError("[WorkerPool]", ...i);
   }
-  let ht = "", dt = "", it = "/", wr = 1, Qt = Fc, Tt = "origin", Se = "main", er = "http://localhost:9000", ln = {}, Fr = {}, Ka = 0, Ze, He = null, qe = {
+  let ht = "", dt = "", rt = "/", wr = 1, Qt = Fc, Tt = "origin", Se = "main", er = "http://localhost:9000", ln = {}, Dr = {}, Ka = 0, Ze, He = null, qe = {
     cloneCount: 0,
     pushCount: 0,
     pullCount: 0,
@@ -10695,7 +10707,7 @@ gpgsig` + Bi(s) + `
   });
   self.addEventListener("activate", (i) => (i.waitUntil(
     (async () => {
-      ht = "", dt = "", it = "/", wr = 1, Tt = "origin", Se = "main", ln = {}, Fr = {}, Ka = 0, He = new Pc("fs"), qe = {
+      ht = "", dt = "", rt = "/", wr = 1, Tt = "origin", Se = "main", ln = {}, Dr = {}, Ka = 0, He = new Pc("fs"), qe = {
         cloneCount: 0,
         pushCount: 0,
         pullCount: 0,
@@ -10763,13 +10775,13 @@ gpgsig` + Bi(s) + `
     ht !== i.username || dt !== i.password ? (ht = i.username || "", dt = i.password || "", fe("handlesetauthparame: ", i), Ze.postMessage({ operation: "setAuthParams", success: !0 })) : Ze.postMessage({ operation: "setAuthParams", success: !0 });
   }
   async function Zc(i) {
-    it !== i ? (it = i, Ze.postMessage({ operation: "setDir", success: !0 })) : Ze.postMessage({ operation: "setDir", success: !0 });
+    rt !== i ? (rt = i, Ze.postMessage({ operation: "setDir", success: !0 })) : Ze.postMessage({ operation: "setDir", success: !0 });
   }
   async function Gc(i) {
     Se !== i ? (Se = i, Ze.postMessage({ operation: "setRef", success: !0 })) : Ze.postMessage({ operation: "setRef", success: !0 });
   }
   async function Vc(i) {
-    it !== i ? (it = i, Ze.postMessage({ operation: "setRepoDir", success: !0 })) : Ze.postMessage({ operation: "setRepoDir", success: !0 });
+    rt !== i ? (rt = i, Ze.postMessage({ operation: "setRepoDir", success: !0 })) : Ze.postMessage({ operation: "setRepoDir", success: !0 });
   }
   async function Xc(i) {
     wr !== i ? (wr = i, Ze.postMessage({ operation: "setDepth", success: !0 })) : Ze.postMessage({ operation: "setDepth", success: !0 });
@@ -10778,7 +10790,7 @@ gpgsig` + Bi(s) + `
     Tt !== i ? (Tt = i, Ze.postMessage({ operation: "setRemote", success: !0 })) : Ze.postMessage({ operation: "setRemote", success: !0 });
   }
   async function Kc(i) {
-    Fr !== i ? (Fr = i, Ze.postMessage({ operation: "setSettingsAddresses", success: !0 })) : Ze.postMessage({ operation: "setSettingsAddresses", success: !0 });
+    Dr !== i ? (Dr = i, Ze.postMessage({ operation: "setSettingsAddresses", success: !0 })) : Ze.postMessage({ operation: "setSettingsAddresses", success: !0 });
   }
   async function Jc(i) {
     try {
@@ -10813,7 +10825,7 @@ gpgsig` + Bi(s) + `
         return;
       }
       const t = Pi && e.pathname.startsWith(Pi) ? e.pathname.slice(Pi.length - 1) : e.pathname;
-      if (console.log(`Extracted path: ${t}`), Fr[t]) {
+      if (console.log(`Extracted path: ${t}`), Dr[t]) {
         console.log("Matched settings file path:", t), i.respondWith(
           el(t).then(
             (r) => new Response(r, {
@@ -10860,7 +10872,7 @@ gpgsig` + Bi(s) + `
       this.queue.length > 0 ? this.queue.shift()() : this.locked = !1;
     }
   }
-  const nt = new tl();
+  const it = new tl();
   async function rl(i) {
     try {
       const e = await i.json().catch(() => {
@@ -10956,7 +10968,7 @@ gpgsig` + Bi(s) + `
   }
   async function Ja(i) {
     return fe("listServerRefs args", i), await rr(async () => {
-      qe.listServerRefsCount++, await nt.lock();
+      qe.listServerRefsCount++, await it.lock();
       try {
         if (fe("Entering listServerRefs function with arguments:", i), !i.url)
           throw new Error("URL parameter is required for listServerRefs");
@@ -10964,16 +10976,16 @@ gpgsig` + Bi(s) + `
           ...i,
           fs: He,
           http: Qt,
-          dir: it,
+          dir: rt,
           corsProxy: er,
           remote: i.remote || Tt,
           // Fallback to global remote
           headers: ir(ht, dt),
           onAuth() {
-            return st.fill();
+            return at.fill();
           },
           onAuthFailure() {
-            return st.rejected();
+            return at.rejected();
           }
         });
         return fe("ListServerRefs successful. Result:", e), { success: !0, refs: e };
@@ -10985,7 +10997,7 @@ gpgsig` + Bi(s) + `
         }
         return Fe("Error occurred during listServerRefs operation:", e), { success: !1, error: e.message };
       } finally {
-        fe("Exiting listServerRefs function."), nt.unlock();
+        fe("Exiting listServerRefs function."), it.unlock();
       }
     }, i);
   }
@@ -10993,27 +11005,27 @@ gpgsig` + Bi(s) + `
     return fe("entering clone with : ", i), await rr(async () => {
       fe("Entering clone function with arguments:", i), qe.cloneCount++;
       let e = {};
-      await nt.lock();
+      await it.lock();
       try {
         if (e = await al(bt.fsName), e)
-          await sl(e), await il({ dir: it, ref: "HEAD~1", branch: Se }), await fa("clone (from cache)", { fsName: bt.fsName }), fe("log", await cl()), e = { isCacheUsed: !0, ref: Se };
+          await sl(e), await il({ dir: rt, ref: "HEAD~1", branch: Se }), await fa("clone (from cache)", { fsName: bt.fsName }), fe("log", await cl()), e = { isCacheUsed: !0, ref: Se };
         else {
           const t = await sc({
             ...i,
             fs: He,
             cache: ln,
             http: Qt,
-            dir: it,
+            dir: rt,
             remote: Tt,
             ref: Se,
             corsProxy: er,
             depth: wr,
             headers: ir(ht, dt),
             onAuth() {
-              return st.fill();
+              return at.fill();
             },
             onAuthFailure() {
-              return st.rejected();
+              return at.rejected();
             }
           });
           if (Ka) {
@@ -11030,7 +11042,7 @@ gpgsig` + Bi(s) + `
           return qe.cloneCount = 0, e = { isCacheUsed: !1, ref: Se }, { success: !0, message: "The repo has successfully cloned", data: e };
         } else throw t?.response?.status === 500 ? (Fe("Server responded with 500 Internal Server Error"), new Error("Internal Server Error: The server encountered an error.")) : typeof t == "object" ? (Fe("Error properties:", Object.keys(t)), new Error(t || "An unknown error occurred during the clone operation")) : (Fe("Unknown error:", t), new Error("An unknown error occurred during the clone operation"));
       } finally {
-        nt.unlock();
+        it.unlock();
       }
     }, i);
   }
@@ -11057,7 +11069,7 @@ gpgsig` + Bi(s) + `
       Fe("Error caching file list and contents:", t);
     }
   }
-  async function es(i = it) {
+  async function es(i = rt) {
     try {
       let e = i, t = await He.promises.readdir(i), r = {};
       fe("files", t), r[i] = i;
@@ -11103,7 +11115,7 @@ gpgsig` + Bi(s) + `
       }
     }
   }
-  const st = {
+  const at = {
     async fill() {
       return fe("authenticate", ht, dt), { username: ht, password: dt };
     },
@@ -11116,7 +11128,7 @@ gpgsig` + Bi(s) + `
     return await rr(async () => {
       qe.pullCount++;
       let e = {};
-      await nt.lock();
+      await it.lock();
       try {
         if (fe("Entering pull function with arguments:", i), !Se)
           throw new Error("Reference (ref) is not defined.");
@@ -11125,7 +11137,7 @@ gpgsig` + Bi(s) + `
           ...i,
           fs: He,
           http: Qt,
-          dir: it,
+          dir: rt,
           corsProxy: er,
           remote: Tt,
           remoteRef: Se,
@@ -11134,10 +11146,10 @@ gpgsig` + Bi(s) + `
           singleBranch: !0,
           headers: ir(ht, dt),
           onAuth() {
-            return st.fill();
+            return at.fill();
           },
           onAuthFailure() {
-            return st.rejected();
+            return at.rejected();
           }
         });
         return e = { ref: Se }, fe("Pull successful. Result:", t), { success: !0, message: t, data: e };
@@ -11149,7 +11161,7 @@ gpgsig` + Bi(s) + `
         }
         throw Fe("Error occurred during pull operation:", t), new Error(`Pull failed: ${t}`);
       } finally {
-        fe("Exiting pull function."), nt.unlock();
+        fe("Exiting pull function."), it.unlock();
       }
     }, i);
   }
@@ -11157,7 +11169,7 @@ gpgsig` + Bi(s) + `
     return await rr(async () => {
       qe.ffCount++;
       let e = {};
-      await nt.lock();
+      await it.lock();
       try {
         if (fe("Entering fastForward function with arguments:", i), !Se)
           throw new Error("Reference (ref) is not defined.");
@@ -11166,7 +11178,7 @@ gpgsig` + Bi(s) + `
           fs: He,
           cache: ln,
           http: Qt,
-          dir: it,
+          dir: rt,
           remote: Tt,
           corsProxy: er,
           ref: Se,
@@ -11175,10 +11187,10 @@ gpgsig` + Bi(s) + `
           singleBranch: !1,
           headers: ir(ht, dt),
           onAuth() {
-            return st.fill();
+            return at.fill();
           },
           onAuthFailure() {
-            return st.rejected();
+            return at.rejected();
           }
         });
         return e = { ref: Se }, fe("FastForward pull successful. Result:", t), { success: !0, message: t, data: e };
@@ -11190,7 +11202,7 @@ gpgsig` + Bi(s) + `
         }
         throw Fe("Error occurred during fastForward operation:", t), new Error(`FastForward pull failed: ${t}`);
       } finally {
-        fe("Exiting fastForward function."), nt.unlock();
+        fe("Exiting fastForward function."), it.unlock();
       }
     }, i);
   }
@@ -11198,7 +11210,7 @@ gpgsig` + Bi(s) + `
     return await rr(async () => {
       qe.pushCount++;
       let e = {};
-      await nt.lock();
+      await it.lock();
       try {
         if (fe("Entering push function with arguments:", i), !Se)
           throw new Error("Reference (ref) is not defined.");
@@ -11206,17 +11218,17 @@ gpgsig` + Bi(s) + `
           ...i,
           fs: He,
           http: Qt,
-          dir: it,
+          dir: rt,
           corsProxy: er,
           remote: Tt,
           ref: Se,
           force: !0,
           headers: ir(ht, dt),
           onAuth() {
-            return st.fill();
+            return at.fill();
           },
           onAuthFailure() {
-            return st.rejected();
+            return at.rejected();
           }
         });
         return e = { ref: Se }, fe("Push successful. Result:", t), { success: !0, message: "Push was successful", data: e };
@@ -11228,7 +11240,7 @@ gpgsig` + Bi(s) + `
         }
         Fe("Error occurred during push operation:", t);
       } finally {
-        fe("Exiting push function."), nt.unlock();
+        fe("Exiting push function."), it.unlock();
       }
     }, i);
   }
@@ -11236,7 +11248,7 @@ gpgsig` + Bi(s) + `
     return await rr(async () => {
       qe.fetchCount++;
       let e = {};
-      await nt.lock();
+      await it.lock();
       try {
         if (fe("Entering doFetch function with arguments:", i), !Se)
           throw new Error("Reference (ref) is not defined.");
@@ -11244,7 +11256,7 @@ gpgsig` + Bi(s) + `
           ...i,
           fs: He,
           http: Qt,
-          dir: it,
+          dir: rt,
           corsProxy: er,
           ref: Se,
           remote: Tt,
@@ -11253,10 +11265,10 @@ gpgsig` + Bi(s) + `
           tags: !1,
           headers: ir(ht, dt),
           onAuth() {
-            return st.fill();
+            return at.fill();
           },
           onAuthFailure() {
-            return st.rejected();
+            return at.rejected();
           }
         });
         return e = { ref: Se }, fe("Fetch successful. Result:", t), { success: !0, message: "Fetch was successful", data: e };
@@ -11268,7 +11280,7 @@ gpgsig` + Bi(s) + `
         }
         throw Fe("Error occurred during fetch operation:", t), new Error(`Fetch failed: ${t}`);
       } finally {
-        fe("Exiting doFetch function."), nt.unlock();
+        fe("Exiting doFetch function."), it.unlock();
       }
     }, i);
   }
@@ -11304,7 +11316,7 @@ gpgsig` + Bi(s) + `
     fe(`Attempt ${t + 1}: Branch "${Se}" not found. Attempting to checkout to the other branch.`);
     try {
       if (t < 2)
-        return nt.unlock(), Se = Se === "main" ? "master" : Se === "master" ? "main" : void 0, Se === void 0 ? (Fe("No default branch name found, you should set it manually!"), !1) : await i(e, t + 1);
+        return it.unlock(), Se = Se === "main" ? "master" : Se === "master" ? "main" : void 0, Se === void 0 ? (Fe("No default branch name found, you should set it manually!"), !1) : await i(e, t + 1);
       throw Fe("Exceeded the maximum number of retries. Please check the branch name manually."), qe = {
         cloneCount: 0,
         pushCount: 0,
