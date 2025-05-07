@@ -625,11 +625,14 @@ async function getCommitHistoryFromReplica(args = {}) {
     const commits = logs.map(commit => commit.oid);
     consoleDotLog('Returning commits:', commits);
     
-    return {
+    const result =  {
       success: true,
       commits: commits,
       head: commits[0] || null
     };
+    consoleDotLog('Result:', result);
+    return result;
+    
   } catch (error) {
     consoleDotError('Error getting commit history from replica:', error);
     return {
