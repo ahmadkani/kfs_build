@@ -44,7 +44,7 @@ export class MergingManager {
         const intervalMs = this.config.interval * 1000;
         this.clockIntervalID = setInterval(async () => {
           try {
-            await this.vfs.merger.merge('Clock-based auto merge');
+            await this.vfs.merger();
           } catch (error) {
             console.error('Clock-based merge failed:', error);
           }

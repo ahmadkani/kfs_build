@@ -367,105 +367,188 @@ export class VFSutils {
   //  Merging Methods
   // -------------------
 
-    /**
-   * High-level sync flow: checks sync status and acts accordingly.
-   * Handles different cases like local changes, remote updates, etc.
-   * @returns {Promise<void>}
-   * @throws {Error} If sync fails or remote branch not found
-   */
-    async autoSyncFlow() {
-      try {
-        const syncStatus = await this.getSyncStatus();
-        consoleDotLog("Auto-sync: Sync status:", syncStatus);
-        switch (syncStatus) {
-          case 'up-to-date':
-            consoleDotLog("Auto-sync: Repo is already up to date.");
-            return;
-          case 'local-ahead':
-            consoleDotLog("Auto-sync: Local changes detected, syncing with remote...");
-            await this.syncWithRemote('local-ahead');
-            break;
-          case 'other-cases':
-            consoleDotLog("Auto-sync: Other cases detected, syncing with remote...");
-            await this.syncWithRemote('other-cases');
-            break;
-          case 'remote-branch-not-found':
-            consoleDotError('No remote branch found, cannot sync.');
-            break;
-          default:
-            consoleDotError('No remote branch found, cannot sync.');
-            break;
+      /**
+       * Optimized sync status check with minimal remote operations
+       */
+      async getSyncStatus(_url = null, ref = 'main') {
+        try {
+          consoleDotLog('Starting sync status check...');
+          const url = _url || this.fetchInfo?.url;
+          
+          // Get local head
+          consoleDotLog('Getting local head commit...');
+          const localHead = await this.workerThread.execute('getLastLocalCommit', { ref });
+          consoleDotLog('Local head commit:', localHead);
+          
+          // Get remote head
+          consoleDotLog('Getting remote head commit...');
+          const remoteResult = await this.workerThread.execute('getLatestRemoteCommit', { 
+            url, 
+            ref,
+          });
+          consoleDotLog('Remote head result:', remoteResult);
+      
+          if (!remoteResult.success) {
+            consoleDotLog('Remote branch not found');
+            return {
+              status: 'remote-branch-not-found',
+              localHead,
+              remoteHead: null
+            };
+          }
+      
+          const remoteHead = remoteResult.commit;
+          consoleDotLog('Remote head commit:', remoteHead);
+          
+          // Fast path if heads match
+          if (localHead === remoteHead) {
+            consoleDotLog('Local and remote heads match - up to date');
+            return {
+              status: 'up-to-date',
+              localHead,
+              remoteHead
+            };
+          }
+      
+          // Get commit histories
+          consoleDotLog('Getting commit histories...');
+          const [localCommits, remoteCommits] = await Promise.all([
+            this.getLocalCommitHistory(10),
+            this.getRemoteCommitHistory(10)
+          ]);
+          
+          consoleDotLog('Local commits (10 most recent):', localCommits);
+          consoleDotLog('Remote commits (10 most recent):', remoteCommits);
+      
+          // Find common commit
+          const commonCommit = this.findFirstCommonCommit(localCommits, remoteCommits);
+          consoleDotLog('Common commit found:', commonCommit);
+          
+          let status;
+          if (!commonCommit) {
+            status = 'diverged';
+            consoleDotLog('No common commit found - branches have diverged');
+          } else if (commonCommit === remoteHead) {
+            status = 'local-ahead';
+            consoleDotLog('Local is ahead of remote');
+          } else if (commonCommit === localHead) {
+            status = 'remote-ahead';
+            consoleDotLog('Remote is ahead of local');
+          } else {
+            status = 'diverged';
+            consoleDotLog('Branches have diverged');
+          }
+      
+          return {
+            status,
+            localHead,
+            remoteHead,
+            commonAncestor: commonCommit
+          };
+        } catch (err) {
+          consoleDotError("getSyncStatus failed:", err);
+          return {
+            status: 'error',
+            error: err.message
+          };
         }
-      } catch (err) {
-        consoleDotError("autoSyncFlow() failed:", err);
       }
-    }
 
-    /**
-   * Syncs the local repo with the remote by pulling changes.
-   * Abstract logic — assumes `doFetch` does a pull or fetch + merge.
-   */
-    async syncWithRemote(strategy) {
-      try {
-        if (!this.initialized) await this.initialize();
-  
-        const { url } = this.fetchInfo;
-        consoleDotLog("Attempting to sync with remote:", url);
-
-        await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
-        await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
-        switch (strategy) {
-          case 'local-ahead':
-            consoleDotLog("Syncing with remote by pushing local changes...");
-            await this.workerThread.execute('push', { url, ref: 'main' });
-            break;
-          case 'other-cases':
-            
-            break;
-          default:
-            consoleDotLog("Could not determine sync strategy, defaulting to pull...");
-            // const pullResult = await this.workerThread.pull({ url, ref: 'main' });
-            if (!pullResult.success) {
-              throw new Error(`Pull failed: ${pullResult.error}`);
-            }
-            break;
+      /**
+       * Find first common commit between two commit lists
+       */
+      findFirstCommonCommit(localCommits, remoteCommits) {
+        const remoteSet = new Set(remoteCommits);
+        for (const commit of localCommits) {
+          if (remoteSet.has(commit)) {
+            return commit;
+          }
         }
-
-        // You might want to handle merge logic here later
-        await this.generateFsTable();
-        consoleDotLog("Local repo successfully synced with remote.");
-      } catch (err) {
-        consoleDotError("syncWithRemote failed:", err);
-        throw err;
+        return null;
       }
-    }
 
-    async getSyncStatus(_url = null, ref = 'main') {
-      try {
-        const url = _url || this.fetchInfo?.url;
-        const localHead = await this.workerThread.execute('getLastLocalCommit', { ref });
-        const getRemoteHead = await this.workerThread.execute('getLatestRemoteCommit', { url, ref });
-        if (!getRemoteHead.success) return 'remote-branch-not-found';
-        const remoteHead = getRemoteHead.commit;
-
-        consoleDotLog('localHead:', localHead, 'remoteHead:', remoteHead);
-        const mergeBase = await this.workerThread.execute('findMergeBase', {
-          oids: [localHead, remoteHead]
-        });
-            
-        const base = mergeBase[0];
-        consoleDotLog("Merge base:", mergeBase);
-    
-        const localHasRemote = base === remoteHead;
-        if (!remoteHead) return 'remote-branch-not-found';
-        if (localHead === remoteHead) return 'up-to-date';
-        return localHasRemote ? 'local-ahead' : 'other-cases';   
-
-      } catch (err) {
-        return `error: ${err.message}`;
+      /**
+       * Get local commit history
+       */
+      async getLocalCommitHistory(depth = 10) {
+        try {
+          const logs = await this.workerThread.execute('log', {
+            depth,
+          });
+          const commits = logs.map(commit => commit.oid);
+          consoleDotLog('GetLocalCommitHistory result: ', commits);
+          return commits || [];
+        } catch (error) {
+          consoleDotError("Failed to get local commit history:", error);
+          return [];
+        }
       }
-    }
-    
+
+      /**
+       * Get remote commit history by fetching from replica
+       */
+      async getRemoteCommitHistory(depth = 10) {
+        try {
+          consoleDotLog('Fetching remote commit history with depth:', depth);
+          const result = await this.workerThread.execute('getCommitHistoryFromReplica', {
+            depth,
+          });
+          
+          consoleDotLog('Raw result from worker:', result);
+          
+          // Handle both direct array response and success/commits object structure
+          if (Array.isArray(result)) {
+            consoleDotLog('Received direct commits array:', result);
+            return result;
+          } else if (result && (result.commits || result.success)) {
+            consoleDotLog('Received structured response with commits:', result.commits || []);
+            return result.commits || [];
+          } else {
+            consoleDotError('Unexpected response format:', result);
+            return [];
+          }
+        } catch (error) {
+          consoleDotError("Failed to get remote commit history:", error);
+          return [];
+        }
+      }
+
+      /**
+       * Optimized sync flow that minimizes remote operations
+       */
+      async autoSyncFlow() {
+        try {
+          // First do lightweight check
+          const { status, localHead, remoteHead, commonAncestor } = await this.getSyncStatus();
+          
+          consoleDotLog("Sync status:", status);
+          
+          switch (status) {
+            case 'up-to-date':
+              return { synced: true };
+              
+            case 'local-ahead':
+              return await this.handleLocalAhead(localHead, remoteHead);
+              
+            case 'remote-ahead':
+              return await this.handleRemoteAhead(localHead, remoteHead);
+              
+            case 'diverged':
+              return await this.handleDiverged(localHead, remoteHead, commonAncestor);
+              
+            case 'remote-branch-not-found':
+              consoleDotError('Remote branch not found');
+              return { synced: false, error: 'Remote branch not found' };
+              
+            default:
+              throw new Error(`Unknown sync status: ${status}`);
+          }
+        } catch (err) {
+          consoleDotError("autoSyncFlow failed:", err);
+          throw err;
+        }
+      }
+
       // ------------------------
       //  Authentication Methods
       // ------------------------

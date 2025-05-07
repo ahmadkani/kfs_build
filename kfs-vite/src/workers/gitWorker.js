@@ -602,6 +602,44 @@ async function listServerRefs(args) {
   }
 }
 
+async function getCommitHistoryFromReplica(args = {}) {
+  try {
+    consoleDotLog('Received args in getCommitHistoryFromReplica:', args);
+
+    const _depth = args?.depth || 10;
+    const mainFsName = fsName;
+    
+    consoleDotLog('Initializing replica FS...');
+    await setFs({ fsName: `${mainFsName}_replica`, fsType });
+    
+    consoleDotLog('Pulling from remote...');
+    await pull({url, depth: _depth});
+    
+    consoleDotLog('Getting commit logs...');
+    const logs = await log({depth: _depth});
+    consoleDotLog('Replica commit logs:', logs);
+    
+    consoleDotLog('Restoring main FS...');
+    await setFs({ fsName: mainFsName, fsType });
+    
+    const commits = logs.map(commit => commit.oid);
+    consoleDotLog('Returning commits:', commits);
+    
+    return {
+      success: true,
+      commits: commits,
+      head: commits[0] || null
+    };
+  } catch (error) {
+    consoleDotError('Error getting commit history from replica:', error);
+    return {
+      success: false,
+      error: error.message,
+      commits: []
+    };
+  }
+}
+
 // usage: await getLatestRemoteCommit({ url: remoteRepoUrl, ref: 'main' });
 async function getLatestRemoteCommit(args) {
   consoleDotLog('getLatestRemoteCommit args:', args);
@@ -973,9 +1011,6 @@ async function doCloneAndStuff(args) {
       const cloneResult = await clone(args);
       await FSManager.createBackupFS(fsName, fsType);
       consoleDotLog('createBackupFS created backup')
-      await setFs({ fsName: `${fsName}_replica`, fsType });
-      await setDir(dir);
-      await doFetch({url});
       await setFs({ fsName, fsType });
       let head = await currentBranch();
       await setRef(head);
@@ -2018,6 +2053,7 @@ const operationHandlers = {
   getRemote: ({remote}) => getRemote(remote),
   getRemoteCommitInLocalRepo: ({ remote }) => getRemoteCommitInLocalRepo(remote),
   getChangedFilesList: getChangedFilesList,
+  getCommitHistoryFromReplica: getCommitHistoryFromReplica,
   getLatestRemoteCommit: ({ url, remote }) => getLatestRemoteCommit({url, remote}),
   getLastLocalCommit: ({ ref }) => getLastLocalCommit (ref),
   handleDeleteCloseAndReclone: ( {args} ) => handleDeleteCloseAndReclone(args),

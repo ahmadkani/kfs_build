@@ -357,7 +357,7 @@ export class VFS {
     try {
       if (this.VFSutils) {
         consoleDotLog('Terminating existing VFSutils instance');
-        await this.VFSutils.terminate();
+        await this.VFSutils.terminate(fsName, fsType);
         this.VFSutils = null;
       }
 
