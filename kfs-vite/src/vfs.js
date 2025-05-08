@@ -20,7 +20,6 @@ function consoleDotError(...parameters) {
 export class VFS {
   // Initialization and Core Setup
   constructor(storageName = "VFS_Mounts") {
-    consoleDotLog(`Initializing VFS with storage name: ${storageName}`);
     this.mounts = Object.create(null);
     this.initializedMounts = new Set();
     this.VFSutils = null;
@@ -28,6 +27,45 @@ export class VFS {
     this.currentMountPath = '';
     this.idbSupported = null; // Will store the IndexedDB support status
     consoleDotLog('VFS instance created');
+  }
+
+  // Environment detection utilities
+  getBrowserInfo() {
+    const userAgent = navigator.userAgent;
+    let browser = 'Unknown';
+    
+    if (userAgent.includes('Firefox')) browser = 'Firefox';
+    else if (userAgent.includes('SamsungBrowser')) browser = 'Samsung Browser';
+    else if (userAgent.includes('Opera') || userAgent.includes('OPR')) browser = 'Opera';
+    else if (userAgent.includes('Trident')) browser = 'IE';
+    else if (userAgent.includes('Edge')) browser = 'Edge';
+    else if (userAgent.includes('Chrome')) browser = 'Chrome';
+    else if (userAgent.includes('Safari')) browser = 'Safari';
+    
+    return browser;
+  }
+
+  getDeviceType() {
+    const userAgent = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(userAgent)) {
+      return 'Tablet';
+    }
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(userAgent)) {
+      return 'Mobile';
+    }
+    return 'Desktop';
+  }
+
+  getPlatformInfo() {
+    return {
+      browser: this.getBrowserInfo(),
+      device: this.getDeviceType(),
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      screenResolution: `${window.screen.width}x${window.screen.height}`,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      language: navigator.language
+    };
   }
 
   // Utility functions for versioning and merging
@@ -251,13 +289,28 @@ export class VFS {
         storedMount.fetchInfo || fetchInfo
       );
 
+      // Update environment info and access log
+      const environment = this.getPlatformInfo();
+      const accessLog = storedMount.accessLog || [];
+      accessLog.push({
+        time: new Date().toISOString(),
+        action: 'remount',
+        environment: environment
+      });
+
       this.mounts[mountPath] = {
         ...storedMount,
         fsInstance,
         fetchMethod: storedMount.fetchMethod || fetchMethod,
-        fetchInfo: storedMount.fetchInfo || fetchInfo,
+        fetchInfo: {
+          ...(storedMount.fetchInfo || fetchInfo),
+          lastFetched: new Date().toISOString()
+        },
         versioning: this.getVersioningConfig(storedMount),
-        merging: this.getMergingConfig(storedMount)
+        merging: this.getMergingConfig(storedMount),
+        environment, // Update environment info
+        modified: new Date().toISOString(),
+        accessLog
       };      
 
       this.initializedMounts.add(mountPath);
@@ -283,6 +336,9 @@ export class VFS {
       const fsSize = await this.VFSutils.getFsTableSize(fsTable);
       consoleDotLog(`Filesystem table generated, size: ${fsSize}`);
 
+      // Get environment information
+      const environment = this.getPlatformInfo();
+      
       const mountData = {
         fsInstance,
         fsType: fsInstance instanceof MemoryFS ? 'memory' : fsType,
@@ -292,10 +348,19 @@ export class VFS {
         fetchInfo: {
           ...fetchInfo,
           time: new Date().toISOString(),
-          size: fsSize
+          size: fsSize,
+          lastFetched: new Date().toISOString()
         },
         versioning: this.getVersioningConfig({ versioning }),
-        merging: this.getMergingConfig({ merging })
+        merging: this.getMergingConfig({ merging }),
+        environment, // Add environment info
+        created: new Date().toISOString(),
+        modified: new Date().toISOString(),
+        accessLog: [{
+          time: new Date().toISOString(),
+          action: 'mount',
+          environment: environment
+        }]
       };
       
       this.mounts[mountPath] = mountData;
@@ -313,6 +378,30 @@ export class VFS {
 
   async getMountPaths() {
     return Object.keys(this.mounts);
+  }
+
+  async getMountInfo(mountPath) {
+    if (!this.mounts[mountPath]) {
+      const errorMsg = `Mount not found: ${mountPath}`;
+      consoleDotError(errorMsg);
+      throw new Error(errorMsg);
+    }
+    
+    const mountData = this.mounts[mountPath];
+    return {
+      path: mountPath,
+      type: mountData.fsType,
+      name: mountData.fsName,
+      fetchMethod: mountData.fetchMethod,
+      versioning: mountData.versioning,
+      merging: mountData.merging,
+      created: mountData.created,
+      modified: mountData.modified,
+      lastFetched: mountData.fetchInfo.lastFetched,
+      size: mountData.fetchInfo.size,
+      environment: mountData.environment,
+      accessLog: mountData.accessLog
+    };
   }
 
   async unmount(path, fsName) {
@@ -379,6 +468,14 @@ export class VFS {
 
       consoleDotLog(`Executing fetch strategy for ${fetchMethod}`);
       await strategy();
+      
+      // Update last fetched time
+      if (this.mounts[this.currentMountPath]) {
+        this.mounts[this.currentMountPath].fetchInfo.lastFetched = new Date().toISOString();
+        this.mounts[this.currentMountPath].modified = new Date().toISOString();
+        await this.persistMountData(this.currentMountPath, this.mounts[this.currentMountPath]);
+      }
+      
       consoleDotLog(`Successfully fetched data using ${fetchMethod} method`);
     } catch (error) {
       consoleDotError(`Fetch operation failed (method: ${fetchMethod}):`, error);
@@ -548,7 +645,7 @@ export class VFS {
     consoleDotLog('Setting versioning strategy');
     let mountData = this.mounts[this.currentMountPath];
     mountData = {...mountData, versioning: versioningStrategy};
-    await this.persistMountData(mountPath, mountData);
+    await this.persistMountData(this.currentMountPath, mountData);
     consoleDotLog('Versioning strategy set successfully:', versioningStrategy);
     return true;
   }
@@ -562,5 +659,4 @@ export class VFS {
     this.persistMountData(this.currentMountPath, mountData);
     return args;
   }
-
 }
