@@ -18,11 +18,11 @@ const swUtilsInstance = new swUtils();
 
 
 function consoleDotLog(...parameters) {
-  logger.consoleDotLog(...parameters);
+  logger.consoleDotLog('[GITWorker] ', ...parameters);
 }
 
 function consoleDotError(...parameters) {
-  logger.consoleDotError(...parameters);
+  logger.consoleDotError('[GITWorker] ', ...parameters);
 }
 
 consoleDotLog('gitWorker loaded.');
@@ -608,12 +608,13 @@ async function getCommitHistoryFromReplica(args = {}) {
 
     const _depth = args?.depth || 10;
     const mainFsName = fsName;
+    const attempt = args?.attempt + 1 || 1;
     
     consoleDotLog('Initializing replica FS...');
     await setFs({ fsName: `${mainFsName}_replica`, fsType });
     
     consoleDotLog('Pulling from remote...');
-    await pull({url, depth: _depth});
+    await pull({...args, attempt, depth: _depth});
     
     consoleDotLog('Getting commit logs...');
     const logs = await log({depth: _depth});
@@ -1539,23 +1540,23 @@ async function commitStagedChanges(message = '') {
 
 async function readFileDot(filePath, _commitOid = 'staged') {
   try {
-    consoleDotLog(`[GITWorker] Reading file: ${filePath}`);
+    consoleDotLog(`Reading file: ${filePath}`);
     consoleDotLog('Current FS state:', { fs, fsName, fsType, fsArgs });
     const rootContents = await fs.promises.readdir('/');
     consoleDotLog('Root directory contents:', rootContents);
     
     const fileContent = await dotGit.readFileDot(fs, dir, filePath, _commitOid);
-    consoleDotLog(`[GITWorker] Successfully read file: ${filePath}`);
+    consoleDotLog(`Successfully read file: ${filePath}`);
     return fileContent;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to read file ${filePath}:`, error);
+    consoleDotError(`Failed to read file ${filePath}:`, error);
     throw new Error(`Failed to read file: ${error.message}`);
   }
 }
 
 async function writeFileDot(filePath, fileContent, doCommit = 1) {
   try {
-    consoleDotLog(`[GITWorker] Writing to file: ${filePath}`);
+    consoleDotLog(`Writing to file: ${filePath}`);
     const result = await dotGit.writeFileDot(
       fs,
       dir,
@@ -1565,94 +1566,94 @@ async function writeFileDot(filePath, fileContent, doCommit = 1) {
       email, 
       doCommit
     );
-    consoleDotLog(`[GITWorker] Successfully wrote to file: ${filePath}`);
+    consoleDotLog(`Successfully wrote to file: ${filePath}`);
     return result;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to write to file ${filePath}:`, error);
+    consoleDotError(`Failed to write to file ${filePath}:`, error);
     throw new Error(`Failed to write file: ${error.message}`);
   }
 }
 
 async function readDirDot(dirPath, _commitOid = 'staged') {
   try {
-    consoleDotLog(`[GITWorker] Reading directory: ${dirPath}`);
+    consoleDotLog(`Reading directory: ${dirPath}`);
     const contents = await dotGit.readDirDot(fs, dir, dirPath, _commitOid);
-    consoleDotLog(`[GITWorker] Directory contents for ${dirPath}:`, contents);
+    consoleDotLog(`Directory contents for ${dirPath}:`, contents);
     return contents;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to read directory ${dirPath}:`, error);
+    consoleDotError(`Failed to read directory ${dirPath}:`, error);
     throw new Error(`Failed to read directory: ${error.message}`);
   }
 }
 
 async function isDirectoryDot(path) {
   try {
-    consoleDotLog(`[GITWorker] Checking if path is directory: ${path}`);
+    consoleDotLog(`Checking if path is directory: ${path}`);
     const result = await dotGit.isDirectoryDot(fs, dir, path);
-    consoleDotLog(`[GITWorker] Path ${path} is directory:`, result);
+    consoleDotLog(`Path ${path} is directory:`, result);
     return result;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to check directory status for ${path}:`, error);
+    consoleDotError(`Failed to check directory status for ${path}:`, error);
     throw new Error(`Failed to check directory: ${error.message}`);
   }
 }
 
 async function listFilesDot(listDirs = 1) {
   try {
-    consoleDotLog('[GITWorker] Listing all files');
+    consoleDotLog('Listing all files');
     const files = await dotGit.listFilesDot(fs, dir, listDirs);
-    consoleDotLog('[GITWorker] File list:', files);
+    consoleDotLog('File list:', files);
     return files;
   } catch (error) {
-    consoleDotError('[GITWorker] Failed to list files:', error);
+    consoleDotError('Failed to list files:', error);
     throw new Error(`Failed to list files: ${error.message}`);
   }
 }
 
 async function mkdirDot(dirPath, doCommit = 1) {
   try {
-    consoleDotLog(`[GITWorker] Creating directory: ${dirPath}`);
+    consoleDotLog(`Creating directory: ${dirPath}`);
     const result = await dotGit.mkdirDot(fs, dir, dirPath, name, email, doCommit);
-    consoleDotLog(`[GITWorker] Successfully created directory: ${dirPath}`);
+    consoleDotLog(`Successfully created directory: ${dirPath}`);
     return result;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to create directory ${dirPath}:`, error);
+    consoleDotError(`Failed to create directory ${dirPath}:`, error);
     throw new Error(`Failed to create directory: ${error.message}`);
   }
 }
 
 async function removeDirDot(dirPath, doCommit = 1) {
   try {
-    consoleDotLog(`[GITWorker] Removing directory: ${dirPath}`);
+    consoleDotLog(`Removing directory: ${dirPath}`);
     const result = await dotGit.removeDirDot(fs, dir, dirPath, doCommit);
-    consoleDotLog(`[GITWorker] Successfully removed directory: ${dirPath}`);
+    consoleDotLog(`Successfully removed directory: ${dirPath}`);
     return result;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to remove directory ${dirPath}:`, error);
+    consoleDotError(`Failed to remove directory ${dirPath}:`, error);
     throw new Error(`Failed to remove directory: ${error.message}`);
   }
 }
 
 async function removeFileDot(filePath, doCommit = 1) {
   try {
-    consoleDotLog(`[GITWorker] Removing file: ${filePath}`);
+    consoleDotLog(`Removing file: ${filePath}`);
     const result = await dotGit.removeFileDot(fs, dir, filePath, doCommit);
-    consoleDotLog(`[GITWorker] Successfully removed file: ${filePath}`);
+    consoleDotLog(`Successfully removed file: ${filePath}`);
     return result;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to remove file ${filePath}:`, error);
+    consoleDotError(`Failed to remove file ${filePath}:`, error);
     throw new Error(`Failed to remove file: ${error.message}`);
   }
 }
 
 async function findInGitHistory(path) {
   try {
-    consoleDotLog(`[GITWorker] Searching git history for: ${path}`);
+    consoleDotLog(`Searching git history for: ${path}`);
     const history = await dotGit.findInGitHistory(fs, dir, path);
-    consoleDotLog(`[GITWorker] Found git history for ${path}:`, history);
+    consoleDotLog(`Found git history for ${path}:`, history);
     return history;
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to search git history for ${path}:`, error);
+    consoleDotError(`Failed to search git history for ${path}:`, error);
     throw new Error(`Failed to search git history: ${error.message}`);
   }
 }
@@ -1685,7 +1686,7 @@ async function mkdirRecursive(path) {
 //This function takes url, username, email
 //as arguments and pulls the remote directory
 async function pull(args) {
-  let attempt = args.attempt || 0;
+  let attempt = args?.attempt || 0;
   args[attempt] = attempt;
   const maxDeleteRetries = 1;
 
@@ -1769,7 +1770,6 @@ async function fastForward(args) {
         await git.fastForward({
           ...args,
           fs,
-          cache,
           http,
           dir,
           remote,
@@ -1792,7 +1792,6 @@ async function fastForward(args) {
       await git.fastForward({
         ...args,
         fs,
-        cache,
         http,
         dir,
         remote,

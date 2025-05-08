@@ -413,8 +413,8 @@ export class VFSutils {
           // Get commit histories
           consoleDotLog('Getting commit histories...');
           const [localCommits, remoteCommits] = await Promise.all([
-            this.getLocalCommitHistory(10),
-            this.getRemoteCommitHistory(10)
+            await this.getLocalCommitHistory(10),
+            await this.getRemoteCommitHistory(10)
           ]);
           
           consoleDotLog('Local commits (10 most recent):', localCommits);
@@ -549,6 +549,228 @@ export class VFSutils {
         }
       }
 
+      /**
+       * Handle case where remote is ahead of local (need to pull changes)
+       */
+      async handleRemoteAhead(localHead, remoteHead) {
+        try {
+          consoleDotLog(`Handling remote-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
+          
+          // 1. First try a simple fast-forward
+          consoleDotLog('Attempting fast-forward merge...');
+          const ffResult = await this.workerThread.execute('fastForward', {
+            url: this.fetchInfo.url,
+            ref: 'main',
+          });
+          
+          if (ffResult.success) {
+            consoleDotLog('Fast-forward successful');
+            await this.generateFsTable(); // Refresh FS table
+            return { 
+              synced: true, 
+              strategy: 'fast-forward',
+              oldHead: localHead,
+              newHead: remoteHead
+            };
+          }
+          
+          // 2. If fast-forward fails, do a full pull with merge
+          consoleDotLog('Fast-forward failed, attempting full pull...');
+          const pullResult = await this.workerThread.execute('pull', {
+            url: this.fetchInfo.url,
+            ref: 'main',
+          });
+          
+          if (!pullResult.success) {
+            throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
+          }
+          
+          consoleDotLog('Pull successful');
+          await this.generateFsTable(); // Refresh FS table
+          
+          // Verify new head matches remote
+          const newLocalHead = await this.workerThread.execute('getLastLocalCommit', { ref: 'main' });
+          if (newLocalHead !== remoteHead) {
+            consoleDotLog(`Warning: Local head (${newLocalHead}) doesn't match remote head (${remoteHead}) after pull`);
+          }
+          
+          return { 
+            synced: true, 
+            strategy: 'pull-with-merge',
+            oldHead: localHead,
+            newHead: newLocalHead
+          };
+        } catch (error) {
+          consoleDotError('handleRemoteAhead failed:', error);
+          
+          // Attempt to reset to original state if something went wrong
+          try {
+            await this.workerThread.execute('resetToCommit', { 
+              oid: localHead,
+              hard: true 
+            });
+          } catch (resetError) {
+            consoleDotError('Failed to reset after error:', resetError);
+          }
+          
+          throw error;
+        }
+      }
+
+      /**
+       * Handle case where local is ahead of remote (need to push changes)
+       */
+      async handleLocalAhead(localHead, remoteHead) {
+        try {
+          consoleDotLog(`Handling local-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
+          
+          await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
+
+          // 1. First try a simple push
+          consoleDotLog('Attempting push...');
+          const pushResult = await this.workerThread.execute('push', {
+            url: this.fetchInfo.url,
+            ref: 'main',
+            force: false,
+          });
+          
+          if (pushResult.success) {
+            consoleDotLog('Push successful');
+            return { 
+              synced: true, 
+              strategy: 'push',
+              oldRemoteHead: remoteHead,
+              newRemoteHead: localHead
+            };
+          }
+          
+          // 2. If push fails (maybe remote was updated concurrently)
+          consoleDotLog('Push failed, rechecking sync status...');
+          const newStatus = await this.getSyncStatus();
+          
+          if (newStatus.status === 'up-to-date') {
+            consoleDotLog('Status is now up-to-date after push failure');
+            return { synced: true, strategy: 'concurrent-update' };
+          }
+          
+          if (newStatus.status === 'remote-ahead') {
+            consoleDotLog('Remote moved ahead during push attempt');
+            return this.handleRemoteAhead(localHead, newStatus.remoteHead);
+          }
+          
+          if (newStatus.status === 'diverged') {
+            consoleDotLog('Branches diverged during push attempt');
+            return this.handleDiverged(localHead, newStatus.remoteHead, newStatus.commonAncestor);
+          }
+          
+          throw new Error(`Unexpected status after push failure: ${newStatus.status}`);
+        } catch (error) {
+          consoleDotError('handleLocalAhead failed:', error);
+          throw error;
+        }
+      }
+
+      /**
+       * Handle case where branches have diverged
+       */
+      async handleDiverged(localHead, remoteHead, commonAncestor) {
+        // try {
+        //   consoleDotLog(`Handling diverged scenario (local: ${localHead}, remote: ${remoteHead}, common: ${commonAncestor || 'none'})`);
+          
+        //   // 1. First try a rebase
+        //   consoleDotLog('Attempting rebase...');
+        //   const rebaseResult = await this.workerThread.execute('rebase', {
+        //     url: this.fetchInfo.url,
+        //     localHead,
+        //     remoteHead,
+        //     branch: 'main',
+        //     attempt: 0
+        //   });
+          
+        //   if (rebaseResult.success) {
+        //     consoleDotLog('Rebase successful');
+        //     await this.generateFsTable(); // Refresh FS table
+            
+        //     // Push the rebased changes
+        //     const pushResult = await this.workerThread.execute('push', {
+        //       url: this.fetchInfo.url,
+        //       ref: 'main',
+        //       force: false
+        //     });
+            
+        //     if (!pushResult.success) {
+        //       throw new Error('Push after rebase failed');
+        //     }
+            
+        //     return { 
+        //       synced: true, 
+        //       strategy: 'rebase',
+        //       oldLocalHead: localHead,
+        //       newLocalHead: rebaseResult.newHead,
+        //       remoteHead
+        //     };
+        //   }
+          
+        //   // 2. If rebase fails, try a merge
+        //   consoleDotLog('Rebase failed, attempting merge...');
+        //   const mergeResult = await this.workerThread.execute('merge', {
+        //     url: this.fetchInfo.url,
+        //     localHead,
+        //     remoteHead,
+        //     branch: 'main',
+        //     attempt: 0
+        //   });
+          
+        //   if (!mergeResult.success) {
+        //     throw new Error('Merge failed: ' + (mergeResult.error || 'Unknown error'));
+        //   }
+          
+        //   consoleDotLog('Merge successful');
+        //   await this.generateFsTable(); // Refresh FS table
+          
+        //   // Commit the merge result
+        //   const commitResult = await this.workerThread.execute('commitStagedChanges', {
+        //     message: `Merge branch 'main' of ${this.fetchInfo.url}`
+        //   });
+          
+        //   if (!commitResult.success) {
+        //     throw new Error('Merge commit failed');
+        //   }
+          
+        //   // Push the merge result
+        //   const pushResult = await this.workerThread.execute('push', {
+        //     url: this.fetchInfo.url,
+        //     ref: 'main',
+        //     force: false
+        //   });
+          
+        //   if (!pushResult.success) {
+        //     throw new Error('Push after merge failed');
+        //   }
+          
+        //   return { 
+        //     synced: true, 
+        //     strategy: 'merge',
+        //     oldLocalHead: localHead,
+        //     newLocalHead: commitResult.commitId,
+        //     remoteHead
+        //   };
+        // } catch (error) {
+        //   consoleDotError('handleDiverged failed:', error);
+          
+        //   // Attempt to reset to original state
+        //   try {
+        //     await this.workerThread.execute('resetToCommit', { 
+        //       oid: localHead,
+        //       hard: true 
+        //     });
+        //   } catch (resetError) {
+        //     consoleDotError('Failed to reset after error:', resetError);
+        //   }
+          
+        //   throw error;
+        // }
+      }
       // ------------------------
       //  Authentication Methods
       // ------------------------
