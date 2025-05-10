@@ -675,103 +675,100 @@ export class VFSutils {
        * Handle case where branches have diverged
        */
       async handleDiverged(localHead, remoteHead, commonAncestor) {
-        // try {
-        //   consoleDotLog(`Handling diverged scenario (local: ${localHead}, remote: ${remoteHead}, common: ${commonAncestor || 'none'})`);
+        try {
+          const { mergeStrategy = 'merge' } = this.fetchInfo; // 'merge' or 'rebase'
           
-        //   // 1. First try a rebase
-        //   consoleDotLog('Attempting rebase...');
-        //   const rebaseResult = await this.workerThread.execute('rebase', {
-        //     url: this.fetchInfo.url,
-        //     localHead,
-        //     remoteHead,
-        //     branch: 'main',
-        //     attempt: 0
-        //   });
-          
-        //   if (rebaseResult.success) {
-        //     consoleDotLog('Rebase successful');
-        //     await this.generateFsTable(); // Refresh FS table
+          if (mergeStrategy === 'rebase') {
+            // Rebase workflow: fetch + rebase + push
+            consoleDotLog('Using rebase workflow');
             
-        //     // Push the rebased changes
-        //     const pushResult = await this.workerThread.execute('push', {
-        //       url: this.fetchInfo.url,
-        //       ref: 'main',
-        //       force: false
-        //     });
+            // 1. Fetch latest changes
+            consoleDotLog('Fetching latest changes...');
+            const fetchResult = await this.workerThread.execute('doFetch', {
+              url: this.fetchInfo.url,
+              ref: 'main',
+            });
             
-        //     if (!pushResult.success) {
-        //       throw new Error('Push after rebase failed');
-        //     }
+            if (!fetchResult.success) {
+              throw new Error('Fetch failed: ' + (fetchResult.error || 'Unknown error'));
+            }
+
+            // 2. Rebase local changes on top of remote
+            consoleDotLog('Rebasing local changes...');
+            const rebaseResult = await this.workerThread.execute('rebase', {
+              upstream: `remotes/${remote}/main`,
+              branch: 'main'
+            });
+
+            if (!rebaseResult.success) {
+              throw new Error('Rebase failed: ' + (rebaseResult.error || 'Unknown error'));
+            }
+
+            // 3. Push rebased changes
+            consoleDotLog('Pushing rebased changes...');
+            await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
+            const pushResult = await this.workerThread.execute('push', {
+              url: this.fetchInfo.url,
+              ref: 'main',
+              force: false,
+            });
             
-        //     return { 
-        //       synced: true, 
-        //       strategy: 'rebase',
-        //       oldLocalHead: localHead,
-        //       newLocalHead: rebaseResult.newHead,
-        //       remoteHead
-        //     };
-        //   }
+            return { 
+              synced: true, 
+              strategy: 'rebase-workflow',
+              oldLocalHead: localHead,
+              newLocalHead: rebaseResult.newHead,
+              remoteHead
+            };
+          } else {
+            // Merge workflow: fetch + merge + push
+            consoleDotLog('Using merge workflow');
+            
+            // 1. Pull with merge
+            consoleDotLog('Pulling with merge...');
+            const pullResult = await this.workerThread.execute('pull', {
+              url: this.fetchInfo.url,
+              ref: 'main',
+            });
+            
+            if (!pullResult.success) {
+              throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
+            }
+
+            // 2. Push merged changes
+            consoleDotLog('Pushing merged changes...');
+            await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
+            const pushResult = await this.workerThread.execute('push', {
+              url: this.fetchInfo.url,
+              ref: 'main',
+              force: false,
+            });
+            
+            return { 
+              synced: true, 
+              strategy: 'merge-workflow',
+              oldLocalHead: localHead,
+              newLocalHead: await this.workerThread.execute('getLastLocalCommit', { ref: 'main' }),
+              remoteHead
+            };
+          }
+        } catch (error) {
+          consoleDotError('handleDiverged failed:', error);
           
-        //   // 2. If rebase fails, try a merge
-        //   consoleDotLog('Rebase failed, attempting merge...');
-        //   const mergeResult = await this.workerThread.execute('merge', {
-        //     url: this.fetchInfo.url,
-        //     localHead,
-        //     remoteHead,
-        //     branch: 'main',
-        //     attempt: 0
-        //   });
+          // Attempt to reset to original state
+          try {
+            await this.workerThread.execute('resetToCommit', { 
+              oid: localHead,
+              hard: true 
+            });
+          } catch (resetError) {
+            consoleDotError('Failed to reset after error:', resetError);
+          }
           
-        //   if (!mergeResult.success) {
-        //     throw new Error('Merge failed: ' + (mergeResult.error || 'Unknown error'));
-        //   }
-          
-        //   consoleDotLog('Merge successful');
-        //   await this.generateFsTable(); // Refresh FS table
-          
-        //   // Commit the merge result
-        //   const commitResult = await this.workerThread.execute('commitStagedChanges', {
-        //     message: `Merge branch 'main' of ${this.fetchInfo.url}`
-        //   });
-          
-        //   if (!commitResult.success) {
-        //     throw new Error('Merge commit failed');
-        //   }
-          
-        //   // Push the merge result
-        //   const pushResult = await this.workerThread.execute('push', {
-        //     url: this.fetchInfo.url,
-        //     ref: 'main',
-        //     force: false
-        //   });
-          
-        //   if (!pushResult.success) {
-        //     throw new Error('Push after merge failed');
-        //   }
-          
-        //   return { 
-        //     synced: true, 
-        //     strategy: 'merge',
-        //     oldLocalHead: localHead,
-        //     newLocalHead: commitResult.commitId,
-        //     remoteHead
-        //   };
-        // } catch (error) {
-        //   consoleDotError('handleDiverged failed:', error);
-          
-        //   // Attempt to reset to original state
-        //   try {
-        //     await this.workerThread.execute('resetToCommit', { 
-        //       oid: localHead,
-        //       hard: true 
-        //     });
-        //   } catch (resetError) {
-        //     consoleDotError('Failed to reset after error:', resetError);
-        //   }
-          
-        //   throw error;
-        // }
+          throw error;
+        }
       }
+      
       // ------------------------
       //  Authentication Methods
       // ------------------------
