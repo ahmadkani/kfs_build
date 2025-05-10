@@ -51,6 +51,17 @@ export class KFS {
     }
   }
   
+  async merge() {
+    try {
+      consoleDotLog('Merging...');
+      await this.vfs.merger();
+      consoleDotLog('Merge completed successfully.');
+    } catch(error) {
+      consoleDotError('Merge failed:', error);
+      throw new Error(`Failed to merge: ${error.message}`);
+    }
+  }
+  
   // -------------------------------
   // Filesystem Operations
   // -------------------------------

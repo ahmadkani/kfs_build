@@ -518,6 +518,7 @@ export class VFSutils {
        */
       async autoSyncFlow() {
         try {
+          consoleDotLog('this.fetchInfo', this.fetchInfo);
           // First do lightweight check
           const { status, localHead, remoteHead, commonAncestor } = await this.getSyncStatus();
           

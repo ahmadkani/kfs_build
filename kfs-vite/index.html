@@ -1,241 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Git Filesystem Manager</title>
-    <style>
-        button { margin: 5px; padding: 8px 12px; cursor: pointer; }
-        input { margin: 5px; padding: 5px; width: 300px; }
-        #output { 
-            margin-top: 20px; 
-            padding: 10px; 
-            border: 1px solid #ddd; 
-            min-height: 20px; 
-            font-family: monospace; 
-            white-space: pre-wrap;
-            background: #f5f5f5;
-        }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        .section { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .status { 
-            padding: 5px 10px; 
-            border-radius: 3px; 
-            font-size: 0.9em;
-            margin-left: 10px;
-        }
-        .status-active { background: #d4edda; color: #155724; }
-        .status-inactive { background: #f8d7da; color: #721c24; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Git Filesystem Manager</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .section h2 {
+      font-size: 1.25rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    button {
+      background: #4a90e2;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #357abd;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #output {
+      padding: 15px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      font-family: monospace;
+      white-space: pre-wrap;
+      border-radius: 5px;
+    }
+    .status {
+      padding: 4px 10px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      margin-left: 10px;
+    }
+    .status-active {
+      background: #d4edda;
+      color: #155724;
+    }
+    .status-inactive {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Git Filesystem Manager</h1>
-        
-        <div class="section">
-            <h2>Service Worker <span id="swStatus" class="status status-inactive">Not Registered</span></h2>
-            <button id="registerSW">Register Service Worker</button>
-            <button id="unregisterSW">Unregister Service Worker</button>
-        </div>
-        
-        <div class="section">
-            <h2>Filesystem Operations</h2>
-            <input type="text" id="mountPath" placeholder="Mount Path (e.g. /repo1)">
-            <button onclick="mountFS()">Mount</button>
-            <button onclick="unmountFS()">Unmount</button>
-        </div>
-        
-        <div class="section">
-            <h2>File Operations</h2>
-            <input type="text" id="filePath" placeholder="File Path (e.g. /repo1/file.txt)">
-            <button onclick="writeFile()">Write File</button>
-            <button onclick="readFile()">Read File</button>
-            <button onclick="removeFile()">Remove File</button>
-        </div>
-        
-        <div class="section">
-            <h2>Output</h2>
-            <div id="output">Ready...</div>
-        </div>
+  <div class="container">
+    <h1>Git Filesystem Manager</h1>
+
+    <div class="section">
+      <h2>Service Worker <span id="swStatus" class="status status-inactive">Not Registered</span></h2>
+      <div class="button-group">
+        <button id="registerSW">Register Service Worker</button>
+        <button id="unregisterSW">Unregister Service Worker</button>
+      </div>
     </div>
 
-    <script type="module">
-        import { KFS, setConfig } from "./src/kfs.js";
-        import { serviceWorker } from "./src/libs/sw-register.js";
+    <div class="section">
+      <h2>Filesystem Operations</h2>
+      <input type="text" id="mountPath" placeholder="Mount Path (e.g. /repo1)" />
+      <div class="button-group">
+        <button id="mountBtn">Mount</button>
+        <button id="unmountBtn">Unmount</button>
+      </div>
+    </div>
 
-        // Initialize KFS
-        const kfs = new KFS();
-        
-        // await setConfig({
-        //     corsProxy: 'http://localhost:9000/',
-        //     logging: {
-        //         serviceWorker: true, // This will enable all serviceWorker-related logging
-        //         gitWorker: true,      // This will enable all gitWorker-related logging
-        //         kfs: true,           // This will enable all vfs-related logging
-        //         storage: true,      // This will enable all storage-related logging
-        //     }
-        // });
+    <div class="section">
+      <h2>File Operations</h2>
+      <input type="text" id="filePath" placeholder="File Path (e.g. /repo1/file.txt)" />
+      <div class="button-group">
+        <button id="writeBtn">Write File</button>
+        <button id="readBtn">Read File</button>
+        <button id="removeBtn">Remove File</button>
+      </div>
+    </div>
 
-        // Service Worker Management
-        document.getElementById('registerSW').addEventListener('click', async () => {
-            try {
-                const registration = await serviceWorker.register({
-                    scope: '/',
-                    enableSync: true
-                });
-                if (registration) {
-                    document.getElementById('swStatus').className = 'status status-active';
-                    document.getElementById('swStatus').textContent = 'Active';
-                    logOutput('✅ Service Worker registered successfully');
-                }
-            } catch (error) {
-                logOutput(`❌ Failed to register Service Worker: ${error.message}`);
-            }
+    <div class="section">
+      <h2>Merging</h2>
+      <div class="button-group">
+        <button id="mergeBtn">Merge from KFS</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Output</h2>
+      <div id="output">Ready...</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { KFS, setConfig } from "./src/kfs.js";
+    import { serviceWorker } from "./src/libs/sw-register.js";
+
+    const kfs = new KFS();
+
+    const $ = (id) => document.getElementById(id);
+    const logOutput = (msg) => {
+      $("output").textContent = `${msg}\n` + $("output").textContent;
+    };
+
+    $("registerSW").addEventListener("click", async () => {
+      try {
+        const registration = await serviceWorker.register({ scope: "/", enableSync: true });
+        $("swStatus").className = "status status-active";
+        $("swStatus").textContent = "Active";
+        logOutput("✅ Service Worker registered successfully");
+      } catch (e) {
+        logOutput(`❌ Failed to register Service Worker: ${e.message}`);
+      }
+    });
+
+    $("unregisterSW").addEventListener("click", async () => {
+      try {
+        await serviceWorker.unregister();
+        $("swStatus").className = "status status-inactive";
+        $("swStatus").textContent = "Not Registered";
+        logOutput("✅ Service Worker unregistered");
+      } catch (e) {
+        logOutput(`❌ Failed to unregister Service Worker: ${e.message}`);
+      }
+    });
+
+    (async () => {
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (reg) {
+        $("swStatus").className = "status status-active";
+        $("swStatus").textContent = "Active";
+      }
+    })();
+
+    $("mountBtn").addEventListener("click", async () => {
+      const path = $("mountPath").value.trim();
+      if (!path) return logOutput("Please enter a mount path");
+
+      try {
+        logOutput("Mounting filesystem...");
+        await kfs.mount(path, "idb", "1", "git", {
+          fetchInfo: {
+            url: 'https://github.com/ahmadkani/ahmadkani',
+            username: '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',
+            password: '',
+            name: 'ahmad',
+            email: 'ahmad@kani.com',
+          },
+          useSW: true,
+          merging: {  },
+          versioning: { strategy: 'immediate', interval: 10, number: 5 },
         });
-        
-        document.getElementById('unregisterSW').addEventListener('click', async () => {
-            try {
-                await serviceWorker.unregister();
-                document.getElementById('swStatus').className = 'status status-inactive';
-                document.getElementById('swStatus').textContent = 'Not Registered';
-                logOutput('✅ Service Worker unregistered');
-            } catch (error) {
-                logOutput(`❌ Failed to unregister Service Worker: ${error.message}`);
-            }
+
+        await kfs.setUserConfigs({
+          username: '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',
+          password: '',
+          name: 'ahmad',
+          email: 'ahmad@kani.com',
         });
-        
-        // Check if service worker is already registered
-        (async () => {
-            if ('serviceWorker' in navigator) {
-                const registration = await navigator.serviceWorker.getRegistration();
-                if (registration) {
-                    document.getElementById('swStatus').className = 'status status-active';
-                    document.getElementById('swStatus').textContent = 'Active';
-                }
-            }
-        })();
-        
-        // Filesystem Operations
-        window.mountFS = async function () {
-            const path = document.getElementById("mountPath").value.trim();
-            if (!path) return logOutput("Please enter a mount path");
-            
-            try {
-                logOutput("Mounting filesystem...");
-                
-                await kfs.mount(path, "idb", "1", "git", {
-                    fetchInfo: {
-                        url: 'https://github.com/ahmadkani/ahmadkani',
-                        username: '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',
-                        password: '',
-                        name: 'ahmad',
-                        email: 'ahmad@kani.com',
-                    }, 
-                    useSW: true,
-                    merging: {
-                        strategy: 'clock',
-                        interval: 20,
-                    },
-                    versioning: {
-                        strategy: 'immediate',
-                        interval: 10,
-                        number: 5
-                    },
-                });
-                
-                await kfs.setUserConfigs({
-                    username: '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',
-                    password: '',
-                    name: 'ahmad',
-                    email: 'ahmad@kani.com',
-                });
-                
-                logOutput(`✅ Successfully mounted at ${path}`);
-            } catch (error) {
-                logOutput(`❌ Mount failed: ${error.message}`);
-                console.error("Mount error:", error);
-            }
-        };
-        
-        window.unmountFS = async function () {
-            const path = document.getElementById("mountPath").value.trim();
-            if (!path) return logOutput("Please enter a mount path");
-            
-            try {
-                logOutput("Unmounting filesystem...");
-                await kfs.unmount(path, "1");
-                logOutput(`✅ Successfully unmounted ${path}`);
-            } catch (error) {
-                logOutput(`❌ Unmount failed: ${error.message}`);
-            }
-        };
-        
-        // File Operations
-        window.writeFile = async function() {
-            const filePath = document.getElementById("filePath").value.trim();
-            if (!filePath) return logOutput("Please enter a file path");
-            
-            try {
-                logOutput(`Creating file at ${filePath}...`);
-                await kfs.create(filePath, "file", "Hello from KFS!\n", "a");
-                // await kfs.create(filePath, "dir", "a");
-                // await kfs.create(`${filePath}/new`, "file", "Hello from KFS!\n", "a");
-                logOutput(`✅ File created at ${filePath}`);
-            } catch (error) {
-                logOutput(`❌ File creation failed: ${error.message}`);
-                console.error("Write error:", error);
-            }
-        };
-    
-        window.readFile = async function () {
-            const filePath = document.getElementById("filePath").value.trim();
-            if (!filePath) return logOutput("Please enter a file path");
-            
-                            
 
+        logOutput(`✅ Successfully mounted at ${path}`);
+      } catch (e) {
+        logOutput(`❌ Mount failed: ${e.message}`);
+      }
+    });
 
-            try {
-                logOutput(`Reading at ${filePath}...`);
-                const content = await kfs.read(filePath); 
-                if (content) {
-                    if (typeof(content) === 'object') {
-                        logOutput(`Dir output:`);
-                        content.map(entry => logOutput(`📄 Entry: ${entry.path}, type: ${entry.type}`));
-                    }
-                    else {
-                        logOutput(`📄 File content:\n${content}`);
-                    }
-                } else {
-                        logOutput("❌ File is empty or not found");
-                    }
-            } catch (error) {
-                logOutput(`❌ File read failed: ${error.message}`);
-                console.error("Read error:", error);
-            }
-        };
-        
-        window.removeFile = async function () {
-            const filePath = document.getElementById("filePath").value.trim();
-            if (!filePath) return alert("Please enter a file path");
-            
-            try {
-                const result = await kfs.remove(filePath);
-                if (result.success === false) {
-                    // Path didn't exist - not necessarily an error
-                    document.getElementById("output").innerText = result.message;
-                } else {
-                    document.getElementById("output").innerText = `✅ Removed ${filePath}`;
-                }
-            } catch (error) {
-                document.getElementById("output").innerText = `❌ ${error.message}`;
-            }
-        };
-        
-        // Helper function for output
-        function logOutput(message) {
-            const output = document.getElementById("output");
-            output.textContent = message + '\n' + output.textContent;
+    $("unmountBtn").addEventListener("click", async () => {
+      const path = $("mountPath").value.trim();
+      if (!path) return logOutput("Please enter a mount path");
+
+      try {
+        await kfs.unmount(path, "1");
+        logOutput(`✅ Successfully unmounted ${path}`);
+      } catch (e) {
+        logOutput(`❌ Unmount failed: ${e.message}`);
+      }
+    });
+
+    $("writeBtn").addEventListener("click", async () => {
+      const filePath = $("filePath").value.trim();
+      if (!filePath) return logOutput("Please enter a file path");
+
+      try {
+        await kfs.create(filePath, "file", "Hello from KFS!\n", "a");
+        logOutput(`✅ File created at ${filePath}`);
+      } catch (e) {
+        logOutput(`❌ File creation failed: ${e.message}`);
+      }
+    });
+
+    $("readBtn").addEventListener("click", async () => {
+      const filePath = $("filePath").value.trim();
+      if (!filePath) return logOutput("Please enter a file path");
+
+      try {
+        const content = await kfs.read(filePath);
+        if (content) {
+          if (typeof content === "object") {
+            content.forEach(entry => logOutput(`📄 Entry: ${entry.path}, type: ${entry.type}`));
+          } else {
+            logOutput(`📄 File content:\n${content}`);
+          }
+        } else {
+          logOutput("❌ File is empty or not found");
         }
-    </script>
+      } catch (e) {
+        logOutput(`❌ File read failed: ${e.message}`);
+      }
+    });
+
+    $("removeBtn").addEventListener("click", async () => {
+      const filePath = $("filePath").value.trim();
+      if (!filePath) return logOutput("Please enter a file path");
+
+      try {
+        const result = await kfs.remove(filePath);
+        logOutput(result.success === false ? result.message : `✅ Removed ${filePath}`);
+      } catch (e) {
+        logOutput(`❌ ${e.message}`);
+      }
+    });
+
+    $("mergeBtn").addEventListener("click", async () => {
+        try {
+        logOutput("🔄 Merging from KFS...");
+        await kfs.merge(); // Assuming `merge()` exists in your KFS class
+        logOutput("✅ Merge complete.");
+      } catch (e) {
+        logOutput(`❌ Merge failed: ${e.message}`);
+      }
+    });
+  </script>
 </body>
 </html>
