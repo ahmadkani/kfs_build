@@ -176,7 +176,7 @@ async function setSettingsAddresses() {
   try {
       const libraries = await readSettingsFile('library'); 
       consoleDotLog('libs', libraries)
-      const directories = await listFiles(); 
+      const directories = await listFilesDot(); 
       consoleDotLog('directories', directories)
 
       if (libraries && directories){
@@ -374,7 +374,7 @@ async function readSettingsFile(type = null, key = null) {
     
     const settingsPath = await fs.promises.readdir(`${dir}`)
     if (settingsPath.includes('settings')){
-      const content = await readFile({filePath: gitConfigFilePath});
+      const content = await git.readFile({fs, dir, filePath: gitConfigFilePath});
       const settingsData = parseIni(content);
       consoleDotLog('settingsData,',settingsData)
 
@@ -843,69 +843,66 @@ async function findMergeBase(oids) {
   }
 }
 
-
 async function resolveMergeConflict() {
-  console.log("🔍 Checking status matrix...");
-
-  const statusMatrix = await git.statusMatrix({ fs, dir });
-  console.log("📊 Status Matrix:", statusMatrix);
-
-  let conflictedFiles = [];
-  for (const [filepath, head, workdir, stage] of statusMatrix) {
-    if (stage === 3) {
-      conflictedFiles.push(filepath);
-    }
-  }
-
-  console.log("⚠️ Conflicted files detected:", conflictedFiles);
-  
-  if (conflictedFiles.length === 0) {
-    console.log("✅ No conflicts found. Skipping merge resolution.");
-    return;
-  }
-
-  const mergeDriver = async ({ filepath, contents }) => {
-    console.log(`🛠️ Running merge driver for: ${filepath}`);
-
-    let baseContent = await git.readFile({ fs, dir, filepath, stage: 1 }).catch(() => "");
-    let ourContent = await git.readFile({ fs, dir, filepath, stage: 2 }).catch(() => "");
-    let theirContent = await git.readFile({ fs, dir, filepath, stage: 3 }).catch(() => "");
-
-    console.log("📄 Base Content:", baseContent);
-    console.log("📄 Our Content:", ourContent);
-    console.log("📄 Their Content:", theirContent);
-
-    if (!ourContent || !theirContent) {
-      console.log("❌ Error: One of the contents is missing. Skipping merge for this file.");
-      return { cleanMerge: false, mergedText: ourContent || theirContent };
-    }
-
-    // Here you can implement actual merge logic
-    const mergedText = theirContent;  // For now, just keeping 'ours' version.
-
-    return { cleanMerge: true, mergedText };
-  };
-
   try {
-    console.log("🔄 Attempting to merge...");
-    await git.merge({
-      fs,
-      dir,
-      ours: ref,
-      theirs: `remotes/${remote}/${ref}`,
-      abortOnConflict: true,
-      mergeDriver,
-    });
-    console.log("✅ Merge completed successfully.");
-  } catch (e) {
-    if (e instanceof Errors.MergeConflictError) {
-      console.log(
-        `❌ Automatic merge failed for the following files: ${e.data}.`
-      );
-      console.log("📝 Resolve conflicts manually and commit your changes.");
-    } else {
-      throw e;
+    consoleDotLog("🔄 Handling merge conflict in git-only storage...");
+
+    // 1. Get the list of conflicted files from git
+    const status = await git.statusMatrix({ fs, dir });
+    const conflictedFiles = status.filter(row => row[3] === 3).map(row => row[0]);
+
+    if (conflictedFiles.length === 0) {
+      consoleDotLog("✅ No conflicted files found in git index");
+      return { success: true, resolved: false };
     }
+
+    consoleDotLog(`⚠️ Found ${conflictedFiles.length} conflicted files in git:`, conflictedFiles);
+
+    // 2. Resolve conflicts directly in git index
+    for (const filepath of conflictedFiles) {
+      try {
+        consoleDotLog(`🔧 Resolving ${filepath} in git index...`);
+
+        // Get the "ours" version (stage 2)
+        const ourVersion = await git.readBlob({
+          fs,
+          dir,
+          oid: await git.resolveRef({ fs, dir, ref: 'HEAD' }),
+          filepath
+        }).catch(() => null);
+
+        // Get the "theirs" version (stage 3)
+        const theirVersion = await git.readBlob({
+          fs,
+          dir,
+          oid: await git.resolveRef({ fs, dir, ref: `refs/remotes/${remote}/${ref}` }),
+          filepath
+        }).catch(() => null);
+
+        // Choose which version to keep (default to "ours")
+        const resolvedContent = ourVersion?.blob || theirVersion?.blob || '';
+
+        // Write resolved version directly to git index
+        await git.add({ 
+          fs, 
+          dir, 
+          filepath,
+          // Force add even if file doesn't exist in working directory
+          force: true 
+        });
+
+        consoleDotLog(`✅ Resolved ${filepath} in git index`);
+      } catch (error) {
+        consoleDotError(`❌ Failed to resolve ${filepath} in git index:`, error);
+      }
+    }
+
+    consoleDotLog("✅ All conflicts resolved in git index");
+    return { success: true, resolved: true, conflictedFiles };
+
+  } catch (error) {
+    consoleDotError("❌ Failed to resolve git-only merge conflicts:", error);
+    return { success: false, error: error.message };
   }
 }
 
@@ -913,36 +910,48 @@ async function handleGitError(error, args, operationName, maxDeleteRetries = 1, 
   consoleDotError(`Some error happened while ${operationName}: `, error);
   
   const isAuthError = error && (error.toString().includes('401') || error.toString().includes('403'));
-  const isNetworkError = ''//error && error.toString().toLowerCase().includes('network') || error.toString().toLowerCase().includes('fetch');
-  const isConflictError = error && error.toString().includes('CheckoutConflictError') || error.toString().toLowerCase().includes('MergeConflictError');
-  const noHeadError = error & error.toString().includes('NotFoundError') || error.toString().toLowerCase().includes('Could not find HEAD');
+  const isNetworkError = error && (error.toString().toLowerCase().includes('network') || error.toString().toLowerCase().includes('fetch'));
+  
+  const isConflictError = error instanceof git.Errors.MergeConflictError || 
+                         (error.toString().includes('MergeConflictError')) ||
+                         (error.toString().includes('CheckoutConflictError')) ||
+                         (error.toString().includes('merge conflicts'));
+  
+  const noHeadError = error && (error.toString().includes('NotFoundError') || 
+                               error.toString().toLowerCase().includes('could not find head'));
 
   if (isAuthError || isNetworkError) {
     consoleDotLog(`Authentication or network error detected. Not deleting the repository.`);
     throw error;
   }
 
+  // Handle merge conflicts first
   if (isConflictError) {
-    consoleDotLog('Merge conflicts resolved.')
-    await resolveMergeConflict();
-    consoleDotLog('Merge conflicts resolved.')
-    return;
+    consoleDotLog('Merge conflict detected. Attempting to resolve...');
+    try {
+      const resolutionResult = await resolveMergeConflict();
+      if (resolutionResult.success) {
+        consoleDotLog('Merge conflicts resolved successfully');
+        return; // Return after successful resolution
+      } else {
+        consoleDotLog('Merge conflict resolution failed');
+        throw error; // Re-throw if resolution failed
+      }
+    } catch (resolutionError) {
+      consoleDotError('Error during merge conflict resolution:', resolutionError);
+      throw resolutionError;
+    }
   }
   
   const attempt = args.attempt || 0;
 
-  if (attempt < 1) {
-    if (attempt < maxDeleteRetries) {
-      if (tryReset) {
-        const isSyncResult = await isSync();
-        !isSyncResult && await handleHardReset({...args, attempt: attempt + 1});
-        isSyncResult && await handleDeleteCloseAndReclone({...args, attempt: attempt + 1});
-      } else {
-        await handleDeleteCloseAndReclone({...args, attempt: attempt + 1});
-      }
-    }
-  } else if (attempt >= 1) {
-    if (attempt < maxDeleteRetries) {
+  // Only proceed with delete/reclone if not a merge conflict
+  if (attempt < maxDeleteRetries) {
+    if (tryReset) {
+      const isSyncResult = await isSync();
+      !isSyncResult && await handleHardReset({...args, attempt: attempt + 1});
+      isSyncResult && await handleDeleteCloseAndReclone({...args, attempt: attempt + 1});
+    } else {
       await handleDeleteCloseAndReclone({...args, attempt: attempt + 1});
     }
   } else {
@@ -1083,7 +1092,7 @@ async function initializeLocalBranches() {
       });
       await writeFile({
         filePath: path + '/' + `.git/refs/heads/${item}`,
-        fileContents: await readFile({filePath: path + '/' + `.git/refs/remotes/${remote}/${item}`})
+        fileContents: await git.readFile({fs, dir, filePath: path + '/' + `.git/refs/remotes/${remote}/${item}`})
       });
     })
   );
@@ -1192,12 +1201,13 @@ async function unlink(filePath) {
   }
 }
 
+//Expired
 async function rename(oldPath, newPath) {
   try {
     if (oldPath === newPath){
       return;
     }
-    await mkdirRecursive(newPath);
+    await mkdirDot(newPath);
     await fs.promises.rename(oldPath, newPath);
   } catch (error) {
     consoleDotError("Error occured while renaming filePath:", error);
@@ -1654,31 +1664,6 @@ async function findInGitHistory(path) {
   }
 }
 
-//path is the path to file
-//it recursively makes directories that aren't made yet
-async function mkdirRecursive(path) {
-  const folders = path.split('/').filter(folder => folder.trim() !== '');
-  let currentPath = '';
-  for (const folder of folders) {
-      if (currentPath === '/'){
-      currentPath += folder;
-      }
-      else{
-        currentPath += '/' + folder;
-      }
-      try {
-        consoleDotLog('recur', currentPath);
-          await fs.promises.mkdir(currentPath);
-      } catch (error) {
-          if (error.code === 'EEXIST') {
-          } else {
-              consoleDotError(`Error creating directory: ${currentPath}`, error);
-          }
-      }
-  }
-}
-
-
 //This function takes url, username, email
 //as arguments and pulls the remote directory
 async function pull(args) {
@@ -1706,6 +1691,7 @@ async function pull(args) {
             url,
             remoteRef: ref,
             fastForward: true,
+            fastForwardOnly: false,
             forced: true,
             headers: buildHeaders(username, password),
             onAuth() {
@@ -1728,6 +1714,7 @@ async function pull(args) {
           remote,
           remoteRef: ref,
           fastForward: true,
+          fastForwardOnly: false,
           forced: true,
           headers: buildHeaders(username, password),
           onAuth() {
@@ -1883,49 +1870,11 @@ async function readdir(_dir) {
   }
 }
 
-//gets filePath and returns contents written in filePath
-async function readFile(args) {
-  try {
-    return await fs.promises.readFile(args.filePath, 'utf8');
-  } catch (error) {
-    consoleDotError('Error reading file:', error);
-    throw(error);
-  }
-}
-
-//gets dir (default can be set using setDir) and returns an object containing filenames for key
-//and paths for values
-async function listFiles(filePath = dir) {
-  try {
-      let path = filePath
-      let files = await fs.promises.readdir(filePath);
-      let result = {};
-
-      for (const file of files) {
-          if (path !== '/') {
-            filePath = path + '/' + file;
-          }
-          else {
-            filePath = path + file;
-          }
-          if (await isDirectory(filePath)) {
-              result = Object.assign(await listFiles(filePath), result)
-          } else {
-              result[filePath] = file;
-          }
-    }
-    consoleDotLog('result', result);
-    return result;
-  } catch (error) {
-    consoleDotError('Error listing files:', error);
-    throw error; 
-  }
-}
 //you should pass filePath and fileContents which you want to write in the file, filePath is : /path/to/your/file
 //and fileContents is a string.
 async function writeFile(args) {
   try {
-    await mkdirRecursive(args.filePath);
+    // await mkdirRecursive(args.filePath);
     await fs.promises.writeFile(args.filePath, args.fileContents, 'utf8');
 
   } catch (error) {
@@ -2040,8 +1989,6 @@ const operationHandlers = {
   commitStagedChanges: commitStagedChanges,
   status: status,
   log: log,
-  listFiles: ({ filePath }) => listFiles(filePath),
-  listFilesDot: ({ filePath }) => listFilesDot(filePath),
   listRemotes: listRemotes,
   listBranches: listBranches,
   checkoutBranch: ({ ref }) => checkoutBranch(ref),
@@ -2077,11 +2024,9 @@ const operationHandlers = {
   setSettingsAddresses: setSettingsAddresses,
   addToSetting: addToSetting,
   stash: ({ operation }) => stash(operation),
-  readFile: ({ filePath }) => readFile({ filePath }),
   readFileDot: ({ filePath, commitOid = 'staged' }) => readFileDot(filePath, commitOid),
   writeFileDot: ({ filePath, fileContent, doCommit = 1 }) => 
     writeFileDot(filePath, fileContent, doCommit),
-  writeFile: ({ filePath, fileContents }) => writeFile({ filePath, fileContents }),
   readDirDot: ({ path, commitOid = 'staged' }) => readDirDot(path, commitOid),
   isDirectoryDot: ({ path }) => isDirectoryDot(path),
   listFilesDot: ({ listDirs = 1 }) => listFilesDot(listDirs),
@@ -2089,7 +2034,6 @@ const operationHandlers = {
   removeDirDot: ({ dirPath, doCommit = 1 }) => removeDirDot(dirPath, doCommit),
   removeFileDot: ({ filePath, doCommit = 1 }) => removeFileDot(filePath, doCommit),
   rename: ({ oldPath, newPath }) => rename(oldPath, newPath),
-  mkdirRecursive: ({ path }) => mkdirRecursive(path),
   listServerRefs: ({args}) => listServerRefs(args),
   getUsername: getUsername,
   getEmail: getEmail,
