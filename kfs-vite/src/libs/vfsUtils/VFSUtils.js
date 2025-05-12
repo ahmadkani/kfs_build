@@ -577,11 +577,12 @@ export class VFSutils {
           
           // 2. If fast-forward fails, do a full pull with merge
           consoleDotLog('Fast-forward failed, attempting full pull...');
-          const pullResult = await this.workerThread.execute('pull', {
+          const pullResult = await this.workerThread.execute('doFetch', {
             url: this.fetchInfo.url,
             ref: 'main',
           });
-          
+          const mergeResult = await this.workerThread.execute('merge', {});
+
           if (!pullResult.success) {
             throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
           }
@@ -726,10 +727,12 @@ export class VFSutils {
             
             // 1. Pull with merge
             consoleDotLog('Pulling with merge...');
-            const pullResult = await this.workerThread.execute('pull', {
+            const pullResult = await this.workerThread.execute('doFetch', {
               url: this.fetchInfo.url,
               ref: 'main',
             });
+            const mergeResult = await this.workerThread.execute('merge', {});
+  
             
             if (!pullResult.success) {
               throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));

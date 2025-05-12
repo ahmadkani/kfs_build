@@ -471,10 +471,10 @@ async function removeAndPush(args) {
 //you can change depth by using setDepth
 //remote is a prerequisite for this function which is being set using clone
 async function doFetch(args) {
-  let attempt = args.attempt || 0;
-  args[attempt] = attempt;
+  let attempt = args?.attempt || 0;
+  
   const maxDeleteRetries = 1;
-
+  consoleDotLog('Doing fetch operation');
   !url && await setUrl(args?.url);
   try {
     if (supportsServiceWorker && useSW) {
@@ -536,8 +536,8 @@ async function doFetch(args) {
 
 // args can be {url} or some other args accepted by the function
 async function listServerRefs(args) {
-  let attempt = args.attempt || 0;
-  args[attempt] = attempt;
+  let attempt = args?.attempt || 0;
+  
   const maxRetries = 1;
 
   !url && await setUrl(args?.url);
@@ -599,6 +599,21 @@ async function listServerRefs(args) {
     consoleDotError('some error happened while listing server refs: ', error);
     await handleGitError(error, args, 'listServerRefs', maxRetries);
     return { success: false, error: error.message };
+  }
+}
+
+async function merge(ours = 'main', theirs = 'origin/main') {
+  try {
+    await git.merge({
+      fs,
+      dir,
+      ours: ours,
+      theirs: theirs,
+      noCheckout: true,
+      fastForwardOnly: false,
+    });    
+  } catch(error) {
+    consoleDotError('Some error happend while merging: ', error);
   }
 }
 
@@ -1000,8 +1015,8 @@ async function handleDeleteCloseAndReclone(args) {
 async function doCloneAndStuff(args) {
   consoleDotLog('doCloneAndStuff args: ', args);
   let useNetwork = false;
-  let attempt = args.attempt || 0;
-  args[attempt] = attempt;
+  let attempt = args?.attempt || 0;
+  
   const maxDeleteRetries = 1;
   !url && await setUrl(args?.url);
   await setDepth(depth);
@@ -1254,8 +1269,8 @@ async function log(args = {}) {
 
 async function push(args) {
   consoleDotLog(`Starting to push with these args: `, args);
-  let attempt = args.attempt || 0;
-  args[attempt] = attempt;
+  let attempt = args?.attempt || 0;
+  
   const maxDeleteRetries = 1;
   const force = args?.force || true;
 
@@ -1667,8 +1682,8 @@ async function findInGitHistory(path) {
 //This function takes url, username, email
 //as arguments and pulls the remote directory
 async function pull(args) {
-  let attempt = args.attempt || 0;
-  args[attempt] = attempt;
+  let attempt = args?.attempt || 0;
+  
   const maxDeleteRetries = 1;
 
   !url && await setUrl(args?.url);
@@ -1693,6 +1708,8 @@ async function pull(args) {
             fastForward: true,
             fastForwardOnly: false,
             forced: true,
+            noCheckout: true,  // Ensure this is true to prevent file checkout
+            singleBranch: true,  // Consider adding this to match clone behavior
             headers: buildHeaders(username, password),
             onAuth() {
               return authenticate.fill();
@@ -1716,6 +1733,8 @@ async function pull(args) {
           fastForward: true,
           fastForwardOnly: false,
           forced: true,
+          noCheckout: true,  // Ensure this is true to prevent file checkout
+          singleBranch: true,  // Consider adding this to match clone behavior
           headers: buildHeaders(username, password),
           onAuth() {
             return authenticate.fill();
@@ -1738,8 +1757,8 @@ async function pull(args) {
 
 //gets url as argument
 async function fastForward(args) {
-  let attempt = args.attempt || 0;
-  args[attempt] = attempt;
+  let attempt = args?.attempt || 0;
+  
   const maxDeleteRetries = 1;
 
   try {
@@ -1975,7 +1994,7 @@ function ensureSerializable(obj) {
 const operationHandlers = {
   setFs: setFs,
   doCloneAndStuff: doCloneAndStuff,
-  doFetch: doFetch,
+  doFetch: ({args}) => doFetch(args),
   doPushFile: doPushFile,
   doPushAll: doPushAll,
   addFile: ({ filePath }) => addFile({ filePath }),
@@ -1983,8 +2002,9 @@ const operationHandlers = {
     commit({ username, email, commitMessage }),
   push: ({ url, remote, ref, force = true }) => 
     push({ url, remote, ref, force }),
-  pull: ({ url, remote, ref }) => 
+  pull: ({ url, remote, ref }) =>
     pull({ url, remote, ref }),  addDot: addDot,
+  merge: ({ours, theirs}) => merge(ours, theirs),
   addFileToStaging: addFileToStaging,
   commitStagedChanges: commitStagedChanges,
   status: status,
