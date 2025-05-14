@@ -614,7 +614,6 @@ async function clone(args) {
             const result = await git.clone({
                 ...args,
                 fs,
-                cache,
                 http,
                 dir,
                 remote,
@@ -890,7 +889,6 @@ async function fastForward(args) {
       const result = await git.fastForward({
         ...args,
         fs,
-        cache,
         http,
         dir,
         remote,

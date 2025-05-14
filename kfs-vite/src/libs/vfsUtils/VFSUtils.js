@@ -731,7 +731,11 @@ export class VFSutils {
               url: this.fetchInfo.url,
               ref: 'main',
             });
-            const mergeResult = await this.workerThread.execute('merge', {});
+            const mergeResult = await this.workerThread.execute('merge', {
+              ours : 'main',
+              theirs : 'origin/main',
+              strategy : 'theirs',
+            });
   
             
             if (!pullResult.success) {

@@ -602,21 +602,92 @@ async function listServerRefs(args) {
   }
 }
 
-async function merge(ours = 'main', theirs = 'origin/main') {
-  try {
-    await git.merge({
-      fs,
-      dir,
-      ours: ours,
-      theirs: theirs,
-      noCheckout: true,
-      fastForwardOnly: false,
-    });    
-  } catch(error) {
-    consoleDotError('Some error happend while merging: ', error);
-  }
-}
+const mergeDriver = ({ contents, filepath }, strategy = 'theirs') => {
+  // contents[0]: base version
+  // contents[1]: our version
+  // contents[2]: their version
+  
+  if (contents[1] === contents[2]) return { cleanMerge: true, mergedText: contents[1] };
+  if (contents[0] === contents[2]) return { cleanMerge: true, mergedText: contents[1] };
+  if (contents[0] === contents[1]) return { cleanMerge: true, mergedText: contents[2] };
 
+ switch (strategy) {
+  case 'ours':
+    return { cleanMerge: true, mergedText: contents[1] };
+  case 'theirs':
+    return { cleanMerge: true, mergedText: contents[2] };
+  case 'combine':
+    return {
+      cleanMerge: true,
+      mergedText: `<<<<<<< ours\n${contents[1]}\n=======\n${contents[2]}\n>>>>>>> theirs\n`
+    };
+  default:
+    return { cleanMerge: true, mergedText: contents[2] };
+}
+};
+
+async function merge(
+ours = 'main',
+theirs = 'origin/main',
+strategy = 'theirs', // 'ours', 'theirs', 'combine'
+{ 
+  onConflict = null,
+  author = { name, email} 
+} = {}
+) {
+try {
+  consoleDotLog('kire khar: ', ours, theirs, strategy)
+  const customMergeDriver = onConflict || (({ contents, filepath }) => 
+    mergeDriver({ contents, filepath }, strategy)
+  );
+
+  const result = await git.merge({
+    fs,
+    dir,
+    ours,
+    theirs,
+    mergeDriver: customMergeDriver,
+    fastForwardOnly: false,
+  });
+
+  return result;
+
+} catch (error) {
+  if (error.message.includes('MergeConflictError')) {
+    // Get conflicted files
+    const status = await git.statusMatrix({ fs, dir });
+    const conflicted = status.filter(s => s[2] === 2).map(s => s[0]);
+
+    if (strategy === 'combine') {
+      // For combine strategy: write conflict markers but don't auto-reset
+      console.log('Merge conflicts preserved. Resolve these files:');
+      console.log(conflicted.join('\n'));
+      
+      return {
+        status: 'conflicted',
+        conflictedFiles: conflicted,
+        message: 'Resolve conflicts and commit',
+        commit: async () => {
+          for (const file of conflicted) {
+            await git.add({ fs, dir, filepath: file });
+          }
+          return git.commit({
+            fs,
+            dir,
+            author,
+            message: 'Merge with conflicts resolved'
+          });
+        }
+      };
+    }
+
+    // For other strategies: abort the merge
+    await git.mergeReset({ fs, dir });
+    throw error;
+  }
+  throw error;
+}
+}
 async function getCommitHistoryFromReplica(args = {}) {
   try {
     consoleDotLog('Received args in getCommitHistoryFromReplica:', args);
@@ -1772,7 +1843,6 @@ async function fastForward(args) {
         await git.fastForward({
           ...args,
           fs,
-          cache,
           http,
           dir,
           remote,
@@ -1795,7 +1865,6 @@ async function fastForward(args) {
       await git.fastForward({
         ...args,
         fs,
-        cache,
         http,
         dir,
         remote,
@@ -2004,7 +2073,7 @@ const operationHandlers = {
     push({ url, remote, ref, force }),
   pull: ({ url, remote, ref }) =>
     pull({ url, remote, ref }),  addDot: addDot,
-  merge: ({ours, theirs}) => merge(ours, theirs),
+  merge: ({ours, theirs, strategy}) => merge(ours, theirs, strategy),
   addFileToStaging: addFileToStaging,
   commitStagedChanges: commitStagedChanges,
   status: status,
