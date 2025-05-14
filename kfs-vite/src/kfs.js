@@ -23,8 +23,25 @@ export class KFS {
     this.mergingManager = new MergingManager(this.vfs);    
     this.commitCount = 0;
     this.mountPaths = null;
+    (async () => {
+      try {
+        await this.init();
+      } catch (error) {
+        consoleDotError('Initing Failed for KFS: ', error);
+      }
+    })();
+    consoleDotLog('KFS instance created');
   }
   
+  async init() {
+    if (!this.initialized) {
+      this.mountPaths = await this.vfs.getMountPaths();
+      this.initialized = true;
+    }
+    consoleDotLog('mountpaths: ', this.mountPaths)
+    return this;
+  }
+
   // -------------------------------
   // Versioning Configuration
   // -------------------------------

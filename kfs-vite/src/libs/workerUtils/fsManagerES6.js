@@ -291,30 +291,57 @@ class fsManager {
     };
   }
 
-  // Helper method to recursively copy IDB contents
-  async _copyIDBContents(sourceFS, targetFS, path) {
+  async _copyIDBContents(sourceFS, targetFS, path = '/') {
     try {
-        const files = await sourceFS.promises.readdir(path);
+        const normalizedPath = path === '/' ? '/' : path.replace(/\/+$/, '');
+        
+        // Read directory contents
+        const files = await sourceFS.promises.readdir(normalizedPath);
         
         for (const file of files) {
-            const fullPath = path === '/' ? `/${file}` : `${path}/${file}`;
+            const sourcePath = normalizedPath === '/' ? `/${file}` : `${normalizedPath}/${file}`;
+            const targetPath = sourcePath; // Using same path structure for target
             
-            const stat = await sourceFS.promises.stat(fullPath);
-            
-            if (stat.isDirectory()) {
-                // Create directory in target
-                await targetFS.promises.mkdir(fullPath);
-                // Recursively copy contents
-                await this._copyIDBContents(sourceFS, targetFS, fullPath);
-            } else {
-                // Read file content and write to target
-                const content = await sourceFS.promises.readFile(fullPath);
-                await targetFS.promises.writeFile(fullPath, content);
+            try {
+                const stat = await sourceFS.promises.stat(sourcePath);
+                
+                if (stat.isDirectory()) {
+                    // Create directory in target (with recursive:true to prevent ENOENT errors)
+                    try {
+                        await targetFS.promises.mkdir(targetPath, { recursive: true });
+                    } catch (mkdirError) {
+                        if (mkdirError.code !== 'EEXIST') {
+                            throw mkdirError;
+                        }
+                        // Directory already exists - this is fine, we can continue
+                        consoleDotLog(`Directory ${targetPath} already exists, continuing`);
+                    }
+                    
+                    // Recursively copy contents
+                    await this._copyIDBContents(sourceFS, targetFS, sourcePath);
+                } else {
+                    // Read file content and write to target
+                    const content = await sourceFS.promises.readFile(sourcePath);
+                    await targetFS.promises.writeFile(targetPath, content);
+                }
+            } catch (fileError) {
+                // Handle individual file/directory errors without stopping the whole process
+                this._error(`Error processing ${sourcePath}:`, fileError);
+                // Continue with next file
+                continue;
             }
         }
     } catch (error) {
-        // Handle case where path doesn't exist or other errors
-        this._error(`Error copying path ${path}:`, error);
+        // Handle top-level errors
+        if (error.code === 'ENOENT') {
+            // Source path doesn't exist
+            this._error(`Source path ${path} does not exist`);
+        } else if (error.code === 'EEXIST') {
+            // This shouldn't happen at top level, but handle it anyway
+            consoleDotLog(`Path ${path} already exists`);
+        } else {
+            this._error(`Error copying path ${path}:`, error);
+        }
         throw error;
     }
   }

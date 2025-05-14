@@ -25,7 +25,14 @@ export class VFS {
     this.VFSutils = null;
     this.storageUtils = new StorageUtils(storageName);
     this.currentMountPath = '';
-    this.idbSupported = null; // Will store the IndexedDB support status
+    this.idbSupported = null;
+    (async () => {
+      try {
+        await this.retrieveAndMountFromFsTable();
+      } catch (error) {
+        consoleDotError('Automatic mount from fsTable failed:', error);
+      }
+    })();
     consoleDotLog('VFS instance created');
   }
 
@@ -267,6 +274,67 @@ export class VFS {
     }
   }
 
+  async retrieveAndMountFromFsTable() {
+    consoleDotLog('Attempting to retrieve and mount filesystems from fsTable');
+    try {
+      // First check if we have any data at all
+      const hasData = await this.storageUtils.ensureObjectStoreExists();
+      if (!hasData) {
+        consoleDotLog('No storage data found - fresh initialization');
+        return false;
+      }
+  
+      const allMounts = await this.storageUtils.getAll();
+      consoleDotLog('Retrieved all mounts from storage:', allMounts);
+      if (!allMounts || Object.keys(allMounts).length === 0) {
+        consoleDotLog('No stored mounts found in fsTable');
+        return false;
+      }
+  
+      consoleDotLog(`Found ${Object.keys(allMounts).length} stored mounts`);
+      
+   
+      for (const mountPath in allMounts) {
+        const mountData = allMounts[mountPath];
+        if (!mountData) continue;
+
+        consoleDotLog(`Processing mount at ${mountPath} from fsTable`);
+        
+        try {
+          const lastSlashIndex = mountPath.lastIndexOf('/');
+          consoleDotLog(`Last slash index:`, lastSlashIndex);
+          const path = mountPath.substring(0, lastSlashIndex);
+          consoleDotLog('path kir: ', path)
+          const fsName = mountPath.substring(lastSlashIndex + 1);
+          consoleDotLog('fsname kir: ', fsName)
+
+          await this.mount(
+            path,
+            mountData.fsType,
+            fsName,
+            mountData.fetchMethod,
+            {
+              fetchInfo: mountData.fetchInfo,
+              versioning: mountData.versioning,
+              merging: mountData.merging
+            }
+          );
+          
+          consoleDotLog(`Successfully mounted ${mountPath} from fsTable`);
+        } catch (mountError) {
+          consoleDotError(`Failed to mount ${mountPath} from fsTable:`, mountError);
+        }
+      }
+      
+      consoleDotLog('Finished mounting all filesystems from fsTable');
+      return true;
+        
+    } catch (error) {
+      consoleDotError('Failed to retrieve and mount:', error);
+      return false;
+    }
+  }
+
   async initializeStoredMount(mountPath, storedMount, fetchMethod, fetchInfo, options) {
     consoleDotLog(`Initializing stored mount at ${mountPath}`);
     try {
@@ -446,7 +514,7 @@ export class VFS {
     try {
       if (this.VFSutils) {
         consoleDotLog('Terminating existing VFSutils instance');
-        await this.VFSutils.terminate(fsName, fsType);
+        await this.VFSutils.terminate();
         this.VFSutils = null;
       }
 

@@ -14,6 +14,35 @@ export class StorageUtils {
     }
   }
 
+  async ensureObjectStoreExists() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.dbName, this.dbVersion);
+      
+      request.onerror = () => {
+        console.error("IndexedDB open error:", request.error);
+        resolve(false);
+      };
+      
+      request.onsuccess = () => {
+        const db = request.result;
+        if (db.objectStoreNames.contains("mounts")) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+        db.close();
+      };
+      
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains("mounts")) {
+          db.createObjectStore("mounts");
+          console.log("Created 'mounts' object store");
+        }
+      };
+    });
+  }
+
   /** Simplified localStorage methods with error handling */
   async getFromLocalStorage(key) {
     try {
@@ -23,6 +52,103 @@ export class StorageUtils {
     } catch (e) {
       console.error("LocalStorage get error:", e);
       return null;
+    }
+  }
+
+  async getFromIndexedDB(key) {
+    const hasObjectStore = await this.ensureObjectStoreExists();
+    if (!hasObjectStore) return null;
+
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.dbName, this.dbVersion);
+      request.onerror = () => resolve(null);
+      request.onsuccess = () => {
+        const db = request.result;
+        try {
+          const transaction = db.transaction("mounts", "readonly");
+          const store = transaction.objectStore("mounts");
+          const getRequest = store.get(key);
+
+          getRequest.onsuccess = () => resolve(getRequest.result || null);
+          getRequest.onerror = () => resolve(null);
+        } catch (error) {
+          console.error("Transaction error:", error);
+          resolve(null);
+        } finally {
+          db.close();
+        }
+      };
+    });
+  }
+
+  async getAll() {
+    if (this.supportsIndexedDB()) {
+      try {
+        return await this.getAllFromIndexedDB();
+      } catch (e) {
+        console.error("IndexedDB getAll failed:", e);
+        // Fallback to localStorage
+        return await this.getAllFromLocalStorage();
+      }
+    }
+    return await this.getAllFromLocalStorage();
+  }
+
+  async getAllFromIndexedDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.dbName, this.dbVersion);
+      
+      request.onerror = () => resolve({});
+      request.onsuccess = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains("mounts")) {
+          resolve({});
+          return;
+        }
+  
+        const transaction = db.transaction("mounts", "readonly");
+        const store = transaction.objectStore("mounts");
+        const getAllKeysRequest = store.getAllKeys();
+        const result = {};
+  
+        getAllKeysRequest.onsuccess = async () => {
+          const keys = getAllKeysRequest.result;
+          
+          // Get each value by its exact key
+          for (const key of keys) {
+            const value = await this.get(key);
+            if (value) {
+              result[key] = value;
+            }
+          }
+          
+          resolve(result);
+        };
+        
+        getAllKeysRequest.onerror = () => resolve({});
+      };
+    });
+  }
+
+  async getAllFromLocalStorage() {
+    try {
+      if (typeof localStorage === "undefined") return {};
+      
+      const result = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith(this.dbName)) {
+          try {
+            result[key] = JSON.parse(localStorage.getItem(key));
+          } catch (e) {
+            console.error("Error parsing localStorage item:", e);
+          }
+        }
+      }
+      return result;
+    } catch (e) {
+      console.error("LocalStorage getAll error:", e);
+      return {};
     }
   }
 
@@ -122,29 +248,6 @@ export class StorageUtils {
     }
 
     return success;
-  }
-
-  /** IndexedDB Methods */
-  async getFromIndexedDB(key) {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(this.dbName, 1);
-      request.onerror = () => resolve(null);
-      request.onsuccess = () => {
-        const db = request.result;
-        const transaction = db.transaction("mounts", "readonly");
-        const store = transaction.objectStore("mounts");
-        const getRequest = store.get(key);
-
-        getRequest.onsuccess = () => resolve(getRequest.result || null);
-        getRequest.onerror = () => resolve(null);
-      };
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains("mounts")) {
-          db.createObjectStore("mounts");
-        }
-      };
-    });
   }
 
   async storeInIndexedDB(key, data) {
