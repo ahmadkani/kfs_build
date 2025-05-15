@@ -173,7 +173,7 @@
 
       try {
         logOutput("Mounting filesystem...");
-        await kfs.mount(path, "idb", "1", "git", {
+        await kfs.mount(path, "memory", "1", "git", {
           fetchInfo: {
             url: 'https://github.com/ahmadkani/ahmadkani',
             username: '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',
@@ -182,7 +182,7 @@
             email: 'ahmad@kani.com',
           },
           useSW: true,
-          merging: { strategy: 'clock', interval: 2000 },
+          merging: { strategy: 'clock', interval: 2000, onConflictStrategy: 'remote' },
           versioning: { strategy: 'immediate', interval: 10, number: 5 },
         });
 

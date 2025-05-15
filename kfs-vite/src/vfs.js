@@ -500,6 +500,7 @@ export class VFS {
         this.VFSutils = null;
       }
   
+      this.storageUtils.remove(fsPath);
       consoleDotLog(`Successfully unmounted ${fsPath}`);
       return true;
     } catch (error) {
@@ -681,12 +682,12 @@ export class VFS {
   // Merging Operations
   //--------------------
 
-  async merger() {
+  async merger(onConflictStrategy) {
     consoleDotLog('Starting merge operation');
     await this.validateVFSutils();
 
     try {
-      const mergeResult = await this.VFSutils.autoSyncFlow();
+      const mergeResult = await this.VFSutils.autoSyncFlow(onConflictStrategy);
       consoleDotLog('Merge operation completed successfully:', mergeResult);
       return mergeResult;
     }

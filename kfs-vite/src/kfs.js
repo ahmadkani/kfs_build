@@ -23,6 +23,7 @@ export class KFS {
     this.mergingManager = new MergingManager(this.vfs);    
     this.commitCount = 0;
     this.mountPaths = null;
+    this.mergingConfig = null;
     (async () => {
       try {
         await this.init();
@@ -58,20 +59,27 @@ export class KFS {
   
   async _handleCommit(message) {
     const versioningConfig = await this.versioningManager.getConfig();
-    const mergingConfig = await this.mergingManager.getConfig();
-    
+    this.mergingConfig = await this.mergingManager.getConfig();
+    const strategyMap = { remote: 'theirs', local: 'ours', combine: 'combine' };
+    const userStrategy = this.mergingConfig?.onConflictStrategy || 'remote';
+    const onConflictStrategy = strategyMap[userStrategy] || 'remote';
+
     await this.vfs.versioner(message);
     this.commitCount++;
     
-    if (mergingConfig.strategy === 'immediate') {
-      await this.vfs.merger();
+    if (this.mergingConfig.strategy === 'immediate') {
+      await this.vfs.merger(onConflictStrategy);
     }
   }
   
   async merge() {
     try {
+      const strategyMap = { remote: 'theirs', local: 'ours', combine: 'combine' };
+      const userStrategy = this.mergingConfig?.onConflictStrategy || 'remote';
+      const onConflictStrategy = strategyMap[userStrategy] || 'remote';
+
       consoleDotLog('Merging...');
-      await this.vfs.merger();
+      await this.vfs.merger(onConflictStrategy);
       consoleDotLog('Merge completed successfully.');
     } catch(error) {
       consoleDotError('Merge failed:', error);
@@ -89,12 +97,12 @@ export class KFS {
       
       path = this._normalizePath(path);
       const versioningConfig = await this.versioningManager.getConfig();
-      const mergingConfig = await this.mergingManager.getConfig();
+      this.mergingConfig = await this.mergingManager.getConfig();
       
       const mountData = await this.vfs.mount(path, fsType, fsName, fetchMethod, {
         ...options,
         versioning: versioningConfig,
-        merging: mergingConfig
+        merging: this.mergingConfig
       });
 
       this.fsInstance = mountData.fsInstance;

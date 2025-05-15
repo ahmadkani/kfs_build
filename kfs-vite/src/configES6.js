@@ -31,6 +31,7 @@ const config = {
   merging: {
     strategy: 'immediate',
     interval: 60,
+    onConflict: 'remote' // remote, local, combine
   }
 };
 
