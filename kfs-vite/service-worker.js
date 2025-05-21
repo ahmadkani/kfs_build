@@ -31,14 +31,6 @@ let settingsFileAddresses = {};
 let useCacheForRepo = 0;
 let broadcastChannel;
 let fs = null;
-let noMainErrorCounts = {
-  cloneCount: 0,
-  pushCount: 0,
-  pullCount: 0,
-  fetchCount: 0,
-  ffCount: 0
-};
-let consoleLoggingOn = true;
 let fsArgs = {};
 const FSManager = new fsManager();
 
@@ -77,15 +69,6 @@ self.addEventListener('activate', (event) => {
       useCacheForRepo = 0;
       broadcastChannel;
       fs = new LightningFS('fs');
-      noMainErrorCounts = {
-        cloneCount: 0,
-        pushCount: 0,
-        pullCount: 0,
-        fetchCount: 0,
-        ffCount: 0,
-        listServerRefsCount: 0
-      };
-      consoleLoggingOn = true;
       fsArgs = {};
       
       const cacheNames = await caches.keys();
@@ -551,7 +534,6 @@ function buildHeaders(username, password) {
 async function listServerRefs(args) {
   consoleDotLog('listServerRefs args', args);
   return await retryOperation(async () => {
-    noMainErrorCounts.listServerRefsCount++;
     await mutex.lock();
     try {
       consoleDotLog('Entering listServerRefs function with arguments:', args);
@@ -578,15 +560,13 @@ async function listServerRefs(args) {
       });
 
       consoleDotLog('ListServerRefs successful. Result:', result);
-      // Changed from 'result' to 'refs' to match git worker
       return { success: true, refs: result };
     } catch (error) {
       if (error?.message?.includes('Could not find') && error?.code === 'NotFoundError') {
-        let isHandled = await handleNoMainError(listServerRefs, args, noMainErrorCounts.listServerRefsCount);
+        let isHandled = await handleNoMainError();
         if (!isHandled) {
           throw error;
         }
-        noMainErrorCounts.listServerRefsCount = 0;
         return { success: true, message: 'listServerRefs was successful' };
       }
       consoleDotError('Error occurred during listServerRefs operation:', error);
@@ -604,7 +584,6 @@ async function clone(args) {
   return await retryOperation(async () => {
     consoleDotLog('Entering clone function with arguments:', args);
 
-    noMainErrorCounts.cloneCount ++;
     let cloneResult = {};
     await mutex.lock();
     try {
@@ -649,11 +628,10 @@ async function clone(args) {
     } catch (error) {
         consoleDotError('Clone failed with error:', error);
         if (error?.message?.includes('Could not find') && error?.code === 'NotFoundError') {
-              let isHandled = await handleNoMainError(clone, args, noMainErrorCounts.cloneCount);
+              let isHandled = await handleNoMainError();
               if (!isHandled) {
                   throw error;
               }
-              noMainErrorCounts.cloneCount = 0;
               cloneResult = { isCacheUsed: false, ref: ref};
               return { success: true, message: 'The repo has successfully cloned', data: cloneResult };
         } else if (error?.response?.status === 500) {
@@ -821,7 +799,6 @@ const authenticate = {
 
 async function pull(args) {
   return await retryOperation(async () => {
-    noMainErrorCounts.pullCount++;
     let pullResult = {};
     await mutex.lock();
     try {
@@ -857,11 +834,10 @@ async function pull(args) {
       return { success: true, message: result, data: pullResult };
     } catch (error) {
       if (error?.message?.includes('Could not find') && error?.code === 'NotFoundError') {
-        let isHandled = await handleNoMainError(pull, args, noMainErrorCounts.pullCount);
+        let isHandled = await handleNoMainError();
         if (!isHandled) {
           throw error;
         }
-        noMainErrorCounts.pullCount = 0;
         pullResult = { ref: ref };
         return { success: true, message: 'pull was successful', data: pullResult };
       }
@@ -876,7 +852,6 @@ async function pull(args) {
 
 async function fastForward(args) {
   return await retryOperation(async () => {
-    noMainErrorCounts.ffCount++;
     let ffResult = {};
     await mutex.lock();
     try {
@@ -911,11 +886,10 @@ async function fastForward(args) {
       return { success: true, message: result, data: ffResult };
     } catch (error) {
       if (error?.message?.includes('Could not find') && error?.code === 'NotFoundError') {
-        let isHandled = await handleNoMainError(fastForward, args, noMainErrorCounts.ffCount);
+        let isHandled = await handleNoMainError();
         if (!isHandled) {
           throw error;
         }
-        noMainErrorCounts.ffCount = 0;
         ffResult = { ref: ref };
         return { success: true, message: 'FastForward was successful', data: ffResult };
       }
@@ -930,7 +904,6 @@ async function fastForward(args) {
 
 async function push(args) {
   return await retryOperation(async () => {
-    noMainErrorCounts.pushCount++;
     let pushResult = {};
     await mutex.lock();
     try {
@@ -963,11 +936,10 @@ async function push(args) {
       return { success: true, message: 'Push was successful', data: pushResult };
     } catch (error) {
       if (error?.message?.includes('Could not find') && error?.code === 'NotFoundError') {
-        let isHandled = await handleNoMainError(push, args, noMainErrorCounts.pushCount);
+        let isHandled = await handleNoMainError();
         if (!isHandled) {
           throw error;
         }
-        noMainErrorCounts.pushCount = 0;
         pushResult = { ref: ref };
         return { success: true, message: 'Push was successful', data: pushResult };
       }
@@ -981,7 +953,6 @@ async function push(args) {
 
 async function doFetch(args) {
   return await retryOperation(async () => {
-    noMainErrorCounts.fetchCount++;
     let fetchResult = {};
     await mutex.lock();
     try {
@@ -1016,11 +987,10 @@ async function doFetch(args) {
       return { success: true, message: 'Fetch was successful', data: fetchResult };
     } catch (error) {
       if (error?.message?.includes('Could not find') && error?.code === 'NotFoundError') {
-        let isHandled = await handleNoMainError(doFetch, args, noMainErrorCounts.fetchCount);
+        let isHandled = await handleNoMainError();
         if (!isHandled) {
           throw error;
         }
-        noMainErrorCounts.fetchCount = 0;
         fetchResult = { ref: ref };
         return { success: true, message: 'The repo has successfully cloned', data: fetchResult };
       }
@@ -1086,37 +1056,13 @@ async function retrieveLogFromCache() {
   }
 }
 
-async function handleNoMainError(operation, args, count) {
-  consoleDotLog(`Attempt ${count + 1}: Branch "${ref}" not found. Attempting to checkout to the other branch.`);
-
+async function handleNoMainError() {
   try {
-      if (count < 2) { // Allow for two retries (3 attempts in total)
-          // Unlock mutex if it was locked
-          mutex.unlock();
-
-          // Switch between 'main' and 'master'
-          ref = (ref === 'main') ? 'master' : (ref === 'master') ? 'main' : undefined;
-
-          if (ref === undefined) {
-              consoleDotError('No default branch name found, you should set it manually!');
-              return false; // Indicate that no retry is possible
-          }
-
-          // Increment count and retry the operation with the new ref
-          return await operation(args, count + 1);
-      } else {
-          consoleDotError('Exceeded the maximum number of retries. Please check the branch name manually.');
-          noMainErrorCounts = {
-            cloneCount: 0,
-            pushCount: 0,
-            pullCount: 0,
-            fetchCount: 0,
-            ffCount: 0
-          };
-          throw new Error('Exceeded the maximum number of retries.');
-      }
+    mutex.unlock();
+    consoleDotError('Only Main is supported for refs.');
+    throw new Error('Only Main is supported for refs.');
   } catch (checkoutError) {
-      consoleDotError(`Checkout to branch "${ref}" failed:`, checkoutError);
-      throw checkoutError; // Propagate the error after all attempts
+    consoleDotError(`Checkout to branch "${ref}" failed:`, checkoutError);
+    throw checkoutError; // Propagate the error after all attempts
   }
 }

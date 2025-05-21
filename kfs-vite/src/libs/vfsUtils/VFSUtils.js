@@ -102,7 +102,10 @@ export class VFSutils {
       const { url, dir = '/' } = this.fetchInfo;
       
       consoleDotLog(`Cloning repository from ${url} to ${dir}`);
-      await this.workerThread.execute('doCloneAndStuff', { url });
+      const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
+      if (!cloneResult.success) {
+        throw new Error("Fetching from git failed!");
+      }
 
       if (this.fetchInfo.name && this.fetchInfo.email) {
         await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);

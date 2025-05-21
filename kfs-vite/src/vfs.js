@@ -22,7 +22,7 @@ export class VFS {
   constructor(storageName = "VFS_Mounts") {
     this.mounts = Object.create(null);
     this.initializedMounts = new Set();
-    this.VFSutils = null;
+    this.vfsUtilsInstances = new Map(); // Track VFSutils instances per mount
     this.storageUtils = new StorageUtils(storageName);
     this.currentMountPath = '';
     this.idbSupported = null;
@@ -483,8 +483,15 @@ export class VFS {
     }
   
     const mountData = this.mounts[fsPath];
-
+  
     try {
+      // Clean up VFSutils instance if it exists
+      if (this.vfsUtilsInstances.has(fsPath)) {
+        consoleDotLog(`Terminating VFSutils instance for ${fsPath}`);
+        await this.vfsUtilsInstances.get(fsPath).terminate(mountData.fsName, mountData.fsType);
+        this.vfsUtilsInstances.delete(fsPath);
+      }
+  
       if (this.mounts[fsPath].fsInstance) {
         consoleDotLog(`Closing all files for mount at ${fsPath}`);
         await this.mounts[fsPath].fsInstance.fs_fcloseall();
@@ -493,12 +500,6 @@ export class VFS {
   
       delete this.mounts[fsPath];
       this.initializedMounts.delete(fsPath);
-  
-      if (Object.keys(this.mounts).length === 0 && this.VFSutils) {
-        consoleDotLog('Terminating VFSutils instance (no more mounts)');
-        await this.VFSutils.terminate(mountData.fsName, mountData.fsType);
-        this.VFSutils = null;
-      }
   
       this.storageUtils.remove(fsPath);
       consoleDotLog(`Successfully unmounted ${fsPath}`);
@@ -513,28 +514,30 @@ export class VFS {
   async fetchFS(fetchMethod, fsType, fsInstance, fsName, fetchInfo, useSW = false) {
     consoleDotLog(`Fetching filesystem data - method: ${fetchMethod}, type: ${fsType}, name: ${fsName}`);
     try {
-      if (this.VFSutils) {
-        consoleDotLog('Terminating existing VFSutils instance');
-        await this.VFSutils.terminate();
-        this.VFSutils = null;
+      // Check if we already have a VFSutils instance for this mount
+      if (this.vfsUtilsInstances.has(this.currentMountPath)) {
+        consoleDotLog('Terminating existing VFSutils instance for this mount');
+        await this.vfsUtilsInstances.get(this.currentMountPath).terminate();
+        this.vfsUtilsInstances.delete(this.currentMountPath);
       }
-
-      consoleDotLog('Creating new VFSutils instance');
-      this.VFSutils = new VFSutils(fsType, fsInstance, fsName, fetchInfo, useSW);
+  
+      consoleDotLog('Creating new VFSutils instance for mount:', this.currentMountPath);
+      const vfsUtils = new VFSutils(fsType, fsInstance, fsName, fetchInfo, useSW);
+      this.vfsUtilsInstances.set(this.currentMountPath, vfsUtils);
       
       const fetchStrategies = {
-        git: () => this.VFSutils.fetchFromGit(),
-        disk: () => this.VFSutils.fetchFromDisk(),
-        googleDrive: () => this.VFSutils.fetchFromGoogleDrive()
+        git: () => vfsUtils.fetchFromGit(),
+        disk: () => vfsUtils.fetchFromDisk(),
+        googleDrive: () => vfsUtils.fetchFromGoogleDrive()
       };
-
+  
       const strategy = fetchStrategies[fetchMethod];
       if (!strategy) {
         const errorMsg = `Unknown fetch method: ${fetchMethod}`;
         consoleDotError(errorMsg);
         throw new Error(errorMsg);
       }
-
+  
       consoleDotLog(`Executing fetch strategy for ${fetchMethod}`);
       await strategy();
       
@@ -548,10 +551,10 @@ export class VFS {
       consoleDotLog(`Successfully fetched data using ${fetchMethod} method`);
     } catch (error) {
       consoleDotError(`Fetch operation failed (method: ${fetchMethod}):`, error);
-      if (this.VFSutils) {
+      if (this.vfsUtilsInstances.has(this.currentMountPath)) {
         consoleDotLog('Cleaning up VFSutils after fetch failure');
-        await this.VFSutils.terminate(fsName, fsType);
-        this.VFSutils = null;
+        await this.vfsUtilsInstances.get(this.currentMountPath).terminate(fsName, fsType);
+        this.vfsUtilsInstances.delete(this.currentMountPath);
       }
       throw error;
     }
@@ -597,8 +600,9 @@ export class VFS {
     await this.validateVFSutils();
     
     try {
+      const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
       consoleDotLog(`Updating fsTable with create operation for ${path}`);
-      const updateResult = await this.VFSutils.updateFsTable("create", path, type, size);
+      const updateResult = await vfsUtils.updateFsTable("create", path, type, size);
       consoleDotLog(`Updating mount fsTable with new data`);
       await this.updateMountFsTable(updateResult.fsTable);
       consoleDotLog(`Successfully updated fsTable for ${path}`);
@@ -608,14 +612,15 @@ export class VFS {
       throw error;
     }
   }
-
+  
   async removeFromFsTable(path) {
     consoleDotLog(`Removing from fsTable - path: ${path}`);
     await this.validateVFSutils();
     
     try {
+      const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
       consoleDotLog(`Updating fsTable with remove operation for ${path}`);
-      const updateResult = await this.VFSutils.updateFsTable("remove", path);
+      const updateResult = await vfsUtils.updateFsTable("remove", path);
       consoleDotLog(`Updating mount fsTable with removal data`);
       await this.updateMountFsTable(updateResult.fsTable);
       consoleDotLog(`Successfully removed ${path} from fsTable`);
@@ -652,24 +657,26 @@ export class VFS {
   // Validation Utilities
   async validateVFSutils() {
     consoleDotLog('Validating VFSutils instance');
-    if (!this.VFSutils) {
-      const errorMsg = "VFSutils not initialized";
+    if (!this.currentMountPath || !this.vfsUtilsInstances.has(this.currentMountPath)) {
+      const errorMsg = "VFSutils not initialized for current mount";
       consoleDotError(errorMsg);
       throw new Error(errorMsg);
     }
     consoleDotLog('VFSutils validation passed');
   }
-
+ 
   //----------------------
   // Versioning Operations
   //----------------------
 
-  async versioner( message ) {
+ 
+  async versioner(message) {
     consoleDotLog(`Committing version with message: ${message}`);
     await this.validateVFSutils();
     
     try {
-      const commitResult = await this.VFSutils.commitStagedChanges( message );
+      const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
+      const commitResult = await vfsUtils.commitStagedChanges(message);
       consoleDotLog(`Version committed successfully`);
       return commitResult;
     } catch (error) {
@@ -682,20 +689,22 @@ export class VFS {
   // Merging Operations
   //--------------------
 
+  
   async merger(onConflictStrategy) {
     consoleDotLog('Starting merge operation');
     await this.validateVFSutils();
-
+  
     try {
-      const mergeResult = await this.VFSutils.autoSyncFlow(onConflictStrategy);
+      const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
+      const mergeResult = await vfsUtils.autoSyncFlow(onConflictStrategy);
       consoleDotLog('Merge operation completed successfully:', mergeResult);
       return mergeResult;
-    }
-    catch (error) {
+    } catch (error) {
       consoleDotError('Merge operation failed:', error);
       throw error;
     }
   }
+
   
   //-------------------
   // Some info setters for vfsUtils
