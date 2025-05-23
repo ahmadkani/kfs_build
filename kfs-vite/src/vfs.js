@@ -302,11 +302,8 @@ export class VFS {
         
         try {
           const lastSlashIndex = mountPath.lastIndexOf('/');
-          consoleDotLog(`Last slash index:`, lastSlashIndex);
           const path = mountPath.substring(0, lastSlashIndex);
-          consoleDotLog('path kir: ', path)
           const fsName = mountPath.substring(lastSlashIndex + 1);
-          consoleDotLog('fsname kir: ', fsName)
 
           await this.mount(
             path,
@@ -393,16 +390,22 @@ export class VFS {
   async createNewMount(mountPath, fsType, fsName, fetchMethod, fetchInfo, versioning = {}, merging = {}) {
     consoleDotLog(`Creating new mount at ${mountPath}`);
     try {
-      consoleDotLog(`Creating new FS instance (type: ${fsType})`);
-      const fsInstance = await this.createFSInstance(fsType, mountPath, { versioning, merging });
-      
-      consoleDotLog(`Fetching data for new mount using method: ${fetchMethod}`);
-      await this.fetchFS(fetchMethod, fsType, fsInstance, mountPath, fetchInfo);
+        consoleDotLog(`Creating new FS instance (type: ${fsType})`);
+        const fsInstance = await this.createFSInstance(fsType, mountPath, { versioning, merging });
+        
+        consoleDotLog(`Fetching data for new mount using method: ${fetchMethod}`);
+        await this.fetchFS(fetchMethod, fsType, fsInstance, mountPath, fetchInfo);
 
-      consoleDotLog('Generating filesystem table');
-      const fsTable = await this.VFSutils.generateFsTable();
-      const fsSize = await this.VFSutils.getFsTableSize(fsTable);
-      consoleDotLog(`Filesystem table generated, size: ${fsSize}`);
+        // Get the VFSutils instance that was created in fetchFS
+        const vfsUtils = this.vfsUtilsInstances.get(mountPath);
+        if (!vfsUtils) {
+            throw new Error('VFSutils instance not found for mount');
+        }
+
+        consoleDotLog('Generating filesystem table');
+        const fsTable = await vfsUtils.generateFsTable();  // Use the instance from the Map
+        const fsSize = await vfsUtils.getFsTableSize(fsTable);
+        consoleDotLog(`Filesystem table generated, size: ${fsSize}`);
 
       // Get environment information
       const environment = this.getPlatformInfo();

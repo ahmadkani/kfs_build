@@ -6,6 +6,8 @@ const config = {
     kfs: true,
     IDBFs: true,
     gitWorker: true,
+    acl: true,
+    stats: true,
     fsType: true,
     fsManagerES6: true,
     fsManagerGlobal: true,
@@ -14,6 +16,7 @@ const config = {
     memoryBackendES6: true,
     memoryBackendGlobal: true,
     VFSutils: true,
+    gitNoteManager: true,
     ServiceWorkerRegistration: true,
     serviceWorker: true,
     storageUtils: true,
@@ -53,8 +56,11 @@ const loggingGroups = {
   gitWorker: [
     'gitWorker',
     'dotGit',
+    'acl',
+    'stats',
     'GitAuth',
-    'WorkerPool'
+    'WorkerPool',
+    'gitNoteManager'
   ],
   storage: [
     'memoryFS',

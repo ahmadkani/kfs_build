@@ -6,6 +6,7 @@ import fsManager from '../libs/workerUtils/fsManagerES6.js';
 import swUtils from '../libs/workerUtils/swUtilsES6.js';
 import dotGit from '../libs/gitOperations/dotGit.js';
 import {config} from '../configES6.js';
+import gitNoteManager from '../libs/workerUtils/gitNoteManager.js';
 
 self.onerror = (e) => {
   console.error('Worker initialization error:', e);
@@ -1120,6 +1121,7 @@ async function doCloneAndStuff(args) {
       handleNoRefResult = await handleNoRef(args);
       await initializeLocalBranches();
     }
+    await initRepoNotes(fsType, 'root');
     return ({handleNoRefResult, message: 'notExist', success: true});
   } catch (error) {
       await handleGitError(error, args, 'doCloneAndStuff', maxDeleteRetries);
@@ -1646,31 +1648,12 @@ async function readFileDot(filePath, _commitOid = 'staged') {
   }
 }
 
-async function writeFileDot(filePath, fileContent, doCommit = 1) {
-  try {
-    consoleDotLog(`[GITWorker] Writing to file: ${filePath}`);
-    const result = await dotGit.writeFileDot(
-      fs,
-      dir,
-      filePath, 
-      fileContent, 
-      name, 
-      email, 
-      doCommit
-    );
-    consoleDotLog(`[GITWorker] Successfully wrote to file: ${filePath}`);
-    return result;
-  } catch (error) {
-    consoleDotError(`[GITWorker] Failed to write to file ${filePath}:`, error);
-    throw new Error(`Failed to write file: ${error.message}`);
-  }
-}
-
 async function readDirDot(dirPath, _commitOid = 'staged') {
   try {
     consoleDotLog(`[GITWorker] Reading directory: ${dirPath}`);
     const contents = await dotGit.readDirDot(fs, dir, dirPath, _commitOid);
     consoleDotLog(`[GITWorker] Directory contents for ${dirPath}:`, contents);
+    consoleDotLog('ATTACK: ', await listAllNotes());
     return contents;
   } catch (error) {
     consoleDotError(`[GITWorker] Failed to read directory ${dirPath}:`, error);
@@ -1702,15 +1685,74 @@ async function listFilesDot(listDirs = 1) {
   }
 }
 
+async function writeFileDot(filePath, fileContent, doCommit = 1) {
+  try {
+    consoleDotLog(`[GITWorker] Writing to file: ${filePath}`);
+    
+    // 1. First write the file content
+    const result = await dotGit.writeFileDot(
+      fs, dir, filePath, fileContent, name, email, doCommit
+    );
+
+    // 2. Get the OID for the written file
+    let oid = result.blobOid;
+
+    // 3. Add inode note with the obtained OID
+    await gitNoteManager(fs, dir, 'add', 'inode', {
+      oid: oid,
+      filepath: filePath,
+      customMetadata: {
+        size: fileContent.length,
+        operation: 'write',
+        timestamp: new Date().toISOString()
+      }
+    }).catch(e => consoleDotError('Note addition failed:', e));
+
+    consoleDotLog(`[GITWorker] Successfully wrote to file: ${filePath}`);
+    return result;
+  } catch (error) {
+    consoleDotError(`[GITWorker] Failed to write to file ${filePath}:`, error);
+    throw new Error(`Failed to write file: ${error.message}`);
+  }
+}
+
 async function mkdirDot(dirPath, doCommit = 1) {
   try {
     consoleDotLog(`[GITWorker] Creating directory: ${dirPath}`);
+    
+    // First create the directory
     const result = await dotGit.mkdirDot(fs, dir, dirPath, name, email, doCommit);
+
+    // Now get the OID after directory exists
+    let oid = result.treeOid;
+
+    // Add dentry note with the obtained OID
+    await gitNoteManager(fs, dir, 'add', 'dentry', {
+      oid: oid,
+      filepath: dirPath,
+      customMetadata: {
+        operation: 'create',
+        timestamp: new Date().toISOString()
+      }
+    });
+
     consoleDotLog(`[GITWorker] Successfully created directory: ${dirPath}`);
     return result;
   } catch (error) {
     consoleDotError(`[GITWorker] Failed to create directory ${dirPath}:`, error);
     throw new Error(`Failed to create directory: ${error.message}`);
+  }
+}
+
+async function removeFileDot(filePath, doCommit = 1) {
+  try {
+    consoleDotLog(`[GITWorker] Removing file: ${filePath}`);
+    const result = await dotGit.removeFileDot(fs, dir, filePath, doCommit);
+    consoleDotLog(`[GITWorker] Successfully removed file: ${filePath}`);
+    return result;
+  } catch (error) {
+    consoleDotError(`[GITWorker] Failed to remove file ${filePath}:`, error);
+    throw new Error(`Failed to remove file: ${error.message}`);
   }
 }
 
@@ -1726,15 +1768,91 @@ async function removeDirDot(dirPath, doCommit = 1) {
   }
 }
 
-async function removeFileDot(filePath, doCommit = 1) {
+// Modified gitNoteManager integration
+async function getPathNote(path) {
   try {
-    consoleDotLog(`[GITWorker] Removing file: ${filePath}`);
-    const result = await dotGit.removeFileDot(fs, dir, filePath, doCommit);
-    consoleDotLog(`[GITWorker] Successfully removed file: ${filePath}`);
-    return result;
+    const isDir = await isDirectoryDot(path);
+    const noteType = isDir ? 'dentry' : 'inode';
+    
+    let oid = await findInGitHistory(path);
+
+    return await gitNoteManager(fs, dir, 'read', noteType, { oid });
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to remove file ${filePath}:`, error);
-    throw new Error(`Failed to remove file: ${error.message}`);
+    consoleDotError(`Failed to get note for ${path}:`, error);
+    throw error;
+  }
+}
+
+async function listAllNotes() {
+  try {
+    const [inodes, dentries, superblock] = await Promise.all([
+      gitNoteManager(fs, dir, 'list', 'inode'),
+      gitNoteManager(fs, dir, 'list', 'dentry'),
+      gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD' }).catch(() => null)
+    ]);
+    
+    return { inodes, dentries, superblock };
+  } catch (error) {
+    consoleDotError('Failed to list notes:', error);
+    throw error;
+  }
+}
+
+async function initRepoNotes(fsType = 'memory', owner = 'root') {
+  try {
+    consoleDotLog('[GITWorker] Initializing repository notes');
+    
+    // Verify we can read the root tree first
+    let rootTreeOid;
+    try {
+      rootTreeOid = await git.resolveRef({ fs, dir, ref: 'HEAD' })
+        .then(oid => git.readTree({ fs, dir, oid }))
+        .then(tree => tree.oid);
+    } catch (error) {
+      throw new Error('Cannot initialize notes: Repository HEAD not available');
+    }
+    
+    // Initialize superblock if needed
+    try {
+      await gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD', fsType });
+      consoleDotLog('Superblock note already exists');
+    } catch {
+      await gitNoteManager(fs, dir, 'add', 'superblock', {
+        oid: 'HEAD',
+        fsType,
+        customMetadata: {
+          owner,
+          created_at: new Date().toISOString(),
+          block_size: 4096,
+          features: []
+        }
+      });
+      consoleDotLog('Created superblock note');
+    }
+    
+    // Initialize root directory note if needed
+    try {
+      await gitNoteManager(fs, dir, 'read', 'dentry', { oid: rootTreeOid });
+      consoleDotLog('Root directory note already exists');
+    } catch {
+      await gitNoteManager(fs, dir, 'add', 'dentry', {
+        oid: rootTreeOid,
+        customMetadata: {
+          is_root: true,
+          created_at: new Date().toISOString(),
+          name: '/',
+          parent_inode: 0,
+          mode: '040755'
+        }
+      });
+      consoleDotLog('Created root directory note');
+    }
+    
+    consoleDotLog('[GITWorker] Repository notes initialized');
+    return true;
+  } catch (error) {
+    consoleDotError('[GITWorker] Failed to initialize notes:', error);
+    throw new Error(`Failed to initialize notes: ${error.message}`);
   }
 }
 
