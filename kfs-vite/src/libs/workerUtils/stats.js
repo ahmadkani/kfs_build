@@ -3,7 +3,6 @@ import {config} from '../../configES6.js';
 
 const logger = new Logger(config.logging.stats);
 
-// Inode counter
 let inodeCounter = 1000;
 
 class StatsManager {

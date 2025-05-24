@@ -3,7 +3,6 @@ import {config} from '../../configES6.js';
 
 const logger = new Logger(config.logging.acl);
 
-// Default ACL rules
 const DEFAULT_ACL = {
     owner: {
         read: true,

@@ -2,14 +2,14 @@ import {Logger} from '../LoggerES6.js';
 import {config} from '../../configES6.js';
 import git from 'isomorphic-git';
 import acl from './acl.js';
-import stats from './stats.js'; // External stats module
+import stats from './stats.js';
 
 const logger = new Logger(config.logging.gitNoteManager);
 
 function consoleDotLog(...parameters) {
   logger.consoleDotLog('[gitNoteManager] ', ...parameters);
 }
-  
+
 function consoleDotError(...parameters) {
   logger.consoleDotError('[gitNoteManager] ', ...parameters);
 }
@@ -23,7 +23,7 @@ const DEFAULT_MODE_FILE = '100644';
 const DEFAULT_MODE_DIR = '040755';
 const DEFAULT_FILE_SIZE = 0;
 
-async function gitNoteManager(fs, dir, operation, type, params = {}) {
+async function gitNoteManager(fs, dir, operation, type = null, params = {}) {
   try {
     switch (operation) {
       case 'add':
@@ -270,7 +270,7 @@ async function readNote(fs, dir, type, params) {
         noteRef = 'acl';
         break;
       default:
-        noteRef = 'commits'; // Default notes reference
+        noteRef = 'commits';
     }
 
     const noteUint8 = await git.readNote({
@@ -305,7 +305,6 @@ async function readNote(fs, dir, type, params) {
 async function listNotes(fs, dir) {
   try {    
     const notes = await git.listNotes({ fs, dir });
-    consoleDotLog('kiri o tokhmie: ', notes)
     consoleDotLog(`Successfully listed notes`);
     return notes;
   } catch (error) {
@@ -313,7 +312,7 @@ async function listNotes(fs, dir) {
     throw error;
   }
 }
-  
+
 async function initDefaultSuperblock(fs, dir) {
   const defaultSuperblock = {
     fs_type: 'memory',

@@ -1783,15 +1783,20 @@ async function getPathNote(path) {
   }
 }
 
-async function listAllNotes() {
+async function listAllNotes(detailed = true) {
   try {
-    const [inodes, dentries, superblock] = await Promise.all([
-      gitNoteManager(fs, dir, 'list', 'inode'),
-      gitNoteManager(fs, dir, 'list', 'dentry'),
+    const [listOfNotes, superblock] = await Promise.all([
+      gitNoteManager(fs, dir, 'list'),
       gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD' }).catch(() => null)
     ]);
+    let detailed = {};
+    if (detailed) {
+      await (listOfNotes.forEach((note) => {
+        detailed.push(gitNoteManager (fs, dir, 'read', { oid: note.target }));
+      }))
     
-    return { inodes, dentries, superblock };
+    return { listOfNotes, detailed, superblock };
+    }
   } catch (error) {
     consoleDotError('Failed to list notes:', error);
     throw error;

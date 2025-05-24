@@ -165,7 +165,7 @@ export class KFS {
       );
     }
     
-    this.vfs.setUserConfigs(args);
+    args && this.vfs.setUserConfigs(args);
     return args;
   }
 

@@ -770,10 +770,16 @@ export class VFSutils {
         return this.auth.verifyAuth();
       }
 
-      async updateFetchInfo(newFetchInfo) {
-        if (!this.initialized) await this.initialize();
-        this.fetchInfo = { ...this.fetchInfo, ...newFetchInfo };
-        consoleDotLog('Fetch info updated:', this.fetchInfo);
-        return this.fetchInfo;
+      async updateFetchInfo(args) {
+        try {
+          const newFetchInfo = args || {};
+          if (!this.initialized) await this.initialize();
+          this.fetchInfo = { ...this.fetchInfo, ...newFetchInfo };
+          consoleDotLog('Fetch info updated:', this.fetchInfo);
+          return this.fetchInfo;
+        } catch(error) {
+          consoleDotError('Some error happened while using updateFetchInfo');
+          throw new Error('Some error happened while using updateFetchInfo');
+        }
       }
 }
