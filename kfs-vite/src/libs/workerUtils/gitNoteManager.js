@@ -270,7 +270,7 @@ async function readNote(fs, dir, type, params) {
         noteRef = 'acl';
         break;
       default:
-        noteRef = 'commits';
+        noteRef = undefined;
     }
 
     const noteUint8 = await git.readNote({

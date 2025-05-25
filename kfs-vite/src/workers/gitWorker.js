@@ -375,7 +375,7 @@ async function readSettingsFile(type = null, key = null) {
     
     const settingsPath = await fs.promises.readdir(`${dir}`)
     if (settingsPath.includes('settings')){
-      const content = await git.readFile({fs, dir, filePath: gitConfigFilePath});
+      const content = await fs.promises.readFile(gitConfigFilePath);
       const settingsData = parseIni(content);
       consoleDotLog('settingsData,',settingsData)
 
@@ -1653,6 +1653,7 @@ async function readDirDot(dirPath, _commitOid = 'staged') {
     consoleDotLog(`[GITWorker] Reading directory: ${dirPath}`);
     const contents = await dotGit.readDirDot(fs, dir, dirPath, _commitOid);
     consoleDotLog(`[GITWorker] Directory contents for ${dirPath}:`, contents);
+    consoleDotLog('refs/notes/commits kir: ', await fs.promises.readFile('/.git/refs/notes/commits'));
     consoleDotLog('ATTACK: ', await listAllNotes());
     return contents;
   } catch (error) {
@@ -1789,14 +1790,15 @@ async function listAllNotes(detailed = true) {
       gitNoteManager(fs, dir, 'list'),
       gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD' }).catch(() => null)
     ]);
-    let detailed = {};
+    let detailedList = [];
     if (detailed) {
-      await (listOfNotes.forEach((note) => {
-        detailed.push(gitNoteManager (fs, dir, 'read', { oid: note.target }));
-      }))
-    
-    return { listOfNotes, detailed, superblock };
+      listOfNotes.forEach((note) => {
+        detailedList.push(gitNoteManager(fs, dir, 'read', 'commits', { oid: note.target }));
+      });
+      const resolvedDetails = await Promise.all(detailedList);
+      return { listOfNotes, detailed: resolvedDetails, superblock };
     }
+
   } catch (error) {
     consoleDotError('Failed to list notes:', error);
     throw error;
@@ -2057,12 +2059,14 @@ async function addFileToStaging(args) {
 //gets username, email and commitMessage as parameters 
 async function commit(args) {
 try{
+  const _username = args?.username || username;
+  const _email = args?.email || 'sample@email.com';
   await git.commit({
     fs,
     dir,
     author: {
-      name: args.username,
-      email: args.email,
+      name: _username,
+      email: _email,
     },
     message: args.commitMessage || "Commit by dnegar"
   });
