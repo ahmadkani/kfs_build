@@ -103,6 +103,10 @@ export class VFSutils {
       
       consoleDotLog(`Cloning repository from ${url} to ${dir}`);
       const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
+      // Fetch notes then
+      await this.reconfigureRemoteWithNotes();
+      await this.fetchNotes();
+
       if (!cloneResult.success) {
         throw new Error("Fetching from git failed!");
       }
@@ -584,6 +588,7 @@ export class VFSutils {
             url: this.fetchInfo.url,
             ref: 'main',
           });
+          const doFetchResult = await this.workerThread.execute('doFetch', { url: this.fetchInfo.url, ref: 'refs/notes/commits' });          
           const mergeResult = await this.workerThread.execute('merge', {
             ours : 'main',
             theirs : 'origin/main',
@@ -642,8 +647,15 @@ export class VFSutils {
             ref: 'main',
             force: false,
           });
+
+          const pushNotesResult = await this.workerThread.execute('push', {
+            url: this.fetchInfo.url,
+            ref: 'refs/notes/commits',
+            remoteRef: 'refs/notes/commits',
+            force: false,
+          });
           
-          if (pushResult.success) {
+          if (pushResult.success || pushNotesResult.success) {
             consoleDotLog('Push successful');
             return { 
               synced: true, 
@@ -694,6 +706,8 @@ export class VFSutils {
             url: this.fetchInfo.url,
             ref: 'main',
           });
+          const doFetchResult = await this.workerThread.execute('doFetch', { url: this.fetchInfo.url, ref: 'refs/notes/commits' });
+
           const mergeResult = await this.workerThread.execute('merge', {
             ours : 'main',
             theirs : 'origin/main',
@@ -711,6 +725,13 @@ export class VFSutils {
           const pushResult = await this.workerThread.execute('push', {
             url: this.fetchInfo.url,
             ref: 'main',
+            force: false,
+          });
+
+          const pushNotesResult = await this.workerThread.execute('push', {
+            url: this.fetchInfo.url,
+            ref: 'refs/notes/commits',
+            remoteRef: 'refs/notes/commits',
             force: false,
           });
           
@@ -780,6 +801,52 @@ export class VFSutils {
         } catch(error) {
           consoleDotError('Some error happened while using updateFetchInfo');
           throw new Error('Some error happened while using updateFetchInfo');
+        }
+      }
+
+      // ------------------
+      //  Helper functions
+      // ------------------
+
+      async fetchNotes() {
+        try {
+          const serverRefs = await this.workerThread.execute('listServerRefs', {
+            remote: 'origin'
+          });
+          consoleDotLog('kiri refs: ', serverRefs)
+          const hasNotes = serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
+          
+          if (hasNotes) {
+            await this.workerThread.execute('pull', {
+              url: this.fetchInfo.url,
+              ref: 'refs/notes/commits'
+            });
+
+          }
+        } catch (error) {
+          consoleDotError('Failed to fetch notes:', error);
+          // Don't throw - notes are optional
+        }
+      }
+
+      async reconfigureRemoteWithNotes() {
+        try {
+          const fetch = await this.workerThread.execute('getConfig', {
+            path: 'remote.origin.fetch',
+          });
+
+          if (fetch !== '+refs/notes/*:refs/notes/*') {
+              await this.workerThread.execute('setConfig', {
+              path: 'remote.origin.fetch',
+              value: '+refs/notes/*:refs/notes/*',
+              args: { append: true }
+            });
+          }
+
+          consoleDotLog('Successfully reconfigured remote with notes fetch');
+        } catch (error) {
+          consoleDotError('Failed to reconfigure remote:', error);
+          throw error;
         }
       }
 }

@@ -473,6 +473,7 @@ async function removeAndPush(args) {
 //remote is a prerequisite for this function which is being set using clone
 async function doFetch(args) {
   let attempt = args?.attempt || 0;
+  let _ref = args?.ref || ref;
   
   const maxDeleteRetries = 1;
   consoleDotLog('Doing fetch operation');
@@ -490,7 +491,7 @@ async function doFetch(args) {
           http,
           dir,
           corsProxy,
-          ref,
+          ref: _ref,
           url,
           remote,
           depth,
@@ -513,7 +514,7 @@ async function doFetch(args) {
         http,
         dir,
         corsProxy,
-        ref,
+        ref: _ref,
         url,
         remote,
         depth,
@@ -526,6 +527,7 @@ async function doFetch(args) {
           return authenticate.rejected();
         },
       });
+
       return {success: true};
     }
   } catch (error) {
@@ -637,11 +639,11 @@ strategy = 'theirs', // 'ours', 'theirs', 'combine'
 } = {}
 ) {
 try {
-  consoleDotLog('kire khar: ', ours, theirs, strategy)
   const customMergeDriver = onConflict || (({ contents, filepath }) => 
     mergeDriver({ contents, filepath }, strategy)
   );
 
+  
   const result = await git.merge({
     fs,
     dir,
@@ -651,6 +653,14 @@ try {
     fastForwardOnly: false,
   });
 
+        try {
+      const readed1 = await fs.promises.readFile('/.git/refs/notes/commits', 'utf8');
+      const readed3 = await fs.promises.readdir('/.git/refs/');
+      const readed2 = await fs.promises.readdir('/.git/refs/notes/');
+      consoleDotLog('kiri', readed1, readed2, readed3)
+      } catch(e) {
+        consoleDotError('Pooch', e)
+      }
   return result;
 
 } catch (error) {
@@ -1030,7 +1040,7 @@ async function handleGitError(error, args, operationName, maxDeleteRetries = 1, 
     }
   }
   
-  const attempt = args.attempt || 0;
+  const attempt = args?.attempt || 0;
 
   // Only proceed with delete/reclone if not a merge conflict
   if (attempt < maxDeleteRetries) {
@@ -1343,6 +1353,7 @@ async function log(args = {}) {
 async function push(args) {
   consoleDotLog(`Starting to push with these args: `, args);
   let attempt = args?.attempt || 0;
+  let _ref = args?.ref || ref;
   
   const maxDeleteRetries = 1;
   const force = args?.force || true;
@@ -1364,7 +1375,7 @@ async function push(args) {
             dir,
             corsProxy,
             remote,
-            ref,
+            ref: _ref,
             force,
             headers: buildHeaders(username, password),
             onAuth() {
@@ -1385,7 +1396,7 @@ async function push(args) {
           dir,
           corsProxy,
           remote,
-          ref,
+          ref: _ref,
           force: true,
           headers: buildHeaders(username, password),
           onAuth() {
@@ -1567,9 +1578,10 @@ async function getConfig(path) {
   }
 }
 
-async function setConfig(path, value) {
+async function setConfig(path, value, args) {
   try {
     await git.setConfig({
+      ...args,
       fs,
       dir,
       path: path,
@@ -1653,7 +1665,6 @@ async function readDirDot(dirPath, _commitOid = 'staged') {
     consoleDotLog(`[GITWorker] Reading directory: ${dirPath}`);
     const contents = await dotGit.readDirDot(fs, dir, dirPath, _commitOid);
     consoleDotLog(`[GITWorker] Directory contents for ${dirPath}:`, contents);
-    consoleDotLog('refs/notes/commits kir: ', await fs.promises.readFile('/.git/refs/notes/commits'));
     consoleDotLog('ATTACK: ', await listAllNotes());
     return contents;
   } catch (error) {
@@ -1745,6 +1756,30 @@ async function mkdirDot(dirPath, doCommit = 1) {
   }
 }
 
+//path is the path to file
+//it recursively makes directories that aren't made yet
+async function mkdirRecursive(path) {
+  const folders = path.split('/').filter(folder => folder.trim() !== '');
+  let currentPath = '';
+  for (const folder of folders) {
+      if (currentPath === '/'){
+      currentPath += folder;
+      }
+      else{
+        currentPath += '/' + folder;
+      }
+      try {
+        consoleDotLog('recur', currentPath);
+          await fs.promises.mkdir(currentPath);
+      } catch (error) {
+          if (error.code === 'EEXIST') {
+          } else {
+              consoleDotError(`Error creating directory: ${currentPath}`, error);
+          }
+      }
+  }
+}
+
 async function removeFileDot(filePath, doCommit = 1) {
   try {
     consoleDotLog(`[GITWorker] Removing file: ${filePath}`);
@@ -1769,7 +1804,6 @@ async function removeDirDot(dirPath, doCommit = 1) {
   }
 }
 
-// Modified gitNoteManager integration
 async function getPathNote(path) {
   try {
     const isDir = await isDirectoryDot(path);
@@ -1905,7 +1939,7 @@ async function pull(args) {
             fastForwardOnly: false,
             forced: true,
             noCheckout: true,  // Ensure this is true to prevent file checkout
-            singleBranch: true,  // Consider adding this to match clone behavior
+            singleBranch: false,  // Consider adding this to match clone behavior
             headers: buildHeaders(username, password),
             onAuth() {
               return authenticate.fill();
@@ -1930,7 +1964,7 @@ async function pull(args) {
           fastForwardOnly: false,
           forced: true,
           noCheckout: true,  // Ensure this is true to prevent file checkout
-          singleBranch: true,  // Consider adding this to match clone behavior
+          singleBranch: false,  // Consider adding this to match clone behavior
           headers: buildHeaders(username, password),
           onAuth() {
             return authenticate.fill();
@@ -2210,6 +2244,7 @@ const operationHandlers = {
   checkoutBranch: ({ ref }) => checkoutBranch(ref),
   currentBranch: currentBranch,
   currentRemote: currentRemote,
+  createBranch: (args) => createBranch(args),
   setRemote: ({ remote }) => setRemote(remote),
   setRemoteUrl: ({ url, remote }) => setRemoteUrl(url, remote),
   getRemoteUrl: ({ remote }) => getRemoteUrl(remote),
@@ -2247,6 +2282,7 @@ const operationHandlers = {
   isDirectoryDot: ({ path }) => isDirectoryDot(path),
   listFilesDot: ({ listDirs = 1 }) => listFilesDot(listDirs),
   mkdirDot: ({ dirPath, doCommit = 1 }) => mkdirDot(dirPath, doCommit),
+  mkdirRecursive: ({path}) => mkdirRecursive(path),
   removeDirDot: ({ dirPath, doCommit = 1 }) => removeDirDot(dirPath, doCommit),
   removeFileDot: ({ filePath, doCommit = 1 }) => removeFileDot(filePath, doCommit),
   rename: ({ oldPath, newPath }) => rename(oldPath, newPath),
@@ -2254,7 +2290,7 @@ const operationHandlers = {
   getUsername: getUsername,
   getEmail: getEmail,
   getConfig: ({ path }) => getConfig(path),
-  setConfig: ({ path, value }) => setConfig(path, value),
+  setConfig: ({ path, value, args }) => setConfig(path, value, args),
   resolveRef: ({ ref }) => resolveRef(ref),
   readCommit: ({ head }) => readCommit(head),
   writeCommit: writeCommit,
