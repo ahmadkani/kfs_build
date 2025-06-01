@@ -813,15 +813,31 @@ export class VFSutils {
           const serverRefs = await this.workerThread.execute('listServerRefs', {
             remote: 'origin'
           });
-          consoleDotLog('kiri refs: ', serverRefs)
-          const hasNotes = serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
           
+          const hasNotes = serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
+          const hasLocalNotes = await this.workerThread.execute('checkForLocalNotes');
+
           if (hasNotes) {
-            await this.workerThread.execute('pull', {
+            if (!hasLocalNotes) {
+              consoleDotLog('Notes found on remote but not locally, fetching...');
+              const addLocalNote = await this.workerThread.execute('addNotesRef');
+            }
+            consoleDotLog('Fetching notes from remote...');
+            await this.workerThread.execute('doFetch', {
               url: this.fetchInfo.url,
-              ref: 'refs/notes/commits'
+              remote: 'origin',
+              ref: 'refs/notes/commits',
+              remoteRef: 'refs/notes/commits',
+              tags: true,
+              prune: true,
+              singleBranch: true,
             });
 
+            const mergeResult = await this.workerThread.execute('merge', {
+              ours : 'main',
+              theirs : 'origin/main',
+              strategy : 'theirs',
+            });
           }
         } catch (error) {
           consoleDotError('Failed to fetch notes:', error);
@@ -834,7 +850,7 @@ export class VFSutils {
           const fetch = await this.workerThread.execute('getConfig', {
             path: 'remote.origin.fetch',
           });
-
+          
           if (fetch !== '+refs/notes/*:refs/notes/*') {
               await this.workerThread.execute('setConfig', {
               path: 'remote.origin.fetch',

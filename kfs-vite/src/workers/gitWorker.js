@@ -495,7 +495,7 @@ async function doFetch(args) {
           url,
           remote,
           depth,
-          tags: false,
+          tags: true,
           headers: buildHeaders(username, password),
           onAuth() {
             return authenticate.fill();
@@ -518,7 +518,7 @@ async function doFetch(args) {
         url,
         remote,
         depth,
-        tags: false,
+        tags: true,
         headers: buildHeaders(username, password),
         onAuth() {
           return authenticate.fill();
@@ -528,6 +528,15 @@ async function doFetch(args) {
         },
       });
 
+      try {
+        const readed1 = await fs.promises.readFile('/.git/refs/notes/commits', 'utf8');
+        const readed3 = await fs.promises.readdir('/.git/refs/');
+        const readed2 = await fs.promises.readdir('/.git/refs/notes/');
+        consoleDotLog('kiri pedar', readed1, readed2, readed3)
+      }
+      catch (e) {
+        consoleDotError('kiri khar', e)
+      }
       return {success: true};
     }
   } catch (error) {
@@ -1897,6 +1906,36 @@ async function initRepoNotes(fsType = 'memory', owner = 'root') {
   }
 }
 
+async function checkForLocalNotes() {
+  try {
+    consoleDotLog('[GITWorker] Checking for local notes');
+    const notes = await gitNoteManager(fs, dir, 'list');
+    if (notes.length > 0) {
+      consoleDotLog('[GITWorker] Local notes found:', notes);
+      return true;
+    } else {
+      consoleDotLog('[GITWorker] No local notes found');
+      return false;
+    }
+  } catch (error) {
+    consoleDotError('[GITWorker] Failed to check for local notes:', error);
+    throw new Error(`Failed to check for local notes: ${error.message}`);
+  }
+}
+
+async function addNotesRef() {
+  try { 
+
+    await mkdirRecursive(dir + '/.git/refs/notes');
+    const notesRefPath = dir + '/.git/refs/notes/commits';
+    await fs.promises.writeFile(notesRefPath, '');
+    return {success: true, message: 'Notes ref added successfully'};
+  } catch (error) {
+    consoleDotError(`[GITWorker] Failed to add local note of type ${noteType}:`, error);
+    throw new Error(`Failed to add local note: ${error.message}`);
+  }
+}
+
 async function findInGitHistory(path) {
   try {
     consoleDotLog(`[GITWorker] Searching git history for: ${path}`);
@@ -2300,7 +2339,9 @@ const operationHandlers = {
   isDirectoryDot: ({ path }) => isDirectoryDot(path),
   readdir: ({ path }) => readdir(path),
   readDirDot: ({ path }) => readDirDot(path),
-  getFileStoresFromDatabases: getFileStoresFromDatabases
+  getFileStoresFromDatabases: getFileStoresFromDatabases,
+  addNotesRef: addNotesRef,
+  checkForLocalNotes: checkForLocalNotes,
 };
 
 // ==============================================
