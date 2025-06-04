@@ -497,6 +497,9 @@ async function doFetch(args) {
           depth,
           tags: true,
           headers: buildHeaders(username, password),
+          onProgress: event => {
+            consoleDotLog('Fetch progress event:', event);
+          },
           onAuth() {
             return authenticate.fill();
           },
@@ -520,6 +523,9 @@ async function doFetch(args) {
         depth,
         tags: true,
         headers: buildHeaders(username, password),
+        onProgress: event => {
+          consoleDotLog('Fetch progress event:', event);
+        },
         onAuth() {
           return authenticate.fill();
         },
@@ -528,15 +534,6 @@ async function doFetch(args) {
         },
       });
 
-      try {
-        const readed1 = await fs.promises.readFile('/.git/refs/notes/commits', 'utf8');
-        const readed3 = await fs.promises.readdir('/.git/refs/');
-        const readed2 = await fs.promises.readdir('/.git/refs/notes/');
-        consoleDotLog('kiri pedar', readed1, readed2, readed3)
-      }
-      catch (e) {
-        consoleDotError('kiri khar', e)
-      }
       return {success: true};
     }
   } catch (error) {
@@ -545,6 +542,35 @@ async function doFetch(args) {
     return {success: false};
   }
 }
+
+async function listFsTree(dir = '/', indent = '') {
+  let entries;
+  try {
+    entries = await fs.promises.readdir(dir);
+  } catch (e) {
+    consoleDotError(`Failed to read ${dir}:`, e);
+    return;
+  }
+
+  for (const entry of entries) {
+    const fullPath = dir.endsWith('/') ? dir + entry : dir + '/' + entry;
+    let stat;
+    try {
+      stat = await fs.promises.stat(fullPath);
+    } catch (e) {
+      consoleDotError(`Failed to stat ${fullPath}:`, e);
+      continue;
+    }
+
+    if (stat.type === 'dir') {
+      consoleDotLog(`${indent}📁 ${entry}`);
+      await listFsTree(fullPath, indent + '  ');
+    } else {
+      consoleDotLog(`${indent}📄 ${entry}`);
+    }
+  }
+}
+
 
 // args can be {url} or some other args accepted by the function
 async function listServerRefs(args) {
@@ -662,14 +688,6 @@ try {
     fastForwardOnly: false,
   });
 
-        try {
-      const readed1 = await fs.promises.readFile('/.git/refs/notes/commits', 'utf8');
-      const readed3 = await fs.promises.readdir('/.git/refs/');
-      const readed2 = await fs.promises.readdir('/.git/refs/notes/');
-      consoleDotLog('kiri', readed1, readed2, readed3)
-      } catch(e) {
-        consoleDotError('Pooch', e)
-      }
   return result;
 
 } catch (error) {
@@ -1237,6 +1255,7 @@ async function clone(args) {
           corsProxy,
           depth,
           noCheckout: true,
+          singleBranch: false,
           headers: buildHeaders(username, password),
           onAuth() {
               return authenticate.fill();
@@ -1258,6 +1277,7 @@ async function clone(args) {
         corsProxy,
         depth,
         noCheckout: true,
+        singleBranch: false,
         headers: buildHeaders(username, password),
         onAuth() {
             return authenticate.fill();
@@ -1640,12 +1660,12 @@ async function writeCommit(commit) {
   });
 }
 
-async function writeRef(head) {
+async function writeRef(value, ref = 'refs/heads/main') {
   await git.writeRef({
     fs,
     dir,
-    ref: 'refs/heads/main',
-    value: head,
+    ref: ref,
+    value: value,
   });
 }
 
@@ -1831,7 +1851,7 @@ async function listAllNotes(detailed = true) {
   try {
     const [listOfNotes, superblock] = await Promise.all([
       gitNoteManager(fs, dir, 'list'),
-      gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD' }).catch(() => null)
+      gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD', fsType }).catch(() => null)
     ]);
     let detailedList = [];
     if (detailed) {
@@ -1926,12 +1946,15 @@ async function checkForLocalNotes() {
 async function addNotesRef() {
   try { 
 
-    await mkdirRecursive(dir + '/.git/refs/notes');
-    const notesRefPath = dir + '/.git/refs/notes/commits';
-    await fs.promises.writeFile(notesRefPath, '');
+    // const notesRefPath = 'refs/notes/commits';
+    // await mkdirRecursive(dir + '/.git/refs/notes');
+    // const notesRefPath = '/.git/refs/notes/commits';
+    // await fs.promises.writeFile(notesRefPath, '');
+    // const oid = await git.resolveRef({ fs, dir, ref: 'HEAD' });
+    // await writeRef('HEAD', notesRefPath);
     return {success: true, message: 'Notes ref added successfully'};
   } catch (error) {
-    consoleDotError(`[GITWorker] Failed to add local note of type ${noteType}:`, error);
+    consoleDotError(`[GITWorker] Failed to add local note of type: `, error);
     throw new Error(`Failed to add local note: ${error.message}`);
   }
 }
@@ -2263,7 +2286,7 @@ function ensureSerializable(obj) {
 const operationHandlers = {
   setFs: setFs,
   doCloneAndStuff: doCloneAndStuff,
-  doFetch: ({args}) => doFetch(args),
+  doFetch: (args) => doFetch(args),
   doPushFile: doPushFile,
   doPushAll: doPushAll,
   addFile: ({ filePath }) => addFile({ filePath }),

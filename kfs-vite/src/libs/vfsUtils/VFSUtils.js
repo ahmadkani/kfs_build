@@ -104,7 +104,6 @@ export class VFSutils {
       consoleDotLog(`Cloning repository from ${url} to ${dir}`);
       const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
       // Fetch notes then
-      await this.reconfigureRemoteWithNotes();
       await this.fetchNotes();
 
       if (!cloneResult.success) {
@@ -588,13 +587,29 @@ export class VFSutils {
             url: this.fetchInfo.url,
             ref: 'main',
           });
-          const doFetchResult = await this.workerThread.execute('doFetch', { url: this.fetchInfo.url, ref: 'refs/notes/commits' });          
+          consoleDotLog('Fetching notes from remote...');
+          await this.workerThread.execute('doFetch', {
+            url: this.fetchInfo.url,
+            remote: 'origin',
+            ref: 'refs/notes/commits',
+            tags: true,
+            singleBranch: true,
+          });
           const mergeResult = await this.workerThread.execute('merge', {
             ours : 'main',
             theirs : 'origin/main',
             strategy: _onConflictStrategy,
           });
 
+          consoleDotLog('Fetching notes from remote...');
+          await this.workerThread.execute('doFetch', {
+            url: this.fetchInfo.url,
+            remote: 'origin',
+            ref: 'refs/notes/commits',
+            tags: true,
+            singleBranch: true,
+          });
+          
           if (!pullResult.success) {
             throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
           }
@@ -706,14 +721,20 @@ export class VFSutils {
             url: this.fetchInfo.url,
             ref: 'main',
           });
-          const doFetchResult = await this.workerThread.execute('doFetch', { url: this.fetchInfo.url, ref: 'refs/notes/commits' });
 
+          consoleDotLog('Fetching notes from remote...');
+          await this.workerThread.execute('doFetch', {
+            url: this.fetchInfo.url,
+            remote: 'origin',
+            ref: 'refs/notes/commits',
+            tags: true,
+            singleBranch: true,
+          });
           const mergeResult = await this.workerThread.execute('merge', {
             ours : 'main',
             theirs : 'origin/main',
             strategy : _onConflictStrategy,
           });
-
           
           if (!pullResult.success) {
             throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
@@ -810,6 +831,7 @@ export class VFSutils {
 
       async fetchNotes() {
         try {
+          await this.reconfigureRemoteWithNotes();
           const serverRefs = await this.workerThread.execute('listServerRefs', {
             remote: 'origin'
           });
@@ -821,23 +843,19 @@ export class VFSutils {
             if (!hasLocalNotes) {
               consoleDotLog('Notes found on remote but not locally, fetching...');
               const addLocalNote = await this.workerThread.execute('addNotesRef');
+              consoleDotLog('Notes are added.');
             }
+            
             consoleDotLog('Fetching notes from remote...');
             await this.workerThread.execute('doFetch', {
               url: this.fetchInfo.url,
               remote: 'origin',
               ref: 'refs/notes/commits',
-              remoteRef: 'refs/notes/commits',
               tags: true,
-              prune: true,
               singleBranch: true,
             });
 
-            const mergeResult = await this.workerThread.execute('merge', {
-              ours : 'main',
-              theirs : 'origin/main',
-              strategy : 'theirs',
-            });
+            consoleDotLog('Notes Fetch is done.')
           }
         } catch (error) {
           consoleDotError('Failed to fetch notes:', error);

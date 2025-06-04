@@ -279,11 +279,12 @@ async function readNote(fs, dir, type, params) {
       oid: targetOid,
       ref: noteRef
     }).catch(() => null);
-
     if (!noteUint8) {
+      
       if (type === 'superblock') {
+        const fsType = params?.fsType || 'memory';
         // Initialize default superblock if not found
-        return await initDefaultSuperblock(fs, dir);
+        return await initDefaultSuperblock(fs, dir, fsType);
       }
       throw new Error(`Note not found for ${type}`);
     }
@@ -313,9 +314,9 @@ async function listNotes(fs, dir) {
   }
 }
 
-async function initDefaultSuperblock(fs, dir) {
+async function initDefaultSuperblock(fs, dir, fsType) {
   const defaultSuperblock = {
-    fs_type: 'memory',
+    fsType,
     owner: 'root',
     created_at: new Date().toISOString(),
     block_size: 4096,
