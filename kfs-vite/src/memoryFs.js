@@ -199,26 +199,82 @@ class MemoryFS {
 
   async fs_stat(path) {
     consoleDotLog(`Getting stats for path: ${path}`);
-
+  
     try {
       if (!this.workerThread) await this.initializeWorker();
-      
+  
+      // First check basic existence and directory status
       const exists = await this.workerThread.execute('isDirectoryDot', { path });
       if (!exists.exists) {
         throw new Error(`ENOENT: no such file or directory, stat '${path}'`);
       }
-
-      return {
-        isDirectory: async () => {
-          return exists.isDirectory;
-        },
-        isFile: async () => {
-          return !exists.isDirectory;
-        },
+  
+      // Get the complete note metadata
+      const noteType = exists.isDirectory ? 'dentry' : 'inode';
+      const noteData = await this.workerThread.execute('getPathNote', {
+        path
+      });
+  
+      // If note doesn't exist, create basic stats
+      if (noteData.error || !noteData.exists) {
+        consoleDotLog(`No note found for ${path}, returning basic stats`);
+      }
+  
+      // Process the full metadata
+      const metadata = noteData.filepath_metadata?.[path] || noteData;
+      const stats = {
+        // Standard fs.Stats properties
+        dev: 0,
+        ino: metadata.inode || metadata.dentry_id || 0,
+        mode: parseInt(metadata.mode, 8) || (exists.isDirectory ? 16877 : 33188),
+        nlink: 1,
+        uid: metadata.uid || 1000,
+        gid: metadata.gid || 1000,
+        rdev: 0,
+        size: metadata.size || 0,
+        blksize: metadata.block_size || 4096,
+        blocks: Math.ceil((metadata.size || 0) / 4096),
+        atimeMs: new Date(metadata.atime || metadata.updated_at).getTime(),
+        mtimeMs: new Date(metadata.mtime || metadata.updated_at).getTime(),
+        ctimeMs: new Date(metadata.ctime || metadata.created_at).getTime(),
+        birthtimeMs: new Date(metadata.created_at).getTime(),
+  
+        // Extended properties from notes
+        acl: metadata.acl || 'root',
+        owner: metadata.owner,
+        fsType: metadata.fsType,
+        fullPath: metadata.full_path || path,
+  
+        // Boolean check methods
+        isDirectory: () => exists.isDirectory,
+        isFile: () => !exists.isDirectory,
+        isBlockDevice: () => false,
+        isCharacterDevice: () => false,
+        isSymbolicLink: () => false,
+        isFIFO: () => false,
+        isSocket: () => false,
+  
+        // Timestamp getters
+        atime: () => new Date(metadata.atime || metadata.updated_at),
+        mtime: () => new Date(metadata.mtime || metadata.updated_at),
+        ctime: () => new Date(metadata.ctime || metadata.created_at),
+        birthtime: () => new Date(metadata.created_at),
+  
+        // Additional metadata
+        getMetadata: () => metadata,
+        getNoteType: () => noteType,
+        getAllPaths: () => noteData.filepath_metadata ? Object.keys(noteData.filepath_metadata) : [path]
       };
+  
+      consoleDotLog(`Retrieved detailed stats for ${path}`, stats);
+      return stats;
     } catch (error) {
       consoleDotError(`Error getting stats for path ${path}:`, error);
-      throw error;
+      
+      // Return basic stats if detailed info fails
+      if (error.message.includes('ENOENT')) {
+        throw error;
+      }
     }
   }
 
