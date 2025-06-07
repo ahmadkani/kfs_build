@@ -1837,15 +1837,13 @@ async function removeDirDot(dirPath, doCommit = 1) {
 
 async function getPathNote(path) {
   try {
-    if (path = '/') {
+    consoleDotLog('entering with path : ', path)
+    if (path === '/') {
       return await gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD', fsType }).catch(() => null);
     } else {
-      const isDir = await isDirectoryDot(path);
-      const noteType = isDir ? 'dentry' : 'inode';
-      
       let oid = await findInGitHistory(path);
-  
-      return await gitNoteManager(fs, dir, 'read', noteType, { oid });
+      consoleDotLog('kiri : ', oid)
+      return await getNoteByOid(oid.oid, 'commits');
     }
   } catch (error) {
     consoleDotError(`Failed to get note for ${path}:`, error);

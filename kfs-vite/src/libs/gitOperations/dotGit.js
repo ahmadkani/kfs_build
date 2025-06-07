@@ -234,8 +234,8 @@ import {config} from './../../configES6.js';
             try {
                 logger.consoleDotLog('Starting findInGitHistory function...');
                 logger.consoleDotLog(`File path: ${filepath}`);
-
-                const pathParts = filepath.split('/');
+                const normalizedPath = filepath.replace(/^\/+|\/+$/g, '');
+                const pathParts = normalizedPath.split('/');
                 logger.consoleDotLog(`Path parts: ${JSON.stringify(pathParts)}`);
 
                 let commitOid = await baseFunctions.resolveRef(fs, dir);

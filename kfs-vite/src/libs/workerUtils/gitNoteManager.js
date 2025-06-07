@@ -34,6 +34,8 @@ async function gitNoteManager(fs, dir, operation, type = null, params = {}) {
         return await removeNote(fs, dir, type, params);
       case 'list':
         return await listNotes(fs, dir, type);
+      case 'findNotesByPath':
+        return await findNotesByPath(fs, dir, params);
       default:
         throw new Error(`Unsupported operation: ${operation}`);
     }
@@ -334,7 +336,9 @@ async function readNote(fs, dir, type, params) {
     }
 
     const noteStr = new TextDecoder().decode(noteUint8);
-    return JSON.parse(noteStr);
+    const result = JSON.parse(noteStr);
+    consoleDotLog('result: ', result);
+    return result;
 
   } catch (error) {
     consoleDotError(`Failed to get ${type} note: ${error.message}`);
@@ -358,15 +362,18 @@ async function listNotes(fs, dir) {
   }
 }
 
-async function findNotesByPath(fs, dir, targetPath) {
+async function findNotesByPath(fs, dir, params) {
+  const { path } = params;
+  consoleDotLog('path: ', path)
   const notes = await git.listNotes({ fs, dir });
+  consoleDotLog('notes: ', notes)
   const results = [];
 
   for (const oid of notes) {
     try {
       const noteRaw = await git.readNote({ fs, dir, oid });
       const noteData = JSON.parse(new TextDecoder().decode(noteRaw));
-      if (noteData.full_path === targetPath) {
+      if (noteData.full_path === path) {
         results.push({ oid, metadata: noteData });
       }
     } catch (e) {

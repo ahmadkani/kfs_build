@@ -201,6 +201,7 @@ class MemoryFS {
     consoleDotLog(`Getting stats for path: ${path}`);
   
     try {
+      const normalizedPath = path.replace(/^\/+|\/+$/g, '');
       if (!this.workerThread) await this.initializeWorker();
   
       // First check basic existence and directory status
@@ -214,18 +215,18 @@ class MemoryFS {
       const noteData = await this.workerThread.execute('getPathNote', {
         path
       });
-  
+
       // If note doesn't exist, create basic stats
-      if (noteData.error || !noteData.exists) {
+      if (noteData.error || !noteData || !noteData.paths[normalizedPath]) {
         consoleDotLog(`No note found for ${path}, returning basic stats`);
       }
   
       // Process the full metadata
-      const metadata = noteData.filepath_metadata?.[path] || noteData;
+      const metadata = noteData?.paths?.[normalizedPath]?.metadata || noteData;
       const stats = {
         // Standard fs.Stats properties
         dev: 0,
-        ino: metadata.inode || metadata.dentry_id || 0,
+        inode: metadata.inode || metadata.dentry_id || 0,
         mode: parseInt(metadata.mode, 8) || (exists.isDirectory ? 16877 : 33188),
         nlink: 1,
         uid: metadata.uid || 1000,

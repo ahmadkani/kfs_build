@@ -209,6 +209,7 @@ class IDBFs {
     consoleDotLog(`Getting stats for path: ${path}`);
   
     try {
+      const normalizedPath = path.replace(/^\/+|\/+$/g, '');
       if (!this.workerThread) await this.initializeWorker();
   
       // First check basic existence and directory status
@@ -222,15 +223,14 @@ class IDBFs {
       const noteData = await this.workerThread.execute('getPathNote', {
         path
       });
-  
+
       // If note doesn't exist, create basic stats
-      if (noteData.error || !noteData.exists) {
+      if (noteData.error || !noteData || !noteData.paths[normalizedPath]) {
         consoleDotLog(`No note found for ${path}, returning basic stats`);
       }
   
       // Process the full metadata
-      const metadata = noteData.filepath_metadata?.[path] || noteData;
-      consoleDotLog('kos : ', metadata)
+      const metadata = noteData?.paths?.[normalizedPath]?.metadata || noteData;
       const stats = {
         // Standard fs.Stats properties
         dev: 0,
