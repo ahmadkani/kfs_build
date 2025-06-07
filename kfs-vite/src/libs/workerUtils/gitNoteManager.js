@@ -174,73 +174,98 @@ async function createMetadata(fs, dir, type, params) {
 async function addNote(fs, dir, type, params) {
   try {
     let { oid, filepath, customMetadata, fsType } = params;
-    
-    // Validate input
+
     if (type === 'superblock' && !params.fsType) {
       throw new Error('fsType parameter is required for superblock notes');
     }
-    
+
     if (!oid && !filepath) {
       throw new Error('Either oid or filepath must be provided');
     }
-    
-    // Get OID if filepath is provided
+
     const isDirectory = type === 'dentry';
     if (filepath && !oid) {
       oid = await getOid(fs, dir, filepath, isDirectory);
     }
-    
-    // Generate complete metadata
-    const metadata = await createMetadata(fs, dir, type, {
+
+    let existingNote = null;
+    try {
+      const noteRef = type === 'superblock' ? 'repo' : type === 'acl' ? 'acl' : undefined;
+      const noteUint8 = await git.readNote({ fs, dir, oid, ref: noteRef });
+      existingNote = JSON.parse(new TextDecoder().decode(noteUint8));
+    } catch (_) {
+      // Note doesn't exist yet
+    }
+
+    const generatedMetadata = await createMetadata(fs, dir, type, {
       filepath,
       customMetadata,
       fsType
     });
-    
-    let noteRef;
-    let message;
-    
-    switch (type) {
-      case 'inode':
-        noteRef = undefined; // default notes ref
-        message = JSON.stringify(metadata);
-        break;
-        
-      case 'dentry':
-        noteRef = undefined;
-        message = JSON.stringify(metadata);
-        break;
-        
-      case 'superblock':
-        noteRef = 'repo';
-        message = JSON.stringify(metadata);
-        break;
-        
-      case 'acl':
-        noteRef = 'acl';
-        message = JSON.stringify(metadata);
-        break;
-        
-      default:
-        throw new Error(`Unsupported note type: ${type}`);
+
+    const now = getCurrentTimestamp();
+    const newPathEntry = {
+      full_path: filepath,
+      associated_at: now,
+      metadata: generatedMetadata
+    };
+
+    let noteData;
+
+    if (existingNote) {
+      consoleDotLog(`Note already exists for ${oid}, adding filepath association`);
+
+      const paths = existingNote.paths || {};
+
+      // Keep the old one if not present in paths
+      if (existingNote.full_path && !paths[existingNote.full_path]) {
+        paths[existingNote.full_path] = {
+          full_path: existingNote.full_path,
+          associated_at: existingNote.updated_at || now,
+          metadata: {
+            ...existingNote,
+            paths: undefined,
+            has_multiple_paths: undefined,
+            updated_at: undefined
+          }
+        };
+      }
+
+      // Add or update current path
+      paths[filepath] = newPathEntry;
+
+      noteData = {
+        has_multiple_paths: Object.keys(paths).length > 1,
+        paths
+      };
+    } else {
+      // New note
+      noteData = {
+        has_multiple_paths: false,
+        paths: {
+          [filepath]: newPathEntry
+        }
+      };
     }
-    
+
+    const noteRef = type === 'superblock' ? 'repo' : type === 'acl' ? 'acl' : undefined;
+    const message = JSON.stringify(noteData);
+
     await git.addNote({
       fs,
       dir,
       oid,
-      force: false,
       note: message,
+      ref: noteRef,
+      force: true,
       author: {
         name: 'gitNoteManager',
         email: 'gitnotemanager@system'
-      },
-      force: true,
-      ref: noteRef
+      }
     });
-    
+
     consoleDotLog(`Successfully added ${type} note to ${oid}`);
-    return metadata;
+    return noteData;
   } catch (error) {
     consoleDotError(`Failed to add ${type} note: ${error.message}`);
     throw error;
