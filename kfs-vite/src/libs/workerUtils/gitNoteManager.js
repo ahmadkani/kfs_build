@@ -82,6 +82,7 @@ async function createMetadata(fs, dir, type, params) {
   const baseMetadata = {
     created_at: now,
     updated_at: now,
+    full_path: filepath,
     ...customMetadata
   };
 
@@ -116,7 +117,7 @@ async function createMetadata(fs, dir, type, params) {
       // Try to get parent inode if parent path exists
       let parentInode = 0;
       try {
-        const parentOid = await getOid(fs, dir, parentPath, true);
+        const parentOid = params?.customMetadata?.parentOid || await getOid(fs, dir, parentPath, true);
         const parentNote = await git.readNote({ fs, dir, oid: parentOid });
         const parentMeta = JSON.parse(parentNote);
         parentInode = parentMeta.inode || 0;
@@ -228,6 +229,7 @@ async function addNote(fs, dir, type, params) {
       fs,
       dir,
       oid,
+      force: false,
       note: message,
       author: {
         name: 'gitNoteManager',
@@ -289,6 +291,23 @@ async function readNote(fs, dir, type, params) {
       throw new Error(`Note not found for ${type}`);
     }
 
+    // Fallback: Try to match by path if available
+    if (filepath && !noteUint8) {
+      const notes = await git.listNotes({ fs, dir });
+      for (const noteOid of notes) {
+        const noteRef = (type === 'superblock') ? 'repo' : (type === 'acl') ? 'acl' : undefined;
+        try {
+          const noteRaw = await git.readNote({ fs, dir, oid: noteOid, ref: noteRef });
+          const noteData = JSON.parse(new TextDecoder().decode(noteRaw));
+          if (noteData.full_path === filepath) {
+            return noteData;
+          }
+        } catch (e) {
+          // Ignore parsing errors or missing notes
+        }
+      }
+    }
+
     const noteStr = new TextDecoder().decode(noteUint8);
     return JSON.parse(noteStr);
 
@@ -314,6 +333,25 @@ async function listNotes(fs, dir) {
   }
 }
 
+async function findNotesByPath(fs, dir, targetPath) {
+  const notes = await git.listNotes({ fs, dir });
+  const results = [];
+
+  for (const oid of notes) {
+    try {
+      const noteRaw = await git.readNote({ fs, dir, oid });
+      const noteData = JSON.parse(new TextDecoder().decode(noteRaw));
+      if (noteData.full_path === targetPath) {
+        results.push({ oid, metadata: noteData });
+      }
+    } catch (e) {
+      continue;
+    }
+  }
+
+  return results;
+}
+
 async function initDefaultSuperblock(fs, dir, fsType) {
   const defaultSuperblock = {
     fsType,
@@ -327,6 +365,7 @@ async function initDefaultSuperblock(fs, dir, fsType) {
     fs,
     dir,
     oid: 'HEAD',
+    force: false,
     note: new TextEncoder().encode(JSON.stringify(defaultSuperblock)),
     author: { name: 'system', email: 'system@git' },
     ref: 'repo',

@@ -734,7 +734,8 @@ export class VFS {
   async setUserConfigs(args) {
     await this.validateVFSutils();
     consoleDotLog('Setting user configurations:', args);
-    await this.VFSutils.updateFetchInfo(args);
+    const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
+    await vfsUtils.updateFetchInfo(args);
     let mountData = this.mounts[this.currentMountPath];
     mountData = { ...mountData, fetchInfo: { ...mountData.fetchInfo, ...args } };
     this.persistMountData(this.currentMountPath, mountData);

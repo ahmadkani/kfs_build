@@ -837,15 +837,8 @@ export class VFSutils {
           });
           
           const hasNotes = serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
-          const hasLocalNotes = await this.workerThread.execute('checkForLocalNotes');
 
           if (hasNotes) {
-            if (!hasLocalNotes) {
-              consoleDotLog('Notes found on remote but not locally, fetching...');
-              const addLocalNote = await this.workerThread.execute('addNotesRef');
-              consoleDotLog('Notes are added.');
-            }
-            
             consoleDotLog('Fetching notes from remote...');
             await this.workerThread.execute('doFetch', {
               url: this.fetchInfo.url,

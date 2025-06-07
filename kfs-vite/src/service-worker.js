@@ -961,6 +961,7 @@ async function doFetch(args) {
       if (!ref) {
         throw new Error('Reference (ref) is not defined.');
       }
+      let _ref = args?.ref || ref;
 
       const result = await git.fetch({
         ...args,
@@ -968,11 +969,14 @@ async function doFetch(args) {
         http,
         dir,
         corsProxy,
-        ref,
+        ref: _ref,
         remote,
         depth,
         singleBranch: false,
         tags: false,
+        onProgress: event => {
+          consoleDotLog('Fetch progress event:', event);
+        },
         headers: buildHeaders(username, password),
         onAuth() {
           return authenticate.fill();

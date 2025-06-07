@@ -338,7 +338,7 @@ export class KFS {
             await fs.fsInstance.fs_mkdir(currentPath);
             await this.vfs.writeToFsTable(currentPath, 'dir');
         } catch (error) {
-            if (!error.message.includes('exists')) throw error;
+            if (!error.message.includes('exists')) consoleDotError(error);
         }
     }
   }

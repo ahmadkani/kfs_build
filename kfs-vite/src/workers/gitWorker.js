@@ -533,7 +533,8 @@ async function doFetch(args) {
           return authenticate.rejected();
         },
       });
-
+      
+      await ensureAllFilesHaveNotes();
       return {success: true};
     }
   } catch (error) {
@@ -1158,6 +1159,7 @@ async function doCloneAndStuff(args) {
       handleNoRefResult = await handleNoRef(args);
       await initializeLocalBranches();
     }
+
     await initRepoNotes(fsType, 'root');
     return ({handleNoRefResult, message: 'notExist', success: true});
   } catch (error) {
@@ -1847,6 +1849,18 @@ async function getPathNote(path) {
   }
 }
 
+async function getNoteByOid(oid, type) {
+  try {
+    const note = await gitNoteManager(fs, dir, 'read', type, { oid });
+    return note;
+  } catch (err) {
+    if (err.message?.includes('Note not found')) {
+      return null;
+    }
+    throw err;
+  }
+}
+
 async function listAllNotes(detailed = true) {
   try {
     const [listOfNotes, superblock] = await Promise.all([
@@ -1873,14 +1887,7 @@ async function initRepoNotes(fsType = 'memory', owner = 'root') {
     consoleDotLog('[GITWorker] Initializing repository notes');
     
     // Verify we can read the root tree first
-    let rootTreeOid;
-    try {
-      rootTreeOid = await git.resolveRef({ fs, dir, ref: 'HEAD' })
-        .then(oid => git.readTree({ fs, dir, oid }))
-        .then(tree => tree.oid);
-    } catch (error) {
-      throw new Error('Cannot initialize notes: Repository HEAD not available');
-    }
+    let rootTreeOid = await git.resolveRef({ fs, dir, ref: 'HEAD' });
     
     // Initialize superblock if needed
     try {
@@ -1926,6 +1933,176 @@ async function initRepoNotes(fsType = 'memory', owner = 'root') {
   }
 }
 
+async function ensureAllFilesHaveNotes(owner = username) {
+  consoleDotLog('[GITWorker] Starting ensureAllFilesHaveNotes...');
+  consoleDotLog(`[GITWorker] Owner: ${owner}`);
+
+  let files = [];
+  let notes = [];
+  try {
+    consoleDotLog('[GITWorker] Listing all files in the repository...');
+    files = await listFilesDot(1);
+    consoleDotLog(`[GITWorker] Total files/directories found: ${files.length}`);
+  } catch (err) {
+    consoleDotError('[GITWorker] Failed to list files:', err);
+    return 0;
+  }
+
+  const fileMap = new Map();
+  consoleDotLog('[GITWorker] Building file map...');
+  for (const file of files) {
+    fileMap.set(file.path, file);
+    consoleDotLog(`[GITWorker] Mapped: ${file.path} (type: ${file.type}, oid: ${file.oid})`);
+  }
+
+  try {
+    const listedNotes = await listAllNotes();
+    consoleDotLog('[GITWorker] notes list: ', listedNotes);
+
+    listedNotes.listOfNotes.forEach(item => notes.push(item.target))
+    consoleDotLog('[GITWorker] notes list: ', notes);
+  } catch(error) {
+    consoleDotError(error);
+  }
+  const missingNotes = [];
+
+  consoleDotLog('[GITWorker] Checking for missing notes...');
+  for (const file of files) {
+    const { path, type, oid } = file; 
+    const noteType = type === 'tree' ? 'dentry' : 'inode';
+
+    if (!oid) {
+      consoleDotError(`[GITWorker] Skipping ${path}: missing OID.`);
+      continue;
+    }
+
+    consoleDotLog(`[GITWorker] Checking for existing ${noteType} note for ${path}...`);
+    try {
+      !(file.oid in notes) && missingNotes.push({path, type: noteType, oid });
+    } catch (err) {
+      consoleDotLog(`[GITWorker] Error fetching note for ${path}. Assuming missing.`, err);
+      missingNotes.push({ path, type: noteType, oid });
+    }
+  }
+
+  consoleDotLog(`[GITWorker] Total missing notes: ${missingNotes.length}`, missingNotes);
+
+  for (const { path, type, oid } of missingNotes) {
+    consoleDotLog(`[GITWorker] Adding ${type} note for ${path}...`);
+    const metadata = {
+      owner,
+      created_at: new Date().toISOString(),
+      operation: 'auto-generated',
+      timestamp: new Date().toISOString()
+    };
+
+    if (type === 'dentry') {
+      const pathParts = path.split('/');
+      const parentPath = pathParts.slice(0, -1).join('/') || '/';
+      
+      // Special case for root directory
+      if (pathParts.length === 1) {
+        // This is a top-level directory, its parent is the root
+        try {
+          // Get the root note using the commitOid
+          const rootNote = 'HEAD';
+          metadata.parentOid = rootNote;
+        } catch {
+          metadata.parentOid = 'HEAD';
+        }
+      } else {
+        // Normal case - get parent from filemapp
+        const parent = fileMap.get(parentPath);
+        if (parent) {
+          try {
+            const parentOid = parent.oid;
+            metadata.parentOid = parentOid || 'HEAD';
+          } catch {
+            metadata.parentOid = 'HEAD';
+          }
+        } else {
+          metadata.parentOid = 'HEAD';
+        }
+      }
+    }
+    
+    try {
+      await gitNoteManager(fs, dir, 'add', type, {
+        oid,
+        filepath: path,
+        customMetadata: metadata
+      });
+      consoleDotLog(`[GITWorker] Successfully added ${type} note for ${path}`);
+    } catch (err) {
+      consoleDotError(`[GITWorker] Failed to add ${type} note for ${path}`, err);
+    }
+  }
+
+  consoleDotLog(`[GITWorker] ensureAllFilesHaveNotes completed. Total notes added: ${missingNotes.length}`);
+  return missingNotes.length;
+}
+
+
+async function tryGetNote(path) {
+  try {
+    return await getPathNote(path);
+  } catch (err) {
+    consoleDotLog(`[GITWorker] No note found for ${path}`);
+    return null;
+  }
+}
+
+async function addMissingNotes(missingNotes, owner) {
+  for (const { path, type, oid } of missingNotes) {
+    try {
+      consoleDotLog(`[GITWorker] Creating metadata for ${path}`);
+      const metadata = buildMetadata(owner, type, path);
+
+      await gitNoteManager(fs, dir, 'add', type, {
+        oid,
+        filepath: path,
+        customMetadata: metadata
+      });
+
+      consoleDotLog(`[GITWorker] Successfully added ${type} note for ${path}`);
+    } catch (error) {
+      consoleDotError(`[GITWorker] Failed to add note for ${path}:`, error);
+    }
+  }
+}
+
+function buildMetadata(owner, type, path) {
+  const baseMeta = {
+    owner,
+    created_at: new Date().toISOString(),
+    operation: 'auto-generated',
+    timestamp: new Date().toISOString()
+  };
+
+  if (type === 'dentry') {
+    const parentPath = path.split('/').slice(0, -1).join('/') || '/';
+    return {
+      ...baseMeta,
+      parent_inode: getParentInode(parentPath)
+    };
+  }
+
+  return baseMeta;
+}
+
+async function getParentInode(parentPath) {
+  consoleDotLog(`[GITWorker] Retrieving parent inode for: ${parentPath}`);
+  try {
+    const parentNote = await getPathNote(parentPath);
+    const inode = parentNote?.inode || parentNote?.dentry_id || 0;
+    consoleDotLog(`[GITWorker] Found parent_inode for ${parentPath}: ${inode}`);
+    return inode;
+  } catch {
+    consoleDotLog(`[GITWorker] Failed to retrieve parent inode for ${parentPath}, defaulting to 0`);
+    return 0;
+  }
+}
+
 async function checkForLocalNotes() {
   try {
     consoleDotLog('[GITWorker] Checking for local notes');
@@ -1940,22 +2117,6 @@ async function checkForLocalNotes() {
   } catch (error) {
     consoleDotError('[GITWorker] Failed to check for local notes:', error);
     throw new Error(`Failed to check for local notes: ${error.message}`);
-  }
-}
-
-async function addNotesRef() {
-  try { 
-
-    // const notesRefPath = 'refs/notes/commits';
-    // await mkdirRecursive(dir + '/.git/refs/notes');
-    // const notesRefPath = '/.git/refs/notes/commits';
-    // await fs.promises.writeFile(notesRefPath, '');
-    // const oid = await git.resolveRef({ fs, dir, ref: 'HEAD' });
-    // await writeRef('HEAD', notesRefPath);
-    return {success: true, message: 'Notes ref added successfully'};
-  } catch (error) {
-    consoleDotError(`[GITWorker] Failed to add local note of type: `, error);
-    throw new Error(`Failed to add local note: ${error.message}`);
   }
 }
 
@@ -2363,8 +2524,8 @@ const operationHandlers = {
   readdir: ({ path }) => readdir(path),
   readDirDot: ({ path }) => readDirDot(path),
   getFileStoresFromDatabases: getFileStoresFromDatabases,
-  addNotesRef: addNotesRef,
   checkForLocalNotes: checkForLocalNotes,
+  ensureAllFilesHaveNotes: ({owner}) => ensureAllFilesHaveNotes(owner),
 };
 
 // ==============================================
