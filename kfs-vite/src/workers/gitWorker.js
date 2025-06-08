@@ -544,7 +544,7 @@ async function doFetch(args) {
   }
 }
 
-async function listFsTree(dir = '/', indent = '') {
+async function listFilesAsTree(dir = '/', indent = '') {
   let entries;
   try {
     entries = await fs.promises.readdir(dir);
@@ -559,13 +559,13 @@ async function listFsTree(dir = '/', indent = '') {
     try {
       stat = await fs.promises.stat(fullPath);
     } catch (e) {
-      consoleDotError(`Failed to stat ${fullPath}:`, e);
+      // consoleDotError(`Failed to stat ${fullPath}:`, e);
       continue;
     }
 
     if (stat.type === 'dir') {
       consoleDotLog(`${indent}📁 ${entry}`);
-      await listFsTree(fullPath, indent + '  ');
+      await listFilesAsTree(fullPath, indent + '  ');
     } else {
       consoleDotLog(`${indent}📄 ${entry}`);
     }
@@ -1693,6 +1693,7 @@ async function readFileDot(filePath, _commitOid = 'staged') {
 
 async function readDirDot(dirPath, _commitOid = 'staged') {
   try {
+    await listFilesAsTree();
     consoleDotLog(`[GITWorker] Reading directory: ${dirPath}`);
     const contents = await dotGit.readDirDot(fs, dir, dirPath, _commitOid);
     consoleDotLog(`[GITWorker] Directory contents for ${dirPath}:`, contents);

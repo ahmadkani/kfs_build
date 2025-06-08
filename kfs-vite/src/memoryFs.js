@@ -202,6 +202,7 @@ class MemoryFS {
   
     try {
       const normalizedPath = path.replace(/^\/+|\/+$/g, '');
+      normalizedPath.includes('.git')
       if (!this.workerThread) await this.initializeWorker();
   
       // First check basic existence and directory status
@@ -217,7 +218,7 @@ class MemoryFS {
       });
 
       // If note doesn't exist, create basic stats
-      if (noteData.error || !noteData || !noteData.paths[normalizedPath]) {
+      if (noteData.error || !noteData || !noteData?.paths?.[normalizedPath]) {
         consoleDotLog(`No note found for ${path}, returning basic stats`);
       }
   

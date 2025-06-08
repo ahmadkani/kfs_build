@@ -225,7 +225,7 @@ class IDBFs {
       });
 
       // If note doesn't exist, create basic stats
-      if (noteData.error || !noteData || !noteData.paths[normalizedPath]) {
+      if (noteData.error || !noteData || !noteData?.paths?.[normalizedPath]) {
         consoleDotLog(`No note found for ${path}, returning basic stats`);
       }
   

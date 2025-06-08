@@ -162,12 +162,6 @@ async function createMetadata(fs, dir, type, params) {
       };
     }
     
-    case 'acl':
-      return {
-        ...baseMetadata,
-        ...acl.getACL(filepath)
-      };
-      
     default:
       throw new Error(`Unsupported note type: ${type}`);
   }
@@ -192,8 +186,7 @@ async function addNote(fs, dir, type, params) {
 
     let existingNote = null;
     try {
-      const noteRef = type === 'superblock' ? 'repo' : type === 'acl' ? 'acl' : undefined;
-      const noteUint8 = await git.readNote({ fs, dir, oid, ref: noteRef });
+      const noteUint8 = await git.readNote({ fs, dir, oid });
       existingNote = JSON.parse(new TextDecoder().decode(noteUint8));
     } catch (_) {
       // Note doesn't exist yet
@@ -250,7 +243,6 @@ async function addNote(fs, dir, type, params) {
       };
     }
 
-    const noteRef = type === 'superblock' ? 'repo' : type === 'acl' ? 'acl' : undefined;
     const message = JSON.stringify(noteData);
 
     await git.addNote({
@@ -258,7 +250,6 @@ async function addNote(fs, dir, type, params) {
       dir,
       oid,
       note: message,
-      ref: noteRef,
       force: true,
       author: {
         name: 'gitNoteManager',
@@ -273,7 +264,6 @@ async function addNote(fs, dir, type, params) {
     throw error;
   }
 }
-
 
 async function readNote(fs, dir, type, params) {
   let targetOid;
@@ -290,26 +280,13 @@ async function readNote(fs, dir, type, params) {
       throw new Error('Valid OID or filepath must be provided');
     }
 
-    let noteRef;
-    switch (type) {
-      case 'superblock':
-        noteRef = 'repo';
-        break;
-      case 'acl':
-        noteRef = 'acl';
-        break;
-      default:
-        noteRef = undefined;
-    }
-
     const noteUint8 = await git.readNote({
       fs,
       dir,
-      oid: targetOid,
-      ref: noteRef
+      oid: targetOid
     }).catch(() => null);
+    
     if (!noteUint8) {
-      
       if (type === 'superblock') {
         const fsType = params?.fsType || 'memory';
         // Initialize default superblock if not found
@@ -322,9 +299,8 @@ async function readNote(fs, dir, type, params) {
     if (filepath && !noteUint8) {
       const notes = await git.listNotes({ fs, dir });
       for (const noteOid of notes) {
-        const noteRef = (type === 'superblock') ? 'repo' : (type === 'acl') ? 'acl' : undefined;
         try {
-          const noteRaw = await git.readNote({ fs, dir, oid: noteOid, ref: noteRef });
+          const noteRaw = await git.readNote({ fs, dir, oid: noteOid });
           const noteData = JSON.parse(new TextDecoder().decode(noteRaw));
           if (noteData.full_path === filepath) {
             return noteData;
@@ -393,14 +369,16 @@ async function initDefaultSuperblock(fs, dir, fsType) {
     features: []
   };
 
+  // Get the HEAD commit OID
+  const headOid = await git.resolveRef({ fs, dir, ref: 'HEAD' });
+
   await git.addNote({
     fs,
     dir,
-    oid: 'HEAD',
+    oid: headOid,
     force: false,
     note: new TextEncoder().encode(JSON.stringify(defaultSuperblock)),
     author: { name: 'system', email: 'system@git' },
-    ref: 'repo',
     force: true
   });
 
@@ -408,44 +386,26 @@ async function initDefaultSuperblock(fs, dir, fsType) {
 }
 
 async function removeNote(fs, dir, type, params) {
-    try {
-      const { oid, filepath } = params;
-      
-      let targetOid = oid;
-      if (filepath && !oid) {
-        targetOid = await getOid(fs, dir, filepath);
-      }
-      
-      let noteRef;
-      
-      switch (type) {
-        case 'inode':
-        case 'dentry':
-          noteRef = undefined; // default notes ref
-          break;
-        case 'superblock':
-          noteRef = 'repo';
-          break;
-        case 'acl':
-          noteRef = 'acl';
-          break;
-        default:
-          throw new Error(`Unsupported note type: ${type}`);
-      }
-      
-      await git.removeNote({
-        fs,
-        dir,
-        oid: targetOid,
-        ref: noteRef
-      });
-      
-      consoleDotLog(`Successfully removed ${type} note from ${targetOid}`);
-      return true;
-    } catch (error) {
-      consoleDotError(`Failed to remove ${type} note: ${error.message}`);
-      throw error;
+  try {
+    const { oid, filepath } = params;
+    
+    let targetOid = oid;
+    if (filepath && !oid) {
+      targetOid = await getOid(fs, dir, filepath);
     }
+    
+    await git.removeNote({
+      fs,
+      dir,
+      oid: targetOid
+    });
+    
+    consoleDotLog(`Successfully removed ${type} note from ${targetOid}`);
+    return true;
+  } catch (error) {
+    consoleDotError(`Failed to remove ${type} note: ${error.message}`);
+    throw error;
   }
-  
+}
+
 export default gitNoteManager;
