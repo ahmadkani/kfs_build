@@ -655,18 +655,16 @@ export class VFSutils {
           
           await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
 
-          // 1. First try a simple push
-          consoleDotLog('Attempting push...');
-          const pushResult = await this.workerThread.execute('push', {
-            url: this.fetchInfo.url,
-            ref: 'main',
-            force: false,
-          });
-
           const pushNotesResult = await this.workerThread.execute('push', {
             url: this.fetchInfo.url,
             ref: 'refs/notes/commits',
             remoteRef: 'refs/notes/commits',
+            force: false,
+          });
+                    consoleDotLog('Attempting push...');
+          const pushResult = await this.workerThread.execute('push', {
+            url: this.fetchInfo.url,
+            ref: 'main',
             force: false,
           });
           
@@ -680,7 +678,6 @@ export class VFSutils {
             };
           }
           
-          // 2. If push fails (maybe remote was updated concurrently)
           consoleDotLog('Push failed, rechecking sync status...');
           const newStatus = await this.getSyncStatus();
           
@@ -740,19 +737,18 @@ export class VFSutils {
             throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
           }
 
-          // 2. Push merged changes
-          consoleDotLog('Pushing merged changes...');
-          await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
-          const pushResult = await this.workerThread.execute('push', {
-            url: this.fetchInfo.url,
-            ref: 'main',
-            force: false,
-          });
 
           const pushNotesResult = await this.workerThread.execute('push', {
             url: this.fetchInfo.url,
             ref: 'refs/notes/commits',
             remoteRef: 'refs/notes/commits',
+            force: false,
+          });
+          consoleDotLog('Pushing merged changes...');
+          await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
+          const pushResult = await this.workerThread.execute('push', {
+            url: this.fetchInfo.url,
+            ref: 'main',
             force: false,
           });
           
