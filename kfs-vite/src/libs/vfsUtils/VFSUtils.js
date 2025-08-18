@@ -53,7 +53,7 @@ export class VFSutils {
       consoleDotLog('workerThread:', this.workerThread);
       this.auth = new GitAuth(this.workerThread);
 
-      if (this.fetchInfo.username && this.fetchInfo.password) {
+      if (this.fetchInfo.username || this.fetchInfo.password) {
         await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
       }
 
@@ -94,6 +94,33 @@ export class VFSutils {
     }
   }
 
+
+    async initRepoLocally() {
+    try {
+      consoleDotLog('Initializing local repository...');
+      if (!this.initialized) await this.initialize();
+      
+      // const initResult = await this.workerThread.execute('doInitAndStuff', {});
+      consoleDotLog('initialized.');
+
+      if (!initResult.success) {
+        throw new Error("Local repository initialization failed!");
+      }
+      
+      if (this.fetchInfo.name && this.fetchInfo.email) {
+        await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
+      }
+      
+      // Generate FS table after successful init
+      await this.generateFsTable();
+      consoleDotLog('Repository successfully initialized and indexed');
+    } catch (error) {
+      consoleDotError(`Local repo init failed: ${error}`);
+      await this.terminate();
+      throw error;
+    }
+  }
+
   async fetchFromGit() {
     try {
       consoleDotLog('Fetching from Git repository...');
@@ -127,10 +154,10 @@ export class VFSutils {
   async fetchFromDisk() {
     try {
       if (!this.initialized) await this.initialize();
-      const { dir } = this.fetchInfo;
+      const { where } = this.fetchInfo;
       consoleDotLog(`Loading filesystem from disk at ${dir}`);
       
-      // Implement disk loading logic here
+      await this.initRepoLocally();
       await this.generateFsTable();
       consoleDotLog(`Successfully loaded filesystem from disk`);
     } catch (error) {
@@ -522,7 +549,7 @@ export class VFSutils {
       /**
        * Optimized sync flow that minimizes remote operations
        */
-      async autoSyncFlow(onConflictStrategy) {
+      async autoSyncFlow(onConflictStrategy, syncUrl) {
         try {
           consoleDotLog('this.fetchInfo', this.fetchInfo);
           // First do lightweight check
@@ -530,18 +557,25 @@ export class VFSutils {
           
           consoleDotLog("Sync status:", status);
           
+          const addRemoteResult = await this.workerThread.execute('addRemote', {
+            url: syncUrl,
+            remote: 'sync',
+          });
+
+          consoleDotLog("Remote added", syncUrl);
+
           switch (status) {
             case 'up-to-date':
               return { synced: true };
               
             case 'local-ahead':
-              return await this.handleLocalAhead(localHead, remoteHead, onConflictStrategy);
+              return await this.handleLocalAhead(localHead, remoteHead, onConflictStrategy, syncUrl);
               
             case 'remote-ahead':
-              return await this.handleRemoteAhead(localHead, remoteHead, onConflictStrategy);
+              return await this.handleRemoteAhead(localHead, remoteHead, onConflictStrategy, syncUrl);
               
             case 'diverged':
-              return await this.handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy);
+              return await this.handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, syncUrl);
               
             case 'remote-branch-not-found':
               consoleDotError('Remote branch not found');
@@ -559,14 +593,14 @@ export class VFSutils {
       /**
        * Handle case where remote is ahead of local (need to pull changes)
        */
-      async handleRemoteAhead(localHead, remoteHead, onConflictStrategy) {
+      async handleRemoteAhead(localHead, remoteHead, onConflictStrategy, syncUrl) {
         try {
           consoleDotLog(`Handling remote-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
           const _onConflictStrategy = onConflictStrategy || 'theirs';
           // 1. First try a simple fast-forward
           consoleDotLog('Attempting fast-forward merge...');
           const ffResult = await this.workerThread.execute('fastForward', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             ref: 'main',
           });
           
@@ -589,7 +623,7 @@ export class VFSutils {
           });
           consoleDotLog('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             remote: 'origin',
             ref: 'refs/notes/commits',
             tags: true,
@@ -603,7 +637,7 @@ export class VFSutils {
 
           consoleDotLog('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             remote: 'origin',
             ref: 'refs/notes/commits',
             tags: true,
@@ -649,21 +683,22 @@ export class VFSutils {
       /**
        * Handle case where local is ahead of remote (need to push changes)
        */
-      async handleLocalAhead(localHead, remoteHead) {
+      async handleLocalAhead(localHead, remoteHead, onConflictStrategy, syncUrl) {
         try {
           consoleDotLog(`Handling local-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
           
           await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
 
           const pushNotesResult = await this.workerThread.execute('push', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             ref: 'refs/notes/commits',
             remoteRef: 'refs/notes/commits',
             force: false,
           });
-                    consoleDotLog('Attempting push...');
+
+          consoleDotLog('Attempting push...');
           const pushResult = await this.workerThread.execute('push', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             ref: 'main',
             force: false,
           });
@@ -688,12 +723,12 @@ export class VFSutils {
           
           if (newStatus.status === 'remote-ahead') {
             consoleDotLog('Remote moved ahead during push attempt');
-            return this.handleRemoteAhead(localHead, newStatus.remoteHead);
+            return this.handleRemoteAhead(localHead, newStatus.remoteHead, onConflictStrategy, syncUrl);
           }
           
           if (newStatus.status === 'diverged') {
             consoleDotLog('Branches diverged during push attempt');
-            return this.handleDiverged(localHead, newStatus.remoteHead, newStatus.commonAncestor);
+            return this.handleDiverged(localHead, newStatus.remoteHead, newStatus.commonAncestor, onConflictStrategy, syncUrl);
           }
           
           throw new Error(`Unexpected status after push failure: ${newStatus.status}`);
@@ -706,7 +741,7 @@ export class VFSutils {
       /**
        * Handle case where branches have diverged
        */
-      async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy) {
+      async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, syncUrl) {
         try {
           const _onConflictStrategy = onConflictStrategy || 'theirs';
 
@@ -715,13 +750,13 @@ export class VFSutils {
           // 1. Pull with merge
           consoleDotLog('Pulling with merge...');
           const pullResult = await this.workerThread.execute('doFetch', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             ref: 'main',
           });
 
           consoleDotLog('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             remote: 'origin',
             ref: 'refs/notes/commits',
             tags: true,
@@ -739,7 +774,7 @@ export class VFSutils {
 
 
           const pushNotesResult = await this.workerThread.execute('push', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             ref: 'refs/notes/commits',
             remoteRef: 'refs/notes/commits',
             force: false,
@@ -747,7 +782,7 @@ export class VFSutils {
           consoleDotLog('Pushing merged changes...');
           await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
           const pushResult = await this.workerThread.execute('push', {
-            url: this.fetchInfo.url,
+            url: syncUrl,
             ref: 'main',
             force: false,
           });

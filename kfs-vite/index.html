@@ -127,9 +127,20 @@
   </div>
 
   <script type="module">
-    import { KFS, setConfig } from "./src/kfs.js";
+    import { KFS } from "./src/kfs.js";
     import { serviceWorker } from "./src/libs/sw-register.js";
 
+    // await setConfig({
+    //   corsProxy: 'http://localhost:9000',
+    //   logging: {
+    //     gitWorker: true,
+    //     serviceWorker: true
+    //   },
+    //   versioning: {
+    //     strategy: 'delayed'
+    //   }
+    // });
+    
     const kfs = new KFS();
 
     const $ = (id) => document.getElementById(id);
@@ -173,21 +184,21 @@
 
       try {
         logOutput("Mounting filesystem...");
-        await kfs.mount(path, "memory", "1", "git", {
+        await kfs.mount(path, "idb", "1", "git", {
           fetchInfo: {
-            url: 'https://github.com/ahmadkani/ahmadkani',
-            username: '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',
+            url: 'https://github.com/ahmadkani/ahmadkani', //idb for idb based initing or fetching if exists, memory for memory based initing
+            username: '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',
             password: '',
             name: 'ahmad',
             email: 'ahmad@kani.com',
           },
           useSW: false,
-          merging: { strategy: 'clock', interval: 2000, onConflictStrategy: 'remote' },
+          merging: { strategy: 'immediate', interval: 2000, onConflictStrategy: 'local', syncUrl: 'https://github.com/ahmadkani/ahmadkani2'}, //syncUrl required, defaults to fetchurl
           versioning: { strategy: 'immediate', interval: 10, number: 5 },
         });
 
         await kfs.setUserConfigs({
-          username: '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',
+          username: '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',
           password: '',
           name: 'ahmad',
           email: 'ahmad@kani.com',

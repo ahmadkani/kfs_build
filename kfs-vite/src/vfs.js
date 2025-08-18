@@ -88,8 +88,9 @@ export class VFS {
   getMergingConfig(options = {}) {
     const merging = options.merging || config.merging || {};
     return {
-      strategy: merging.strategy || 'none',
-      conflictResolution: merging.conflictResolution || 'timestamp'
+        ...merging,
+        strategy: merging.strategy || 'immediate',
+        onConflictStrategy: merging.onConflictStrategy || 'local'
     };
   }
 
@@ -696,10 +697,10 @@ export class VFS {
   async merger(onConflictStrategy) {
     consoleDotLog('Starting merge operation');
     await this.validateVFSutils();
-  
+    const syncUrl = this.mounts[this.currentMountPath]?.merging?.syncUrl;
     try {
       const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
-      const mergeResult = await vfsUtils.autoSyncFlow(onConflictStrategy);
+      const mergeResult = await vfsUtils.autoSyncFlow(onConflictStrategy, syncUrl);
       consoleDotLog('Merge operation completed successfully:', mergeResult);
       return mergeResult;
     } catch (error) {

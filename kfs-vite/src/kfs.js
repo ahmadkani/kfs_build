@@ -74,11 +74,13 @@ export class KFS {
   
   async merge() {
     try {
+      consoleDotLog('Merging...', mountPaths);
+
       const strategyMap = { remote: 'theirs', local: 'ours', combine: 'combine' };
       const userStrategy = this.mergingConfig?.onConflictStrategy || 'remote';
       const onConflictStrategy = strategyMap[userStrategy] || 'remote';
 
-      consoleDotLog('Merging...');
+      consoleDotLog('Merging...', mountPaths);
       await this.vfs.merger(onConflictStrategy);
       consoleDotLog('Merge completed successfully.');
     } catch(error) {
@@ -94,7 +96,6 @@ export class KFS {
   async mount(path, fsType, fsName, fetchMethod, options = {}) {
     try {
       this._setupVersioningAndMerging(options);
-      
       path = this._normalizePath(path);
       const versioningConfig = await this.versioningManager.getConfig();
       this.mergingConfig = await this.mergingManager.getConfig();
@@ -104,6 +105,7 @@ export class KFS {
         versioning: versioningConfig,
         merging: this.mergingConfig
       });
+      this.mergingConfig = mountData.merging;
 
       this.fsInstance = mountData.fsInstance;
       const root = await this.read(`${path}/${fsName}`);
@@ -347,7 +349,11 @@ export class KFS {
     if (typeof path !== 'string') throw new Error('Path must be a string');
     return path.startsWith('/') ? path : `/${path}`;
   }
+
+  // Config functions
+  async setConfig(config) {
+    return configStore.setConfig(config)
+  }
 }
 
 export { serviceWorker } from './libs/sw-register.js';
-export { setConfig } from './configES6.js';
