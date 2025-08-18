@@ -1385,7 +1385,12 @@ async function push(args) {
   consoleDotLog(`Starting to push with these args: `, args);
   let attempt = args?.attempt || 0;
   let _ref = args?.ref || ref;
-  
+  try{
+  const config = await fs.promises.readFile('/.git/config', 'utf8')
+  consoleDotLog('kir', config)
+  } catch(err) {
+    consoleDotError(err)
+  }
   const maxDeleteRetries = 1;
   const force = args?.force || true;
 

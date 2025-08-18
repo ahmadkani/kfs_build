@@ -561,6 +561,7 @@ export class VFSutils {
             url: syncUrl,
             remote: 'sync',
           });
+          await this.reconfigureRemoteWithNotes('sync');
 
           consoleDotLog("Remote added", syncUrl);
 
@@ -624,7 +625,7 @@ export class VFSutils {
           consoleDotLog('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
             url: syncUrl,
-            remote: 'origin',
+            remote: 'sync',
             ref: 'refs/notes/commits',
             tags: true,
             singleBranch: true,
@@ -638,7 +639,7 @@ export class VFSutils {
           consoleDotLog('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
             url: syncUrl,
-            remote: 'origin',
+            remote: 'sync',
             ref: 'refs/notes/commits',
             tags: true,
             singleBranch: true,
@@ -757,7 +758,7 @@ export class VFSutils {
           consoleDotLog('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
             url: syncUrl,
-            remote: 'origin',
+            remote: 'sync',
             ref: 'refs/notes/commits',
             tags: true,
             singleBranch: true,
@@ -862,7 +863,7 @@ export class VFSutils {
 
       async fetchNotes() {
         try {
-          await this.reconfigureRemoteWithNotes();
+          await this.reconfigureRemoteWithNotes('origin');
           const serverRefs = await this.workerThread.execute('listServerRefs', {
             remote: 'origin'
           });
@@ -873,7 +874,7 @@ export class VFSutils {
             consoleDotLog('Fetching notes from remote...');
             await this.workerThread.execute('doFetch', {
               url: this.fetchInfo.url,
-              remote: 'origin',
+              remote: 'sync',
               ref: 'refs/notes/commits',
               tags: true,
               singleBranch: true,
@@ -887,15 +888,15 @@ export class VFSutils {
         }
       }
 
-      async reconfigureRemoteWithNotes() {
+      async reconfigureRemoteWithNotes(remote) {
         try {
           const fetch = await this.workerThread.execute('getConfig', {
-            path: 'remote.origin.fetch',
+            path: `remote.${remote}.fetch`,
           });
           
           if (fetch !== '+refs/notes/*:refs/notes/*') {
               await this.workerThread.execute('setConfig', {
-              path: 'remote.origin.fetch',
+              path: `remote.${remote}.fetch`,
               value: '+refs/notes/*:refs/notes/*',
               args: { append: true }
             });
