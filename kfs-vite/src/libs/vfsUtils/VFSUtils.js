@@ -102,7 +102,7 @@
         consoleDotLog('Initializing local repository...');
         if (!this.initialized) await this.initialize();
         
-        // const initResult = await this.workerThread.execute('doInitAndStuff', {});
+        const initResult = await this.workerThread.execute('init');
         consoleDotLog('initialized.');
   
         if (!initResult.success) {
@@ -131,19 +131,21 @@
         const { url, dir = '/' } = this.fetchInfo;
         
         consoleDotLog(`Cloning repository from ${url} to ${dir}`);
-        const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
-        // Fetch notes then
-        await this.fetchNotes();
-  
-        if (!cloneResult.success) {
-          throw new Error("Fetching from git failed!");
+        if (url === '' || !url) {
+          await this.initRepoLocally();
+        } else {
+          const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
+          await this.fetchNotes();
+
+          if (!cloneResult.success) {
+            throw new Error("Fetching from git failed!");
+          }
         }
-  
+        
         if (this.fetchInfo.name && this.fetchInfo.email) {
           await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
         }
   
-        // Generate FS table after successful clone
         await this.generateFsTable();
         consoleDotLog('Repository successfully cloned and indexed');
       } catch (error) {

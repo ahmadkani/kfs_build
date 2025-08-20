@@ -915,15 +915,43 @@ async function handleNoRef(args) {
   }
 }
 
-async function init(){
-  try{
-    await git.init({
-      fs,
-      dir
-    })
-  }
-  catch(error){
-  consoleDotLog('something went wrong while initing the repo: ', error)
+async function init() {
+  
+  try {
+
+    const dirExists = await checkDirExists();
+    consoleDotLog('Directory exists:', dirExists);
+    
+    if (dirExists) {
+      consoleDotLog('Directory already exists. Skipping initialization...');
+      return { 
+        message: 'Directory already exists', 
+        success: true, 
+        alreadyInitialized: true 
+      };
+    }
+    
+    consoleDotLog('Initializing repository...');
+
+    await FSManager.initFS(fsName, fsType);
+    await setFs({ fsName, fsType });
+    await initializeLocalBranches();
+    await initRepoNotes(fsType, 'root');
+    
+    consoleDotLog('Initialization completed successfully');
+    return { 
+      message: 'Initialization successful', 
+      success: true, 
+      alreadyInitialized: false 
+    };
+    
+  } catch (error) {
+    consoleDotLog('Initialization failed:', error);
+    return { 
+      message: 'Initialization failed', 
+      success: false, 
+      error: error.message 
+    };
   }
 }
 

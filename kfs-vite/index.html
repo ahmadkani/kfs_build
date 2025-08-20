@@ -186,7 +186,7 @@
         logOutput("Mounting filesystem...");
         await kfs.mount(path, "idb", "1", "git", {
           fetchInfo: {
-            url: 'https://github.com/ahmadkani/ahmadkani', //idb for idb based initing or fetching if exists, memory for memory based initing
+            url: '', // can be null for new repo in user's system
             username: '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',
             password: '',
             name: 'ahmad',
