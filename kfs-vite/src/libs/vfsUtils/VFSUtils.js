@@ -52,10 +52,8 @@
         }
         consoleDotLog('workerThread:', this.workerThread);
         this.auth = new GitAuth(this.workerThread);
-          console.log('username, kiri', this.fetchInfo, this.fetchInfo.username, this.fetchInfo.password)
   
         if (this.fetchInfo.username && this.fetchInfo.password) {
-          console.log('username, kiri', this.fetchInfo.username, this.fetchInfo.password)
           await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
         }
   
@@ -101,7 +99,7 @@
       try {
         consoleDotLog('Initializing local repository...');
         if (!this.initialized) await this.initialize();
-        
+
         const initResult = await this.workerThread.execute('init');
         consoleDotLog('initialized.');
   
@@ -557,7 +555,7 @@
           try {
             consoleDotLog('this.fetchInfo', this.fetchInfo);
             // First do lightweight check
-            const { status, localHead, remoteHead, commonAncestor } = await this.getSyncStatus();
+            const { status, localHead, remoteHead, commonAncestor } = await this.getSyncStatus(syncUrl);
             
             consoleDotLog("Sync status:", status);
             
@@ -710,7 +708,7 @@
             }
             
             consoleDotLog('Push failed, rechecking sync status...');
-            const newStatus = await this.getSyncStatus();
+            const newStatus = await this.getSyncStatus(syncUrl);
             
             if (newStatus.status === 'up-to-date') {
               consoleDotLog('Status is now up-to-date after push failure');

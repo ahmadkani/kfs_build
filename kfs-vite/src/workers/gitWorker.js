@@ -567,7 +567,10 @@ async function listFilesAsTree(dir = '/', indent = '') {
       consoleDotLog(`${indent}📁 ${entry}`);
       await listFilesAsTree(fullPath, indent + '  ');
     } else {
-      consoleDotLog(`${indent}📄 ${entry}`);
+      try{
+      const content = await fs.promises.readFile(fullPath, 'utf8')
+      consoleDotLog(`${indent}📄 ${entry} : `, content);
+      } catch{}
     }
   }
 }
@@ -919,6 +922,7 @@ async function init() {
   
   try {
 
+    await git.init({fs, dir : '/',defaultBranch: 'main'})
     const dirExists = await checkDirExists();
     consoleDotLog('Directory exists:', dirExists);
     
@@ -933,11 +937,11 @@ async function init() {
     
     consoleDotLog('Initializing repository...');
 
-    await FSManager.initFS(fsName, fsType);
     await setFs({ fsName, fsType });
+    await createInitialCommit();
     await initializeLocalBranches();
-    await initRepoNotes(fsType, 'root');
-    
+    // await initRepoNotes(fsType, 'root');
+    // await listFilesAsTree();
     consoleDotLog('Initialization completed successfully');
     return { 
       message: 'Initialization successful', 
@@ -951,6 +955,37 @@ async function init() {
       message: 'Initialization failed', 
       success: false, 
       error: error.message 
+    };
+  }
+}
+
+async function createInitialCommit() {
+  try {
+    // Create initial commit
+    const commitOid = await git.commit({
+      fs,
+      dir: '/',
+      message: 'Initial commit',
+      author: {
+        name: 'ahmad',
+        email: 'ahmad@kani.com'
+      }
+    });
+
+    consoleDotLog(`Created initial commit: ${commitOid}`);
+
+    return { 
+      success: true, 
+      commitOid,
+      message: 'Initial commit created successfully' 
+    };
+    
+  } catch (error) {
+    consoleDotLog('Failed to create initial commit:', error);
+    return { 
+      success: false, 
+      error: error.message,
+      message: 'Failed to create initial commit' 
     };
   }
 }
@@ -1247,7 +1282,7 @@ async function initializeLocalBranches() {
       });
       await writeFile({
         filePath: path + '/' + `.git/refs/heads/${item}`,
-        fileContents: await git.readFile({fs, dir, filePath: path + '/' + `.git/refs/remotes/${remote}/${item}`})
+        fileContents: await fs.promises.readFile({fs, dir, filePath: path + '/' + `.git/refs/remotes/${remote}/${item}`})
       });
     })
   );
@@ -1726,7 +1761,7 @@ async function readFileDot(filePath, _commitOid = 'staged') {
 
 async function readDirDot(dirPath, _commitOid = 'staged') {
   try {
-    await listFilesAsTree();
+    // await listFilesAsTree();
     consoleDotLog(`[GITWorker] Reading directory: ${dirPath}`);
     const contents = await dotGit.readDirDot(fs, dir, dirPath, _commitOid);
     consoleDotLog(`[GITWorker] Directory contents for ${dirPath}:`, contents);
@@ -1752,6 +1787,7 @@ async function isDirectoryDot(path) {
 
 async function listFilesDot(listDirs = 1) {
   try {
+    
     consoleDotLog('[GITWorker] Listing all files');
     const files = await dotGit.listFilesDot(fs, dir, listDirs);
     consoleDotLog('[GITWorker] File list:', files);

@@ -725,18 +725,51 @@ async isDirectoryDot(fs, dir, path) {
                     logger.consoleDotLog('No commit found, returning empty list.');
                     return []; // If no commits exist, return an empty list
                 }
-        
+
+                // If commitOid is null (empty repository), return empty list
+                if (!commitOid) {
+                    logger.consoleDotLog('No commit OID found, repository is empty.');
+                    return [];
+                }
+
                 const allEntries = new Map(); // Store unique file and directory info
                 const visitedTrees = new Set(); // Track processed trees to avoid redundant work
-        
+
+                // Read the commit first to get the tree
+                let commit;
+                try {
+                    commit = await baseFunctions.readCommit(fs, dir, commitOid);
+                } catch (error) {
+                    if (error.message.includes('Cannot read properties of null') || 
+                        error.message.includes('readObjectLoose')) {
+                        logger.consoleDotLog('Commit reading failed, repository may be empty.');
+                        return [];
+                    }
+                    throw error;
+                }
+
+                // If commit is null, return empty list
+                if (!commit) {
+                    logger.consoleDotLog('No commit found, returning empty list.');
+                    return [];
+                }
+
                 // Optimized tree traversal function
                 const traverseTree = async (treeOid, currentPath = '') => {
                     if (visitedTrees.has(treeOid)) return; // Skip already processed directories
                     visitedTrees.add(treeOid);
-        
+
                     logger.consoleDotLog('Traversing tree:', treeOid, 'Path:', currentPath);
-                    const { tree } = await git.readTree({ fs, dir, oid: treeOid });
-        
+                    
+                    let tree;
+                    try {
+                        const treeResult = await git.readTree({ fs, dir, oid: treeOid });
+                        tree = treeResult.tree;
+                    } catch (error) {
+                        logger.consoleDotLog('Error reading tree:', error);
+                        return; // Skip this tree if there's an error
+                    }
+
                     await Promise.all(tree.map(async (entry) => {
                         const entryPath = currentPath ? `${currentPath}/${entry.path}` : entry.path;
                         
@@ -748,30 +781,38 @@ async isDirectoryDot(fs, dir, path) {
                                 commitOid: commitOid,
                             });
                         }
-        
+
                         if (entry.type === 'tree') {
                             return traverseTree(entry.oid, entryPath); // Recursively process directories
                         }
                     }));
                 };
-        
-                // Read the commit and traverse its tree
-                const { commit } = await baseFunctions.readCommit(fs, dir, commitOid);
-                await traverseTree(commit.tree);
-        
+
+                // Traverse the commit tree
+                await traverseTree(commit.commit.tree);
+
                 // Convert Map to an array and filter based on listDirs flag
                 let allEntriesArr = Array.from(allEntries.values());
                 if (!listDirs) {
                     allEntriesArr = allEntriesArr.filter(entry => entry.type !== 'tree');
                 }
-        
+
                 logger.consoleDotLog('Total entries:', allEntriesArr.length, 'Entries:', allEntriesArr);
                 return allEntriesArr;
             } catch (e) {
+                // Handle specific errors for empty repositories
+                if (e.message.includes('Could not find HEAD') || 
+                    e.message.includes('Could not find refs/heads') ||
+                    e.message.includes('Cannot read properties of null') ||
+                    e.message.includes('readObjectLoose') ||
+                    e.message.includes('ENOENT')) {
+                    logger.consoleDotLog('Repository is empty or not fully initialized, returning empty list.');
+                    return [];
+                }
                 logger.consoleDotLog('Error in listFilesDot:', e);
                 throw e;
             }
-        },                   
+        },               
                
 
         async mkdirDot(fs, dir, dirPath, name = 'sample', email = 'sample@email.com', doCommit = 1) {
