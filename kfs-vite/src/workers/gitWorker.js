@@ -44,7 +44,6 @@ let fsArgs = {};
 let useSW = true;
 let fsType;
 let fsName;
-let isFsNew;
 let corsProxy = config.corsProxy;
 let supportsServiceWorker = false;
 
@@ -223,7 +222,6 @@ async function setFs({ fsName: _fsName, fsType: _fsType }) {
     consoleDotLog('Getting FS instance from FSManager');
     const getFs = await FSManager.getFS(_fsName, _fsType);
     fs = getFs.fs;
-    isFsNew = getFs.new;
 
     if (!fs) {
       throw new Error('Failed to initialize file system');
@@ -958,7 +956,7 @@ async function init() {
       await createInitialCommit();
       await initializeLocalBranches();
       await initRepoNotes(fsType, 'root');
-      await listFilesAsTree();
+      // await listFilesAsTree();
       consoleDotLog('Initialization completed successfully');
       return { 
         message: 'Initialization successful', 

@@ -53,7 +53,7 @@
         consoleDotLog('workerThread:', this.workerThread);
         this.auth = new GitAuth(this.workerThread);
   
-        if (this.fetchInfo.username && this.fetchInfo.password) {
+        if (this.fetchInfo.username || this.fetchInfo.password) {
           await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
         }
   
