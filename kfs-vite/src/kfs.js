@@ -67,7 +67,7 @@ export class KFS {
     await this.vfs.versioner(message);
     this.commitCount++;
     
-    if (this.mergingConfig.strategy === 'immediate') {
+    if (this.mergingConfig?.strategy === 'immediate') {
       await this.vfs.merger(onConflictStrategy);
     }
   }

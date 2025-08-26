@@ -405,10 +405,10 @@
         /**
          * Optimized sync status check with minimal remote operations
          */
-        async getSyncStatus(_url = null, ref = 'main') {
+        async getSyncStatus(__url = null, ref = 'main') {
           try {
             consoleDotLog('Starting sync status check...');
-            const url = _url || this.fetchInfo?.url;
+            const _url = __url || this?.fetchInfo?.url;
             
             // Get local head
             consoleDotLog('Getting local head commit...');
@@ -418,7 +418,7 @@
             // Get remote head
             consoleDotLog('Getting remote head commit...');
             const remoteResult = await this.workerThread.execute('getLatestRemoteCommit', { 
-              url, 
+              url: _url,
               ref,
             });
             consoleDotLog('Remote head result:', remoteResult);

@@ -84,9 +84,9 @@ class fsManager {
     const initPromise = (async () => {
       try {
         if (!this.fsInstances.has(key)) {
-          return await this.initializeFS(fsName, fsType);
+          return { new: true, fs: await this.initializeFS(fsName, fsType)};
         }
-        return this.fsInstances.get(key);
+        return { new: false, fs: this.fsInstances.get(key) };
       } finally {
         this.initializationLocks.delete(key);
       }
@@ -156,7 +156,8 @@ class fsManager {
     
     try {
         // Get the original filesystem instance
-        const originalFS = await this.getFS(originalName, fsType);
+        const getOriginalFS = await this.getFS(originalName, fsType);
+        const originalFS = getOriginalFS?.fs;
         
         if (fsType === 'memory') {
             // Get the original backend

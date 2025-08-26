@@ -629,7 +629,7 @@ async isDirectoryDot(fs, dir, path) {
             const tree = await git.readTree({
                 fs,
                 dir,
-                oid: commit.commit.tree,
+                oid: commit?.commit?.tree,
             });
 
             consoleDotLog('[isDirectoryDot] Root directory tree loaded:', tree.tree);

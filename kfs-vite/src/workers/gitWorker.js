@@ -44,6 +44,7 @@ let fsArgs = {};
 let useSW = true;
 let fsType;
 let fsName;
+let isFsNew;
 let corsProxy = config.corsProxy;
 let supportsServiceWorker = false;
 
@@ -220,8 +221,10 @@ async function setFs({ fsName: _fsName, fsType: _fsType }) {
     fsType = _fsType;
     
     consoleDotLog('Getting FS instance from FSManager');
-    fs = await FSManager.getFS(_fsName, _fsType);
-    
+    const getFs = await FSManager.getFS(_fsName, _fsType);
+    fs = getFs.fs;
+    isFsNew = getFs.new;
+
     if (!fs) {
       throw new Error('Failed to initialize file system');
     }
@@ -771,8 +774,13 @@ async function getCommitHistoryFromReplica(args = {}) {
 // usage: await getLatestRemoteCommit({ url: remoteRepoUrl, ref: 'main' });
 async function getLatestRemoteCommit(args) {
   consoleDotLog('getLatestRemoteCommit args:', args);
-  const url = args?.url || url;
-  const result = await listServerRefs({...args, url});
+  let result = { success: false, refs: null}
+  const _url = args?.url || url;
+  if (_url) {
+    result = await listServerRefs({...args, url: _url});
+  } else {
+    return result;
+  }
   consoleDotLog('getLatestRemoteCommit result:', result);
   const _ref = args?.ref || ref || 'HEAD';
   consoleDotLog('getLatestRemoteCommit _ref:', _ref);
@@ -781,7 +789,7 @@ async function getLatestRemoteCommit(args) {
     return { success: false, error: result.error };
   }
 
-  const refs = result.refs;
+  const refs = result?.refs;
 
   let headOid = refs.find(ref => ref.ref === `refs/heads/${_ref}`)?.oid;
 
@@ -922,33 +930,43 @@ async function init() {
   
   try {
 
-    await git.init({fs, dir : '/',defaultBranch: 'main'})
     const dirExists = await checkDirExists();
     consoleDotLog('Directory exists:', dirExists);
-    
+
     if (dirExists) {
-      consoleDotLog('Directory already exists. Skipping initialization...');
-      return { 
+      return {     
         message: 'Directory already exists', 
         success: true, 
         alreadyInitialized: true 
       };
     }
-    
-    consoleDotLog('Initializing repository...');
-
-    await setFs({ fsName, fsType });
-    await createInitialCommit();
-    await initializeLocalBranches();
-    // await initRepoNotes(fsType, 'root');
-    // await listFilesAsTree();
-    consoleDotLog('Initialization completed successfully');
-    return { 
-      message: 'Initialization successful', 
-      success: true, 
-      alreadyInitialized: false 
-    };
-    
+    else {
+      await git.init({fs, dir : '/',defaultBranch: 'main'});
+      
+      if (dirExists) {
+        consoleDotLog('Directory already exists. Skipping initialization...');
+        return { 
+          message: 'Directory already exists', 
+          success: true, 
+          alreadyInitialized: true 
+        };
+      }
+      
+      consoleDotLog('Initializing repository...');
+  
+      await setFs({ fsName, fsType });
+      await createInitialCommit();
+      await initializeLocalBranches();
+      await initRepoNotes(fsType, 'root');
+      await listFilesAsTree();
+      consoleDotLog('Initialization completed successfully');
+      return { 
+        message: 'Initialization successful', 
+        success: true, 
+        alreadyInitialized: false 
+      };
+  
+    }    
   } catch (error) {
     consoleDotLog('Initialization failed:', error);
     return { 
@@ -1003,7 +1021,7 @@ async function checkDirExists() {
         return false;
       }
     }
-    if (contents.length === 0 || urls.length === 0) {
+    if (contents.length == 0 && urls.length == 0) {
       return false;
     }
     return true;
@@ -1450,7 +1468,6 @@ async function push(args) {
   let _ref = args?.ref || ref;
   try{
   const config = await fs.promises.readFile('/.git/config', 'utf8')
-  consoleDotLog('kir', config)
   } catch(err) {
     consoleDotError(err)
   }
@@ -1912,7 +1929,6 @@ async function getPathNote(path) {
       return await gitNoteManager(fs, dir, 'read', 'superblock', { oid: 'HEAD', fsType }).catch(() => null);
     } else {
       let oid = await findInGitHistory(path);
-      consoleDotLog('kiri : ', oid)
       return await getNoteByOid(oid.oid, 'commits');
     }
   } catch (error) {
