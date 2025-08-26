@@ -129,17 +129,6 @@
   <script type="module">
     import { KFS } from "./src/kfs.js";
     import { serviceWorker } from "./src/libs/sw-register.js";
-
-    // await setConfig({
-    //   corsProxy: 'http://localhost:9000',
-    //   logging: {
-    //     gitWorker: true,
-    //     serviceWorker: true
-    //   },
-    //   versioning: {
-    //     strategy: 'delayed'
-    //   }
-    // });
     
     const kfs = new KFS();
 
@@ -185,14 +174,14 @@
       try {
         logOutput("Mounting filesystem...");
         await kfs.mount(path, "idb", "1", "git", {
-          fetchInfo: {
-            url: '', // can be null for new repo in user's system
-            username: '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',
-            password: '',
-            name: 'ahmad',
-            email: 'ahmad@kani.com',
-          },
-          useSW: false,
+          // fetchInfo: {
+          //   url: '', // can be null for new repo in user's system
+          //   username: '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',
+          //   password: '',
+          //   name: 'ahmad',
+          //   email: 'ahmad@kani.com',
+          // },
+          // useSW: false,
           // merging: { strategy: 'immediate', interval: 2000, onConflictStrategy: 'local', syncUrl: 'https://github.com/ahmadkani/ahmadkani2'}, //syncUrl required, defaults to fetchurl
           versioning: { strategy: 'immediate', interval: 10, number: 5 },
         });

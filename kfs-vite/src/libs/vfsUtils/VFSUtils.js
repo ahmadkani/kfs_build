@@ -156,8 +156,7 @@
     async fetchFromDisk() {
       try {
         if (!this.initialized) await this.initialize();
-        const { where } = this.fetchInfo;
-        consoleDotLog(`Loading filesystem from disk at ${dir}`);
+        consoleDotLog(`Loading filesystem from disk`);
         
         await this.initRepoLocally();
         await this.generateFsTable();
