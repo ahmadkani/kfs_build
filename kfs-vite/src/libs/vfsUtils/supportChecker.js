@@ -1,6 +1,7 @@
 import { Logger } from "./../LoggerES6.js";
-import { config } from './../../configES6.js';
+import { getConfig } from './../../configES6.js';
 
+const config = await getConfig();
 const logger = new Logger(config.logging.supportChecker);
 
 function consoleDotLog(...parameters) {

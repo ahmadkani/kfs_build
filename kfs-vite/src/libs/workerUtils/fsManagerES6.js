@@ -1,8 +1,9 @@
 import memoryBackend from "./memoryBackendES6.js";
 import LightningFS from '@isomorphic-git/lightning-fs';
 import {Logger} from './../LoggerES6.js';
-import {config} from './../../configES6.js';
+import {getConfig} from './../../configES6.js';
 
+const config = await getConfig();
 const logger = new Logger(config.logging.fsManagerES6);
 
 function consoleDotLog(...parameters) {

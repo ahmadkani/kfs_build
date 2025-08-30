@@ -5,9 +5,9 @@ import * as GitHttp from './libs/http.js';
 import * as LightningFS from './libs/LightningFS.js';
 import {Logger} from './libs/LoggerES6.js';
 import fsManager from './libs/workerUtils/fsManagerES6.js';
-import {config} from './configES6.js';
+import {getConfig} from './configES6.js';
 
-
+const config = await getConfig();
 const logger = new Logger(config.logging.serviceWorker);
 
 function consoleDotLog(...parameters) {

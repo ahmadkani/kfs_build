@@ -1,8 +1,9 @@
 import { Logger } from "./libs/LoggerES6.js";
 import { workerPool } from "./WorkerPool.js";
-import { config } from './configES6.js';
+import { getConfig } from './configES6.js';
 import LightningFS from '@isomorphic-git/lightning-fs';
 
+const config = await getConfig();
 const logger = new Logger(config.logging.IDBFs);
 
 function consoleDotLog(...parameters) {

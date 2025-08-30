@@ -1,8 +1,9 @@
   import { Logger } from "../LoggerES6.js";
   import { workerPool } from '../../WorkerPool.js';
-  import { config } from '../../configES6.js';
+  import { getConfig } from '../../configES6.js';
   import { GitAuth } from './gitAuth.js';
   
+  const config = await getConfig();
   const logger = new Logger(config.logging.VFSutils);
   
   function consoleDotLog(...parameters) {

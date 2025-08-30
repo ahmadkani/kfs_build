@@ -1,9 +1,10 @@
 import {Logger} from '../LoggerES6.js';
-import {config} from '../../configES6.js';
+import {getConfig} from '../../configES6.js';
 import git from 'isomorphic-git';
 import acl from './acl.js';
 import stats from './stats.js';
 
+const config = await getConfig();
 const logger = new Logger(config.logging.gitNoteManager);
 
 function consoleDotLog(...parameters) {

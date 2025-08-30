@@ -1,7 +1,8 @@
 import {Logger} from "./../LoggerES6.js";
 import swUtils from "./swUtilsES6.js";
-import {config} from "./../../configES6.js";
+import {getConfig} from "./../../configES6.js";
 
+const config = await getConfig();
 const logger = new Logger(config.logging.memoryBackendES6);
 
 function consoleDotLog(...args) {

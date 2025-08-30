@@ -4,8 +4,9 @@ import { VFSutils } from "./libs/vfsUtils/VFSUtils.js";
 import { Logger } from "./libs/LoggerES6.js";
 import { StorageUtils } from './libs/vfsUtils/storageUtils.js';
 import { checkIndexedDBSupport } from './libs/vfsUtils/supportChecker.js';
-import { config } from './configES6.js';
+import { getConfig } from './configES6.js';
 
+const config = await getConfig();
 const logger = new Logger(config.logging.vfs);
 
 // Logger Utilities

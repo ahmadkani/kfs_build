@@ -1,8 +1,9 @@
 import git from 'isomorphic-git'
 import baseFunctions from './baseFunctions.js';
 import {Logger} from './../LoggerES6.js';
-import {config} from './../../configES6.js';
+import {getConfig} from './../../configES6.js';
 
+const config = await getConfig();
     const logger = new Logger(config.logging.dotGit);
     const staged = new Map();
 
