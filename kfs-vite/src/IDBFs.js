@@ -22,7 +22,6 @@ class IDBFs {
     this.workerEntry = null;
     this.workerThread = null;
     this.fsName = fsName;
-    this.useSW = options?.useSW || null;
     this.versioningStrategy = options?.versioning?.strategy || config.versioning.strategy;
     this.doImmediateCommit = (this.versioningStrategy === 'immediate') ? true : false;
 
@@ -35,7 +34,7 @@ class IDBFs {
   }
 
   async initializeWorker() {
-    this.workerEntry = await workerPool.getWorker(this.fsName, this.useSW);
+    this.workerEntry = await workerPool.getWorker(this.fsName);
     this.workerThread = this.workerEntry.thread;
 
     await this.workerThread.execute('setFs', {

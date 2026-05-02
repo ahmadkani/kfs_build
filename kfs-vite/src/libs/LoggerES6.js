@@ -1,3 +1,5 @@
+const isNode = typeof window === 'undefined';
+
 export class Logger {
   constructor(on = true, trace = false) {
     this.on = on;

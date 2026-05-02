@@ -39,6 +39,7 @@ export class VFS {
 
   // Environment detection utilities
   getBrowserInfo() {
+    if (typeof navigator === 'undefined') return 'Node.js';
     const userAgent = navigator.userAgent;
     let browser = 'Unknown';
     
@@ -54,6 +55,7 @@ export class VFS {
   }
 
   getDeviceType() {
+    if (typeof navigator === 'undefined') return 'Server';
     const userAgent = navigator.userAgent;
     if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(userAgent)) {
       return 'Tablet';
@@ -65,14 +67,15 @@ export class VFS {
   }
 
   getPlatformInfo() {
+    const isBrowser = typeof window !== 'undefined';
     return {
       browser: this.getBrowserInfo(),
       device: this.getDeviceType(),
-      userAgent: navigator.userAgent,
-      platform: navigator.platform,
-      screenResolution: `${window.screen.width}x${window.screen.height}`,
+      userAgent: isBrowser ? navigator.userAgent : 'Node.js',
+      platform: isBrowser ? navigator.platform : process.platform,
+      screenResolution: isBrowser ? `${window.screen.width}x${window.screen.height}` : 'N/A',
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      language: navigator.language
+      language: isBrowser ? navigator.language : 'N/A'
     };
   }
 
@@ -102,6 +105,13 @@ export class VFS {
       return this.idbSupported; // Return cached result if available
     }
     
+    // Check if running in Node.js
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      consoleDotLog('Running in Node.js environment, IndexedDB not supported');
+      this.idbSupported = false;
+      return false;
+    }
+
     try {
       await checkIndexedDBSupport();
       consoleDotLog('IndexedDB is supported');
@@ -112,22 +122,6 @@ export class VFS {
       this.idbSupported = false;
       return false;
     }
-  }
-
-  async determineUseSW(fsType, options) {
-    // If useSW is explicitly set in options, use that value
-    if (options.useSW !== undefined) {
-      return options.useSW;
-    }
-    
-    // For IDB filesystem, check support and disable SW if not supported
-    if (fsType === 'idb') {
-      const isSupported = await this.checkIndexedDBSupport();
-      return isSupported; // Only use SW if IDB is supported
-    }
-    
-    // Default to false for memory filesystem
-    return false;
   }
 
   async loadMountFromStorage(mountPath) {
@@ -149,6 +143,14 @@ export class VFS {
   async persistMountData(mountPath, mountData) {
     consoleDotLog(`Persisting mount data for ${mountPath}`);
     try {
+      // FIX: In Node.js, we don't use IndexedDB. We just keep it in memory.
+      if (typeof indexedDB === 'undefined') {
+        this.mounts[mountPath] = mountData;
+        consoleDotLog(`Node.js: Mount data persisted in memory for ${mountPath}`);
+        return;
+      }
+
+      // Browser logic
       const dataToStore = { ...mountData };
       delete dataToStore.fsInstance;
       await this.storageUtils.store(mountPath, dataToStore);
@@ -163,11 +165,28 @@ export class VFS {
   async createFSInstance(fsType, mountPath, options = {}) {
     consoleDotLog(`Creating FS instance of type ${fsType} for mount path ${mountPath}`);
     try {
-      // Determine the actual useSW value based on filesystem type and support
-      const useSW = await this.determineUseSW(fsType, options);
+      const isNode = typeof window === 'undefined';
+
+      // 1. Use NodeFS if explicitly requested
+      if (isNode && fsType === 'node') {
+          consoleDotLog('Using NodeFS (Native Worker Wrapper)');
+          const { NodeFS } = await import('./NodeFS.js');
+          // FIX: Pass fsType: 'node' so NodeFS knows to use the path directly
+          return new NodeFS(mountPath, { fsName: mountPath, fsType: 'node', ...options });
+      }
+      
+      // 2. Use NodeFS for 'memory' in Node.js (Disk backed temp folder)
+      if (isNode && fsType === 'memory') {
+          consoleDotLog('Using NodeFS (Disk-backed) for memory in Node.js');
+          const { NodeFS } = await import('./NodeFS.js');
+          // FIX: Pass fsType: 'memory' so NodeFS knows to map to temp
+          return new NodeFS(mountPath, { fsName: mountPath, fsType: 'memory', ...options });
+      }
+
+      // 3. Browser Logic
+      const useSW = false;
       
       if (fsType === 'idb') {
-        consoleDotLog('Checking IndexedDB support for IDB FS');
         const isSupported = await this.checkIndexedDBSupport();
         if (!isSupported) {
           consoleDotLog(`IndexedDB not supported, falling back to memory FS for ${mountPath}`);
@@ -179,22 +198,21 @@ export class VFS {
       switch (fsType) {
         case 'memory':
           consoleDotLog('Creating MemoryFS instance');
-          fsInstance = new MemoryFS(mountPath, { ...options, useSW: false }); // Always disable SW for memory FS
+          const { MemoryFS } = await import('./memoryFs.js');
+          fsInstance = new MemoryFS(mountPath, { ...options, useSW: false });
           break;
         case 'idb':
           consoleDotLog('Creating IDBFs instance');
+          const { IDBFs } = await import('./IDBFs.js');
           fsInstance = new IDBFs(mountPath, { ...options, useSW });
           break;
         default:
-          const errorMsg = `Unknown FS type: ${fsType}`;
-          consoleDotError(errorMsg);
-          throw new Error(errorMsg);
+          throw new Error(`Unknown FS type: ${fsType}`);
       }
 
-      consoleDotLog(`Successfully created ${fsType} FS instance for ${mountPath}`);
       return fsInstance;
     } catch (error) {
-      consoleDotError(`Failed to create FS instance (type: ${fsType}, path: ${mountPath}):`, error);
+      consoleDotError(`Failed to create FS instance`, error);
       throw error;
     }
   }
@@ -215,12 +233,10 @@ export class VFS {
     
     if (!mountData.fsInstance) {
       consoleDotLog(`Creating new FS instance for mount at ${fsPath}`);
-      const useSW = await this.determineUseSW(mountData.fsType, mountData);
       mountData.fsInstance = await this.createFSInstance(
         mountData.fsType, 
         fsPath, 
         { 
-          useSW, 
           versioning: this.getVersioningConfig(mountData),
           merging: this.getMergingConfig(mountData)
         }
@@ -279,11 +295,19 @@ export class VFS {
   async retrieveAndMountFromFsTable() {
     consoleDotLog('Attempting to retrieve and mount filesystems from fsTable');
     try {
-      // First check if we have any data at all
-      const hasData = await this.storageUtils.ensureObjectStoreExists();
-      if (!hasData) {
-        consoleDotLog('No storage data found - fresh initialization');
+      if (typeof indexedDB === 'undefined') {
+        consoleDotLog('IndexedDB not available (Node.js environment). Skipping mount from fsTable.');
         return false;
+      }
+
+      try {
+        const hasData = await this.storageUtils.ensureObjectStoreExists();
+        if (!hasData) {
+          consoleDotLog('No storage data found - fresh initialization');
+          return false;
+        }
+      } catch (e) {
+        consoleDotError('error: ', e)
       }
   
       const allMounts = await this.storageUtils.getAll();
@@ -516,7 +540,7 @@ export class VFS {
   }
 
   // Filesystem Operations
-  async fetchFS(fetchMethod, fsType, fsInstance, fsName, fetchInfo, useSW = false) {
+  async fetchFS(fetchMethod, fsType, fsInstance, fsName, fetchInfo) {
     consoleDotLog(`Fetching filesystem data - method: ${fetchMethod}, type: ${fsType}, name: ${fsName}`);
     try {
       // Check if we already have a VFSutils instance for this mount
@@ -527,7 +551,7 @@ export class VFS {
       }
   
       consoleDotLog('Creating new VFSutils instance for mount:', this.currentMountPath);
-      const vfsUtils = new VFSutils(fsType, fsInstance, fsName, fetchInfo, useSW);
+      const vfsUtils = new VFSutils(fsType, fsInstance, fsName, fetchInfo);
       this.vfsUtilsInstances.set(this.currentMountPath, vfsUtils);
       
       const fetchStrategies = {
@@ -644,6 +668,19 @@ export class VFS {
       throw new Error(errorMsg);
     }
 
+    // FIX: In Node.js, update the in-memory object directly
+    if (typeof indexedDB === 'undefined') {
+       if (!this.mounts[this.currentMountPath]) {
+          const errorMsg = `Mount data not found in memory for path: ${this.currentMountPath}`;
+          consoleDotError(errorMsg);
+          throw new Error(errorMsg);
+       }
+       this.mounts[this.currentMountPath].fsTable = fsTable;
+       consoleDotLog(`Updated in-memory fsTable for ${this.currentMountPath}`);
+       return;
+    }
+
+    // Browser logic
     consoleDotLog(`Loading mount data for ${this.currentMountPath}`);
     const mountData = await this.storageUtils.get(this.currentMountPath);
     if (!mountData) {

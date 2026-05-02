@@ -17,7 +17,7 @@ function consoleDotError(...parameters) {
 consoleDotLog('Loading fsmanagerES6.')
 
 class fsManager {
-  constructor(options = {supportsServiceWorker: true, useSW: true}) {
+  constructor(options = {}) {
     this.fsInstances = new Map();
     this.initializationLocks = new Map(); // For concurrency control
     this.debug = true;

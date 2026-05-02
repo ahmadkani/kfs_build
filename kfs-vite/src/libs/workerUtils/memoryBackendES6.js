@@ -1,5 +1,4 @@
 import {Logger} from "./../LoggerES6.js";
-import swUtils from "./swUtilsES6.js";
 import {getConfig} from "./../../configES6.js";
 
 const config = await getConfig();
@@ -26,16 +25,12 @@ class MemoryBackend {
     this.deviceId = options.deviceId || generateSimpleID();
     this._files = new Map();
     this.versionVector = { [this.deviceId]: 0 };
-    this.swUtilsInstance = new swUtils();
     this.channel = null;
     this.isProcessing = false;
     this.pendingUpdates = [];
     this.processingQueue = false;
 
     this._initializeRoot();
-    if (this.options?.supportsServiceWorker && this.options?.useSW) {
-      this._setupReceiveChannel();
-    }
 
     Promise.resolve().then(() => this._requestInitialSync());
     consoleDotLog(`Initialized with dbName: ${this.dbName}, deviceId: ${this.deviceId}`);
@@ -104,39 +99,6 @@ class MemoryBackend {
     return files;
   }  
 
-  async sendFilesToSW(targetId = null) {
-    const update = {
-      operation: "memorySync",
-      data: {
-        files: Array.from(this._files.entries()),
-        dbName: this.dbName,
-        versionVector: { ...this.versionVector },
-        sender: this.deviceId,
-        targetId,
-      },
-    };
-
-    if (this.isProcessing) {
-      consoleDotLog("Queueing update due to ongoing processing");
-      this.pendingUpdates.push(update);
-      return;
-    }
-
-    try {
-      this.isProcessing = true;
-      consoleDotLog("Sending files to SW:", update);
-      const channel = new BroadcastChannel(`memory-backend-${this.dbName}`);
-      channel.postMessage(update);
-      channel.close();
-      consoleDotLog("Files sent to SW successfully");
-      await this._processPendingUpdates();
-    } catch (err) {
-      consoleDotError("Failed to send files to SW:", err);
-    } finally {
-      this.isProcessing = false;
-    }
-  }
-
   async _processPendingUpdates() {
     if (this.processingQueue || this.pendingUpdates.length === 0) return;
 
@@ -177,8 +139,6 @@ class MemoryBackend {
 
     if (operation === "memorySyncRequest") {
       if (this._isNewerVersionVector(data.requesterVV)) {
-        consoleDotLog("Responding to sync request with newer data");
-        Promise.resolve().then(() => this.sendFilesToSW(data.requesterId));
       } else {
         consoleDotLog("No newer data to send to requester");
       }
@@ -225,9 +185,6 @@ class MemoryBackend {
 
   async _handleFilesChange() {
     this._incrementVersionVector();
-    if (this.options?.supportsServiceWorker && this.options?.useSW) {
-      await this.sendFilesToSW();
-    }
   }
 
   async readFile(filepath, opts = {}) {

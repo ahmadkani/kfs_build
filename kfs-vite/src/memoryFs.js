@@ -22,14 +22,16 @@ class MemoryFS {
     this.fdCounter = 3;
     this.workerEntry = null;
     this.workerThread = null;
-    this.useSW = options?.useSW || null;
     this.versioningStrategy = options?.versioning?.strategy || config.versioning.strategy;
     this.doImmediateCommit = (this.versioningStrategy === 'immediate') ? true : false;
+    this.isInitialized = false;
     consoleDotLog(`MemoryFS created for ${fsName}`);
   }
 
   async initializeWorker() {
-    this.workerEntry = await workerPool.getWorker(this.fsName, this.useSW);
+    if (this.isInitialized && this.workerThread) return;
+    
+    this.workerEntry = await workerPool.getWorker(this.fsName);
     this.workerThread = this.workerEntry.thread;
 
     await this.workerThread.execute('setFs', {
@@ -37,6 +39,7 @@ class MemoryFS {
       fsType: 'memory',
     });
 
+    this.isInitialized = true;
     consoleDotLog(`Worker initialized for ${this.fsName}`);
   }
 
@@ -45,16 +48,23 @@ class MemoryFS {
       await workerPool.releaseWorker(this.fsName);
       this.workerEntry = null;
       this.workerThread = null;
+      this.isInitialized = false;
+    }
+  }
+
+  async ensureInitialized() {
+    if (!this.isInitialized || !this.workerThread) {
+      await this.initializeWorker();
     }
   }
 
   async fs_fopen(filename, mode) {
-    if (!this.workerThread) await this.initializeWorker();
+    await this.ensureInitialized();
     
     // Check if parent directory exists for new files
     if (mode.includes('w') || mode.includes('a') || mode.includes('x')) {
       const parentDir = filename.split('/').slice(0, -1).join('/');
-      if (parentDir) {
+      if (parentDir && parentDir !== '') {
         const dirExists = await this.workerThread.execute('isDirectoryDot', { path: parentDir });
         if (!dirExists.exists || !dirExists.isDirectory) {
           throw new Error(`ENOENT: no such directory, open '${filename}'`);
@@ -86,9 +96,9 @@ class MemoryFS {
     }
 
     try {
-      if (!this.workerThread) await this.initializeWorker();
+      await this.ensureInitialized();
       const data = await this.workerThread.execute('readFileDot', { filePath: file.path });
-      if (data === null) {
+      if (data === null || data === undefined) {
         throw new Error(`ENOENT: no such file, read '${file.path}'`);
       }
       const chunk = data.slice(file.pos, file.pos + length);
@@ -109,11 +119,11 @@ class MemoryFS {
     }
 
     try {
-      if (!this.workerThread) await this.initializeWorker();
+      await this.ensureInitialized();
       
       // Check if the file's parent directory exists
       const parentDir = file.path.split('/').slice(0, -1).join('/');
-      if (parentDir) {
+      if (parentDir && parentDir !== '') {
         const dirExists = await this.workerThread.execute('isDirectoryDot', { path: parentDir });
         if (!dirExists.exists || !dirExists.isDirectory) {
           throw new Error(`ENOENT: no such directory, open '${file.path}'`);
@@ -123,7 +133,7 @@ class MemoryFS {
       let currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       let data = currentData;
       consoleDotLog(`Current data in file ${file.path}:`, data);
-      if (data === null) data = "";
+      if (data === null || data === undefined) data = "";
       data = data.slice(0, file.pos) + content + data.slice(file.pos + content.length);
       await this.workerThread.execute('writeFileDot', {
         filePath: file.path,
@@ -147,13 +157,13 @@ class MemoryFS {
     }
 
     try {
-      if (!this.workerThread) await this.initializeWorker();
+      await this.ensureInitialized();
       const data = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       if (whence === "SEEK_SET") file.pos = offset;
       else if (whence === "SEEK_CUR") file.pos += offset;
-      else if (whence === "SEEK_END") file.pos = data.length + offset;
+      else if (whence === "SEEK_END") file.pos = (data?.length || 0) + offset;
 
-      file.pos = Math.max(0, Math.min(file.pos, data.length));
+      file.pos = Math.max(0, Math.min(file.pos, data?.length || 0));
       consoleDotLog(`New position in file ${file.path}: ${file.pos}`);
       return 0;
     } catch (error) {
@@ -180,10 +190,11 @@ class MemoryFS {
     }
 
     try {
-      if (!this.workerThread) await this.initializeWorker();
+      await this.ensureInitialized();
       let currentData = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       let data = currentData;
       consoleDotLog(`Current data in file ${file.path}:`, data);
+      if (data === null || data === undefined) data = "";
       data = data.slice(0, length);
       await this.workerThread.execute('writeFileDot', {
         filePath: file.path,
@@ -198,86 +209,97 @@ class MemoryFS {
     }
   }
 
-  async fs_stat(path) {
+  async fs_stat(path, visited = new Set()) {
     consoleDotLog(`Getting stats for path: ${path}`);
+    
+    // Prevent infinite recursion
+    const pathKey = path.toString();
+    if (visited.has(pathKey)) {
+      consoleDotError(`Circular reference detected at ${path}`);
+      throw new Error(`Circular reference detected at ${path}`);
+    }
+    visited.add(pathKey);
   
     try {
+      // Normalize path
       const normalizedPath = path.replace(/^\/+|\/+$/g, '');
-      normalizedPath.includes('.git')
-      if (!this.workerThread) await this.initializeWorker();
+      
+      await this.ensureInitialized();
   
-      // First check basic existence and directory status
+      // Check basic existence - don't use fs_stat recursively
       const exists = await this.workerThread.execute('isDirectoryDot', { path });
+      
+      // If path doesn't exist, throw ENOENT
       if (!exists.exists) {
         throw new Error(`ENOENT: no such file or directory, stat '${path}'`);
       }
   
-      // Get the complete note metadata
-      const noteType = exists.isDirectory ? 'dentry' : 'inode';
-      const noteData = await this.workerThread.execute('getPathNote', {
-        path
-      });
-
-      // If note doesn't exist, create basic stats
-      if (noteData.error || !noteData || !noteData?.paths?.[normalizedPath]) {
-        consoleDotLog(`No note found for ${path}, returning basic stats`);
+      // Get note metadata without causing recursion
+      let noteData = null;
+      try {
+        noteData = await this.workerThread.execute('getPathNote', { path });
+      } catch (noteError) {
+        consoleDotLog(`Could not get note for ${path}:`, noteError.message);
       }
   
-      // Process the full metadata
-      const metadata = noteData?.paths?.[normalizedPath]?.metadata || noteData;
+      // Extract metadata safely
+      const metadata = noteData?.paths?.[normalizedPath]?.metadata || 
+                       noteData || 
+                       { created_at: Date.now(), updated_at: Date.now() };
+  
+      // Create stats object
       const stats = {
         // Standard fs.Stats properties
         dev: 0,
-        inode: metadata.inode || metadata.dentry_id || 0,
-        mode: parseInt(metadata.mode, 8) || (exists.isDirectory ? 16877 : 33188),
+        ino: metadata.inode || metadata.dentry_id || Math.floor(Math.random() * 1000000),
+        mode: exists.isDirectory ? 0o40777 : 0o100644, // Directory or file with proper mode
         nlink: 1,
-        uid: metadata.uid || 1000,
-        gid: metadata.gid || 1000,
+        uid: metadata.uid || process.getuid?.() || 1000,
+        gid: metadata.gid || process.getgid?.() || 1000,
         rdev: 0,
         size: metadata.size || 0,
         blksize: metadata.block_size || 4096,
-        blocks: Math.ceil((metadata.size || 0) / 4096),
-        atimeMs: new Date(metadata.atime || metadata.updated_at).getTime(),
-        mtimeMs: new Date(metadata.mtime || metadata.updated_at).getTime(),
-        ctimeMs: new Date(metadata.ctime || metadata.created_at).getTime(),
-        birthtimeMs: new Date(metadata.created_at).getTime(),
+        blocks: Math.ceil((metadata.size || 0) / 512),
+        atimeMs: metadata.atime ? new Date(metadata.atime).getTime() : Date.now(),
+        mtimeMs: metadata.mtime ? new Date(metadata.mtime).getTime() : Date.now(),
+        ctimeMs: metadata.ctime ? new Date(metadata.ctime).getTime() : Date.now(),
+        birthtimeMs: metadata.created_at ? new Date(metadata.created_at).getTime() : Date.now(),
   
-        // Extended properties from notes
-        acl: metadata.acl || 'root',
-        owner: metadata.owner,
-        fsType: metadata.fsType,
-        fullPath: metadata.full_path || path,
-  
-        // Boolean check methods
-        isDirectory: () => exists.isDirectory,
-        isFile: () => !exists.isDirectory,
+        // Deno/Node compatibility methods
+        isDirectory: () => exists.isDirectory === true,
+        isFile: () => exists.isDirectory === false,
         isBlockDevice: () => false,
         isCharacterDevice: () => false,
         isSymbolicLink: () => false,
         isFIFO: () => false,
         isSocket: () => false,
   
-        // Timestamp getters
-        atime: () => new Date(metadata.atime || metadata.updated_at),
-        mtime: () => new Date(metadata.mtime || metadata.updated_at),
-        ctime: () => new Date(metadata.ctime || metadata.created_at),
-        birthtime: () => new Date(metadata.created_at),
-  
-        // Additional metadata
-        getMetadata: () => metadata,
-        getNoteType: () => noteType,
-        getAllPaths: () => noteData.filepath_metadata ? Object.keys(noteData.filepath_metadata) : [path]
+        // Timestamp getters for compatibility
+        atime: new Date(metadata.atime || Date.now()),
+        mtime: new Date(metadata.mtime || Date.now()),
+        ctime: new Date(metadata.ctime || Date.now()),
+        birthtime: new Date(metadata.created_at || Date.now()),
       };
   
-      consoleDotLog(`Retrieved detailed stats for ${path}`, stats);
+      // Add helper methods that Node.js expects
+      stats.isDirectory = stats.isDirectory.bind(stats);
+      stats.isFile = stats.isFile.bind(stats);
+      stats.isBlockDevice = stats.isBlockDevice.bind(stats);
+      stats.isCharacterDevice = stats.isCharacterDevice.bind(stats);
+      stats.isSymbolicLink = stats.isSymbolicLink.bind(stats);
+      stats.isFIFO = stats.isFIFO.bind(stats);
+      stats.isSocket = stats.isSocket.bind(stats);
+  
+      consoleDotLog(`Retrieved stats for ${path}:`, { 
+        isDirectory: stats.isDirectory(), 
+        size: stats.size,
+        mode: stats.mode.toString(8)
+      });
+      
       return stats;
     } catch (error) {
-      consoleDotError(`Error getting stats for path ${path}:`, error);
-      
-      // Return basic stats if detailed info fails
-      if (error.message.includes('ENOENT')) {
-        throw error;
-      }
+      consoleDotError(`Error getting stats for path ${path}:`, error.message);
+      throw error;
     }
   }
 
@@ -291,7 +313,7 @@ class MemoryFS {
   }
 
   async fs_remove(path) {
-    if (!this.workerThread) await this.initializeWorker();
+    await this.ensureInitialized();
     consoleDotLog(`Removing file: ${path}`);
     try {
       const exists = await this.workerThread.execute('isDirectoryDot', { path });
@@ -314,12 +336,12 @@ class MemoryFS {
   }
 
   async fs_mkdir(path) {
-    if (!this.workerThread) await this.initializeWorker();
+    await this.ensureInitialized();
     consoleDotLog(`Creating directory: ${path}`);
     try {
       // Check if parent directory exists
       const parentDir = path.split('/').slice(0, -1).join('/');
-      if (parentDir) {
+      if (parentDir && parentDir !== '') {
         const dirExists = await this.workerThread.execute('isDirectoryDot', { path: parentDir });
         if (!dirExists.exists || !dirExists.isDirectory) {
           throw new Error(`ENOENT: no such directory, mkdir '${path}'`);
@@ -349,7 +371,7 @@ class MemoryFS {
   }
 
   async fs_rmdir(path) {
-    if (!this.workerThread) await this.initializeWorker();
+    await this.ensureInitialized();
     consoleDotLog(`Removing directory: ${path}`);
     try {
       const exists = await this.workerThread.execute('isDirectoryDot', { path });
@@ -378,7 +400,7 @@ class MemoryFS {
   }
 
   async fs_rename(oldPath, newPath) {
-    if (!this.workerThread) await this.initializeWorker();
+    await this.ensureInitialized();
     consoleDotLog(`Renaming ${oldPath} to ${newPath}`);
     try {
       // Check if oldPath exists
@@ -389,7 +411,7 @@ class MemoryFS {
 
       // Check if newPath's parent directory exists
       const newParentDir = newPath.split('/').slice(0, -1).join('/');
-      if (newParentDir) {
+      if (newParentDir && newParentDir !== '') {
         const parentExists = await this.workerThread.execute('isDirectoryDot', { path: newParentDir });
         if (!parentExists.exists || !parentExists.isDirectory) {
           throw new Error(`ENOENT: no such directory, rename '${oldPath}' -> '${newPath}'`);
@@ -408,7 +430,7 @@ class MemoryFS {
   }
 
   async fs_opendir(path) {
-    if (!this.workerThread) await this.initializeWorker();
+    await this.ensureInitialized();
     consoleDotLog(`Opening directory: ${path}`);
     try {
       const exists = await this.workerThread.execute('isDirectoryDot', { path });
@@ -430,7 +452,7 @@ class MemoryFS {
   async fs_readdir(path, options = {}) {
     consoleDotLog(`Reading directory: ${path}`);
     try {
-      if (!this.workerThread) await this.initializeWorker();
+      await this.ensureInitialized();
 
       const exists = await this.workerThread.execute('isDirectoryDot', { path });
       if (!exists.exists) {
@@ -443,7 +465,11 @@ class MemoryFS {
       const result = await this.workerThread.execute('readDirDot', { path });
       const dirEntries = result?.entries || [];
 
-      return dirEntries.map(entry => ({ path: entry.path, type: (entry.type === 'tree' ? 'dir' : 'file') }));
+      return dirEntries.map(entry => ({ 
+        name: entry.name || entry.path.split('/').pop(),
+        path: entry.path, 
+        type: (entry.type === 'tree' ? 'dir' : 'file') 
+      }));
     } catch (error) {
       consoleDotError(`Error reading directory ${path}:`, error);
       throw error;
@@ -458,10 +484,10 @@ class MemoryFS {
     }
 
     try {
-      if (!this.workerThread) await this.initializeWorker();
+      await this.ensureInitialized();
       const data = await this.workerThread.execute('readFileDot', { filePath: file.path }).catch(() => "");
       consoleDotLog(`Current data in file ${file.path}:`, data);
-      const eof = file.pos >= data.length;
+      const eof = file.pos >= (data?.length || 0);
       consoleDotLog(`EOF status for file ${file.path}: ${eof}`);
       return eof;
     } catch (error) {

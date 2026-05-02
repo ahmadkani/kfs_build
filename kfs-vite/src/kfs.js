@@ -74,13 +74,13 @@ export class KFS {
   
   async merge() {
     try {
-      consoleDotLog('Merging...', mountPaths);
+      consoleDotLog('Merging...', this.mountPaths);
 
       const strategyMap = { remote: 'theirs', local: 'ours', combine: 'combine' };
       const userStrategy = this.mergingConfig?.onConflictStrategy || 'remote';
       const onConflictStrategy = strategyMap[userStrategy] || 'remote';
 
-      consoleDotLog('Merging...', mountPaths);
+      consoleDotLog('Merging...', this.mountPaths);
       await this.vfs.merger(onConflictStrategy);
       consoleDotLog('Merge completed successfully.');
     } catch(error) {
@@ -182,7 +182,7 @@ export class KFS {
   
       path = this._normalizePath(path);
 
-      if (this.mountPaths.includes(path)) {
+      if (this.mountPaths && this.mountPaths.includes(path)) {
         throw new Error(`Cannot write directly to mount path (${path}). Use mount() instead.`);
       }
 
@@ -272,7 +272,7 @@ export class KFS {
     try {
       path = this._normalizePath(path);
 
-      if (this.mountPaths.includes(path)) {
+      if (this.mountPaths && this.mountPaths.includes(path)) {
         throw new Error(`Cannot remove path (${path}) directly. Use unmount() instead.`);
       }
       const { fs, relativePath, versioning } = await this.vfs.resolveFS(path);
@@ -355,5 +355,3 @@ export class KFS {
     return configStore.setConfig(config)
   }
 }
-
-export { serviceWorker } from './libs/sw-register.js';

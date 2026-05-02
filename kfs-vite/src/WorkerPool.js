@@ -1,10 +1,8 @@
 import { Logger } from "./libs/LoggerES6.js";
 import MagicPortal from "./libs/MagicPortalES6.js";
 import { getConfig } from './configES6.js';
-import GitWorker from './workers/gitWorker.js?worker';
 
 const config = await getConfig();
-
 const logger = new Logger(config.logging.WorkerPool);
 
 function consoleDotLog(...parameters) {
@@ -17,45 +15,76 @@ function consoleDotError(...parameters) {
 
 consoleDotLog('Loading workerPool.');
 
+// Helper to wrap Node Worker to look like Browser Worker
+class NodeWorkerWrapper {
+  constructor(worker) {
+    this.worker = worker;
+    this.listeners = new Map();
+    
+    this.worker.on('message', (message) => {
+      const event = { data: message };
+      if (this.onmessage) this.onmessage(event);
+      const listeners = this.listeners.get('message') || [];
+      listeners.forEach(fn => fn(event));
+    });
+    
+    this.worker.on('error', (err) => {
+      const listeners = this.listeners.get('error') || [];
+      listeners.forEach(fn => fn(err));
+    });
+  }
+
+  postMessage(message) {
+    this.worker.postMessage(message);
+  }
+
+  addEventListener(type, listener) {
+    if (!this.listeners.has(type)) this.listeners.set(type, []);
+    this.listeners.get(type).push(listener);
+  }
+
+  terminate() {
+    return this.worker.terminate();
+  }
+}
+
 class WorkerPool {
-  constructor(workerClass = null) {
+  constructor() {
     this.workers = new Map();
     this.workerCount = 0;
-    // Allow dependency injection for testing
-    this.WorkerClass = workerClass || (typeof Worker !== 'undefined' ? Worker : null);
+    this.isNode = typeof window === 'undefined';
   }
 
   async getWorker(mountPath, useSW = false) {
     try {
-      if (!this.WorkerClass) {
-        throw new Error("Worker class not available in this environment");
-      }
-  
       if (!this.workers.has(mountPath)) {
         consoleDotLog(`Creating new worker for ${mountPath}`);
+        let workerInstance;
 
-        const worker = new GitWorker();
+        if (this.isNode) {
+            // --- NODE.JS: Dynamic Import to avoid Vite bundling errors ---
+            const { Worker } = await import('worker_threads');
+            const { fileURLToPath } = await import('url');
+            const { dirname, join } = await import('path');
 
+            const __filename = fileURLToPath(import.meta.url);
+            const __dirname = dirname(__filename);
+            const workerPath = join(__dirname, 'workers', 'gitWorker.js');
+            
+            const rawWorker = new Worker(workerPath);
+            workerInstance = new NodeWorkerWrapper(rawWorker);
+        } else {
+            // --- BROWSER: Standard Worker ---
+            // Ensure this path matches your public structure or Vite config
+            workerInstance = new Worker(new URL('./workers/gitWorker.js', import.meta.url), { type: 'module' });
+        }
   
-        // Add error handling
-        worker.onerror = (e) => {
-          consoleDotError('Worker error:', e);
-          consoleDotError('Error details:', {
-            filename: e.filename,
-            lineno: e.lineno,
-            colno: e.colno,
-            message: e.message
-          });
-          throw e;
-        };
-  
-        const portal = new MagicPortal(worker);
+        const portal = new MagicPortal(workerInstance);
         
-        // Add timeout for safety
         const thread = await Promise.race([
           portal.get("workerThread"),
           new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Worker thread timeout')), 5000)
+            setTimeout(() => reject(new Error('Worker thread timeout')), 10000)
           )
         ]);
         
@@ -63,11 +92,8 @@ class WorkerPool {
         await thread.ready();
         consoleDotLog('Worker is ready');
   
-        const swSupport = typeof navigator !== 'undefined' && 'serviceWorker' in navigator;
-        await thread.execute('setSWUsage', { supportsServiceWorker: swSupport, useSW });
-  
         this.workers.set(mountPath, {
-          worker,
+          worker: workerInstance,
           portal,
           thread,
           users: 0
@@ -90,29 +116,13 @@ class WorkerPool {
     if (this.workers.has(mountPath)) {
       const entry = this.workers.get(mountPath);
       entry.users--;
-      
       if (entry.users <= 0) {
-        entry.worker.terminate();
+        await entry.worker.terminate();
         this.workers.delete(mountPath);
         this.workerCount--;
-        consoleDotLog(`Terminated worker for ${mountPath}`);
       }
     }
   }
-
-  async forceTerminateAll() {
-    for (const [path, {worker}] of this.workers) {
-      worker.terminate();
-      consoleDotLog(`Force terminated worker for ${path}`);
-    }
-    this.workers.clear();
-    this.workerCount = 0;
-  }
-
-  getActiveCount() {
-    return this.workerCount;
-  }
 }
 
-// Singleton instance
 export const workerPool = new WorkerPool();

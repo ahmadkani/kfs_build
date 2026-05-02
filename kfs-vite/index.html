@@ -66,33 +66,13 @@
       white-space: pre-wrap;
       border-radius: 5px;
     }
-    .status {
-      padding: 4px 10px;
-      border-radius: 3px;
-      font-size: 0.9em;
-      margin-left: 10px;
-    }
-    .status-active {
-      background: #d4edda;
-      color: #155724;
-    }
-    .status-inactive {
-      background: #f8d7da;
-      color: #721c24;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Git Filesystem Manager</h1>
 
-    <div class="section">
-      <h2>Service Worker <span id="swStatus" class="status status-inactive">Not Registered</span></h2>
-      <div class="button-group">
-        <button id="registerSW">Register Service Worker</button>
-        <button id="unregisterSW">Unregister Service Worker</button>
-      </div>
-    </div>
+    <!-- Service Worker Section Removed -->
 
     <div class="section">
       <h2>Filesystem Operations</h2>
@@ -128,7 +108,7 @@
 
   <script type="module">
     import { KFS } from "./src/kfs.js";
-    import { serviceWorker } from "./src/libs/sw-register.js";
+    // Service Worker import removed
     
     const kfs = new KFS();
 
@@ -137,35 +117,7 @@
       $("output").textContent = `${msg}\n` + $("output").textContent;
     };
 
-    $("registerSW").addEventListener("click", async () => {
-      try {
-        const registration = await serviceWorker.register({ scope: "/", enableSync: true });
-        $("swStatus").className = "status status-active";
-        $("swStatus").textContent = "Active";
-        logOutput("✅ Service Worker registered successfully");
-      } catch (e) {
-        logOutput(`❌ Failed to register Service Worker: ${e.message}`);
-      }
-    });
-
-    $("unregisterSW").addEventListener("click", async () => {
-      try {
-        await serviceWorker.unregister();
-        $("swStatus").className = "status status-inactive";
-        $("swStatus").textContent = "Not Registered";
-        logOutput("✅ Service Worker unregistered");
-      } catch (e) {
-        logOutput(`❌ Failed to unregister Service Worker: ${e.message}`);
-      }
-    });
-
-    (async () => {
-      const reg = await navigator.serviceWorker.getRegistration();
-      if (reg) {
-        $("swStatus").className = "status status-active";
-        $("swStatus").textContent = "Active";
-      }
-    })();
+    // Service Worker registration logic removed
 
     $("mountBtn").addEventListener("click", async () => {
       const path = $("mountPath").value.trim();
@@ -175,14 +127,12 @@
         logOutput("Mounting filesystem...");
         await kfs.mount(path, "idb", "1", "git", {
           // fetchInfo: {
-          //   url: '', // can be null for new repo in user's system
+          //   url: '', 
           //   username: 'Token',
           //   password: '',
           //   name: 'ahmad',
           //   email: 'ahmad@kani.com',
           // },
-          // useSW: false,
-          // merging: { strategy: 'immediate', interval: 2000, onConflictStrategy: 'local', syncUrl: 'https://github.com/ahmadkani/ahmadkani2'}, //syncUrl required, defaults to fetchurl
           versioning: { strategy: 'immediate', interval: 10, number: 5 },
         });
 
@@ -258,7 +208,7 @@
     $("mergeBtn").addEventListener("click", async () => {
         try {
         logOutput("🔄 Merging from KFS...");
-        await kfs.merge(); // Assuming `merge()` exists in your KFS class
+        await kfs.merge();
         logOutput("✅ Merge complete.");
       } catch (e) {
         logOutput(`❌ Merge failed: ${e.message}`);

@@ -3,11 +3,6 @@ let config = null;
 
 // Define group mappings
 const loggingGroups = {
-  serviceWorker: [
-    'serviceWorker',
-    'ServiceWorkerRegistration',
-    'swUtils',
-  ],
   kfs: [
     'kfs',
     'fsType',
@@ -47,14 +42,11 @@ const defaultConfig = {
     fsType: true,
     fsManagerES6: false,
     fsManagerGlobal: false,
-    swUtils: true,
     memoryFS: true,
     memoryBackendES6: false,
     memoryBackendGlobal: false,
     VFSutils: true,
     gitNoteManager: true,
-    ServiceWorkerRegistration: true,
-    serviceWorker: true,
     storageUtils: true,
     supportChecker: true,
     dotGit: true,

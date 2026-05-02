@@ -1,22 +1,62 @@
+// -------------------------------------------------------
+// 1. Environment Setup & Polyfills
+// -------------------------------------------------------
+const isNode = typeof self === 'undefined';
+
+let selfObj;
+let http;
+
+if (isNode) {
+  // --- Node.js Specifics ---
+  const { parentPort } = await import('worker_threads');
+  
+  // Polyfill 'self' for MagicPortal
+  selfObj = {
+    postMessage: (msg) => parentPort.postMessage(msg),
+    addEventListener: (type, listener) => {
+      if (type === 'message') {
+        parentPort.on('message', (msg) => listener({ data: msg }));
+      }
+    }
+  };
+
+  // Load Node HTTP client
+  try {
+    const nodeHttp = await import('./githttpnode.js');
+    http = nodeHttp.default || nodeHttp;
+  } catch (e) {
+    console.error('[Worker] Failed to load githttpnode.js', e);
+    const fallbackHttp = await import('isomorphic-git/http/node');
+    http = fallbackHttp.default || fallbackHttp;
+  }
+} else {
+  // --- Browser Specifics ---
+  selfObj = self;
+  const webHttp = await import('isomorphic-git/http/web');
+  http = webHttp.default || webHttp;
+}
+
+// -------------------------------------------------------
+// 2. Imports
+// -------------------------------------------------------
 import MagicPortal from '../libs/MagicPortalES6.js';
-import git from 'isomorphic-git'
-import http from 'isomorphic-git/http/web';
-import {Logger} from '../libs/LoggerES6.js';
+import git from 'isomorphic-git';
+import { Logger } from '../libs/LoggerES6.js';
 import fsManager from '../libs/workerUtils/fsManagerES6.js';
-import swUtils from '../libs/workerUtils/swUtilsES6.js';
 import dotGit from '../libs/gitOperations/dotGit.js';
-import {config} from '../configES6.js';
+import { config } from '../configES6.js';
 import gitNoteManager from '../libs/workerUtils/gitNoteManager.js';
 
-self.onerror = (e) => {
+// -------------------------------------------------------
+// 3. Initialization
+// -------------------------------------------------------
+selfObj.onerror = (e) => {
   console.error('Worker initialization error:', e);
 };
 
-const portal = new MagicPortal(self);
+const portal = new MagicPortal(selfObj);
 const logger = new Logger(config.logging.dotGit);
 const FSManager = new fsManager();
-const swUtilsInstance = new swUtils();
-
 
 function consoleDotLog(...parameters) {
   logger.consoleDotLog(...parameters);
@@ -41,11 +81,10 @@ let settingsFileAddresses = {};
 let fs = null;
 let gitConfigFilePath = '/settings';
 let fsArgs = {};
-let useSW = true;
 let fsType;
 let fsName;
 let corsProxy = config.corsProxy;
-let supportsServiceWorker = false;
+
 
 // Auth object
 const authenticate = {
@@ -60,68 +99,9 @@ const authenticate = {
   }
 };
 
-//broadcastChannel for sending set functions' parameters
-async function sendMessageToSW(message) {
-  if (supportsServiceWorker && useSW) {
-    await swUtilsInstance.sendMessageToChannel(message);
-  } else {
-    consoleDotLog('This browser doesn\'t support service worker');
-  }
-}
-
-self.setAuthParams = async function() {
-  await sendMessageToSW({ 
-    operation: 'setAuthParams',
-    data: {username: username, password: password}
-  });
-};
-
-self.setDir = async function() {
-  await sendMessageToSW({ operation: 'setDir', data: dir });
-};
-
-self.setRef = async function () {
-  await sendMessageToSW({ operation: 'setRef', data: ref });
-}
-self.setDepth = async function() {
-  await sendMessageToSW({ operation: 'setDepth', data: depth });
-};
-
-self.setRemote = async function() {
-  await sendMessageToSW({ operation: 'setRemote', data: remote });
-};
-
-self.passFsArgs = async function() {
-  await sendMessageToSW({ operation: 'passFsArgs', data: fsArgs });
-};
-
-self.setRepoDir = async function() {
-  await sendMessageToSW({ operation: 'setRepoDir', data: dir });
-}
-
-self.setSettingsAddresses = async function () {
-  await sendMessageToSW({ operation: 'setSettingsAddresses', data: settingsFileAddresses });
-}
-
-async function fetchWithServiceWorker(operation, args) {
-
-  if (supportsServiceWorker && useSW) {
-    return await swUtilsInstance.fetchWithServiceWorker(operation, args);
-  } else {
-    consoleDotLog('This browser doesn\'t support service worker');
-  }
-}
-
-async function setSWUsage(_supportsServiceWorker, _useSW = useSW) {
-  supportsServiceWorker = _supportsServiceWorker;
-  useSW = _useSW;
-  FSManager.options = {supportsServiceWorker, useSW};
-}
-
 //This function sets the directory for your working directory
 async function setDir(_dir) {
   dir = _dir;
-  await self.setDir();
 }
 
 function isValidUrl(url) {
@@ -142,13 +122,11 @@ async function setUrl(_url) {
 
 async function setRef(_ref) {
   ref = _ref;
-  await self.setRef();
 }
 
 //This function sets depth
 async function setDepth(_depth) {
   depth = _depth;
-  await self.setDepth();
 }
 
 //Using this function sets the CorsProxy of your choice
@@ -160,13 +138,11 @@ async function setCorsProxy(_corsProxy) {
 async function setAuthParams(_username, _password) {
   username = _username;
   password = _password;
-  await self.setAuthParams();
 }
 
 //this function sets up the remote that user wants to do things on
 async function setRemote(_remote) {
   remote = _remote;
-  await self.setRemote();
 }
 
 async function getRemote() {
@@ -191,7 +167,6 @@ async function setSettingsAddresses() {
                 filePath,
             };
             console.log(`File mapped: ${filePath}`);
-            await self.setSettingsAddresses();
             return {success: true};
         }
       } else {
@@ -211,24 +186,47 @@ async function setFs({ fsName: _fsName, fsType: _fsType }) {
   try {
     consoleDotLog('Initializing FS with:', { _fsName, _fsType });
     
-    if (!_fsName || !_fsType) {
-      throw new Error('fsName and fsType are required');
-    }
-
-    fsArgs = { fsName: _fsName, fsType: _fsType };
+    // 1. ALWAYS store configuration globally first
     fsName = _fsName;
     fsType = _fsType;
-    
-    consoleDotLog('Getting FS instance from FSManager');
-    const getFs = await FSManager.getFS(_fsName, _fsType);
-    fs = getFs.fs;
 
-    if (!fs) {
-      throw new Error('Failed to initialize file system');
+    // 2. NODE JS NATIVE FS
+    if (isNode && _fsType === 'node') {
+      const nodeFs = await import('fs');
+      fs = nodeFs.default; 
+      dir = _fsName; // In 'node' mode, fsName IS the real path on disk
+      
+      // FIX: Ensure the directory exists on disk
+      await fs.promises.mkdir(dir, { recursive: true });
+      
+      consoleDotLog(`NodeNS Mode: Native FS initialized at ${dir}`);
+      return fs;
     }
+
+    // 3. NODE JS MEMORY (TEMP DIR)
+    if (isNode && _fsType === 'memory') {
+       const nodeFs = await import('fs');
+       fs = nodeFs.default;
+       const path = await import('path');
+       const os = await import('os');
+       
+       // Calculate path exactly like NodeFS does
+       const tempDir = path.join(os.tmpdir(), 'kfs_node_temp', _fsName.replace(/\//g, '_'));
+       
+       // FIX: Ensure the temp directory exists
+       await fs.promises.mkdir(tempDir, { recursive: true });
+       
+       dir = tempDir; 
+       consoleDotLog(`Node.js Memory Mode: Using temp directory ${dir}`);
+       return fs;
+    }
+
+    // 4. BROWSER LOGIC
+    if (!_fsName || !_fsType) throw new Error('fsName and fsType are required');
     
-    consoleDotLog('FS initialized successfully:', fs);
-    await self.passFsArgs();
+    const getFs = await FSManager.getFS(_fsName, _fsType);
+    if (getFs && getFs.fs) fs = getFs.fs;
+    if (!fs) throw new Error('Failed to initialize file system');
     return fs;
   } catch (error) {
     consoleDotError("Error initializing file system:", error);
@@ -480,38 +478,6 @@ async function doFetch(args) {
   consoleDotLog('Doing fetch operation');
   !url && await setUrl(args?.url);
   try {
-    if (supportsServiceWorker && useSW) {
-      try {
-        await fetchWithServiceWorker('fetch', args);
-        return {success: true};
-      } catch (swError) {
-        consoleDotLog('Service Worker fetch failed, falling back to Web Worker', swError);
-        await git.fetch({
-          ...args,
-          fs,
-          http,
-          dir,
-          corsProxy,
-          ref: _ref,
-          url,
-          remote,
-          depth,
-          tags: true,
-          headers: buildHeaders(username, password),
-          onProgress: event => {
-            consoleDotLog('Fetch progress event:', event);
-          },
-          onAuth() {
-            return authenticate.fill();
-          },
-          onAuthFailure() {
-            return authenticate.rejected();
-          },
-        });
-        return {success: true};
-      }
-    } else {
-      consoleDotLog('Service Worker not supported, using Web Worker directly');
       await git.fetch({
         ...args,
         fs,
@@ -537,7 +503,6 @@ async function doFetch(args) {
       
       await ensureAllFilesHaveNotes();
       return {success: true};
-    }
   } catch (error) {
     consoleDotError('some error happend while fetching: ', error);
     await handleGitError(error, args, 'doFetch', maxDeleteRetries);
@@ -588,34 +553,6 @@ async function listServerRefs(args) {
   try {
     await setConfigs(args);
     try {
-      if (supportsServiceWorker && useSW) {
-        try {
-          const result = await fetchWithServiceWorker('listServerRefs', {...args, url});
-          consoleDotLog('listServerRefs result with sw:', result);
-          return result;
-        } catch (swError) {
-          consoleDotLog('Service Worker listServerRefs failed, falling back to Web Worker', swError);
-          const refs = await git.listServerRefs({
-            ...args,
-            fs,
-            url,
-            http,
-            dir,
-            corsProxy,
-            remote,
-            headers: buildHeaders(username, password),
-            onAuth() {
-              return authenticate.fill();
-            },
-            onAuthFailure() {
-              return authenticate.rejected();
-            },
-          });
-          consoleDotLog('listServerRefs result:', refs);
-          return { success: true, refs };
-        }
-      } else {
-        consoleDotLog('Service Worker not supported, using Web Worker directly');
         const refs = await git.listServerRefs({
           ...args,
           fs,
@@ -634,7 +571,6 @@ async function listServerRefs(args) {
         });
         consoleDotLog('listServerRefs result:', refs);
         return { success: true, refs };
-      }
     } catch (error) {
       throw error;
     }
@@ -939,16 +875,8 @@ async function init() {
       };
     }
     else {
-      await git.init({fs, dir : '/',defaultBranch: 'main'});
-      
-      if (dirExists) {
-        consoleDotLog('Directory already exists. Skipping initialization...');
-        return { 
-          message: 'Directory already exists', 
-          success: true, 
-          alreadyInitialized: true 
-        };
-      }
+      // FIX: Use 'dir' variable (set by setFs) instead of '/'
+      await git.init({fs, dir, defaultBranch: 'main'});
       
       consoleDotLog('Initializing repository...');
   
@@ -956,7 +884,7 @@ async function init() {
       await createInitialCommit();
       await initializeLocalBranches();
       await initRepoNotes(fsType, 'root');
-      // await listFilesAsTree();
+      
       consoleDotLog('Initialization completed successfully');
       return { 
         message: 'Initialization successful', 
@@ -980,7 +908,7 @@ async function createInitialCommit() {
     // Create initial commit
     const commitOid = await git.commit({
       fs,
-      dir: '/',
+      dir, // FIX: Use 'dir' variable instead of '/'
       message: 'Initial commit',
       author: {
         name: 'ahmad',
@@ -1321,33 +1249,6 @@ function buildHeaders(username, password) {
 async function clone(args) {
   try {
     let cloneResult;
-    if (supportsServiceWorker && useSW) {
-      try {
-        cloneResult = await fetchWithServiceWorker('clone', args);
-      } catch (swError) {
-        consoleDotLog('Service Worker clone failed, falling back to Web Worker', swError);
-        cloneResult = await git.clone({
-          ...args,
-          fs,
-          http,
-          dir,
-          remote,
-          ref,
-          corsProxy,
-          depth,
-          noCheckout: true,
-          singleBranch: false,
-          headers: buildHeaders(username, password),
-          onAuth() {
-              return authenticate.fill();
-          },
-          onAuthFailure() {
-              return authenticate.rejected();
-          },
-        });
-      }
-    } else {
-      consoleDotLog('Service Worker not supported, using Web Worker directly');
       cloneResult = await git.clone({
         ...args,
         fs,
@@ -1367,7 +1268,6 @@ async function clone(args) {
             return authenticate.rejected();
         },
       });
-    }
     return cloneResult;
   } catch (error) {
     consoleDotError("Some error happened while cloning:", error);
@@ -1447,7 +1347,6 @@ async function log(args = {}) {
 
 /**
  * Pushes changes to the remote repository.
- * This function handles both service worker and web worker scenarios.
  * It uses the `git.push` method from the `isomorphic-git` library to push changes.
  * @param {Object} args - The arguments for the push operation.
  * @param {string} [args.url] - The URL of the remote repository to push to.
@@ -1476,33 +1375,6 @@ async function push(args) {
   try {
     await setConfigs(args);
     try {
-      if (supportsServiceWorker && useSW) {
-        try {
-          await fetchWithServiceWorker('push', args);
-          return {success: true};
-        } catch (swError) {
-          consoleDotLog('Service Worker push failed, falling back to Web Worker', swError);
-          await git.push({
-            ...args,
-            fs,
-            http,
-            dir,
-            corsProxy,
-            remote,
-            ref: _ref,
-            force,
-            headers: buildHeaders(username, password),
-            onAuth() {
-              return authenticate.fill();
-            },
-            onAuthFailure() {
-              return authenticate.rejected();
-            },
-          });
-          return {success: true};
-        }
-      } else {
-        consoleDotLog('Service Worker not supported, using Web Worker directly');
         await git.push({
           ...args,
           fs,
@@ -1522,7 +1394,6 @@ async function push(args) {
         });
         consoleDotLog('Pushing was successful.');
         return {success: true};
-      }
     } catch (error) {
       throw error;
     }
@@ -1761,7 +1632,6 @@ async function commitStagedChanges(message = '') {
 async function readFileDot(filePath, _commitOid = 'staged') {
   try {
     consoleDotLog(`[GITWorker] Reading file: ${filePath}`);
-    consoleDotLog('Current FS state:', { fs, fsName, fsType, fsArgs });
     const rootContents = await fs.promises.readdir('/');
     consoleDotLog('Root directory contents:', rootContents);
     
@@ -2229,38 +2099,6 @@ async function pull(args) {
   try {
     await setConfigs(args);
     try {
-      if (supportsServiceWorker && useSW) {
-        try {
-          await fetchWithServiceWorker('pull', args);
-          return {success: true};
-        } catch (swError) {
-          consoleDotLog('Service Worker pull failed, falling back to Web Worker', swError);
-          await git.pull({
-            ...args,
-            fs,
-            http,
-            dir,
-            corsProxy,
-            remote,
-            url,
-            remoteRef: ref,
-            fastForward: true,
-            fastForwardOnly: false,
-            forced: true,
-            noCheckout: true,  // Ensure this is true to prevent file checkout
-            singleBranch: false,  // Consider adding this to match clone behavior
-            headers: buildHeaders(username, password),
-            onAuth() {
-              return authenticate.fill();
-            },
-            onAuthFailure() {
-              return authenticate.rejected();
-            },
-          });
-          return {success: true};
-        }
-      } else {
-        consoleDotLog('Service Worker not supported, using Web Worker directly');
         await git.pull({
           ...args,
           fs,
@@ -2283,7 +2121,6 @@ async function pull(args) {
           },
         });
         return {success: true};
-      }
     } catch (error) {
       throw error;
     }
@@ -2302,34 +2139,6 @@ async function fastForward(args) {
 
   try {
     !url && await setUrl(args?.url);
-    if (supportsServiceWorker && useSW) {
-      try {
-        await fetchWithServiceWorker('fastForward', args);
-        return {success: true};
-      } catch (swError) {
-        consoleDotLog('Service Worker fastForward failed, falling back to Web Worker', swError);
-        await git.fastForward({
-          ...args,
-          fs,
-          http,
-          dir,
-          remote,
-          corsProxy,
-          ref,
-          remoteref: ref,
-          forced: true,
-          headers: buildHeaders(username, password),
-          onAuth() {
-            return authenticate.fill();
-          },
-          onAuthFailure() {
-            return authenticate.rejected();
-          },
-        });
-        return {success: true};
-      }
-    } else {
-      consoleDotLog('Service Worker not supported, using Web Worker directly');
       await git.fastForward({
         ...args,
         fs,
@@ -2349,7 +2158,6 @@ async function fastForward(args) {
         },
       });
       return {success: true};
-    }
   } catch (error) {
     consoleDotLog('This error occured while fast-forwarding: ', error);
     await handleGitError(error, args, 'fastForward', maxDeleteRetries);
@@ -2576,7 +2384,6 @@ const operationHandlers = {
   setConfigs: setConfigs,
   setUrl: ({ url }) => setUrl(url),
   setCorsProxy: ({ corsProxy }) => setCorsProxy(corsProxy),
-  setSWUsage: ({ useSW }) => setSWUsage(useSW),
   setDir: ({ dir }) => setDir(dir),
   setDepth: ({ depth }) => setDepth(depth),
   setRef: ({ ref }) => setRef(ref),
@@ -2665,5 +2472,3 @@ const workerAPI = {
 resolveReady();
 portal.set("workerThread", workerAPI);
 consoleDotLog('Worker initialized and ready');
-
-//# sourceMappingURL=gitWorker.js.map
