@@ -1,4 +1,4 @@
-import { Logger } from "/libs/LoggerES6.js";
+import { Logger } from "./libs/LoggerES6.js";
 import { getConfig } from "./configES6.js";
 
 const config = await getConfig();

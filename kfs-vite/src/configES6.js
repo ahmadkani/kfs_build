@@ -68,50 +68,71 @@ const defaultConfig = {
 // Promise that resolves when config is loaded
 let configReadyPromise = null;
 
+/**
+ * Try to fetch config.json from multiple candidate locations.
+ * Logs every attempt to help debugging.
+ */
 async function loadConfig() {
-  try {
-    // Use fetch to load config from public directory
-    const response = await fetch('/config.json');
-    if (!response.ok) {
-      throw new Error('Config file not found');
-    }
-    const jsonConfig = await response.json();
-    
-    // Apply group mappings to the loaded config
-    if (jsonConfig.logging) {
-      for (const group in loggingGroups) {
-        if (jsonConfig.logging.hasOwnProperty(group)) {
-          const value = jsonConfig.logging[group];
-          loggingGroups[group].forEach(subKey => {
-            if (jsonConfig.logging.hasOwnProperty(subKey)) {
-              jsonConfig.logging[subKey] = value;
+  // Build list of URLs to try
+  const candidates = [
+    '/config.json',                       // served from host root
+    './config.json',                      // relative to current page URL
+    '/kfs/config.json',                   // if library is under /kfs/
+    '/dist/config.json',
+    new URL('./config.json', import.meta.url).href,   // same folder as this script
+    new URL('../config.json', import.meta.url).href,  // one level up from script
+  ];
+
+  for (const url of candidates) {
+    try {
+      console.debug(`[Config] Trying to load config from: ${url}`);
+      const response = await fetch(url);
+      if (response.ok) {
+        const jsonConfig = await response.json();
+        console.debug(`[Config] Successfully loaded config from: ${url}`);
+        
+        // Apply group mappings to the loaded config
+        if (jsonConfig.logging) {
+          for (const group in loggingGroups) {
+            if (jsonConfig.logging.hasOwnProperty(group)) {
+              const value = jsonConfig.logging[group];
+              loggingGroups[group].forEach(subKey => {
+                if (jsonConfig.logging.hasOwnProperty(subKey)) {
+                  jsonConfig.logging[subKey] = value;
+                }
+              });
             }
-          });
+          }
         }
+        
+        // Merge with default config
+        return {
+          ...defaultConfig,
+          ...jsonConfig,
+          logging: {
+            ...defaultConfig.logging,
+            ...(jsonConfig.logging || {})
+          },
+          versioning: {
+            ...defaultConfig.versioning,
+            ...(jsonConfig.versioning || {})
+          },
+          merging: {
+            ...defaultConfig.merging,
+            ...(jsonConfig.merging || {})
+          }
+        };
+      } else {
+        console.debug(`[Config] Failed to load from ${url} (status ${response.status})`);
       }
+    } catch (err) {
+      console.debug(`[Config] Error fetching ${url}: ${err.message}`);
     }
-    
-    // Merge with default config
-    return {
-      ...defaultConfig,
-      ...jsonConfig,
-      logging: {
-        ...defaultConfig.logging,
-        ...(jsonConfig.logging || {})
-      },
-      versioning: {
-        ...defaultConfig.versioning,
-        ...(jsonConfig.versioning || {})
-      },
-      merging: {
-        ...defaultConfig.merging,
-        ...(jsonConfig.merging || {})
-      }
-    };
-  } catch (error) {
-    console.warn('Using default configuration:', error.message);
-    return defaultConfig;
   }
+
+  // If we get here, no config file was found
+  console.warn('Using default configuration: Config file not found in any candidate location.');
+  return defaultConfig;
 }
 
 // Initialize config

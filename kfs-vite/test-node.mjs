@@ -1,4 +1,4 @@
-import { KFS } from './src/kfs.js';
+import { KFS } from './kfs/kfs.js';
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';

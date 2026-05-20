@@ -5,11 +5,13 @@ const isNode = typeof self === 'undefined';
 
 let selfObj;
 let http;
-
+console.log('1')
+try{
 if (isNode) {
   // --- Node.js Specifics ---
   const { parentPort } = await import('worker_threads');
-  
+  console.log('12')
+
   // Polyfill 'self' for MagicPortal
   selfObj = {
     postMessage: (msg) => parentPort.postMessage(msg),
@@ -35,7 +37,9 @@ if (isNode) {
   const webHttp = await import('isomorphic-git/http/web');
   http = webHttp.default || webHttp;
 }
-
+} catch(e) {
+  console.error('2', e)
+}
 // -------------------------------------------------------
 // 2. Imports
 // -------------------------------------------------------

@@ -1,5 +1,4 @@
 import { MemoryFS } from './memoryFs.js';
-import { IDBFs } from './IDBFs.js';
 import { VFSutils } from "./libs/vfsUtils/VFSUtils.js";
 import { Logger } from "./libs/LoggerES6.js";
 import { StorageUtils } from './libs/vfsUtils/storageUtils.js';
