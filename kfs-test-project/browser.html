@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Filesystem Manager</title>
+<script type="importmap">
+  {
+    "imports": {
+      "js-kfs": "./node_modules/js-kfs/kfs/kfs.js"
+    }
+  }
+</script>
+<style>
+    button { margin: 5px; padding: 8px 12px; cursor: pointer; }
+    input { margin: 5px; padding: 5px; width: 300px; }
+
+    #output {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        min-height: 20px;
+        font-family: monospace;
+        white-space: pre-wrap;
+        background: #f5f5f5;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+    .section {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 0.9em;
+        margin-left: 10px;
+    }
+
+    .status-active { background: #d4edda; color: #155724; }
+    .status-inactive { background: #f8d7da; color: #721c24; }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Git Filesystem Manager</h1>
+
+    <div class="section">
+        <h2>Service Worker <span id="swStatus" class="status status-inactive">Not Registered</span></h2>
+        <button id="registerSW">Register Service Worker</button>
+        <button id="unregisterSW">Unregister Service Worker</button>
+    </div>
+
+    <div class="section">
+        <h2>Filesystem Operations</h2>
+        <input type="text" id="mountPath" placeholder="Mount Path (e.g. /repo1)">
+        <button id="mountBtn">Mount</button>
+        <button id="unmountBtn">Unmount</button>
+    </div>
+
+    <div class="section">
+        <h2>File Operations</h2>
+        <input type="text" id="filePath" placeholder="File Path (e.g. /repo1/file.txt)">
+        <button id="writeBtn">Write File</button>
+        <button id="readBtn">Read File</button>
+        <button id="removeBtn">Remove File</button>
+    </div>
+
+    <div class="section">
+        <h2>Output</h2>
+        <div id="output">Ready...</div>
+    </div>
+</div>
+
+<script type="module">
+/*
+    IMPORTANT FIX:
+    ❌ "js-kfs" npm import will NOT work in raw HTML
+    ✅ Must use relative ESM path from node_modules
+*/
+
+import { KFS } from "js-kfs";
+
+const kfs = new KFS();
+
+/* ---------------- OUTPUT ---------------- */
+
+function log(msg) {
+    const el = document.getElementById("output");
+    el.textContent = msg + "\n" + el.textContent;
+}
+
+/* ---------------- SERVICE WORKER ---------------- */
+
+document.getElementById("registerSW").addEventListener("click", async () => {
+    try {
+        const reg = await serviceWorker.register({
+            scope: "/",
+            enableSync: true
+        });
+
+        if (reg) {
+            document.getElementById("swStatus").textContent = "Active";
+            document.getElementById("swStatus").className = "status status-active";
+        }
+
+        log("✅ Service Worker registered");
+    } catch (e) {
+        log("❌ SW error: " + e.message);
+    }
+});
+
+document.getElementById("unregisterSW").addEventListener("click", async () => {
+    try {
+        await serviceWorker.unregister();
+        document.getElementById("swStatus").textContent = "Not Registered";
+        document.getElementById("swStatus").className = "status status-inactive";
+        log("✅ Service Worker unregistered");
+    } catch (e) {
+        log("❌ SW error: " + e.message);
+    }
+});
+
+/* ---------------- FS OPS ---------------- */
+
+async function mountFS() {
+    const path = document.getElementById("mountPath").value.trim();
+    if (!path) return log("Enter mount path");
+
+    try {
+        log("Mounting...");
+
+        await kfs.mount(path, "memory", "1", "git", {
+            fetchInfo: {
+                url: "",
+                username: "TOKEN",
+                password: "",
+                name: "ahmad",
+                email: "ahmad@kani.com"
+            },
+            useSW: true,
+            merging: { strategy: "immediate", interval: 60 },
+            versioning: { strategy: "immediate", interval: 10, number: 5 }
+        });
+
+        await kfs.setUserConfigs({
+            username: "TOKEN",
+            password: "",
+            name: "ahmad",
+            email: "ahmad@kani.com"
+        });
+
+        log("✅ Mounted: " + path);
+    } catch (e) {
+        log("❌ Mount failed: " + e.message);
+    }
+}
+
+async function unmountFS() {
+    const path = document.getElementById("mountPath").value.trim();
+    if (!path) return log("Enter mount path");
+
+    try {
+        await kfs.unmount(path, "1");
+        log("✅ Unmounted: " + path);
+    } catch (e) {
+        log("❌ Unmount failed: " + e.message);
+    }
+}
+
+async function writeFile() {
+    const p = document.getElementById("filePath").value.trim();
+    if (!p) return log("Enter file path");
+
+    try {
+        await kfs.create(p, "file", "Hello from KFS!");
+        log("✅ File created: " + p);
+    } catch (e) {
+        log("❌ Write failed: " + e.message);
+    }
+}
+
+async function readFile() {
+    const p = document.getElementById("filePath").value.trim();
+    if (!p) return log("Enter file path");
+
+    try {
+        const data = await kfs.read(p);
+        log("📄 " + (data || "Empty / Not found"));
+    } catch (e) {
+        log("❌ Read failed: " + e.message);
+    }
+}
+
+async function removeFile() {
+    const p = document.getElementById("filePath").value.trim();
+    if (!p) return log("Enter file path");
+
+    try {
+        await kfs.remove(p);
+        log("✅ Removed: " + p);
+    } catch (e) {
+        log("❌ Remove failed: " + e.message);
+    }
+}
+
+/* ---------------- WIRE BUTTONS (FIXES YOUR mountFS ERROR) ---------------- */
+
+document.getElementById("mountBtn").addEventListener("click", mountFS);
+document.getElementById("unmountBtn").addEventListener("click", unmountFS);
+document.getElementById("writeBtn").addEventListener("click", writeFile);
+document.getElementById("readBtn").addEventListener("click", readFile);
+document.getElementById("removeBtn").addEventListener("click", removeFile);
+
+</script>
+</body>
+</html>
