@@ -4,11 +4,14 @@ on:
   release:
     types: [created]
 
+# ADD THIS SECTION ▼
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+# ADD THIS SECTION ▲
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    # This step creates a .npmrc file in the root, which is fine
-    # because NPM checks parent directories for config.
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,18 +24,10 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        # This tells GitHub to run 'npm ci' inside the kfs-vite folder
         working-directory: ./kfs-vite
-
-      # Optional: Build step (if you have a build script)
-      # - name: Build
-      #   run: npm run build
-      #   working-directory: ./kfs-vite
 
       - name: Publish to NPM
         run: npm publish
-        # This tells GitHub to run 'npm publish' from inside kfs-vite
-        # NPM will pack whatever is in THIS folder.
         working-directory: ./kfs-vite
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
