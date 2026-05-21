@@ -4,10 +4,9 @@ on:
   release:
     types: [created]
 
-# ADD THIS SECTION ▼
+# Force the runner to use Node.js 24 for the actions themselves
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-# ADD THIS SECTION ▲
 
 jobs:
   build:
@@ -19,6 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
+          # Set the Node.js version for your package build to 24
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
 
