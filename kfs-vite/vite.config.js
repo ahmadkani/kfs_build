@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import dts from 'vite-plugin-dts';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
@@ -17,12 +18,13 @@ export default defineConfig({
         process: true,
       },
       protocolImports: true,
+      // Exclude Node-only system modules from polyfilling
       exclude: ['fs', 'fs/promises', 'worker_threads'],
     }),
     dts({
       outDir: 'kfs',
       insertTypesEntry: true,
-      rollupTypes: true, // Bundle all types into one file
+      rollupTypes: true,
     }),
   ],
 
@@ -36,24 +38,6 @@ export default defineConfig({
     },
   },
 
-  optimizeDeps: {
-    include: [
-      'isomorphic-git',
-      'isomorphic-git/http/web',
-    ],
-    esbuildOptions: {
-      define: {
-        global: 'globalThis',
-      },
-    },
-  },
-
-  server: {
-    fs: {
-      strict: false,
-    },
-  },
-
   build: {
     target: 'esnext',
     sourcemap: true,
@@ -62,29 +46,24 @@ export default defineConfig({
     minify: false,
 
     lib: {
-      entry: path.resolve(__dirname, 'src/kfs.js'),
+      entry: {
+        kfs: path.resolve(__dirname, 'src/kfs.js'),
+        gitWorker: path.resolve(__dirname, 'src/workers/gitWorker.js'), 
+      },
       name: 'KFS',
       formats: ['es'],
-      fileName: () => 'kfs.js',
     },
 
     rollupOptions: {
       external: [
         'fs',
         'fs/promises',
-        'path',
-        'url',
         'worker_threads',
-        'crypto',
-        'stream',
-        'util',
-        'events',
-        'buffer',
-        'os',
+        'module', // ✅ Add this to allow createRequire in Node.js
+        // 'url', 'path', 'buffer', etc. should be REMOVED from here so they are polyfilled for the browser
       ],
       output: {
         format: 'es',
-        // Ensure assets go into an 'assets' subfolder
         entryFileNames: '[name].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash][extname]'
@@ -92,14 +71,5 @@ export default defineConfig({
     },
   },
 
-  worker: {
-    format: 'es',
-    plugins: () => [
-      nodePolyfills({
-        globals: { Buffer: true, global: true, process: true },
-        protocolImports: true,
-        exclude: ['fs', 'fs/promises', 'worker_threads'],
-      })
-    ]
-  },
+  worker: { format: 'es' },
 });

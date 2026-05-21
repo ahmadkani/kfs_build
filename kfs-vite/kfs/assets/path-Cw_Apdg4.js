@@ -201,7 +201,7 @@ function basename(path, ext) {
 function extname(path) {
   return splitPath(path)[3];
 }
-var path = {
+const path = {
   extname: extname,
   basename: basename,
   dirname: dirname,
@@ -232,4 +232,4 @@ var substr = 'ab'.substr(-1) === 'b' ?
 ;
 
 export { basename, path as default, delimiter, dirname, extname, isAbsolute, join, normalize, relative, resolve, sep };
-//# sourceMappingURL=path-CPNT95Y7.js.map
+//# sourceMappingURL=path-Cw_Apdg4.js.map

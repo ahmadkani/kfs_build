@@ -60,7 +60,7 @@ function tmpDir() {
 }
 var tmpdir = tmpDir;
 var EOL = "\n";
-var os = {
+const os = {
   EOL,
   tmpdir,
   tmpDir,
@@ -78,4 +78,4 @@ var os = {
 };
 
 export { EOL, arch, cpus, os as default, endianness, freemem, getNetworkInterfaces, hostname, loadavg, networkInterfaces, platform, release, tmpDir, tmpdir, totalmem, type, uptime };
-//# sourceMappingURL=os-C9YbAgMJ.js.map
+//# sourceMappingURL=os-2nQsBSa6.js.map

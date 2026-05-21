@@ -1,5 +1,5 @@
-import { a as bufferExports, g as getAugmentedNamespace, p as process, b as browserExports, c as getDefaultExportFromCjs } from './browser-DvltcbqP.js';
-import { _ as __viteBrowserExternal } from './__vite-browser-external-rPTQLI0c.js';
+import { b as bufferExports, g as getAugmentedNamespace, a as getDefaultExportFromCjs } from './index-v4ZNQwfX.js';
+import { p as process, b as browserExports } from './browser-6Ng8fUg6.js';
 
 var simpleConcat;
 var hasRequiredSimpleConcat;
@@ -24,7 +24,14 @@ function requireSimpleConcat () {
 	return simpleConcat;
 }
 
-var require$$1 = /*@__PURE__*/getAugmentedNamespace(__viteBrowserExternal);
+const __viteBrowserExternal = {};
+
+const __viteBrowserExternal$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: __viteBrowserExternal
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const require$$1 = /*@__PURE__*/getAugmentedNamespace(__viteBrowserExternal$1);
 
 var hasFetch = isFunction$1(globalThis.fetch) && isFunction$1(globalThis.ReadableStream);
 var _blobConstructor;
@@ -88,7 +95,7 @@ if (typeof Object.create === 'function'){
     ctor.prototype.constructor = ctor;
   };
 }
-var inherits$1 = inherits;
+const inherits$1 = inherits;
 
 var formatRegExp = /%[sdj%]/g;
 function format$1(f) {
@@ -3731,21 +3738,21 @@ function parse$1(qs, sep, eq, options) {
   }
 
   return obj;
-}var qs = {
+}const qs = {
   encode: stringify,
   stringify: stringify,
   decode: parse$1,
   parse: parse$1
 };
 
-var qs$1 = /*#__PURE__*/Object.freeze({
+const qs$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   decode: parse$1,
   default: qs,
   encode: stringify,
   parse: parse$1,
-  stringify: stringify
-});
+  stringify
+}, Symbol.toStringTag, { value: 'Module' }));
 
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3768,7 +3775,7 @@ var qs$1 = /*#__PURE__*/Object.freeze({
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var url = {
+const url = {
   parse: urlParse,
   resolve: urlResolve,
   resolveObject: urlResolveObject,
@@ -4483,15 +4490,15 @@ function parseHost(self) {
   if (host) self.hostname = host;
 }
 
-var url$1 = /*#__PURE__*/Object.freeze({
+const url$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  Url: Url,
+  Url,
   default: url,
   format: urlFormat,
   parse: urlParse,
   resolve: urlResolve,
   resolveObject: urlResolveObject
-});
+}, Symbol.toStringTag, { value: 'Module' }));
 
 function request$1(opts, cb) {
   if (typeof opts === "string")
@@ -4620,7 +4627,7 @@ var STATUS_CODES = {
   511: "Network Authentication Required"
   // RFC 6585
 };
-var http = {
+const http = {
   request: request$1,
   get: get$1,
   Agent,
@@ -4628,17 +4635,17 @@ var http = {
   STATUS_CODES
 };
 
-var http$1 = /*#__PURE__*/Object.freeze({
+const http$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  Agent: Agent,
-  METHODS: METHODS,
-  STATUS_CODES: STATUS_CODES,
+  Agent,
+  METHODS,
+  STATUS_CODES,
   default: http,
   get: get$1,
   request: request$1
-});
+}, Symbol.toStringTag, { value: 'Module' }));
 
-var require$$3 = /*@__PURE__*/getAugmentedNamespace(http$1);
+const require$$3 = /*@__PURE__*/getAugmentedNamespace(http$1);
 
 var once = {exports: {}};
 
@@ -4734,9 +4741,9 @@ function requireOnce () {
 	return once.exports;
 }
 
-var require$$5 = /*@__PURE__*/getAugmentedNamespace(qs$1);
+const require$$5 = /*@__PURE__*/getAugmentedNamespace(qs$1);
 
-var require$$6 = /*@__PURE__*/getAugmentedNamespace(url$1);
+const require$$6 = /*@__PURE__*/getAugmentedNamespace(url$1);
 
 var simpleGet_1;
 var hasRequiredSimpleGet;
@@ -4855,7 +4862,7 @@ function requireSimpleGet () {
 }
 
 var simpleGetExports = requireSimpleGet();
-var get = /*@__PURE__*/getDefaultExportFromCjs(simpleGetExports);
+const get = /*@__PURE__*/getDefaultExportFromCjs(simpleGetExports);
 
 /**
  * @typedef {Object} GitProgressEvent
@@ -5085,4 +5092,4 @@ async function request({
 var index = { request };
 
 export { index as default, request };
-//# sourceMappingURL=index-9g5Z03ah.js.map
+//# sourceMappingURL=index-zuw4MAho.js.map

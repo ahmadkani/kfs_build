@@ -1,5 +1,6 @@
-import { MemoryFS } from './assets/memoryFs-BgEJL5Jz.js';
-import { g as getConfig, L as Logger, w as workerPool } from './assets/WorkerPool-DqBGROTj.js';
+import { MemoryFS } from './assets/memoryFs-DpIQ9M4n.js';
+import { g as getConfig, L as Logger } from './assets/configES6-CqAsI6Bu.js';
+import { w as workerPool } from './assets/WorkerPool-Cdg_6RwF.js';
 
 // GitAuth.js
 
@@ -1493,7 +1494,7 @@ class VFS {
       // 1. Use NodeFS if explicitly requested
       if (isNode && fsType === 'node') {
           consoleDotLog$2('Using NodeFS (Native Worker Wrapper)');
-          const { NodeFS } = await import('./assets/NodeFS-BmAOIAyV.js');
+          const { NodeFS } = await import('./assets/NodeFS-rWs0YrHI.js');
           // FIX: Pass fsType: 'node' so NodeFS knows to use the path directly
           return new NodeFS(mountPath, { fsName: mountPath, fsType: 'node', ...options });
       }
@@ -1501,7 +1502,7 @@ class VFS {
       // 2. Use NodeFS for 'memory' in Node.js (Disk backed temp folder)
       if (isNode && fsType === 'memory') {
           consoleDotLog$2('Using NodeFS (Disk-backed) for memory in Node.js');
-          const { NodeFS } = await import('./assets/NodeFS-BmAOIAyV.js');
+          const { NodeFS } = await import('./assets/NodeFS-rWs0YrHI.js');
           // FIX: Pass fsType: 'memory' so NodeFS knows to map to temp
           return new NodeFS(mountPath, { fsName: mountPath, fsType: 'memory', ...options });
       }
@@ -1521,12 +1522,12 @@ class VFS {
       switch (fsType) {
         case 'memory':
           consoleDotLog$2('Creating MemoryFS instance');
-          const { MemoryFS } = await import('./assets/memoryFs-BgEJL5Jz.js');
+          const { MemoryFS } = await import('./assets/memoryFs-DpIQ9M4n.js');
           fsInstance = new MemoryFS(mountPath, { ...options, useSW: false });
           break;
         case 'idb':
           consoleDotLog$2('Creating IDBFs instance');
-          const { IDBFs } = await import('./assets/IDBFs-CoY9en-p.js');
+          const { IDBFs } = await import('./assets/IDBFs-BPWAf9ho.js');
           fsInstance = new IDBFs(mountPath, { ...options, useSW });
           break;
         default:

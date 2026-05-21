@@ -1,6 +1,4 @@
-import { Logger } from "./libs/LoggerES6.js";
-import MagicPortal from "./libs/MagicPortalES6.js";
-import { getConfig } from './configES6.js';
+import { g as getConfig, L as Logger, M as MagicPortal } from './configES6-CqAsI6Bu.js';
 
 const config = await getConfig();
 const logger = new Logger(config.logging.WorkerPool);
@@ -94,7 +92,7 @@ class WorkerPool {
             // new URL() will correctly resolve to the output file path (e.g. /kfs/gitWorker.js).
             // WorkerPool.js is at /kfs/assets/WorkerPool-[hash].js
             // gitWorker.js is at /kfs/gitWorker.js
-            const workerUrl = new URL('../gitWorker.js', import.meta.url);
+            const workerUrl = new URL("../gitWorker.js", import.meta.url);
             
             consoleDotLog(`Resolved worker URL: ${workerUrl.href}`);
             workerInstance = new Worker(workerUrl, { type: 'module' });
@@ -146,4 +144,7 @@ class WorkerPool {
   }
 }
 
-export const workerPool = new WorkerPool();
+const workerPool = new WorkerPool();
+
+export { workerPool as w };
+//# sourceMappingURL=WorkerPool-Cdg_6RwF.js.map
