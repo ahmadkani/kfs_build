@@ -23,21 +23,15 @@ async function httpRequest({ onProgress, url, method = "GET", headers = {}, body
       body = await concatenateChunks(body);
     }
 
-    // DEBUG: Log request details
-    console.log(`[GitHttp] Requesting ${method} ${url}`);
-    console.log('[GitHttp] Headers:', headers);
+    // DEBUG: Log request
+    console.log(`[GitHttp] -> ${method} ${url}`);
 
     const fetchOptions = {
       method,
       headers: {
-        // FIX: Ensure 'Accept' header exists for Git Smart HTTP
-        // This is required for /info/refs?service=git-upload-pack
-        'Accept': 'application/x-git-upload-pack-advertisement',
-        
-        // Merge headers provided by isomorphic-git
-        ...headers,
-        
-        // Connection header (browsers usually ignore this, but safe to keep)
+        // IMPORTANT: Do NOT hardcode 'Accept' here.
+        // Let isomorphic-git manage the headers via the 'headers' argument.
+        ...headers, 
         'Connection': 'keep-alive',
       },
       body,
@@ -45,11 +39,10 @@ async function httpRequest({ onProgress, url, method = "GET", headers = {}, body
 
     const response = await fetch(url, fetchOptions);
 
-    // DEBUG: Log response status
-    console.log(`[GitHttp] Response Status: ${response.status}`);
+    // DEBUG: Log response
+    console.log(`[GitHttp] <- ${response.status} Length: ${response.headers.get('Content-Length')}`);
 
     if (!response.ok) {
-      // Attempt to read the error body for more info
       const errorText = await response.text();
       console.error(`[GitHttp] Error Body: ${errorText}`);
       throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
@@ -60,15 +53,25 @@ async function httpRequest({ onProgress, url, method = "GET", headers = {}, body
       ? {
           async *[Symbol.asyncIterator]() {
             let bytesRead = 0;
+            let isFirstChunk = true;
             for (;;) {
               const { done, value } = await reader.read();
               if (done) break;
+              
+              // DEBUG: Check packfile header on first chunk
+              if (isFirstChunk) {
+                const header = new TextDecoder().decode(value.slice(0, 4));
+                console.log(`[GitHttp] Packfile Header: "${header}"`);
+                isFirstChunk = false;
+              }
+
               bytesRead += value.byteLength;
               if (onProgress) {
                  onProgress({ loaded: bytesRead });
               }
               yield value;
             }
+            console.log(`[GitHttp] Stream finished. Total bytes: ${bytesRead}`);
             reader.releaseLock();
           },
         }
@@ -96,4 +99,4 @@ async function httpRequest({ onProgress, url, method = "GET", headers = {}, body
 const GitHttp = { request: httpRequest };
 
 export { GitHttp as default, httpRequest as request };
-//# sourceMappingURL=GitHttp-DuBjIlXM.js.map
+//# sourceMappingURL=GitHttp-BuUKi4DY.js.map
