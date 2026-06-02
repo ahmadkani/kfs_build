@@ -1,5 +1,5 @@
-import { w as workerPool } from './WorkerPool-Cdg_6RwF.js';
-import { g as getConfig, L as Logger } from './configES6-CqAsI6Bu.js';
+import { w as workerPool } from './WorkerPool-B814pJ45.js';
+import { g as getConfig, L as Logger } from './configES6-bU3v7xiC.js';
 
 const config = await getConfig();
 const logger = new Logger(config.logging.memoryFS);
@@ -508,4 +508,4 @@ class MemoryFS {
 }
 
 export { MemoryFS };
-//# sourceMappingURL=memoryFs-DpIQ9M4n.js.map
+//# sourceMappingURL=memoryFs-VAT3s8Qe.js.map

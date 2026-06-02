@@ -1,8 +1,8 @@
-import { w as workerPool } from './WorkerPool-Cdg_6RwF.js';
-import { L as Logger, g as getConfig } from './configES6-CqAsI6Bu.js';
+import { w as workerPool } from './WorkerPool-B814pJ45.js';
+import { L as Logger, g as getConfig } from './configES6-bU3v7xiC.js';
 import fs from 'fs/promises';
-import path from './path-Cw_Apdg4.js';
-import os from './os-2nQsBSa6.js';
+import path from 'path';
+import os from 'os';
 
 const config = await getConfig();
 const logger = new Logger(config.logging.nodeFS);
@@ -241,4 +241,4 @@ class NodeFS {
 }
 
 export { NodeFS };
-//# sourceMappingURL=NodeFS-rWs0YrHI.js.map
+//# sourceMappingURL=NodeFS-BpR-j37P.js.map

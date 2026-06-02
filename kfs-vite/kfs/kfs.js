@@ -1,6 +1,6 @@
-import { MemoryFS } from './assets/memoryFs-DpIQ9M4n.js';
-import { g as getConfig, L as Logger } from './assets/configES6-CqAsI6Bu.js';
-import { w as workerPool } from './assets/WorkerPool-Cdg_6RwF.js';
+import { MemoryFS } from './assets/memoryFs-VAT3s8Qe.js';
+import { g as getConfig, L as Logger } from './assets/configES6-bU3v7xiC.js';
+import { w as workerPool } from './assets/WorkerPool-B814pJ45.js';
 
 // GitAuth.js
 
@@ -207,7 +207,7 @@ class VFSutils {
     }
   }
 
-  async fetchFromGit() {
+async fetchFromGit() {
     try {
       consoleDotLog$4('Fetching from Git repository...');
       if (!this.initialized) await this.initialize();
@@ -219,15 +219,26 @@ class VFSutils {
         await this.initRepoLocally();
       } else {
         const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
-        await this.fetchNotes();
+        
+        // FIX: Handle missing notes gracefully by catching the specific error
+        try {
+          await this.fetchNotes();
+        } catch (noteError) {
+           if (!noteError.message.includes('refs/notes')) {
+             throw noteError; // Re-throw if it's not a "notes missing" error
+           }
+           consoleDotLog$4('Notes not found on remote, continuing.');
+        }
 
         if (!cloneResult.success) {
           throw new Error("Fetching from git failed!");
         }
       }
       
-      if (this.fetchInfo.name && this.fetchInfo.email) {
-        await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
+      // FIX: Use username as fallback for author name
+      if (this.fetchInfo.email) {
+        const authorName = this.fetchInfo.name || this.fetchInfo.username || 'Default User';
+        await this.setUserConfig(authorName, this.fetchInfo.email);
       }
 
       await this.generateFsTable();
@@ -643,7 +654,9 @@ class VFSutils {
           const { status, localHead, remoteHead, commonAncestor } = await this.getSyncStatus(syncUrl);
           
           consoleDotLog$4("Sync status:", status);
-          
+          if (this.fetchInfo.name && this.fetchInfo.email) {
+            await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
+          }
           switch (status) {
             case 'up-to-date':
               return { synced: true };
@@ -820,75 +833,75 @@ class VFSutils {
       /**
        * Handle case where branches have diverged
        */
-      async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, syncUrl) {
-        try {
-          const _onConflictStrategy = onConflictStrategy || 'theirs';
 
-          consoleDotLog$4('Using merge workflow');
-          
-          // 1. Pull with merge
-          consoleDotLog$4('Pulling with merge...');
-          const pullResult = await this.workerThread.execute('doFetch', {
-            url: syncUrl,
-            ref: 'main',
-          });
+// In VFSUtils.js -> handleDiverged
 
-          consoleDotLog$4('Fetching notes from remote...');
-          await this.workerThread.execute('doFetch', {
-            url: syncUrl,
-            remote: 'origin',
-            ref: 'refs/notes/commits',
-            tags: true,
-            singleBranch: true,
-          });
-          const mergeResult = await this.workerThread.execute('merge', {
-            ours : 'main',
-            theirs : 'origin/main',
-            strategy : _onConflictStrategy,
-          });
-          
-          if (!pullResult.success) {
-            throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
-          }
+async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, syncUrl) {
+  try {
+    // Default to 'local' to preserve user changes
+    const _onConflictStrategy = onConflictStrategy || 'local'; 
+    consoleDotLog$4('Using merge workflow');
+    
+    // 1. Fetch
+    consoleDotLog$4('Pulling with merge...');
+    const pullResult = await this.workerThread.execute('doFetch', {
+      url: syncUrl,
+      ref: 'main',
+    });
 
+    if (!pullResult || !pullResult.success) {
+       throw new Error('Fetch operation failed, aborting merge.');
+    }
 
-          const pushNotesResult = await this.workerThread.execute('push', {
-            url: syncUrl,
-            ref: 'refs/notes/commits',
-            remoteRef: 'refs/notes/commits',
-            force: false,
-          });
-          consoleDotLog$4('Pushing merged changes...');
-          await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
-          const pushResult = await this.workerThread.execute('push', {
-            url: syncUrl,
-            ref: 'main',
-            force: false,
-          });
-          
-          return { 
-            synced: true, 
-            strategy: 'merge-workflow',
-            oldLocalHead: localHead,
-            newLocalHead: await this.workerThread.execute('getLastLocalCommit', { ref: 'main' }),
-            remoteHead
-          };
-        } catch (error) {
-          consoleDotError$3('handleDiverged failed:', error);
-          
-          // Attempt to reset to original state
-          try {
-            await this.workerThread.execute('resetToCommit', { 
-              oid: localHead,
-              hard: true 
-            });
-          } catch (resetError) {
-            consoleDotError$3('Failed to reset after error:', resetError);
-          }
-          
-          throw error;
-        }
-      }
+    // 2. Merge
+    const mergeResult = await this.workerThread.execute('merge', {
+      ours : 'main',
+      theirs : 'origin/main',
+      strategy : _onConflictStrategy,
+    });
+    
+    // Check result
+    if (!mergeResult || mergeResult.oid === undefined) {
+        throw new Error('Merge failed or produced no commit.');
+    }
+    
+    // 3. Push
+    consoleDotLog$4('Pushing merged changes...');
+    await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
+    
+    const pushResult = await this.workerThread.execute('push', {
+      url: syncUrl,
+      ref: 'main',
+      force: false,
+    });
+    
+    if(!pushResult.success) {
+        throw new Error('Push failed after merge.');
+    }
+
+    return { 
+      synced: true, 
+      strategy: 'merge-workflow',
+      oldLocalHead: localHead,
+      newLocalHead: await this.workerThread.execute('getLastLocalCommit', { ref: 'main' }),
+      remoteHead
+    };
+  } catch (error) {
+    consoleDotError$3('handleDiverged failed:', error);
+    
+    // Attempt to reset to original state
+    try {
+      await this.workerThread.execute('resetToCommit', { 
+        oid: localHead,
+        hard: true 
+      });
+    } catch (resetError) {
+      consoleDotError$3('Failed to reset after error:', resetError);
+    }
+    
+    throw error;
+  }
+}
       
       // ------------------------
       //  Authentication Methods
@@ -946,7 +959,8 @@ class VFSutils {
             remote: 'origin'
           });
           
-          const hasNotes = serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
+          // Check if notes exist before fetching
+          const hasNotes = serverRefs.success && serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
 
           if (hasNotes) {
             consoleDotLog$4('Fetching notes from remote...');
@@ -957,12 +971,13 @@ class VFSutils {
               tags: true,
               singleBranch: true,
             });
-
             consoleDotLog$4('Notes Fetch is done.');
+          } else {
+            consoleDotLog$4('No notes found on remote, skipping notes fetch.');
           }
         } catch (error) {
-          consoleDotError$3('Failed to fetch notes:', error);
-          // Don't throw - notes are optional
+          // If listServerRefs fails or notes fetch fails, log but continue
+          consoleDotError$3('Failed to fetch notes (optional):', error.message);
         }
       }
 
@@ -1494,7 +1509,7 @@ class VFS {
       // 1. Use NodeFS if explicitly requested
       if (isNode && fsType === 'node') {
           consoleDotLog$2('Using NodeFS (Native Worker Wrapper)');
-          const { NodeFS } = await import('./assets/NodeFS-rWs0YrHI.js');
+          const { NodeFS } = await import('./assets/NodeFS-BpR-j37P.js');
           // FIX: Pass fsType: 'node' so NodeFS knows to use the path directly
           return new NodeFS(mountPath, { fsName: mountPath, fsType: 'node', ...options });
       }
@@ -1502,7 +1517,7 @@ class VFS {
       // 2. Use NodeFS for 'memory' in Node.js (Disk backed temp folder)
       if (isNode && fsType === 'memory') {
           consoleDotLog$2('Using NodeFS (Disk-backed) for memory in Node.js');
-          const { NodeFS } = await import('./assets/NodeFS-rWs0YrHI.js');
+          const { NodeFS } = await import('./assets/NodeFS-BpR-j37P.js');
           // FIX: Pass fsType: 'memory' so NodeFS knows to map to temp
           return new NodeFS(mountPath, { fsName: mountPath, fsType: 'memory', ...options });
       }
@@ -1522,12 +1537,12 @@ class VFS {
       switch (fsType) {
         case 'memory':
           consoleDotLog$2('Creating MemoryFS instance');
-          const { MemoryFS } = await import('./assets/memoryFs-DpIQ9M4n.js');
+          const { MemoryFS } = await import('./assets/memoryFs-VAT3s8Qe.js');
           fsInstance = new MemoryFS(mountPath, { ...options, useSW: false });
           break;
         case 'idb':
           consoleDotLog$2('Creating IDBFs instance');
-          const { IDBFs } = await import('./assets/IDBFs-BPWAf9ho.js');
+          const { IDBFs } = await import('./assets/IDBFs-DaKLHPir.js');
           fsInstance = new IDBFs(mountPath, { ...options, useSW });
           break;
         default:

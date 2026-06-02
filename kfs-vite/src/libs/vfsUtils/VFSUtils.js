@@ -122,7 +122,7 @@ export class VFSutils {
     }
   }
 
-  async fetchFromGit() {
+async fetchFromGit() {
     try {
       consoleDotLog('Fetching from Git repository...');
       if (!this.initialized) await this.initialize();
@@ -134,15 +134,26 @@ export class VFSutils {
         await this.initRepoLocally();
       } else {
         const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
-        await this.fetchNotes();
+        
+        // FIX: Handle missing notes gracefully by catching the specific error
+        try {
+          await this.fetchNotes();
+        } catch (noteError) {
+           if (!noteError.message.includes('refs/notes')) {
+             throw noteError; // Re-throw if it's not a "notes missing" error
+           }
+           consoleDotLog('Notes not found on remote, continuing.');
+        }
 
         if (!cloneResult.success) {
           throw new Error("Fetching from git failed!");
         }
       }
       
-      if (this.fetchInfo.name && this.fetchInfo.email) {
-        await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
+      // FIX: Use username as fallback for author name
+      if (this.fetchInfo.email) {
+        const authorName = this.fetchInfo.name || this.fetchInfo.username || 'Default User';
+        await this.setUserConfig(authorName, this.fetchInfo.email);
       }
 
       await this.generateFsTable();
@@ -558,7 +569,9 @@ export class VFSutils {
           const { status, localHead, remoteHead, commonAncestor } = await this.getSyncStatus(syncUrl);
           
           consoleDotLog("Sync status:", status);
-          
+          if (this.fetchInfo.name && this.fetchInfo.email) {
+            await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
+          }
           switch (status) {
             case 'up-to-date':
               return { synced: true };
@@ -735,75 +748,75 @@ export class VFSutils {
       /**
        * Handle case where branches have diverged
        */
-      async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, syncUrl) {
-        try {
-          const _onConflictStrategy = onConflictStrategy || 'theirs';
 
-          consoleDotLog('Using merge workflow');
-          
-          // 1. Pull with merge
-          consoleDotLog('Pulling with merge...');
-          const pullResult = await this.workerThread.execute('doFetch', {
-            url: syncUrl,
-            ref: 'main',
-          });
+// In VFSUtils.js -> handleDiverged
 
-          consoleDotLog('Fetching notes from remote...');
-          await this.workerThread.execute('doFetch', {
-            url: syncUrl,
-            remote: 'origin',
-            ref: 'refs/notes/commits',
-            tags: true,
-            singleBranch: true,
-          });
-          const mergeResult = await this.workerThread.execute('merge', {
-            ours : 'main',
-            theirs : 'origin/main',
-            strategy : _onConflictStrategy,
-          });
-          
-          if (!pullResult.success) {
-            throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
-          }
+async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, syncUrl) {
+  try {
+    // Default to 'local' to preserve user changes
+    const _onConflictStrategy = onConflictStrategy || 'local'; 
+    consoleDotLog('Using merge workflow');
+    
+    // 1. Fetch
+    consoleDotLog('Pulling with merge...');
+    const pullResult = await this.workerThread.execute('doFetch', {
+      url: syncUrl,
+      ref: 'main',
+    });
 
+    if (!pullResult || !pullResult.success) {
+       throw new Error('Fetch operation failed, aborting merge.');
+    }
 
-          const pushNotesResult = await this.workerThread.execute('push', {
-            url: syncUrl,
-            ref: 'refs/notes/commits',
-            remoteRef: 'refs/notes/commits',
-            force: false,
-          });
-          consoleDotLog('Pushing merged changes...');
-          await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
-          const pushResult = await this.workerThread.execute('push', {
-            url: syncUrl,
-            ref: 'main',
-            force: false,
-          });
-          
-          return { 
-            synced: true, 
-            strategy: 'merge-workflow',
-            oldLocalHead: localHead,
-            newLocalHead: await this.workerThread.execute('getLastLocalCommit', { ref: 'main' }),
-            remoteHead
-          };
-        } catch (error) {
-          consoleDotError('handleDiverged failed:', error);
-          
-          // Attempt to reset to original state
-          try {
-            await this.workerThread.execute('resetToCommit', { 
-              oid: localHead,
-              hard: true 
-            });
-          } catch (resetError) {
-            consoleDotError('Failed to reset after error:', resetError);
-          }
-          
-          throw error;
-        }
-      }
+    // 2. Merge
+    const mergeResult = await this.workerThread.execute('merge', {
+      ours : 'main',
+      theirs : 'origin/main',
+      strategy : _onConflictStrategy,
+    });
+    
+    // Check result
+    if (!mergeResult || mergeResult.oid === undefined) {
+        throw new Error('Merge failed or produced no commit.');
+    }
+    
+    // 3. Push
+    consoleDotLog('Pushing merged changes...');
+    await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
+    
+    const pushResult = await this.workerThread.execute('push', {
+      url: syncUrl,
+      ref: 'main',
+      force: false,
+    });
+    
+    if(!pushResult.success) {
+        throw new Error('Push failed after merge.');
+    }
+
+    return { 
+      synced: true, 
+      strategy: 'merge-workflow',
+      oldLocalHead: localHead,
+      newLocalHead: await this.workerThread.execute('getLastLocalCommit', { ref: 'main' }),
+      remoteHead
+    };
+  } catch (error) {
+    consoleDotError('handleDiverged failed:', error);
+    
+    // Attempt to reset to original state
+    try {
+      await this.workerThread.execute('resetToCommit', { 
+        oid: localHead,
+        hard: true 
+      });
+    } catch (resetError) {
+      consoleDotError('Failed to reset after error:', resetError);
+    }
+    
+    throw error;
+  }
+}
       
       // ------------------------
       //  Authentication Methods
@@ -861,7 +874,8 @@ export class VFSutils {
             remote: 'origin'
           });
           
-          const hasNotes = serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
+          // Check if notes exist before fetching
+          const hasNotes = serverRefs.success && serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
 
           if (hasNotes) {
             consoleDotLog('Fetching notes from remote...');
@@ -872,12 +886,13 @@ export class VFSutils {
               tags: true,
               singleBranch: true,
             });
-
-            consoleDotLog('Notes Fetch is done.')
+            consoleDotLog('Notes Fetch is done.');
+          } else {
+            consoleDotLog('No notes found on remote, skipping notes fetch.');
           }
         } catch (error) {
-          consoleDotError('Failed to fetch notes:', error);
-          // Don't throw - notes are optional
+          // If listServerRefs fails or notes fetch fails, log but continue
+          consoleDotError('Failed to fetch notes (optional):', error.message);
         }
       }
 

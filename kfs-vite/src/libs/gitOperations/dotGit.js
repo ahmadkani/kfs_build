@@ -475,8 +475,11 @@ const config = await getConfig();
             doCommit = 1
         ) {
             try {
-                logger.consoleDotLog('Starting writeFileDot function...');
-                
+                const contentPreview = typeof fileContent === 'string' 
+                    ? `${fileContent.length} chars: "${fileContent.substring(0, 20)}..."`
+                    : `Type: ${typeof fileContent}`;
+                    
+                logger.consoleDotLog(`[DEBUG] writeFileDot called for ${filePath}. Content: ${contentPreview}`);                
                 // Normalize path and extract components
                 filePath = filePath.replace(/^\/+|\/+$/g, '');
                 const pathParts = filePath.split('/');

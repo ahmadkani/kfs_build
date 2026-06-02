@@ -51,7 +51,7 @@ const loggingGroups = {
 
 // Default configuration (fallback)
 const defaultConfig = {
-  corsProxy: 'http://localhost:9000/',
+  corsProxy: 'http://localhost:9999',
   dir: '/',
   logging: {
     vfs: true,
@@ -172,4 +172,4 @@ async function getConfig() {
 }
 
 export { Logger as L, MagicPortal as M, config as c, getConfig as g };
-//# sourceMappingURL=configES6-CqAsI6Bu.js.map
+//# sourceMappingURL=configES6-bU3v7xiC.js.map

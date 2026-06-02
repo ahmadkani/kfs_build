@@ -1,5 +1,5 @@
-import { g as getConfig, L as Logger } from './configES6-CqAsI6Bu.js';
-import { w as workerPool } from './WorkerPool-Cdg_6RwF.js';
+import { g as getConfig, L as Logger } from './configES6-bU3v7xiC.js';
+import { w as workerPool } from './WorkerPool-B814pJ45.js';
 import { L as LightningFS } from './index-Da37s8Dj.js';
 
 const config = await getConfig();
@@ -484,4 +484,4 @@ class IDBFs {
 }
 
 export { IDBFs };
-//# sourceMappingURL=IDBFs-BPWAf9ho.js.map
+//# sourceMappingURL=IDBFs-DaKLHPir.js.map

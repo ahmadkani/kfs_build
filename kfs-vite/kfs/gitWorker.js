@@ -1,6 +1,6 @@
-import { g as getConfig$2, L as Logger, M as MagicPortal, c as config$6 } from './assets/configES6-CqAsI6Bu.js';
+import { g as getConfig$2, L as Logger, M as MagicPortal, c as config$6 } from './assets/configES6-bU3v7xiC.js';
 import { a as getDefaultExportFromCjs, r as requireBuffer, b as bufferExports } from './assets/index-v4ZNQwfX.js';
-import { p as process } from './assets/browser-6Ng8fUg6.js';
+import { p as process } from './assets/browser-dgLw7JhW.js';
 import { L as LightningFS } from './assets/index-Da37s8Dj.js';
 
 var lib$1;
@@ -22269,8 +22269,11 @@ const config$3 = await getConfig$2();
             doCommit = 1
         ) {
             try {
-                logger$2.consoleDotLog('Starting writeFileDot function...');
-                
+                const contentPreview = typeof fileContent === 'string' 
+                    ? `${fileContent.length} chars: "${fileContent.substring(0, 20)}..."`
+                    : `Type: ${typeof fileContent}`;
+                    
+                logger$2.consoleDotLog(`[DEBUG] writeFileDot called for ${filePath}. Content: ${contentPreview}`);                
                 // Normalize path and extract components
                 filePath = filePath.replace(/^\/+|\/+$/g, '');
                 const pathParts = filePath.split('/');
@@ -23540,19 +23543,14 @@ try {
         }
       }
     };
-    try {
-      const nodeHttp = await import('./assets/githttpnode-DjaD5OLu.js');
-      http = nodeHttp.default || nodeHttp;
-    } catch (e) {
-      console.error("[Worker] Failed to load githttpnode.js", e);
-      const fallbackHttp = await import('./assets/index-zuw4MAho.js');
-      http = fallbackHttp.default || fallbackHttp;
-    }
+    const nodeHttp = await import('./assets/index-GHOoLBX4.js');
+    http = nodeHttp.default || nodeHttp;
   } else {
     selfObj = self;
-    const webHttp = await import('./assets/index-B6Fg5VK6.js');
+    const webHttp = await import('./assets/GitHttp-DuBjIlXM.js');
     http = webHttp.default || webHttp;
   }
+  console.log("HTTP: ", http);
 } catch (e) {
   console.error("2", e);
 }
@@ -23583,7 +23581,7 @@ let fs = null;
 let gitConfigFilePath = "/settings";
 let fsType;
 let fsName;
-let corsProxy = config$6.corsProxy;
+let corsProxy = isNode ? null : config$6.corsProxy;
 const authenticate = {
   async fill() {
     consoleDotLog("authenticate", username, password);
@@ -23604,8 +23602,17 @@ function isValidUrl(url2) {
 }
 async function setUrl(_url) {
   consoleDotLog("seturl url ", _url);
+  if (typeof _url === "string") {
+    while (_url.startsWith("/")) {
+      _url = _url.substring(1);
+    }
+  }
   if (!isValidUrl(_url)) {
-    throw new Error("Invalid Git URL format.");
+    if (!_url.startsWith("http")) {
+      _url = "https://" + _url;
+    } else {
+      throw new Error("Invalid Git URL format.");
+    }
   }
   url = _url;
 }
@@ -23616,7 +23623,11 @@ async function setDepth(_depth) {
   depth = _depth;
 }
 async function setCorsProxy(_corsProxy) {
-  corsProxy = _corsProxy;
+  if (isNode) {
+    corsProxy = null;
+  } else {
+    corsProxy = _corsProxy;
+  }
 }
 async function setAuthParams(_username, _password) {
   username = _username;
@@ -23673,8 +23684,8 @@ async function setFs({ fsName: _fsName, fsType: _fsType }) {
     if (isNode && _fsType === "memory") {
       const nodeFs = await import('fs');
       fs = nodeFs.default;
-      const path = await import('./assets/path-Cw_Apdg4.js');
-      const os = await import('./assets/os-2nQsBSa6.js');
+      const path = await import('path');
+      const os = await import('os');
       const tempDir = path.join(os.tmpdir(), "kfs_node_temp", _fsName.replace(/\//g, "_"));
       await fs.promises.mkdir(tempDir, { recursive: true });
       dir = tempDir;
@@ -23866,29 +23877,29 @@ async function doFetch(args) {
   consoleDotLog("Doing fetch operation");
   !url && await setUrl(args?.url);
   try {
-    await index.fetch({
+    const fetchOptions = {
       ...args,
       fs,
       http,
       dir,
-      corsProxy,
       ref: _ref,
       url,
+      // Use global sanitized url
       remote,
       depth,
       tags: true,
       headers: buildHeaders(username, password),
-      onProgress: (event) => {
-        consoleDotLog("Fetch progress event:", event);
-      },
       onAuth() {
         return authenticate.fill();
       },
       onAuthFailure() {
         return authenticate.rejected();
       }
-    });
-    await ensureAllFilesHaveNotes();
+    };
+    if (corsProxy) {
+      fetchOptions.corsProxy = corsProxy;
+    }
+    await index.fetch(fetchOptions);
     return { success: true };
   } catch (error) {
     consoleDotError("some error happend while fetching: ", error);
@@ -23936,8 +23947,10 @@ const mergeDriver = ({ contents, filepath }, strategy = "theirs") => {
   if (contents[0] === contents[1]) return { cleanMerge: true, mergedText: contents[2] };
   switch (strategy) {
     case "ours":
+    case "local":
       return { cleanMerge: true, mergedText: contents[1] };
     case "theirs":
+    case "remote":
       return { cleanMerge: true, mergedText: contents[2] };
     case "combine":
       return {
@@ -23950,7 +23963,7 @@ ${contents[2]}
 `
       };
     default:
-      return { cleanMerge: true, mergedText: contents[2] };
+      return { cleanMerge: true, mergedText: contents[1] };
   }
 };
 async function merge(ours = "main", theirs = "origin/main", strategy = "theirs", {
@@ -23999,21 +24012,17 @@ async function merge(ours = "main", theirs = "origin/main", strategy = "theirs",
   }
 }
 async function getCommitHistoryFromReplica(args = {}) {
+  const mainFsName = fsName;
+  const mainDir = dir;
   try {
-    consoleDotLog("Received args in getCommitHistoryFromReplica:", args);
     const _depth = args?.depth || 10;
-    const mainFsName = fsName;
     consoleDotLog("Initializing replica FS...");
     await setFs({ fsName: `${mainFsName}_replica`, fsType });
-    consoleDotLog("Pulling from remote...");
-    await pull({ url, depth: _depth });
+    consoleDotLog("Cloning to replica...");
+    await clone({ url, depth: _depth, noCheckout: true });
     consoleDotLog("Getting commit logs...");
     const logs = await log({ depth: _depth });
-    consoleDotLog("Replica commit logs:", logs);
-    consoleDotLog("Restoring main FS...");
-    await setFs({ fsName: mainFsName, fsType });
     const commits = logs.map((commit2) => commit2.oid);
-    consoleDotLog("Returning commits:", commits);
     return {
       success: true,
       commits,
@@ -24021,11 +24030,10 @@ async function getCommitHistoryFromReplica(args = {}) {
     };
   } catch (error) {
     consoleDotError("Error getting commit history from replica:", error);
-    return {
-      success: false,
-      error: error.message,
-      commits: []
-    };
+    return { success: false, error: error.message, commits: [] };
+  } finally {
+    await setFs({ fsName: mainFsName, fsType });
+    dir = mainDir;
   }
 }
 async function getLatestRemoteCommit(args) {
@@ -24037,9 +24045,7 @@ async function getLatestRemoteCommit(args) {
   } else {
     return result;
   }
-  consoleDotLog("getLatestRemoteCommit result:", result);
   const _ref = args?.ref || ref || "HEAD";
-  consoleDotLog("getLatestRemoteCommit _ref:", _ref);
   if (!result.success) {
     consoleDotError("Failed to fetch server refs", result.error);
     return { success: false, error: result.error };
@@ -24219,27 +24225,24 @@ async function createInitialCommit() {
 async function checkDirExists() {
   try {
     const contents = await fs.promises.readdir(dir);
-    const remotes = await listRemotes();
-    let urls = [];
-    remotes.forEach((i) => urls.push(i.url));
-    consoleDotLog("urls:", urls, remotes, contents);
-    if (urls.length > 0) {
-      if (!urls.includes(url)) {
+    if (contents.length === 0) return false;
+    if (!contents.includes(".git")) return false;
+    try {
+      const remotes = await index.listRemotes({ fs, dir });
+      const origin = remotes.find((r) => r.remote === "origin");
+      if (origin && origin.url === url) {
+        return true;
+      } else {
+        consoleDotLog("Remote missing or URL mismatch. Treating as non-existent.");
         return false;
       }
-    }
-    if (contents.length == 0 && urls.length == 0) {
+    } catch (e) {
+      consoleDotLog("Git config check failed (corrupted repo?), assuming directory needs re-cloning.", e.message);
       return false;
     }
-    return true;
   } catch (err) {
-    if (err.code === "ENOENT") {
-      consoleDotLog("Directory does not exist:", dir);
-      return false;
-    } else {
-      consoleDotError("Error checking directory existence:", err);
-      throw err;
-    }
+    if (err.code === "ENOENT") return false;
+    throw err;
   }
 }
 async function findMergeBase(oids) {
@@ -24300,53 +24303,33 @@ async function resolveMergeConflict() {
 }
 async function handleGitError(error, args, operationName, maxDeleteRetries = 1, tryReset = 0) {
   consoleDotError(`Some error happened while ${operationName}: `, error);
-  const isAuthError = error && (error.toString().includes("401") || error.toString().includes("403"));
-  const isNetworkError = error && (error.toString().toLowerCase().includes("network") || error.toString().toLowerCase().includes("fetch"));
-  const isConflictError = error instanceof index.Errors.MergeConflictError || error.toString().includes("MergeConflictError") || error.toString().includes("CheckoutConflictError") || error.toString().includes("merge conflicts");
-  error && (error.toString().includes("NotFoundError") || error.toString().toLowerCase().includes("could not find head"));
-  if (isAuthError || isNetworkError) {
-    consoleDotLog(`Authentication or network error detected. Not deleting the repository.`);
+  if (error.code === "NotFoundError" && error.data?.what?.includes("refs/notes")) {
+    consoleDotLog("Notes not found on remote, ignoring.");
     throw error;
   }
-  if (isConflictError) {
-    consoleDotLog("Merge conflict detected. Attempting to resolve...");
-    try {
-      const resolutionResult = await resolveMergeConflict();
-      if (resolutionResult.success) {
-        consoleDotLog("Merge conflicts resolved successfully");
-        return;
-      } else {
-        consoleDotLog("Merge conflict resolution failed");
-        throw error;
-      }
-    } catch (resolutionError) {
-      consoleDotError("Error during merge conflict resolution:", resolutionError);
-      throw resolutionError;
+  const isConfigError = error.code === "NoRefspecError" || error.code === "NotFoundError" && !error.data?.what?.includes("refs/notes");
+  const errorMessage = (error.message || error.toString()).toLowerCase();
+  const isBrowserFetchError = error.name === "TypeError" && errorMessage.includes("failed to fetch");
+  const isAuthError = error && (error.code === "HttpError" && (error.data?.statusCode === 401 || error.data?.statusCode === 403));
+  const isNetworkError = error.code === "HttpError" || isBrowserFetchError || errorMessage.includes("network") && !isConfigError;
+  if (isConfigError) {
+    consoleDotLog("Configuration error detected. Deleting and recloning...");
+    const attempt2 = args?.attempt || 0;
+    if (attempt2 < maxDeleteRetries) {
+      await handleDeleteCloseAndReclone({ ...args, attempt: attempt2 + 1 });
+      return;
     }
+  }
+  if (isAuthError || isNetworkError) {
+    consoleDotLog(`Network/Auth error detected. Keeping local data safe.`);
+    throw error;
   }
   const attempt = args?.attempt || 0;
   if (attempt < maxDeleteRetries) {
-    if (tryReset) {
-      const isSyncResult = await isSync();
-      !isSyncResult && await handleHardReset({ ...args, attempt: attempt + 1 });
-      isSyncResult && await handleDeleteCloseAndReclone({ ...args, attempt: attempt + 1 });
-    } else {
-      await handleDeleteCloseAndReclone({ ...args, attempt: attempt + 1 });
-    }
+    consoleDotLog(`Unknown error, attempting recovery.`);
+    throw error;
   } else {
     throw new Error(`${operationName} wasn't successful: ${error}`);
-  }
-}
-async function handleHardReset(args) {
-  const attempt = args?.attempt + 1 || 1;
-  consoleDotLog(`Attempting hard reset for ${fsName}. Attempt: ${attempt}`);
-  try {
-    await hardReset({ dir, ref: "HEAD~1", branch: ref });
-    consoleDotLog(`Hard reset to HEAD~1 successful for ${fsName}`);
-    return attempt;
-  } catch (error) {
-    consoleDotError(`Error during hard reset for ${fsName}: `, error);
-    throw error;
   }
 }
 async function handleDeleteCloseAndReclone(args) {
@@ -24355,8 +24338,14 @@ async function handleDeleteCloseAndReclone(args) {
   const _fsName = args?.fsName || fsName;
   const _fsType = args?.fsType || fsType;
   try {
-    await FSManager.deleteFS(_fsName, _fsType);
-    reclone && await doCloneAndStuff({ ...args, url: args.url, attempt });
+    if (isNode) {
+      const path = await import('path');
+      await fs.promises.rm(_fsName, { recursive: true, force: true });
+      consoleDotLog(`Deleted Node directory: ${_fsName}`);
+    } else {
+      await FSManager.deleteFS(_fsName, _fsType);
+    }
+    if (reclone) await doCloneAndStuff({ ...args, url: args.url, attempt });
     return;
   } catch (error) {
     consoleDotError(`Error during delete, close, and reclone process for ${fsName}: `, error);
@@ -24380,9 +24369,17 @@ async function doCloneAndStuff(args) {
       return { handleNoRefResult, message: "exists", success: true };
     } else {
       consoleDotLog(`Cloning repository ...`);
+      try {
+        await fs.promises.access(dir);
+        consoleDotLog(`Removing corrupted or incomplete directory: ${dir}`);
+        await fs.promises.rm(dir, { recursive: true, force: true });
+      } catch (e) {
+      }
       const cloneResult = await clone(args);
-      await FSManager.createBackupFS(fsName, fsType);
-      consoleDotLog("createBackupFS created backup");
+      if (!isNode) {
+        await FSManager.createBackupFS(fsName, fsType);
+        consoleDotLog("createBackupFS created backup");
+      }
       await setFs({ fsName, fsType });
       let head = await currentBranch();
       await setRef(head);
@@ -24443,18 +24440,18 @@ async function initializeLocalBranches() {
     const filteredBranches = remoteBranches.filter((item) => !localBranches.includes(item));
     consoleDotLog("filteredBranches", filteredBranches);
     let path = dir === "/" ? "" : dir;
-    await Promise.all(
-      filteredBranches.map(async (item) => {
-        await createBranch({
-          ref: item,
-          object: path + `/.git/refs/remotes/${remote}/${item}`
-        });
-        await writeFile({
-          filePath: path + `/.git/refs/heads/${item}`,
-          fileContents: await fs.promises.readFile({ fs, dir, filePath: path + `/.git/refs/remotes/${remote}/${item}` })
-        });
-      })
-    );
+    await Promise.all(filteredBranches.map(async (item) => {
+      await createBranch({
+        ref: item,
+        object: path + `/.git/refs/remotes/${remote}/${item}`
+      });
+      const refPath = path + `/.git/refs/remotes/${remote}/${item}`;
+      const fileContent = await fs.promises.readFile(refPath, "utf8");
+      await writeFile({
+        filePath: path + `/.git/refs/heads/${item}`,
+        fileContents: fileContent
+      });
+    }));
   } catch (error) {
     consoleDotError("Error initializing local branches:", error);
     throw error;
@@ -24471,26 +24468,36 @@ function buildHeaders(username2, password2) {
 }
 async function clone(args) {
   try {
-    let cloneResult;
-    cloneResult = await index.clone({
+    const cloneOptions = {
       ...args,
       fs,
+      corsProxy,
       http,
       dir,
       remote,
       ref,
-      corsProxy,
       depth,
+      force: true,
       noCheckout: true,
       singleBranch: false,
       headers: buildHeaders(username, password),
+      url,
+      // <--- USE THE SANITIZED GLOBAL 'url' VARIABLE
       onAuth() {
         return authenticate.fill();
       },
       onAuthFailure() {
         return authenticate.rejected();
       }
-    });
+    };
+    if (corsProxy) {
+      cloneOptions.corsProxy = corsProxy;
+    }
+    try {
+      await index.deleteRemote({ fs, dir, remote: "origin" });
+    } catch (e) {
+    }
+    const cloneResult = await index.clone(cloneOptions);
     return cloneResult;
   } catch (error) {
     consoleDotError("Some error happened while cloning:", error);
@@ -24556,11 +24563,6 @@ async function push(args) {
   consoleDotLog(`Starting to push with these args: `, args);
   args?.attempt || 0;
   let _ref = args?.ref || ref;
-  try {
-    const config2 = await fs.promises.readFile("/.git/config", "utf8");
-  } catch (err) {
-    consoleDotError(err);
-  }
   const maxDeleteRetries = 1;
   args?.force || true;
   !url && await setUrl(args?.url);

@@ -125,14 +125,14 @@
 
       try {
         logOutput("Mounting filesystem...");
-        await kfs.mount(path, "idb", "1", "git", {
-          // fetchInfo: {
-          //   url: '', 
-          //   username: 'Token',
-          //   password: '',
-          //   name: 'ahmad',
-          //   email: 'ahmad@kani.com',
-          // },
+        await kfs.mount(path, "memory", "1", "git", {
+           fetchInfo: {
+        url: 'https://dev.kamaanai.ir/Kani/test/',
+        name: 'kani',
+        username: 'kani', 
+        password: '87654321',
+        email: 'kani@kani.com' 
+           },
           versioning: { strategy: 'immediate', interval: 10, number: 5 },
         });
 

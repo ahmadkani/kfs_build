@@ -169,5 +169,5 @@ function requireBrowser () {
 var browserExports = requireBrowser();
 const process = /*@__PURE__*/getDefaultExportFromCjs(browserExports);
 
-export { browserExports as b, process as p };
-//# sourceMappingURL=browser-6Ng8fUg6.js.map
+export { process as p };
+//# sourceMappingURL=browser-dgLw7JhW.js.map

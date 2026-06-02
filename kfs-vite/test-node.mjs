@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
 
-// 1. Mock Browser Globals for Node.js
+// Mock Browser Globals for Node.js
 if (typeof globalThis.navigator === 'undefined') {
     globalThis.navigator = {
         userAgent: 'Node.js',
@@ -12,7 +12,7 @@ if (typeof globalThis.navigator === 'undefined') {
     };
 }
 
-// Helper to clean directories
+// Helper to clean a directory
 async function cleanDir(dirPath) {
     try {
         await fs.rm(dirPath, { recursive: true, force: true });
@@ -26,19 +26,23 @@ const testResults = [];
 async function runTest() {
     console.log('--- Starting Node.js KFS Test Suite ---\n');
 
-    // Calculate paths we will use
+    // ---- Pre‑clean all folders that will be used ----
     const memoryMountPath = '/memory-test-repo';
     const nodeMountPath = path.join(os.tmpdir(), 'kfs_explicit_node_test');
-    
-    // Calculate the internal temp path used by 'memory' mode so we can clean it
-    const memoryInternalPath = path.join(os.tmpdir(), 'kfs_node_temp', memoryMountPath.replace(/\//g, '_') + '_testFs');
+    const memoryInternalPath = path.join(
+        os.tmpdir(),
+        'kfs_node_temp',
+        memoryMountPath.replace(/\//g, '_') + '_testFs'
+    );
+
+    await cleanDir(memoryInternalPath);
+    await cleanDir(nodeMountPath);
+    // ------------------------------------------------
 
     // --- Test 1: Memory Mode ---
-    await cleanDir(memoryInternalPath);
     await runScenario('Memory Mode (Temp Disk Backed)', 'memory', memoryMountPath);
 
     // --- Test 2: Explicit Node Mode ---
-    await cleanDir(nodeMountPath);
     await runScenario('Node Mode (Explicit Disk Path)', 'node', nodeMountPath);
 
     // --- Print Summary ---
@@ -62,15 +66,17 @@ async function runScenario(scenarioName, fsType, mountBasePath) {
         
         await kfs.mount(mountPath, fsType, fsName, 'git', {
             fetchInfo: {
-                url: '', // Empty URL = local repo
-                name: 'Node Tester',
-                email: 'test@node.com'
+                url: 'https://dev.kamaanai.ir/Kani/test/',
+                name: 'kani',
+                username: 'kani', 
+                password: '87654321',
+                email: 'kani@kani.com' 
             },
             versioning: { strategy: 'immediate' }
         });
         console.log('[Test] ✅ Mount successful.');
 
-        const filePath = `${mountPath}/${fsName}/hello.txt`;
+        const filePath = `${mountPath}/${fsName}/test_${Date.now()}.txt`;
         const content = `Hello from ${scenarioName}!`;
         
         // Create
@@ -90,7 +96,7 @@ async function runScenario(scenarioName, fsType, mountBasePath) {
         await kfs.create(filePath, 'file', appendContent, 'a');
         const updatedContent = await kfs.read(filePath);
         if (updatedContent !== content + appendContent) {
-             throw new Error(`Append mismatch!`);
+            throw new Error(`Append mismatch!`);
         }
         console.log('[Test] ✅ Append operation verified.');
 

@@ -93,5 +93,7 @@ async function httpRequest({ onProgress, url, method = "GET", headers = {}, body
   }
 }
 
-export default { request: httpRequest };
-export { httpRequest as request };
+const GitHttp = { request: httpRequest };
+
+export { GitHttp as default, httpRequest as request };
+//# sourceMappingURL=GitHttp-DuBjIlXM.js.map

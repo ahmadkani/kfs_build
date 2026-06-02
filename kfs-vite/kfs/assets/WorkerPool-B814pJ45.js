@@ -1,4 +1,4 @@
-import { g as getConfig, L as Logger, M as MagicPortal } from './configES6-CqAsI6Bu.js';
+import { g as getConfig, L as Logger, M as MagicPortal } from './configES6-bU3v7xiC.js';
 
 const config = await getConfig();
 const logger = new Logger(config.logging.WorkerPool);
@@ -147,4 +147,4 @@ class WorkerPool {
 const workerPool = new WorkerPool();
 
 export { workerPool as w };
-//# sourceMappingURL=WorkerPool-Cdg_6RwF.js.map
+//# sourceMappingURL=WorkerPool-B814pJ45.js.map

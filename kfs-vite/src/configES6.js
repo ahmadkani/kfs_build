@@ -30,7 +30,7 @@ const loggingGroups = {
 
 // Default configuration (fallback)
 const defaultConfig = {
-  corsProxy: 'http://localhost:9000/',
+  corsProxy: 'http://localhost:9999',
   dir: '/',
   logging: {
     vfs: true,
