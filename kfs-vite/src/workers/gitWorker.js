@@ -1453,23 +1453,25 @@ async function push(args) {
   try {
     await setConfigs(args);
     try {
-        await git.push({
-          ...args,
-          fs,
-          http,
-          dir,
-          corsProxy,
-          remote,
-          ref: _ref,
-          force: true,
-          headers: buildHeaders(username, password),
-          onAuth() {
-            return authenticate.fill();
-          },
-          onAuthFailure() {
-            return authenticate.rejected();
-          },
-        });
+      await git.push({
+        ...args,
+        fs,
+        http, // This uses the imported GitHttp
+        dir,
+        corsProxy, // Ensure this is passed so GitHttp can use it
+        remote,
+        ref: _ref,
+        force: force, 
+        // Pre-emptive auth header (Good for known private repos)
+        headers: buildHeaders(username, password), 
+        // Challenge-response auth (Necessary if server requires negotiation)
+        onAuth() {
+          return authenticate.fill();
+        },
+        onAuthFailure() {
+          return authenticate.rejected();
+        },
+      });
         consoleDotLog('Pushing was successful.');
         return {success: true};
     } catch (error) {

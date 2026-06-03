@@ -1,4 +1,4 @@
-import { g as getConfig$2, L as Logger, M as MagicPortal, c as config$6 } from './assets/configES6-Ds9kj0h6.js';
+import { g as getConfig$2, L as Logger, M as MagicPortal, c as config$6 } from './assets/configES6-bU3v7xiC.js';
 import { a as getDefaultExportFromCjs, r as requireBuffer, b as bufferExports } from './assets/index-v4ZNQwfX.js';
 import { p as process } from './assets/browser-dgLw7JhW.js';
 import { L as LightningFS } from './assets/index-Da37s8Dj.js';
@@ -23662,7 +23662,7 @@ try {
         }
       }
     };
-    const nodeHttp = await import('./assets/index-GHOoLBX4.js');
+    const nodeHttp = await import('./assets/index-Dc2gOS7B.js');
     http = nodeHttp.default || nodeHttp;
   } else {
     selfObj = self;
@@ -23793,7 +23793,7 @@ async function setFs({ fsName: _fsName, fsType: _fsType }) {
     fsName = _fsName;
     fsType = _fsType;
     if (isNode && _fsType === "node") {
-      const nodeFs = await import('fs');
+      const nodeFs = await import('./assets/__vite-browser-external-Dqb7JVuV.js').then(n => n._);
       fs = nodeFs.default;
       dir = _fsName;
       await fs.promises.mkdir(dir, { recursive: true });
@@ -23801,7 +23801,7 @@ async function setFs({ fsName: _fsName, fsType: _fsType }) {
       return fs;
     }
     if (isNode && _fsType === "memory") {
-      const nodeFs = await import('fs');
+      const nodeFs = await import('./assets/__vite-browser-external-Dqb7JVuV.js').then(n => n._);
       fs = nodeFs.default;
       const path = await import('path');
       const os = await import('os');

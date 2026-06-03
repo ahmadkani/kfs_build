@@ -125,22 +125,15 @@
 
       try {
         logOutput("Mounting filesystem...");
-        await kfs.mount(path, "memory", "1", "git", {
+        await kfs.mount(path, "idb", "1", "git", {
            fetchInfo: {
         url: 'https://dev.kamaanai.ir/Kani/test',
         name: 'kani',
-        username: 'kani', 
-        password: '87654321',
+        username: '', 
+        password: '136f1069290f388384b036cec734948c60572aaa',
         email: 'kani@kani.com' 
            },
           versioning: { strategy: 'immediate', interval: 10, number: 5 },
-        });
-
-        await kfs.setUserConfigs({
-          username: 'Token',
-          password: '',
-          name: 'ahmad',
-          email: 'ahmad@kani.com',
         });
 
         logOutput(`✅ Successfully mounted at ${path}`);

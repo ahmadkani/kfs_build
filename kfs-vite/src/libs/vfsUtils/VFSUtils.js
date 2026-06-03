@@ -31,29 +31,33 @@ export class VFSutils {
     this.auth = null;
   }
 
-  async initialize() {
+// VFSutils.js
+
+async initialize() {
     if (this.initialized) return;
     
     try {
       this.workerEntry = await workerPool.getWorker(this.fsName);
       this.workerThread = this.workerEntry.thread;
       
-      consoleDotLog('Setting Fs for VFSUtils.')
+      consoleDotLog('Setting Fs for VFSutils.')
       await this.workerThread.execute('setFs', {
         fsName: this.fsName,
         fsType: this.fsType,
       });
       
-      
       consoleDotLog('Fs set.')
-      if (this.fetchInfo.corsProxy) {
+      
+      // FIX: Check if fetchInfo exists before accessing properties
+      if (this.fetchInfo?.corsProxy) {
         await this.workerThread.execute('setCorsProxy', {
           corsProxy: this.fetchInfo.corsProxy,
         });
       }
       this.auth = new GitAuth(this.workerThread);
 
-      if (this.fetchInfo.username || this.fetchInfo.password) {
+      // FIX: Use optional chaining
+      if (this.fetchInfo?.username || this.fetchInfo?.password) {
         await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
       }
 
@@ -62,6 +66,24 @@ export class VFSutils {
     } catch (error) {
       await this.terminate();
       throw error;
+    }
+  }
+
+  // ...
+
+  async updateFetchInfo(args) {
+    try {
+      const newFetchInfo = args || {};
+      if (!this.initialized) await this.initialize();
+
+      // FIX: Handle case where this.fetchInfo might be undefined initially
+      this.fetchInfo = { ...(this.fetchInfo || {}), ...newFetchInfo };
+      
+      consoleDotLog('Fetch info updated:', this.fetchInfo);
+      return this.fetchInfo;
+    } catch(error) {
+      consoleDotError('Some error happened while using updateFetchInfo');
+      throw new Error('Some error happened while using updateFetchInfo');
     }
   }
 

@@ -1,18 +1,18 @@
-import { MemoryFS } from './assets/memoryFs-VAT3s8Qe.js';
-import { g as getConfig, L as Logger } from './assets/configES6-bU3v7xiC.js';
-import { w as workerPool } from './assets/WorkerPool-B814pJ45.js';
+import { MemoryFS } from './assets/memoryFs-Ddlcqzcp.js';
+import { g as getConfig, L as Logger } from './assets/configES6-Ds9kj0h6.js';
+import { w as workerPool } from './assets/WorkerPool-pKB-8UK-.js';
 
 // GitAuth.js
 
-const config$6 = await getConfig();
-const logger$5 = new Logger(config$6.logging.GitAuth);
+const config$5 = await getConfig();
+const logger$4 = new Logger(config$5.logging.GitAuth);
 
-function consoleDotLog$5(...parameters) {
-  logger$5.consoleDotLog(...parameters);
+function consoleDotLog$4(...parameters) {
+  logger$4.consoleDotLog(...parameters);
 }
 
-function consoleDotError$4(...parameters) {
-  logger$5.consoleDotError(...parameters);
+function consoleDotError$3(...parameters) {
+  logger$4.consoleDotError(...parameters);
 }
 
 class GitAuth {
@@ -34,15 +34,15 @@ class GitAuth {
       }
       
       await this.workerThread.execute('setAuthParams', { username, password });
-      consoleDotLog$5('Auth params set successfully');
+      consoleDotLog$4('Auth params set successfully');
       if (!this.AuthChecked) {
         // await this.verifyAuth();
         this.AuthChecked = true;
       }
-      consoleDotLog$5('Auth params verified successfully');
+      consoleDotLog$4('Auth params verified successfully');
       return true;
     } catch (error) {
-      consoleDotError$4('Failed to set auth params:', error);
+      consoleDotError$3('Failed to set auth params:', error);
       throw error;
     }
   }
@@ -60,14 +60,14 @@ class GitAuth {
       // Try a lightweight operation that requires auth
       // It is not permanent, because a repo can require no auth for clone
       await this.workerThread.execute('listServerRefs');
-      consoleDotLog$5('Auth verification successful');
+      consoleDotLog$4('Auth verification successful');
       return true;
     } catch (error) {
       if (error.toString().includes('401') || error.toString().includes('403')) {
-        consoleDotLog$5('Auth verification failed - invalid credentials');
+        consoleDotLog$4('Auth verification failed - invalid credentials');
         return false;
       }
-      consoleDotError$4('Auth verification error:', error);
+      consoleDotError$3('Auth verification error:', error);
       throw error;
     }
   }
@@ -80,27 +80,27 @@ class GitAuth {
     async setUserConfig(name, email) {
         try {
         await this.workerThread.execute('setConfigs', { name, email });
-        consoleDotLog$5(`User config set, name: ${name}, email: ${email}`);
+        consoleDotLog$4(`User config set, name: ${name}, email: ${email}`);
         return true;
         } catch (error) {
-        consoleDotError$4(`Failed to set user config: ${error}`);
+        consoleDotError$3(`Failed to set user config: ${error}`);
         throw error;
         }
     }
 }
 
-const config$5 = await getConfig();
-const logger$4 = new Logger(config$5.logging.VFSutils);
+const config$4 = await getConfig();
+const logger$3 = new Logger(config$4.logging.VFSutils);
 
-function consoleDotLog$4(...parameters) {
-  logger$4.consoleDotLog('[ VFSUtils ]' , ...parameters);
+function consoleDotLog$3(...parameters) {
+  logger$3.consoleDotLog('[ VFSUtils ]' , ...parameters);
 }
 
-function consoleDotError$3(...parameters) {
-  logger$4.consoleDotError('[ VFSUtils ]' , ...parameters);
+function consoleDotError$2(...parameters) {
+  logger$3.consoleDotError('[ VFSUtils ]' , ...parameters);
 }
 
-consoleDotLog$4("Loading VFSUtils module");
+consoleDotLog$3("Loading VFSUtils module");
 
 class VFSutils {
   constructor(fsType, fsInstance, fsName, fetchInfo) {
@@ -116,37 +116,59 @@ class VFSutils {
     this.auth = null;
   }
 
-  async initialize() {
+// VFSutils.js
+
+async initialize() {
     if (this.initialized) return;
     
     try {
       this.workerEntry = await workerPool.getWorker(this.fsName);
       this.workerThread = this.workerEntry.thread;
       
-      consoleDotLog$4('Setting Fs for VFSUtils.');
+      consoleDotLog$3('Setting Fs for VFSutils.');
       await this.workerThread.execute('setFs', {
         fsName: this.fsName,
         fsType: this.fsType,
       });
       
+      consoleDotLog$3('Fs set.');
       
-      consoleDotLog$4('Fs set.');
-      if (this.fetchInfo.corsProxy) {
+      // FIX: Check if fetchInfo exists before accessing properties
+      if (this.fetchInfo?.corsProxy) {
         await this.workerThread.execute('setCorsProxy', {
           corsProxy: this.fetchInfo.corsProxy,
         });
       }
       this.auth = new GitAuth(this.workerThread);
 
-      if (this.fetchInfo.username || this.fetchInfo.password) {
+      // FIX: Use optional chaining
+      if (this.fetchInfo?.username || this.fetchInfo?.password) {
         await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
       }
 
       this.initialized = true;
-      consoleDotLog$4(`VFSutils initialized for ${this.fsName} with type ${this.fsType}`);
+      consoleDotLog$3(`VFSutils initialized for ${this.fsName} with type ${this.fsType}`);
     } catch (error) {
       await this.terminate();
       throw error;
+    }
+  }
+
+  // ...
+
+  async updateFetchInfo(args) {
+    try {
+      const newFetchInfo = args || {};
+      if (!this.initialized) await this.initialize();
+
+      // FIX: Handle case where this.fetchInfo might be undefined initially
+      this.fetchInfo = { ...(this.fetchInfo || {}), ...newFetchInfo };
+      
+      consoleDotLog$3('Fetch info updated:', this.fetchInfo);
+      return this.fetchInfo;
+    } catch(error) {
+      consoleDotError$2('Some error happened while using updateFetchInfo');
+      throw new Error('Some error happened while using updateFetchInfo');
     }
   }
 
@@ -155,14 +177,14 @@ class VFSutils {
       // FIX: Check if workerThread exists before trying to execute commands
       if (fsName && fsType && this.workerThread) {
         try {
-          consoleDotLog$4('Terminating VFSUtils...', fsName, fsType);
+          consoleDotLog$3('Terminating VFSUtils...', fsName, fsType);
           await this.workerThread.execute('handleDeleteCloseAndReclone', {
             fsName: fsName,
             fsType: fsType,
             reclone: true,
           });
         } catch (error) {
-          consoleDotError$3(`Some error happened while terminating VFS: `, error);
+          consoleDotError$2(`Some error happened while terminating VFS: `, error);
           // We don't throw here, we proceed to clean up local references
         }
       }
@@ -175,7 +197,7 @@ class VFSutils {
       this.initialized = false;
       return true;
     } catch (error) {
-      consoleDotError$3("VFSutils termination error:", error);
+      consoleDotError$2("VFSutils termination error:", error);
       return false;
     }
   }
@@ -183,11 +205,11 @@ class VFSutils {
 
     async initRepoLocally() {
     try {
-      consoleDotLog$4('Initializing local repository...');
+      consoleDotLog$3('Initializing local repository...');
       if (!this.initialized) await this.initialize();
 
       const initResult = await this.workerThread.execute('init');
-      consoleDotLog$4('initialized.');
+      consoleDotLog$3('initialized.');
 
       if (!initResult.success) {
         throw new Error("Local repository initialization failed!");
@@ -199,9 +221,9 @@ class VFSutils {
       
       // Generate FS table after successful init
       await this.generateFsTable();
-      consoleDotLog$4('Repository successfully initialized and indexed');
+      consoleDotLog$3('Repository successfully initialized and indexed');
     } catch (error) {
-      consoleDotError$3(`Local repo init failed: ${error}`);
+      consoleDotError$2(`Local repo init failed: ${error}`);
       await this.terminate();
       throw error;
     }
@@ -209,12 +231,12 @@ class VFSutils {
 
 async fetchFromGit() {
     try {
-      consoleDotLog$4('Fetching from Git repository...');
+      consoleDotLog$3('Fetching from Git repository...');
       if (!this.initialized) await this.initialize();
-      consoleDotLog$4('initialized.');
+      consoleDotLog$3('initialized.');
       const { url, dir = '/' } = this.fetchInfo;
       
-      consoleDotLog$4(`Cloning repository from ${url} to ${dir}`);
+      consoleDotLog$3(`Cloning repository from ${url} to ${dir}`);
       if (url === '' || !url) {
         await this.initRepoLocally();
       } else {
@@ -227,7 +249,7 @@ async fetchFromGit() {
            if (!noteError.message.includes('refs/notes')) {
              throw noteError; // Re-throw if it's not a "notes missing" error
            }
-           consoleDotLog$4('Notes not found on remote, continuing.');
+           consoleDotLog$3('Notes not found on remote, continuing.');
         }
 
         if (!cloneResult.success) {
@@ -242,9 +264,9 @@ async fetchFromGit() {
       }
 
       await this.generateFsTable();
-      consoleDotLog$4('Repository successfully cloned and indexed');
+      consoleDotLog$3('Repository successfully cloned and indexed');
     } catch (error) {
-      consoleDotError$3(`Git fetch failed: ${error}`);
+      consoleDotError$2(`Git fetch failed: ${error}`);
       await this.terminate();
       throw error;
     }
@@ -253,13 +275,13 @@ async fetchFromGit() {
   async fetchFromDisk() {
     try {
       if (!this.initialized) await this.initialize();
-      consoleDotLog$4(`Loading filesystem from disk`);
+      consoleDotLog$3(`Loading filesystem from disk`);
       
       await this.initRepoLocally();
       await this.generateFsTable();
-      consoleDotLog$4(`Successfully loaded filesystem from disk`);
+      consoleDotLog$3(`Successfully loaded filesystem from disk`);
     } catch (error) {
-      consoleDotError$3(`Disk load failed: ${error.message}`);
+      consoleDotError$2(`Disk load failed: ${error.message}`);
       await this.terminate();
       throw error;
     }
@@ -269,13 +291,13 @@ async fetchFromGit() {
     try {
       if (!this.initialized) await this.initialize();
       const { fileId } = this.fetchInfo;
-      consoleDotLog$4(`Fetching from Google Drive file ${fileId}`);
+      consoleDotLog$3(`Fetching from Google Drive file ${fileId}`);
       
       // Implement Google Drive loading logic here
       await this.generateFsTable();
-      consoleDotLog$4(`Successfully fetched from Google Drive`);
+      consoleDotLog$3(`Successfully fetched from Google Drive`);
     } catch (error) {
-      consoleDotError$3(`Google Drive fetch failed: ${error.message}`);
+      consoleDotError$2(`Google Drive fetch failed: ${error.message}`);
       await this.terminate();
       throw error;
     }
@@ -286,16 +308,16 @@ async fetchFromGit() {
     try {
       if (!this.initialized) await this.initialize();
       
-      consoleDotLog$4('Generating FS table...');
+      consoleDotLog$3('Generating FS table...');
       const fileList = await this.workerThread.execute('listFilesDot', { listDirs: true });
-      consoleDotLog$4('File list:', fileList);
+      consoleDotLog$3('File list:', fileList);
       this.fsTable = this.buildHierarchicalFsTable(fileList);
       
-      consoleDotLog$4('FS table generated with', 
+      consoleDotLog$3('FS table generated with', 
         Object.keys(this.fsTable['/'].children).length, 'root entries');
       return this.fsTable;
     } catch (error) {
-      consoleDotError$3('FS table generation failed:', error);
+      consoleDotError$2('FS table generation failed:', error);
       throw error;
     }
   }
@@ -397,7 +419,7 @@ async fetchFromGit() {
                 
                 // Check if already exists
                 if (current.children[name]) {
-                    consoleDotLog$4(`path ${path} already exists, updating its content`);
+                    consoleDotLog$3(`path ${path} already exists, updating its content`);
                 }
                 
                 current.children[name] = this.createFsTableEntry(
@@ -429,7 +451,7 @@ async fetchFromGit() {
 
         return { success: true, fsTable: this.fsTable };
     } catch (error) {
-        consoleDotError$3('FS table update failed:', error);
+        consoleDotError$2('FS table update failed:', error);
         throw error;
     }
 }
@@ -473,7 +495,7 @@ async fetchFromGit() {
     try {
       return fsTable ? JSON.stringify(fsTable).length : 0;
     } catch (error) {
-      consoleDotError$3('Size calculation failed:', error);
+      consoleDotError$2('Size calculation failed:', error);
       return 0;
     }
   }
@@ -489,7 +511,7 @@ async fetchFromGit() {
 
       return await this.workerThread.execute('commitStagedChanges', { message });
     } catch (error) {
-      consoleDotError$3('Version commit failed:', error);
+      consoleDotError$2('Version commit failed:', error);
       throw error;
     } 
   }
@@ -503,24 +525,24 @@ async fetchFromGit() {
        */
       async getSyncStatus(__url = null, ref = 'main') {
         try {
-          consoleDotLog$4('Starting sync status check...');
+          consoleDotLog$3('Starting sync status check...');
           const _url = __url || this?.fetchInfo?.url;
           
           // Get local head
-          consoleDotLog$4('Getting local head commit...');
+          consoleDotLog$3('Getting local head commit...');
           const localHead = await this.workerThread.execute('getLastLocalCommit', { ref });
-          consoleDotLog$4('Local head commit:', localHead);
+          consoleDotLog$3('Local head commit:', localHead);
           
           // Get remote head
-          consoleDotLog$4('Getting remote head commit...');
+          consoleDotLog$3('Getting remote head commit...');
           const remoteResult = await this.workerThread.execute('getLatestRemoteCommit', { 
             url: _url,
             ref,
           });
-          consoleDotLog$4('Remote head result:', remoteResult);
+          consoleDotLog$3('Remote head result:', remoteResult);
       
           if (!remoteResult.success) {
-            consoleDotLog$4('Remote branch not found');
+            consoleDotLog$3('Remote branch not found');
             return {
               status: 'remote-branch-not-found',
               localHead,
@@ -529,11 +551,11 @@ async fetchFromGit() {
           }
       
           const remoteHead = remoteResult.commit;
-          consoleDotLog$4('Remote head commit:', remoteHead);
+          consoleDotLog$3('Remote head commit:', remoteHead);
           
           // Fast path if heads match
           if (localHead === remoteHead) {
-            consoleDotLog$4('Local and remote heads match - up to date');
+            consoleDotLog$3('Local and remote heads match - up to date');
             return {
               status: 'up-to-date',
               localHead,
@@ -542,32 +564,32 @@ async fetchFromGit() {
           }
       
           // Get commit histories
-          consoleDotLog$4('Getting commit histories...');
+          consoleDotLog$3('Getting commit histories...');
           const [localCommits, remoteCommits] = await Promise.all([
             await this.getLocalCommitHistory(10),
             await this.getRemoteCommitHistory(10)
           ]);
           
-          consoleDotLog$4('Local commits (10 most recent):', localCommits);
-          consoleDotLog$4('Remote commits (10 most recent):', remoteCommits);
+          consoleDotLog$3('Local commits (10 most recent):', localCommits);
+          consoleDotLog$3('Remote commits (10 most recent):', remoteCommits);
       
           // Find common commit
           const commonCommit = this.findFirstCommonCommit(localCommits, remoteCommits);
-          consoleDotLog$4('Common commit found:', commonCommit);
+          consoleDotLog$3('Common commit found:', commonCommit);
           
           let status;
           if (!commonCommit) {
             status = 'diverged';
-            consoleDotLog$4('No common commit found - branches have diverged');
+            consoleDotLog$3('No common commit found - branches have diverged');
           } else if (commonCommit === remoteHead) {
             status = 'local-ahead';
-            consoleDotLog$4('Local is ahead of remote');
+            consoleDotLog$3('Local is ahead of remote');
           } else if (commonCommit === localHead) {
             status = 'remote-ahead';
-            consoleDotLog$4('Remote is ahead of local');
+            consoleDotLog$3('Remote is ahead of local');
           } else {
             status = 'diverged';
-            consoleDotLog$4('Branches have diverged');
+            consoleDotLog$3('Branches have diverged');
           }
       
           return {
@@ -577,7 +599,7 @@ async fetchFromGit() {
             commonAncestor: commonCommit
           };
         } catch (err) {
-          consoleDotError$3("getSyncStatus failed:", err);
+          consoleDotError$2("getSyncStatus failed:", err);
           return {
             status: 'error',
             error: err.message
@@ -607,10 +629,10 @@ async fetchFromGit() {
             depth,
           });
           const commits = logs.map(commit => commit.oid);
-          consoleDotLog$4('GetLocalCommitHistory result: ', commits);
+          consoleDotLog$3('GetLocalCommitHistory result: ', commits);
           return commits || [];
         } catch (error) {
-          consoleDotError$3("Failed to get local commit history:", error);
+          consoleDotError$2("Failed to get local commit history:", error);
           return [];
         }
       }
@@ -620,26 +642,26 @@ async fetchFromGit() {
        */
       async getRemoteCommitHistory(depth = 10) {
         try {
-          consoleDotLog$4('Fetching remote commit history with depth:', depth);
+          consoleDotLog$3('Fetching remote commit history with depth:', depth);
           const result = await this.workerThread.execute('getCommitHistoryFromReplica', {
             depth,
           });
           
-          consoleDotLog$4('Raw result from worker:', result);
+          consoleDotLog$3('Raw result from worker:', result);
           
           // Handle both direct array response and success/commits object structure
           if (Array.isArray(result)) {
-            consoleDotLog$4('Received direct commits array:', result);
+            consoleDotLog$3('Received direct commits array:', result);
             return result;
           } else if (result && (result.commits || result.success)) {
-            consoleDotLog$4('Received structured response with commits:', result.commits || []);
+            consoleDotLog$3('Received structured response with commits:', result.commits || []);
             return result.commits || [];
           } else {
-            consoleDotError$3('Unexpected response format:', result);
+            consoleDotError$2('Unexpected response format:', result);
             return [];
           }
         } catch (error) {
-          consoleDotError$3("Failed to get remote commit history:", error);
+          consoleDotError$2("Failed to get remote commit history:", error);
           return [];
         }
       }
@@ -649,11 +671,11 @@ async fetchFromGit() {
        */
       async autoSyncFlow(onConflictStrategy, syncUrl) {
         try {
-          consoleDotLog$4('this.fetchInfo', this.fetchInfo);
+          consoleDotLog$3('this.fetchInfo', this.fetchInfo);
           // First do lightweight check
           const { status, localHead, remoteHead, commonAncestor } = await this.getSyncStatus(syncUrl);
           
-          consoleDotLog$4("Sync status:", status);
+          consoleDotLog$3("Sync status:", status);
           if (this.fetchInfo.name && this.fetchInfo.email) {
             await this.setUserConfig(this.fetchInfo.name, this.fetchInfo.email);
           }
@@ -671,14 +693,14 @@ async fetchFromGit() {
               return await this.handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, syncUrl);
               
             case 'remote-branch-not-found':
-              consoleDotError$3('Remote branch not found');
+              consoleDotError$2('Remote branch not found');
               return { synced: false, error: 'Remote branch not found' };
               
             default:
               throw new Error(`Unknown sync status: ${status}`);
           }
         } catch (err) {
-          consoleDotError$3("autoSyncFlow failed:", err);
+          consoleDotError$2("autoSyncFlow failed:", err);
           throw err;
         }
       }
@@ -688,17 +710,17 @@ async fetchFromGit() {
        */
       async handleRemoteAhead(localHead, remoteHead, onConflictStrategy, syncUrl) {
         try {
-          consoleDotLog$4(`Handling remote-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
+          consoleDotLog$3(`Handling remote-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
           const _onConflictStrategy = onConflictStrategy || 'theirs';
           // 1. First try a simple fast-forward
-          consoleDotLog$4('Attempting fast-forward merge...');
+          consoleDotLog$3('Attempting fast-forward merge...');
           const ffResult = await this.workerThread.execute('fastForward', {
             url: syncUrl,
             ref: 'main',
           });
           
           if (ffResult.success) {
-            consoleDotLog$4('Fast-forward successful');
+            consoleDotLog$3('Fast-forward successful');
             await this.generateFsTable(); // Refresh FS table
             return { 
               synced: true, 
@@ -709,12 +731,12 @@ async fetchFromGit() {
           }
           
           // 2. If fast-forward fails, do a full pull with merge
-          consoleDotLog$4('Fast-forward failed, attempting full pull...');
+          consoleDotLog$3('Fast-forward failed, attempting full pull...');
           const pullResult = await this.workerThread.execute('doFetch', {
             url: syncUrl,
             ref: 'main',
           });
-          consoleDotLog$4('Fetching notes from remote...');
+          consoleDotLog$3('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
             url: syncUrl,
             remote: 'origin',
@@ -728,7 +750,7 @@ async fetchFromGit() {
             strategy: _onConflictStrategy,
           });
 
-          consoleDotLog$4('Fetching notes from remote...');
+          consoleDotLog$3('Fetching notes from remote...');
           await this.workerThread.execute('doFetch', {
             url: syncUrl,
             remote: 'origin',
@@ -741,13 +763,13 @@ async fetchFromGit() {
             throw new Error('Pull failed: ' + (pullResult.error || 'Unknown error'));
           }
           
-          consoleDotLog$4('Pull successful');
+          consoleDotLog$3('Pull successful');
           await this.generateFsTable(); // Refresh FS table
           
           // Verify new head matches remote
           const newLocalHead = await this.workerThread.execute('getLastLocalCommit', { ref: 'main' });
           if (newLocalHead !== remoteHead) {
-            consoleDotLog$4(`Warning: Local head (${newLocalHead}) doesn't match remote head (${remoteHead}) after pull`);
+            consoleDotLog$3(`Warning: Local head (${newLocalHead}) doesn't match remote head (${remoteHead}) after pull`);
           }
           
           return { 
@@ -757,7 +779,7 @@ async fetchFromGit() {
             newHead: newLocalHead
           };
         } catch (error) {
-          consoleDotError$3('handleRemoteAhead failed:', error);
+          consoleDotError$2('handleRemoteAhead failed:', error);
           
           // Attempt to reset to original state if something went wrong
           try {
@@ -766,7 +788,7 @@ async fetchFromGit() {
               hard: true 
             });
           } catch (resetError) {
-            consoleDotError$3('Failed to reset after error:', resetError);
+            consoleDotError$2('Failed to reset after error:', resetError);
           }
           
           throw error;
@@ -778,7 +800,7 @@ async fetchFromGit() {
        */
       async handleLocalAhead(localHead, remoteHead, onConflictStrategy, syncUrl) {
         try {
-          consoleDotLog$4(`Handling local-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
+          consoleDotLog$3(`Handling local-ahead scenario (local: ${localHead}, remote: ${remoteHead})`);
           
           await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
 
@@ -788,7 +810,7 @@ async fetchFromGit() {
             remoteRef: 'refs/notes/commits',
             force: false,
           });
-                    consoleDotLog$4('Attempting push...');
+                    consoleDotLog$3('Attempting push...');
           const pushResult = await this.workerThread.execute('push', {
             url: syncUrl,
             ref: 'main',
@@ -796,7 +818,7 @@ async fetchFromGit() {
           });
           
           if (pushResult.success || pushNotesResult.success) {
-            consoleDotLog$4('Push successful');
+            consoleDotLog$3('Push successful');
             return { 
               synced: true, 
               strategy: 'push',
@@ -805,27 +827,27 @@ async fetchFromGit() {
             };
           }
           
-          consoleDotLog$4('Push failed, rechecking sync status...');
+          consoleDotLog$3('Push failed, rechecking sync status...');
           const newStatus = await this.getSyncStatus(syncUrl);
           
           if (newStatus.status === 'up-to-date') {
-            consoleDotLog$4('Status is now up-to-date after push failure');
+            consoleDotLog$3('Status is now up-to-date after push failure');
             return { synced: true, strategy: 'concurrent-update' };
           }
           
           if (newStatus.status === 'remote-ahead') {
-            consoleDotLog$4('Remote moved ahead during push attempt');
+            consoleDotLog$3('Remote moved ahead during push attempt');
             return this.handleRemoteAhead(localHead, newStatus.remoteHead);
           }
           
           if (newStatus.status === 'diverged') {
-            consoleDotLog$4('Branches diverged during push attempt');
+            consoleDotLog$3('Branches diverged during push attempt');
             return this.handleDiverged(localHead, newStatus.remoteHead, newStatus.commonAncestor, onConflictStrategy, syncUrl);
           }
           
           throw new Error(`Unexpected status after push failure: ${newStatus.status}`);
         } catch (error) {
-          consoleDotError$3('handleLocalAhead failed:', error);
+          consoleDotError$2('handleLocalAhead failed:', error);
           throw error;
         }
       }
@@ -840,10 +862,10 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
   try {
     // Default to 'local' to preserve user changes
     const _onConflictStrategy = onConflictStrategy || 'local'; 
-    consoleDotLog$4('Using merge workflow');
+    consoleDotLog$3('Using merge workflow');
     
     // 1. Fetch
-    consoleDotLog$4('Pulling with merge...');
+    consoleDotLog$3('Pulling with merge...');
     const pullResult = await this.workerThread.execute('doFetch', {
       url: syncUrl,
       ref: 'main',
@@ -866,7 +888,7 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
     }
     
     // 3. Push
-    consoleDotLog$4('Pushing merged changes...');
+    consoleDotLog$3('Pushing merged changes...');
     await this.setAuthParams(this.fetchInfo.username, this.fetchInfo.password);
     
     const pushResult = await this.workerThread.execute('push', {
@@ -887,7 +909,7 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
       remoteHead
     };
   } catch (error) {
-    consoleDotError$3('handleDiverged failed:', error);
+    consoleDotError$2('handleDiverged failed:', error);
     
     // Attempt to reset to original state
     try {
@@ -896,7 +918,7 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
         hard: true 
       });
     } catch (resetError) {
-      consoleDotError$3('Failed to reset after error:', resetError);
+      consoleDotError$2('Failed to reset after error:', resetError);
     }
     
     throw error;
@@ -940,10 +962,10 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
           const newFetchInfo = args || {};
           if (!this.initialized) await this.initialize();
           this.fetchInfo = { ...this.fetchInfo, ...newFetchInfo };
-          consoleDotLog$4('Fetch info updated:', this.fetchInfo);
+          consoleDotLog$3('Fetch info updated:', this.fetchInfo);
           return this.fetchInfo;
         } catch(error) {
-          consoleDotError$3('Some error happened while using updateFetchInfo');
+          consoleDotError$2('Some error happened while using updateFetchInfo');
           throw new Error('Some error happened while using updateFetchInfo');
         }
       }
@@ -963,7 +985,7 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
           const hasNotes = serverRefs.success && serverRefs.refs.some(row => row.ref === 'refs/notes/commits');
 
           if (hasNotes) {
-            consoleDotLog$4('Fetching notes from remote...');
+            consoleDotLog$3('Fetching notes from remote...');
             await this.workerThread.execute('doFetch', {
               url: this.fetchInfo.url,
               remote: 'origin',
@@ -971,13 +993,13 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
               tags: true,
               singleBranch: true,
             });
-            consoleDotLog$4('Notes Fetch is done.');
+            consoleDotLog$3('Notes Fetch is done.');
           } else {
-            consoleDotLog$4('No notes found on remote, skipping notes fetch.');
+            consoleDotLog$3('No notes found on remote, skipping notes fetch.');
           }
         } catch (error) {
           // If listServerRefs fails or notes fetch fails, log but continue
-          consoleDotError$3('Failed to fetch notes (optional):', error.message);
+          consoleDotError$2('Failed to fetch notes (optional):', error.message);
         }
       }
 
@@ -995,9 +1017,9 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
             });
           }
 
-          consoleDotLog$4('Successfully reconfigured remote with notes fetch');
+          consoleDotLog$3('Successfully reconfigured remote with notes fetch');
         } catch (error) {
-          consoleDotError$3('Failed to reconfigure remote:', error);
+          consoleDotError$2('Failed to reconfigure remote:', error);
           throw error;
         }
       }
@@ -1292,17 +1314,17 @@ class StorageUtils {
   }
 }
 
-const config$4 = await getConfig();
-const logger$3 = new Logger(config$4.logging.supportChecker);
+const config$3 = await getConfig();
+const logger$2 = new Logger(config$3.logging.supportChecker);
 
-function consoleDotLog$3(...parameters) {
-  logger$3.consoleDotLog(...parameters);
+function consoleDotLog$2(...parameters) {
+  logger$2.consoleDotLog(...parameters);
 }
 
 async function checkIndexedDBSupport() {
   try {
     if (!window.indexedDB) {
-      consoleDotLog$3("IndexedDB not supported in this browser");
+      consoleDotLog$2("IndexedDB not supported in this browser");
       return false;
     }
 
@@ -1312,7 +1334,7 @@ async function checkIndexedDBSupport() {
       const request = indexedDB.open(dbName);
       
       request.onerror = () => {
-        consoleDotLog$3("IndexedDB not available");
+        consoleDotLog$2("IndexedDB not available");
         resolve(false);
       };
       
@@ -1324,37 +1346,37 @@ async function checkIndexedDBSupport() {
         const deleteRequest = indexedDB.deleteDatabase(dbName);
         
         deleteRequest.onerror = () => {
-          consoleDotLog$3("Failed to delete test database");
+          consoleDotLog$2("Failed to delete test database");
           resolve(true); // Still consider IDB supported
         };
         
         deleteRequest.onsuccess = () => {
-          consoleDotLog$3("IndexedDB test successful");
+          consoleDotLog$2("IndexedDB test successful");
           resolve(true);
         };
       };
 
       request.onblocked = () => {
-        consoleDotLog$3("IndexedDB request blocked");
+        consoleDotLog$2("IndexedDB request blocked");
         resolve(false);
       };
     });
   } catch (e) {
-    consoleDotLog$3("IndexedDB test failed:", e);
+    consoleDotLog$2("IndexedDB test failed:", e);
     return false;
   }
 }
 
-const config$3 = await getConfig();
-const logger$2 = new Logger(config$3.logging.vfs);
+const config$2 = await getConfig();
+const logger$1 = new Logger(config$2.logging.vfs);
 
 // Logger Utilities
-function consoleDotLog$2(...parameters) {
-  logger$2.consoleDotLog('[VFS] ', ...parameters);
+function consoleDotLog$1(...parameters) {
+  logger$1.consoleDotLog('[VFS] ', ...parameters);
 }
 
-function consoleDotError$2(...parameters) {
-  logger$2.consoleDotError('[VFS] ', ...parameters);
+function consoleDotError$1(...parameters) {
+  logger$1.consoleDotError('[VFS] ', ...parameters);
 }
 
 class VFS {
@@ -1370,10 +1392,10 @@ class VFS {
       try {
         await this.retrieveAndMountFromFsTable();
       } catch (error) {
-        consoleDotError$2('Automatic mount from fsTable failed:', error);
+        consoleDotError$1('Automatic mount from fsTable failed:', error);
       }
     })();
-    consoleDotLog$2('VFS instance created');
+    consoleDotLog$1('VFS instance created');
   }
 
   // Environment detection utilities
@@ -1420,7 +1442,7 @@ class VFS {
 
   // Utility functions for versioning and merging
   getVersioningConfig(options = {}) {
-    const versioning = options.versioning || config$3.versioning || {};
+    const versioning = options.versioning || config$2.versioning || {};
     return {
       strategy: versioning.strategy,
       interval: versioning.interval,
@@ -1429,7 +1451,7 @@ class VFS {
   }
 
   getMergingConfig(options = {}) {
-    const merging = options.merging || config$3.merging || {};
+    const merging = options.merging || config$2.merging || {};
     return {
         ...merging,
         strategy: merging.strategy || 'immediate',
@@ -1439,53 +1461,53 @@ class VFS {
 
   // Storage and Support Checking
   async checkIndexedDBSupport() {
-    consoleDotLog$2('Checking IndexedDB support...');
+    consoleDotLog$1('Checking IndexedDB support...');
     if (this.idbSupported !== null) {
       return this.idbSupported; // Return cached result if available
     }
     
     // Check if running in Node.js
     if (typeof window === 'undefined' || typeof navigator === 'undefined') {
-      consoleDotLog$2('Running in Node.js environment, IndexedDB not supported');
+      consoleDotLog$1('Running in Node.js environment, IndexedDB not supported');
       this.idbSupported = false;
       return false;
     }
 
     try {
       await checkIndexedDBSupport();
-      consoleDotLog$2('IndexedDB is supported');
+      consoleDotLog$1('IndexedDB is supported');
       this.idbSupported = true;
       return true;
     } catch (error) {
-      consoleDotError$2('IndexedDB not supported:', error);
+      consoleDotError$1('IndexedDB not supported:', error);
       this.idbSupported = false;
       return false;
     }
   }
 
   async loadMountFromStorage(mountPath) {
-    consoleDotLog$2(`Attempting to load mount from storage: ${mountPath}`);
+    consoleDotLog$1(`Attempting to load mount from storage: ${mountPath}`);
     try {
       const storedMount = await this.storageUtils.get(mountPath);
       if (storedMount) {
-        consoleDotLog$2(`Successfully loaded mount from storage: ${mountPath}`);
+        consoleDotLog$1(`Successfully loaded mount from storage: ${mountPath}`);
         return storedMount;
       }
-      consoleDotLog$2(`No mount found in storage for path: ${mountPath}`);
+      consoleDotLog$1(`No mount found in storage for path: ${mountPath}`);
       return null;
     } catch (error) {
-      consoleDotError$2(`Failed to load mount from storage (path: ${mountPath}):`, error);
+      consoleDotError$1(`Failed to load mount from storage (path: ${mountPath}):`, error);
       throw error;
     }
   }
 
   async persistMountData(mountPath, mountData) {
-    consoleDotLog$2(`Persisting mount data for ${mountPath}`);
+    consoleDotLog$1(`Persisting mount data for ${mountPath}`);
     try {
       // FIX: In Node.js, we don't use IndexedDB. We just keep it in memory.
       if (typeof indexedDB === 'undefined') {
         this.mounts[mountPath] = mountData;
-        consoleDotLog$2(`Node.js: Mount data persisted in memory for ${mountPath}`);
+        consoleDotLog$1(`Node.js: Mount data persisted in memory for ${mountPath}`);
         return;
       }
 
@@ -1493,31 +1515,31 @@ class VFS {
       const dataToStore = { ...mountData };
       delete dataToStore.fsInstance;
       await this.storageUtils.store(mountPath, dataToStore);
-      consoleDotLog$2(`Successfully persisted mount data for ${mountPath}`);
+      consoleDotLog$1(`Successfully persisted mount data for ${mountPath}`);
     } catch (error) {
-      consoleDotError$2(`Failed to persist mount data for ${mountPath}:`, error);
+      consoleDotError$1(`Failed to persist mount data for ${mountPath}:`, error);
       throw error;
     }
   }
 
   // Filesystem Instance Management
   async createFSInstance(fsType, mountPath, options = {}) {
-    consoleDotLog$2(`Creating FS instance of type ${fsType} for mount path ${mountPath}`);
+    consoleDotLog$1(`Creating FS instance of type ${fsType} for mount path ${mountPath}`);
     try {
       const isNode = typeof window === 'undefined';
 
       // 1. Use NodeFS if explicitly requested
       if (isNode && fsType === 'node') {
-          consoleDotLog$2('Using NodeFS (Native Worker Wrapper)');
-          const { NodeFS } = await import('./assets/NodeFS-BpR-j37P.js');
+          consoleDotLog$1('Using NodeFS (Native Worker Wrapper)');
+          const { NodeFS } = await import('./assets/NodeFS-BfXyWf6A.js');
           // FIX: Pass fsType: 'node' so NodeFS knows to use the path directly
           return new NodeFS(mountPath, { fsName: mountPath, fsType: 'node', ...options });
       }
       
       // 2. Use NodeFS for 'memory' in Node.js (Disk backed temp folder)
       if (isNode && fsType === 'memory') {
-          consoleDotLog$2('Using NodeFS (Disk-backed) for memory in Node.js');
-          const { NodeFS } = await import('./assets/NodeFS-BpR-j37P.js');
+          consoleDotLog$1('Using NodeFS (Disk-backed) for memory in Node.js');
+          const { NodeFS } = await import('./assets/NodeFS-BfXyWf6A.js');
           // FIX: Pass fsType: 'memory' so NodeFS knows to map to temp
           return new NodeFS(mountPath, { fsName: mountPath, fsType: 'memory', ...options });
       }
@@ -1528,7 +1550,7 @@ class VFS {
       if (fsType === 'idb') {
         const isSupported = await this.checkIndexedDBSupport();
         if (!isSupported) {
-          consoleDotLog$2(`IndexedDB not supported, falling back to memory FS for ${mountPath}`);
+          consoleDotLog$1(`IndexedDB not supported, falling back to memory FS for ${mountPath}`);
           fsType = 'memory';
         }
       }
@@ -1536,13 +1558,13 @@ class VFS {
       let fsInstance;
       switch (fsType) {
         case 'memory':
-          consoleDotLog$2('Creating MemoryFS instance');
-          const { MemoryFS } = await import('./assets/memoryFs-VAT3s8Qe.js');
+          consoleDotLog$1('Creating MemoryFS instance');
+          const { MemoryFS } = await import('./assets/memoryFs-Ddlcqzcp.js');
           fsInstance = new MemoryFS(mountPath, { ...options, useSW: false });
           break;
         case 'idb':
-          consoleDotLog$2('Creating IDBFs instance');
-          const { IDBFs } = await import('./assets/IDBFs-DaKLHPir.js');
+          consoleDotLog$1('Creating IDBFs instance');
+          const { IDBFs } = await import('./assets/IDBFs-D2PlO4yn.js');
           fsInstance = new IDBFs(mountPath, { ...options, useSW });
           break;
         default:
@@ -1551,27 +1573,27 @@ class VFS {
 
       return fsInstance;
     } catch (error) {
-      consoleDotError$2(`Failed to create FS instance`, error);
+      consoleDotError$1(`Failed to create FS instance`, error);
       throw error;
     }
   }
 
   async ensureFSInitialized(fsPath) {
-    consoleDotLog$2(`Ensuring FS is initialized for path: ${fsPath}`);
+    consoleDotLog$1(`Ensuring FS is initialized for path: ${fsPath}`);
     if (this.initializedMounts.has(fsPath)) {
-      consoleDotLog$2(`FS already initialized for path: ${fsPath}`);
+      consoleDotLog$1(`FS already initialized for path: ${fsPath}`);
       return true;
     }
     
     const mountData = this.mounts[fsPath];
     if (!mountData) {
       const errorMsg = `Mount not found: ${fsPath}`;
-      consoleDotError$2(errorMsg);
+      consoleDotError$1(errorMsg);
       throw new Error(errorMsg);
     }
     
     if (!mountData.fsInstance) {
-      consoleDotLog$2(`Creating new FS instance for mount at ${fsPath}`);
+      consoleDotLog$1(`Creating new FS instance for mount at ${fsPath}`);
       mountData.fsInstance = await this.createFSInstance(
         mountData.fsType, 
         fsPath, 
@@ -1582,7 +1604,7 @@ class VFS {
       );
     }
     
-    consoleDotLog$2(`Fetching data for mount at ${fsPath}`);
+    consoleDotLog$1(`Fetching data for mount at ${fsPath}`);
     await this.fetchFS(
       mountData.fetchMethod, 
       mountData.fsType, 
@@ -1592,13 +1614,13 @@ class VFS {
     );
     
     this.initializedMounts.add(fsPath);
-    consoleDotLog$2(`Successfully initialized FS for path: ${fsPath}`);
+    consoleDotLog$1(`Successfully initialized FS for path: ${fsPath}`);
     return true;
   }
 
   // Mount/Unmount Operations
   async mount(path, fsType, fsName, fetchMethod, options = {}) {
-    consoleDotLog$2(`Mounting filesystem - path: ${path}, type: ${fsType}, name: ${fsName}, method: ${fetchMethod}, options: ${JSON.stringify(options)}`);
+    consoleDotLog$1(`Mounting filesystem - path: ${path}, type: ${fsType}, name: ${fsName}, method: ${fetchMethod}, options: ${JSON.stringify(options)}`);
     try {
       const fetchInfo = options.fetchInfo || {};
       const versioning = this.getVersioningConfig(options);
@@ -1606,64 +1628,64 @@ class VFS {
       
       const normalizedPath = path.endsWith('/') ? path : `${path}/`;
       const mountPath = `${normalizedPath}${fsName}`;
-      consoleDotLog$2(`Normalized mount path: ${mountPath}`);
+      consoleDotLog$1(`Normalized mount path: ${mountPath}`);
       
       if (this.mounts[mountPath]) {
         const errorMsg = `Path ${mountPath} is already mounted`;
-        consoleDotError$2(errorMsg);
+        consoleDotError$1(errorMsg);
         throw new Error(errorMsg);
       }
 
       this.currentMountPath = mountPath;
-      consoleDotLog$2(`Checking storage for existing mount at ${mountPath}`);
+      consoleDotLog$1(`Checking storage for existing mount at ${mountPath}`);
       const storedMount = await this.loadMountFromStorage(mountPath);
 
       if (storedMount) {
-        consoleDotLog$2(`Found stored mount, initializing existing mount at ${mountPath}`);
+        consoleDotLog$1(`Found stored mount, initializing existing mount at ${mountPath}`);
         return this.initializeStoredMount(mountPath, storedMount, fetchMethod, fetchInfo, { versioning, merging });
       }
 
-      consoleDotLog$2(`No stored mount found, creating new mount at ${mountPath}`);
+      consoleDotLog$1(`No stored mount found, creating new mount at ${mountPath}`);
       return this.createNewMount(mountPath, fsType, fsName, fetchMethod, fetchInfo, versioning, merging);
     } catch (error) {
-      consoleDotError$2('Mount operation failed:', error);
+      consoleDotError$1('Mount operation failed:', error);
       throw error;
     }
   }
 
   async retrieveAndMountFromFsTable() {
-    consoleDotLog$2('Attempting to retrieve and mount filesystems from fsTable');
+    consoleDotLog$1('Attempting to retrieve and mount filesystems from fsTable');
     try {
       if (typeof indexedDB === 'undefined') {
-        consoleDotLog$2('IndexedDB not available (Node.js environment). Skipping mount from fsTable.');
+        consoleDotLog$1('IndexedDB not available (Node.js environment). Skipping mount from fsTable.');
         return false;
       }
 
       try {
         const hasData = await this.storageUtils.ensureObjectStoreExists();
         if (!hasData) {
-          consoleDotLog$2('No storage data found - fresh initialization');
+          consoleDotLog$1('No storage data found - fresh initialization');
           return false;
         }
       } catch (e) {
-        consoleDotError$2('error: ', e);
+        consoleDotError$1('error: ', e);
       }
   
       const allMounts = await this.storageUtils.getAll();
-      consoleDotLog$2('Retrieved all mounts from storage:', allMounts);
+      consoleDotLog$1('Retrieved all mounts from storage:', allMounts);
       if (!allMounts || Object.keys(allMounts).length === 0) {
-        consoleDotLog$2('No stored mounts found in fsTable');
+        consoleDotLog$1('No stored mounts found in fsTable');
         return false;
       }
   
-      consoleDotLog$2(`Found ${Object.keys(allMounts).length} stored mounts`);
+      consoleDotLog$1(`Found ${Object.keys(allMounts).length} stored mounts`);
       
    
       for (const mountPath in allMounts) {
         const mountData = allMounts[mountPath];
         if (!mountData) continue;
 
-        consoleDotLog$2(`Processing mount at ${mountPath} from fsTable`);
+        consoleDotLog$1(`Processing mount at ${mountPath} from fsTable`);
         
         try {
           const lastSlashIndex = mountPath.lastIndexOf('/');
@@ -1682,25 +1704,25 @@ class VFS {
             }
           );
           
-          consoleDotLog$2(`Successfully mounted ${mountPath} from fsTable`);
+          consoleDotLog$1(`Successfully mounted ${mountPath} from fsTable`);
         } catch (mountError) {
-          consoleDotError$2(`Failed to mount ${mountPath} from fsTable:`, mountError);
+          consoleDotError$1(`Failed to mount ${mountPath} from fsTable:`, mountError);
         }
       }
       
-      consoleDotLog$2('Finished mounting all filesystems from fsTable');
+      consoleDotLog$1('Finished mounting all filesystems from fsTable');
       return true;
         
     } catch (error) {
-      consoleDotError$2('Failed to retrieve and mount:', error);
+      consoleDotError$1('Failed to retrieve and mount:', error);
       return false;
     }
   }
 
   async initializeStoredMount(mountPath, storedMount, fetchMethod, fetchInfo, options) {
-    consoleDotLog$2(`Initializing stored mount at ${mountPath}`);
+    consoleDotLog$1(`Initializing stored mount at ${mountPath}`);
     try {
-      consoleDotLog$2(`Creating FS instance for stored mount (type: ${storedMount.fsType})`);
+      consoleDotLog$1(`Creating FS instance for stored mount (type: ${storedMount.fsType})`);
       const fsInstance = await this.createFSInstance(
         storedMount.fsType,
         mountPath,
@@ -1710,7 +1732,7 @@ class VFS {
         }
       );
 
-      consoleDotLog$2(`Fetching data for stored mount using method: ${storedMount.fetchMethod || fetchMethod}`);
+      consoleDotLog$1(`Fetching data for stored mount using method: ${storedMount.fetchMethod || fetchMethod}`);
       await this.fetchFS(
         storedMount.fetchMethod || fetchMethod,
         storedMount.fsType,
@@ -1744,21 +1766,21 @@ class VFS {
       };      
 
       this.initializedMounts.add(mountPath);
-      consoleDotLog$2(`Successfully initialized stored mount at ${mountPath}`);
+      consoleDotLog$1(`Successfully initialized stored mount at ${mountPath}`);
       return this.mounts[mountPath];
     } catch (error) {
-      consoleDotError$2(`Failed to initialize stored mount at ${mountPath}:`, error);
+      consoleDotError$1(`Failed to initialize stored mount at ${mountPath}:`, error);
       throw error;
     }
   }
 
   async createNewMount(mountPath, fsType, fsName, fetchMethod, fetchInfo, versioning = {}, merging = {}) {
-    consoleDotLog$2(`Creating new mount at ${mountPath}`);
+    consoleDotLog$1(`Creating new mount at ${mountPath}`);
     try {
-        consoleDotLog$2(`Creating new FS instance (type: ${fsType})`);
+        consoleDotLog$1(`Creating new FS instance (type: ${fsType})`);
         const fsInstance = await this.createFSInstance(fsType, mountPath, { versioning, merging });
         
-        consoleDotLog$2(`Fetching data for new mount using method: ${fetchMethod}`);
+        consoleDotLog$1(`Fetching data for new mount using method: ${fetchMethod}`);
         await this.fetchFS(fetchMethod, fsType, fsInstance, mountPath, fetchInfo);
 
         // Get the VFSutils instance that was created in fetchFS
@@ -1767,10 +1789,10 @@ class VFS {
             throw new Error('VFSutils instance not found for mount');
         }
 
-        consoleDotLog$2('Generating filesystem table');
+        consoleDotLog$1('Generating filesystem table');
         const fsTable = await vfsUtils.generateFsTable();  // Use the instance from the Map
         const fsSize = await vfsUtils.getFsTableSize(fsTable);
-        consoleDotLog$2(`Filesystem table generated, size: ${fsSize}`);
+        consoleDotLog$1(`Filesystem table generated, size: ${fsSize}`);
 
       // Get environment information
       const environment = this.getPlatformInfo();
@@ -1800,14 +1822,14 @@ class VFS {
       };
       
       this.mounts[mountPath] = mountData;
-      consoleDotLog$2(`Persisting mount data for ${mountPath}`);
+      consoleDotLog$1(`Persisting mount data for ${mountPath}`);
       await this.persistMountData(mountPath, mountData);
       
       this.initializedMounts.add(mountPath);
-      consoleDotLog$2(`Successfully mounted new filesystem at ${mountPath}`);
+      consoleDotLog$1(`Successfully mounted new filesystem at ${mountPath}`);
       return mountData;
     } catch (error) {
-      consoleDotError$2(`Failed to create new mount at ${mountPath}:`, error);
+      consoleDotError$1(`Failed to create new mount at ${mountPath}:`, error);
       throw error;
     }
   }
@@ -1819,7 +1841,7 @@ class VFS {
   async getMountInfo(mountPath) {
     if (!this.mounts[mountPath]) {
       const errorMsg = `Mount not found: ${mountPath}`;
-      consoleDotError$2(errorMsg);
+      consoleDotError$1(errorMsg);
       throw new Error(errorMsg);
     }
     
@@ -1842,11 +1864,11 @@ class VFS {
 
   async unmount(path, fsName) {
     const fsPath = path + '/' + fsName;
-    consoleDotLog$2(`Unmounting filesystem at ${fsPath}`);
+    consoleDotLog$1(`Unmounting filesystem at ${fsPath}`);
     
     if (!this.mounts[fsPath]) {
       const errorMsg = `Path ${fsPath} is not mounted`;
-      consoleDotError$2(errorMsg);
+      consoleDotError$1(errorMsg);
       throw new Error(errorMsg);
     }
   
@@ -1855,13 +1877,13 @@ class VFS {
     try {
       // Clean up VFSutils instance if it exists
       if (this.vfsUtilsInstances.has(fsPath)) {
-        consoleDotLog$2(`Terminating VFSutils instance for ${fsPath}`);
+        consoleDotLog$1(`Terminating VFSutils instance for ${fsPath}`);
         await this.vfsUtilsInstances.get(fsPath).terminate(mountData.fsName, mountData.fsType);
         this.vfsUtilsInstances.delete(fsPath);
       }
   
       if (this.mounts[fsPath].fsInstance) {
-        consoleDotLog$2(`Closing all files for mount at ${fsPath}`);
+        consoleDotLog$1(`Closing all files for mount at ${fsPath}`);
         await this.mounts[fsPath].fsInstance.fs_fcloseall();
         this.mounts[fsPath].fsInstance = null;
       }
@@ -1870,26 +1892,26 @@ class VFS {
       this.initializedMounts.delete(fsPath);
   
       this.storageUtils.remove(fsPath);
-      consoleDotLog$2(`Successfully unmounted ${fsPath}`);
+      consoleDotLog$1(`Successfully unmounted ${fsPath}`);
       return true;
     } catch (error) {
-      consoleDotError$2(`Error unmounting ${fsPath}:`, error);
+      consoleDotError$1(`Error unmounting ${fsPath}:`, error);
       throw error;
     }
   }
 
   // Filesystem Operations
   async fetchFS(fetchMethod, fsType, fsInstance, fsName, fetchInfo) {
-    consoleDotLog$2(`Fetching filesystem data - method: ${fetchMethod}, type: ${fsType}, name: ${fsName}`);
+    consoleDotLog$1(`Fetching filesystem data - method: ${fetchMethod}, type: ${fsType}, name: ${fsName}`);
     try {
       // Check if we already have a VFSutils instance for this mount
       if (this.vfsUtilsInstances.has(this.currentMountPath)) {
-        consoleDotLog$2('Terminating existing VFSutils instance for this mount');
+        consoleDotLog$1('Terminating existing VFSutils instance for this mount');
         await this.vfsUtilsInstances.get(this.currentMountPath).terminate();
         this.vfsUtilsInstances.delete(this.currentMountPath);
       }
   
-      consoleDotLog$2('Creating new VFSutils instance for mount:', this.currentMountPath);
+      consoleDotLog$1('Creating new VFSutils instance for mount:', this.currentMountPath);
       const vfsUtils = new VFSutils(fsType, fsInstance, fsName, fetchInfo);
       this.vfsUtilsInstances.set(this.currentMountPath, vfsUtils);
       
@@ -1902,11 +1924,11 @@ class VFS {
       const strategy = fetchStrategies[fetchMethod];
       if (!strategy) {
         const errorMsg = `Unknown fetch method: ${fetchMethod}`;
-        consoleDotError$2(errorMsg);
+        consoleDotError$1(errorMsg);
         throw new Error(errorMsg);
       }
   
-      consoleDotLog$2(`Executing fetch strategy for ${fetchMethod}`);
+      consoleDotLog$1(`Executing fetch strategy for ${fetchMethod}`);
       await strategy();
       
       // Update last fetched time
@@ -1916,11 +1938,11 @@ class VFS {
         await this.persistMountData(this.currentMountPath, this.mounts[this.currentMountPath]);
       }
       
-      consoleDotLog$2(`Successfully fetched data using ${fetchMethod} method`);
+      consoleDotLog$1(`Successfully fetched data using ${fetchMethod} method`);
     } catch (error) {
-      consoleDotError$2(`Fetch operation failed (method: ${fetchMethod}):`, error);
+      consoleDotError$1(`Fetch operation failed (method: ${fetchMethod}):`, error);
       if (this.vfsUtilsInstances.has(this.currentMountPath)) {
-        consoleDotLog$2('Cleaning up VFSutils after fetch failure');
+        consoleDotLog$1('Cleaning up VFSutils after fetch failure');
         await this.vfsUtilsInstances.get(this.currentMountPath).terminate(fsName, fsType);
         this.vfsUtilsInstances.delete(this.currentMountPath);
       }
@@ -1929,81 +1951,81 @@ class VFS {
   }
 
   async resolveFS(path) {
-    consoleDotLog$2(`Resolving filesystem for path: ${path}`);
+    consoleDotLog$1(`Resolving filesystem for path: ${path}`);
     try {
       for (const mountPath in this.mounts) {
         if (path.startsWith(mountPath)) {
-          consoleDotLog$2(`Found matching mount at `, mountPath);
+          consoleDotLog$1(`Found matching mount at `, mountPath);
           await this.ensureFSInitialized(mountPath);
           const relativePath = path.slice(mountPath.length) || "/";
-          consoleDotLog$2(`Resolved path: ${path} to mount: ${mountPath}, relative path: ${relativePath}, this.mounts[mountPath] : `, this.mounts[mountPath]);
-          consoleDotLog$2('resolveFs returned value: ', 
+          consoleDotLog$1(`Resolved path: ${path} to mount: ${mountPath}, relative path: ${relativePath}, this.mounts[mountPath] : `, this.mounts[mountPath]);
+          consoleDotLog$1('resolveFs returned value: ', 
             {            
             fs: this.mounts[mountPath],
             relativePath: relativePath,
-            versioning: this.mounts[mountPath].versioning || config$3.versioning,
-            merging: this.mounts[mountPath].merging || config$3.merging
+            versioning: this.mounts[mountPath].versioning || config$2.versioning,
+            merging: this.mounts[mountPath].merging || config$2.merging
           });
 
           return {
             fs: this.mounts[mountPath],
             relativePath: relativePath,
-            versioning: this.mounts[mountPath].versioning || config$3.versioning,
-            merging: this.mounts[mountPath].merging || config$3.merging
+            versioning: this.mounts[mountPath].versioning || config$2.versioning,
+            merging: this.mounts[mountPath].merging || config$2.merging
           };
         }
       }
       const errorMsg = `No filesystem mounted for path: ${path}`;
-      consoleDotError$2(errorMsg);
+      consoleDotError$1(errorMsg);
       throw new Error(errorMsg);
     } catch (error) {
-      consoleDotError$2(`Failed to resolve filesystem for path ${path}:`, error);
+      consoleDotError$1(`Failed to resolve filesystem for path ${path}:`, error);
       throw error;
     }
   }
 
   // Filesystem Table Operations
   async writeToFsTable(path, type = "file", size = 0) {
-    consoleDotLog$2(`Writing to fsTable - path: ${path}, type: ${type}, size: ${size}`);
+    consoleDotLog$1(`Writing to fsTable - path: ${path}, type: ${type}, size: ${size}`);
     await this.validateVFSutils();
     
     try {
       const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
-      consoleDotLog$2(`Updating fsTable with create operation for ${path}`);
+      consoleDotLog$1(`Updating fsTable with create operation for ${path}`);
       const updateResult = await vfsUtils.updateFsTable("create", path, type, size);
-      consoleDotLog$2(`Updating mount fsTable with new data`);
+      consoleDotLog$1(`Updating mount fsTable with new data`);
       await this.updateMountFsTable(updateResult.fsTable);
-      consoleDotLog$2(`Successfully updated fsTable for ${path}`);
+      consoleDotLog$1(`Successfully updated fsTable for ${path}`);
       return updateResult.fsTable;
     } catch (error) {
-      consoleDotError$2('Failed to write to fsTable:', error);
+      consoleDotError$1('Failed to write to fsTable:', error);
       throw error;
     }
   }
   
   async removeFromFsTable(path) {
-    consoleDotLog$2(`Removing from fsTable - path: ${path}`);
+    consoleDotLog$1(`Removing from fsTable - path: ${path}`);
     await this.validateVFSutils();
     
     try {
       const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
-      consoleDotLog$2(`Updating fsTable with remove operation for ${path}`);
+      consoleDotLog$1(`Updating fsTable with remove operation for ${path}`);
       const updateResult = await vfsUtils.updateFsTable("remove", path);
-      consoleDotLog$2(`Updating mount fsTable with removal data`);
+      consoleDotLog$1(`Updating mount fsTable with removal data`);
       await this.updateMountFsTable(updateResult.fsTable);
-      consoleDotLog$2(`Successfully removed ${path} from fsTable`);
+      consoleDotLog$1(`Successfully removed ${path} from fsTable`);
       return updateResult.fsTable;
     } catch (error) {
-      consoleDotError$2('Failed to remove from fsTable:', error);
+      consoleDotError$1('Failed to remove from fsTable:', error);
       throw error;
     }
   }
 
   async updateMountFsTable(fsTable) {
-    consoleDotLog$2(`Updating mount fsTable for current mount path`);
+    consoleDotLog$1(`Updating mount fsTable for current mount path`);
     if (!this.currentMountPath) {
       const errorMsg = 'No active mount path available';
-      consoleDotError$2(errorMsg);
+      consoleDotError$1(errorMsg);
       throw new Error(errorMsg);
     }
 
@@ -2011,39 +2033,39 @@ class VFS {
     if (typeof indexedDB === 'undefined') {
        if (!this.mounts[this.currentMountPath]) {
           const errorMsg = `Mount data not found in memory for path: ${this.currentMountPath}`;
-          consoleDotError$2(errorMsg);
+          consoleDotError$1(errorMsg);
           throw new Error(errorMsg);
        }
        this.mounts[this.currentMountPath].fsTable = fsTable;
-       consoleDotLog$2(`Updated in-memory fsTable for ${this.currentMountPath}`);
+       consoleDotLog$1(`Updated in-memory fsTable for ${this.currentMountPath}`);
        return;
     }
 
     // Browser logic
-    consoleDotLog$2(`Loading mount data for ${this.currentMountPath}`);
+    consoleDotLog$1(`Loading mount data for ${this.currentMountPath}`);
     const mountData = await this.storageUtils.get(this.currentMountPath);
     if (!mountData) {
       const errorMsg = `Mount data not found for path: ${this.currentMountPath}`;
-      consoleDotError$2(errorMsg);
+      consoleDotError$1(errorMsg);
       throw new Error(errorMsg);
     }
 
-    consoleDotLog$2(`Updating fsTable in mount data`);
+    consoleDotLog$1(`Updating fsTable in mount data`);
     mountData.fsTable = fsTable;
-    consoleDotLog$2(`Storing updated mount data for ${this.currentMountPath}`);
+    consoleDotLog$1(`Storing updated mount data for ${this.currentMountPath}`);
     await this.storageUtils.store(this.currentMountPath, mountData);
-    consoleDotLog$2(`Successfully updated mount fsTable`);
+    consoleDotLog$1(`Successfully updated mount fsTable`);
   }
 
   // Validation Utilities
   async validateVFSutils() {
-    consoleDotLog$2('Validating VFSutils instance');
+    consoleDotLog$1('Validating VFSutils instance');
     if (!this.currentMountPath || !this.vfsUtilsInstances.has(this.currentMountPath)) {
       const errorMsg = "VFSutils not initialized for current mount";
-      consoleDotError$2(errorMsg);
+      consoleDotError$1(errorMsg);
       throw new Error(errorMsg);
     }
-    consoleDotLog$2('VFSutils validation passed');
+    consoleDotLog$1('VFSutils validation passed');
   }
  
   //----------------------
@@ -2052,16 +2074,16 @@ class VFS {
 
  
   async versioner(message) {
-    consoleDotLog$2(`Committing version with message: ${message}`);
+    consoleDotLog$1(`Committing version with message: ${message}`);
     await this.validateVFSutils();
     
     try {
       const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
       const commitResult = await vfsUtils.commitStagedChanges(message);
-      consoleDotLog$2(`Version committed successfully`);
+      consoleDotLog$1(`Version committed successfully`);
       return commitResult;
     } catch (error) {
-      consoleDotError$2('Failed to commit version:', error);
+      consoleDotError$1('Failed to commit version:', error);
       throw error;
     }
   }
@@ -2072,16 +2094,16 @@ class VFS {
 
   
   async merger(onConflictStrategy) {
-    consoleDotLog$2('Starting merge operation');
+    consoleDotLog$1('Starting merge operation');
     await this.validateVFSutils();
     const syncUrl = this.mounts[this.currentMountPath]?.merging?.syncUrl;
     try {
       const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
       const mergeResult = await vfsUtils.autoSyncFlow(onConflictStrategy, syncUrl);
-      consoleDotLog$2('Merge operation completed successfully:', mergeResult);
+      consoleDotLog$1('Merge operation completed successfully:', mergeResult);
       return mergeResult;
     } catch (error) {
-      consoleDotError$2('Merge operation failed:', error);
+      consoleDotError$1('Merge operation failed:', error);
       throw error;
     }
   }
@@ -2092,26 +2114,26 @@ class VFS {
   //-------------------
 
   async setMergingStrategy(mergingStrategy) {
-    consoleDotLog$2('Setting merging strategy');
+    consoleDotLog$1('Setting merging strategy');
     let mountData = this.mounts[this.currentMountPath];
     mountData = {...mountData, merging: mergingStrategy};
     await this.persistMountData(this.currentMountPath, mountData);
-    consoleDotLog$2('Merging strategy set successfully:', mergingStrategy);
+    consoleDotLog$1('Merging strategy set successfully:', mergingStrategy);
     return true;
   }
 
   async setVersioingStrategy(versioningStrategy) {
-    consoleDotLog$2('Setting versioning strategy');
+    consoleDotLog$1('Setting versioning strategy');
     let mountData = this.mounts[this.currentMountPath];
     mountData = {...mountData, versioning: versioningStrategy};
     await this.persistMountData(this.currentMountPath, mountData);
-    consoleDotLog$2('Versioning strategy set successfully:', versioningStrategy);
+    consoleDotLog$1('Versioning strategy set successfully:', versioningStrategy);
     return true;
   }
 
   async setUserConfigs(args) {
     await this.validateVFSutils();
-    consoleDotLog$2('Setting user configurations:', args);
+    consoleDotLog$1('Setting user configurations:', args);
     const vfsUtils = this.vfsUtilsInstances.get(this.currentMountPath);
     await vfsUtils.updateFetchInfo(args);
     let mountData = this.mounts[this.currentMountPath];
@@ -2121,15 +2143,15 @@ class VFS {
   }
 }
 
-const config$2 = await getConfig();
-const logger$1 = new Logger(config$2.logging.kfs);
+const config$1 = await getConfig();
+const logger = new Logger(config$1.logging.kfs);
 
-function consoleDotLog$1(...params) {
-  logger$1.consoleDotLog('[Versioning]', ...params);
+function consoleDotLog(...params) {
+  logger.consoleDotLog('[Versioning]', ...params);
 }
 
-function consoleDotError$1(...params) {
-  logger$1.consoleDotError('[Versioning]', ...params);
+function consoleDotError(...params) {
+  logger.consoleDotError('[Versioning]', ...params);
 }
 
 class VersioningManager {
@@ -2141,7 +2163,7 @@ class VersioningManager {
   }
 
   _getDefaultVersioningConfig() {
-    const versioning = config$2.versioning || {};
+    const versioning = config$1.versioning || {};
     return {
       strategy: versioning.strategy,
       interval: versioning.interval,
@@ -2161,7 +2183,7 @@ class VersioningManager {
 
   async setup(options = {}) {
     this.config = await this._getVersioningConfig(options);
-    consoleDotLog$1('Versioning configuration:', this.config);
+    consoleDotLog('Versioning configuration:', this.config);
 
     if (this.config.strategy === 'clock') {
       this._startClockVersioning();
@@ -2180,14 +2202,14 @@ class VersioningManager {
   _startClockVersioning() {
     this.clearClock();
     const intervalMs = (this.config.interval || 10) * 1000;
-    consoleDotLog$1('Starting clock-based versioning with interval:', intervalMs, 'ms');
+    consoleDotLog('Starting clock-based versioning with interval:', intervalMs, 'ms');
 
     this.clockIntervalID = setInterval(async () => {
-      consoleDotLog$1('Clock-based auto commit triggered');
+      consoleDotLog('Clock-based auto commit triggered');
       try {
         await this.vfs.versioner('Clock-based auto commit');
       } catch (error) {
-        consoleDotError$1('Error in clock-based versioning:', error);
+        consoleDotError('Error in clock-based versioning:', error);
       }
     }, intervalMs);
   }
@@ -2199,7 +2221,7 @@ class VersioningManager {
     if (strategyConfig.strategy === 'batch') {
       this.operationQueueCount++;
       const batchSize = strategyConfig.number || 5;
-      consoleDotLog$1(`Batch operation count: ${this.operationQueueCount}/${batchSize}`);
+      consoleDotLog(`Batch operation count: ${this.operationQueueCount}/${batchSize}`);
 
       if (this.operationQueueCount >= batchSize) {
         this.operationQueueCount = 0;
@@ -2213,8 +2235,8 @@ class VersioningManager {
   }
 }
 
-const config$1 = await getConfig();
-new Logger(config$1.logging.kfs);
+const config = await getConfig();
+new Logger(config.logging.kfs);
 
 class MergingManager {
     constructor(vfs) {
@@ -2225,9 +2247,9 @@ class MergingManager {
   
     _getDefaultMergingConfig() {
       return {
-        strategy: config$1.merging?.strategy || null,
-        interval: config$1.merging?.interval || 10,
-        number: config$1.merging?.number || 5
+        strategy: config.merging?.strategy || null,
+        interval: config.merging?.interval || 10,
+        number: config.merging?.number || 5
       };
     }
   
@@ -2268,17 +2290,6 @@ class MergingManager {
       }
   }
 
-const config = await getConfig();
-const logger = new Logger(config.logging.kfs);
-
-function consoleDotLog(...params) {
-  logger.consoleDotLog('[KFS]', ...params);
-}
-
-function consoleDotError(...params) {
-  logger.consoleDotError('[KFS]', ...params);
-}
-
 class KFS {
   constructor() {
     this.vfs = new VFS();
@@ -2288,23 +2299,52 @@ class KFS {
     this.commitCount = 0;
     this.mountPaths = null;
     this.mergingConfig = null;
-    (async () => {
-      try {
-        await this.init();
-      } catch (error) {
-        consoleDotError('Initing Failed for KFS: ', error);
-      }
-    })();
-    consoleDotLog('KFS instance created');
+    this.initialized = false;
+    
+    // FIX: Initialize config and logger as null, load them in init()
+    this.config = null;
+    this.logger = null;
+
+    // FIX: Store the initialization promise so other methods can wait for it
+    this.ready = this.init();
+  }
+
+  // Internal logger wrapper to handle cases where logger isn't ready yet
+  _log(...params) {
+    if (this.logger) {
+      this.logger.consoleDotLog('[KFS]', ...params);
+    } else {
+      console.log('[KFS]', ...params);
+    }
+  }
+
+  _error(...params) {
+    if (this.logger) {
+      this.logger.consoleDotError('[KFS]', ...params);
+    } else {
+      console.error('[KFS]', ...params);
+    }
   }
   
   async init() {
-    if (!this.initialized) {
-      this.mountPaths = await this.vfs.getMountPaths();
-      this.initialized = true;
-    }
-    consoleDotLog('mountpaths: ', this.mountPaths);
+    if (this.initialized) return;
+
+    // FIX: Load config here instead of top-level
+    this.config = await getConfig();
+    this.logger = new Logger(this.config.logging.kfs);
+
+    this._log('Initializing KFS instance...');
+    
+    this.mountPaths = await this.vfs.getMountPaths();
+    this.initialized = true;
+    
+    this._log('mountpaths: ', this.mountPaths);
     return this;
+  }
+
+  // FIX: Helper method to ensure initialization is complete before running logic
+  async _ensureReady() {
+    await this.ready;
   }
 
   // -------------------------------
@@ -2338,17 +2378,18 @@ class KFS {
   
   async merge() {
     try {
-      consoleDotLog('Merging...', this.mountPaths);
+      await this._ensureReady(); // ENSURE READY
+      this._log('Merging...', this.mountPaths);
 
       const strategyMap = { remote: 'theirs', local: 'ours', combine: 'combine' };
       const userStrategy = this.mergingConfig?.onConflictStrategy || 'remote';
       const onConflictStrategy = strategyMap[userStrategy] || 'remote';
 
-      consoleDotLog('Merging...', this.mountPaths);
+      this._log('Merging...', this.mountPaths);
       await this.vfs.merger(onConflictStrategy);
-      consoleDotLog('Merge completed successfully.');
+      this._log('Merge completed successfully.');
     } catch(error) {
-      consoleDotError('Merge failed:', error);
+      this._error('Merge failed:', error);
       throw new Error(`Failed to merge: ${error.message}`);
     }
   }
@@ -2359,6 +2400,8 @@ class KFS {
 
   async mount(path, fsType, fsName, fetchMethod, options = {}) {
     try {
+      await this._ensureReady(); // ENSURE READY
+      
       this._setupVersioningAndMerging(options);
       path = this._normalizePath(path);
       const versioningConfig = await this.versioningManager.getConfig();
@@ -2374,16 +2417,18 @@ class KFS {
       this.fsInstance = mountData.fsInstance;
       const root = await this.read(`${path}/${fsName}`);
       this.mountPaths = await this.vfs.getMountPaths();
-      consoleDotLog('Mount successful, root:', root);
+      this._log('Mount successful, root:', root);
       return mountData;
     } catch (error) {
-      consoleDotError(`Failed to mount filesystem at ${path}:`, error);
+      this._error(`Failed to mount filesystem at ${path}:`, error);
       throw new Error(`Failed to mount filesystem: ${error.message}`);
     }
   }
 
   async unmount(path, fsName) {
     try {
+      await this._ensureReady(); // ENSURE READY
+      
       path = this._normalizePath(path);
       await this.vfs.unmount(path, fsName);
       this.fsInstance = null;
@@ -2391,20 +2436,22 @@ class KFS {
       this.commitCount = 0;
       return { success: true };
     } catch (error) {
-      consoleDotError(`Failed to unmount filesystem at ${path}:`, error);
+      this._error(`Failed to unmount filesystem at ${path}:`, error);
       throw new Error(`Failed to unmount filesystem: ${error.message}`);
     }
   }
 
 
   async setMergingStrategy(mergingStrategy) {
+    await this._ensureReady();
     await this.vfs.setMergingStrategy(mergingStrategy);
-    consoleDotLog('Merging strategy set to:', mergingStrategy);
+    this._log('Merging strategy set to:', mergingStrategy);
   }
 
   async setVersioingStrategy(versioningStrategy) {
+    await this._ensureReady();
     await this.vfs.setVersioingStrategy(versioningStrategy);
-    consoleDotLog('Versioning strategy set to:', versioningStrategy);
+    this._log('Versioning strategy set to:', versioningStrategy);
   }
 
   /**
@@ -2416,6 +2463,9 @@ class KFS {
     * @throws {Error} - Throws an error if the arguments are invalid or if the operation fails.
    */
   async setUserConfigs(args) {
+    // FIX: Wait for ready before validating or setting config
+    await this._ensureReady();
+
     if (!args || typeof args !== 'object') {
       throw new Error('Invalid arguments: must be an object');
     }
@@ -2431,12 +2481,14 @@ class KFS {
       );
     }
     
-    args && this.vfs.setUserConfigs(args);
+    args && await this.vfs.setUserConfigs(args);
     return args;
   }
 
   async create(path, type = 'file', content = '', mode = 'w') {
     try {
+      await this._ensureReady(); // ENSURE READY
+
       if (!['file', 'dir'].includes(type)) {
         throw new Error(`Invalid type: ${type}. Must be 'file' or 'dir'`);
       }
@@ -2527,13 +2579,15 @@ class KFS {
   
       return { success: true };
     } catch (error) {
-      consoleDotError(`Failed to create ${type} at ${path}:`, error);
+      this._error(`Failed to create ${type} at ${path}:`, error);
       throw new Error(`Failed to create: ${error.message}`);
     }
   }
 
   async remove(path) {
     try {
+      await this._ensureReady(); // ENSURE READY
+
       path = this._normalizePath(path);
 
       if (this.mountPaths && this.mountPaths.includes(path)) {
@@ -2560,13 +2614,15 @@ class KFS {
 
       return { success: true };
     } catch (error) {
-      consoleDotError(`Failed to remove ${path}:`, error);
+      this._error(`Failed to remove ${path}:`, error);
       throw new Error(`Failed to remove: ${error.message}`);
     }
   }
 
   async read(path) {
     try {
+      await this._ensureReady(); // ENSURE READY
+
       path = this._normalizePath(path);
       const { fs, relativePath } = await this.vfs.resolveFS(path);
       this.fsInstance = fs.fsInstance;
@@ -2576,7 +2632,7 @@ class KFS {
 
       if (await stats.isDirectory()) {
         const result = await this.fsInstance.fs_readdir(relativePath);
-        consoleDotLog('result', result);
+        this._log('result', result);
         return result;
       } else {
         const fd = await this.fsInstance.fs_fopen(relativePath, 'r');
@@ -2604,7 +2660,7 @@ class KFS {
             await fs.fsInstance.fs_mkdir(currentPath);
             await this.vfs.writeToFsTable(currentPath, 'dir');
         } catch (error) {
-            if (!error.message.includes('exists')) consoleDotError(error);
+            if (!error.message.includes('exists')) this._error(error);
         }
     }
   }
