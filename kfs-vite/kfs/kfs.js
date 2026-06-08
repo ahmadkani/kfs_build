@@ -234,27 +234,42 @@ async fetchFromGit() {
       consoleDotLog$3('Fetching from Git repository...');
       if (!this.initialized) await this.initialize();
       consoleDotLog$3('initialized.');
-      const { url, dir = '/' } = this.fetchInfo;
       
-      consoleDotLog$3(`Cloning repository from ${url} to ${dir}`);
-      if (url === '' || !url) {
+      // --- START FIX ---
+      let { url, dir = '/' } = this.fetchInfo;
+      
+      // 1. Fix Double Slash Issue
+      if (url && url.startsWith('//')) {
+        url = 'http:' + url;
+        consoleDotLog$3(`[FIX] URL started with //, converted to: ${url}`);
+      }
+      
+      // 2. Handle undefined/null/empty URL
+      if (!url) {
+        consoleDotLog$3('No URL provided, initializing local repository...');
         await this.initRepoLocally();
-      } else {
-        const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
-        
-        // FIX: Handle missing notes gracefully by catching the specific error
-        try {
-          await this.fetchNotes();
-        } catch (noteError) {
-           if (!noteError.message.includes('refs/notes')) {
-             throw noteError; // Re-throw if it's not a "notes missing" error
-           }
-           consoleDotLog$3('Notes not found on remote, continuing.');
-        }
+        return; // Exit early
+      }
+      // --- END FIX ---
 
-        if (!cloneResult.success) {
-          throw new Error("Fetching from git failed!");
-        }
+      consoleDotLog$3(`Cloning repository from ${url} to ${dir}`);
+      
+      const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
+      
+      // ... (rest of the function remains the same)
+      
+      // FIX: Handle missing notes gracefully by catching the specific error
+      try {
+        await this.fetchNotes();
+      } catch (noteError) {
+         if (!noteError.message.includes('refs/notes')) {
+           throw noteError; // Re-throw if it's not a "notes missing" error
+         }
+         consoleDotLog$3('Notes not found on remote, continuing.');
+      }
+
+      if (!cloneResult.success) {
+        throw new Error("Fetching from git failed!");
       }
       
       // FIX: Use username as fallback for author name
@@ -524,21 +539,28 @@ async fetchFromGit() {
        * Optimized sync status check with minimal remote operations
        */
       async getSyncStatus(__url = null, ref = 'main') {
-        try {
-          consoleDotLog$3('Starting sync status check...');
-          const _url = __url || this?.fetchInfo?.url;
-          
-          // Get local head
-          consoleDotLog$3('Getting local head commit...');
-          const localHead = await this.workerThread.execute('getLastLocalCommit', { ref });
-          consoleDotLog$3('Local head commit:', localHead);
-          
-          // Get remote head
-          consoleDotLog$3('Getting remote head commit...');
-          const remoteResult = await this.workerThread.execute('getLatestRemoteCommit', { 
-            url: _url,
-            ref,
-          });
+          try {
+            consoleDotLog$3('Starting sync status check...');
+            
+            // FIX: Add fallback for URL
+            const _url = __url || this?.fetchInfo?.url;
+            
+            // If no URL, we can't check remote status
+            if (!_url) {
+              return { status: 'offline', error: 'No URL configured' };
+            }
+            
+            // Get local head
+            consoleDotLog$3('Getting local head commit...');
+            const localHead = await this.workerThread.execute('getLastLocalCommit', { ref });
+            consoleDotLog$3('Local head commit:', localHead);
+            
+            // Get remote head
+            consoleDotLog$3('Getting remote head commit...');
+            const remoteResult = await this.workerThread.execute('getLatestRemoteCommit', { 
+              url: _url,
+              ref,
+            });
           consoleDotLog$3('Remote head result:', remoteResult);
       
           if (!remoteResult.success) {
@@ -958,17 +980,20 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
       }
 
       async updateFetchInfo(args) {
-        try {
-          const newFetchInfo = args || {};
-          if (!this.initialized) await this.initialize();
-          this.fetchInfo = { ...this.fetchInfo, ...newFetchInfo };
-          consoleDotLog$3('Fetch info updated:', this.fetchInfo);
-          return this.fetchInfo;
-        } catch(error) {
-          consoleDotError$2('Some error happened while using updateFetchInfo');
-          throw new Error('Some error happened while using updateFetchInfo');
+          try {
+            const newFetchInfo = args || {};
+            if (!this.initialized) await this.initialize();
+
+            // FIX: Handle case where this.fetchInfo might be undefined initially
+            this.fetchInfo = { ...(this.fetchInfo || {}), ...newFetchInfo };
+            
+            consoleDotLog$3('Fetch info updated:', this.fetchInfo);
+            return this.fetchInfo;
+          } catch(error) {
+            consoleDotError$2('Some error happened while using updateFetchInfo');
+            throw new Error('Some error happened while using updateFetchInfo');
+          }
         }
-      }
 
       // ------------------
       //  Helper functions
@@ -1902,19 +1927,40 @@ class VFS {
 
   // Filesystem Operations
   async fetchFS(fetchMethod, fsType, fsInstance, fsName, fetchInfo) {
-    consoleDotLog$1(`Fetching filesystem data - method: ${fetchMethod}, type: ${fsType}, name: ${fsName}`);
+    consoleDotLog$1(`Fetching filesystem data - method: ${fetchMethod}`);
     try {
-      // Check if we already have a VFSutils instance for this mount
+      // Cleanup previous instance logic...
       if (this.vfsUtilsInstances.has(this.currentMountPath)) {
-        consoleDotLog$1('Terminating existing VFSutils instance for this mount');
         await this.vfsUtilsInstances.get(this.currentMountPath).terminate();
         this.vfsUtilsInstances.delete(this.currentMountPath);
       }
+  
+      // ═══════════════════════════════════════════════════════
+      // ✅ GLOBAL FIX: Sanitize URL at the entry point
+      // ═══════════════════════════════════════════════════════
+      if (fetchInfo && fetchInfo.url) {
+        let url = fetchInfo.url;
+        
+        // 1. Fix Double Slash (//) caused by protocol stripping
+        if (url.startsWith('//')) {
+          url = 'http:' + url; 
+          consoleDotLog$1(`[VFS FIX] URL started with //, converted to: ${url}`);
+        }
+        
+        // 2. (Optional) Force HTTP if you are using a local HTTP proxy
+        // if (url.startsWith('https://')) {
+        //    url = url.replace('https://', 'http://');
+        // }
+        
+        fetchInfo.url = url;
+      }
+      // ═══════════════════════════════════════════════════════
   
       consoleDotLog$1('Creating new VFSutils instance for mount:', this.currentMountPath);
       const vfsUtils = new VFSutils(fsType, fsInstance, fsName, fetchInfo);
       this.vfsUtilsInstances.set(this.currentMountPath, vfsUtils);
       
+      // ... rest of the function remains the same
       const fetchStrategies = {
         git: () => vfsUtils.fetchFromGit(),
         disk: () => vfsUtils.fetchFromDisk(),
@@ -1931,18 +1977,17 @@ class VFS {
       consoleDotLog$1(`Executing fetch strategy for ${fetchMethod}`);
       await strategy();
       
-      // Update last fetched time
+      // Update timestamps...
       if (this.mounts[this.currentMountPath]) {
         this.mounts[this.currentMountPath].fetchInfo.lastFetched = new Date().toISOString();
         this.mounts[this.currentMountPath].modified = new Date().toISOString();
         await this.persistMountData(this.currentMountPath, this.mounts[this.currentMountPath]);
       }
       
-      consoleDotLog$1(`Successfully fetched data using ${fetchMethod} method`);
     } catch (error) {
-      consoleDotError$1(`Fetch operation failed (method: ${fetchMethod}):`, error);
+      consoleDotError$1(`Fetch operation failed:`, error);
+      // Cleanup logic...
       if (this.vfsUtilsInstances.has(this.currentMountPath)) {
-        consoleDotLog$1('Cleaning up VFSutils after fetch failure');
         await this.vfsUtilsInstances.get(this.currentMountPath).terminate(fsName, fsType);
         this.vfsUtilsInstances.delete(this.currentMountPath);
       }
@@ -2580,7 +2625,12 @@ class KFS {
       return { success: true };
     } catch (error) {
       this._error(`Failed to create ${type} at ${path}:`, error);
-      throw new Error(`Failed to create: ${error.message}`);
+      
+      const errorMessage = error?.message 
+        ? error.message 
+        : (typeof error === 'string' ? error : JSON.stringify(error));
+        
+      throw new Error(`Failed to create: ${errorMessage}`);
     }
   }
 

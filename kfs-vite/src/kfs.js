@@ -294,7 +294,12 @@ export class KFS {
       return { success: true };
     } catch (error) {
       this._error(`Failed to create ${type} at ${path}:`, error);
-      throw new Error(`Failed to create: ${error.message}`);
+      
+      const errorMessage = error?.message 
+        ? error.message 
+        : (typeof error === 'string' ? error : JSON.stringify(error));
+        
+      throw new Error(`Failed to create: ${errorMessage}`);
     }
   }
 

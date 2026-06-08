@@ -148,28 +148,43 @@ async fetchFromGit() {
     try {
       consoleDotLog('Fetching from Git repository...');
       if (!this.initialized) await this.initialize();
-      consoleDotLog('initialized.')
-      const { url, dir = '/' } = this.fetchInfo;
+      consoleDotLog('initialized.');
       
-      consoleDotLog(`Cloning repository from ${url} to ${dir}`);
-      if (url === '' || !url) {
+      // --- START FIX ---
+      let { url, dir = '/' } = this.fetchInfo;
+      
+      // 1. Fix Double Slash Issue
+      if (url && url.startsWith('//')) {
+        url = 'http:' + url;
+        consoleDotLog(`[FIX] URL started with //, converted to: ${url}`);
+      }
+      
+      // 2. Handle undefined/null/empty URL
+      if (!url) {
+        consoleDotLog('No URL provided, initializing local repository...');
         await this.initRepoLocally();
-      } else {
-        const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
-        
-        // FIX: Handle missing notes gracefully by catching the specific error
-        try {
-          await this.fetchNotes();
-        } catch (noteError) {
-           if (!noteError.message.includes('refs/notes')) {
-             throw noteError; // Re-throw if it's not a "notes missing" error
-           }
-           consoleDotLog('Notes not found on remote, continuing.');
-        }
+        return; // Exit early
+      }
+      // --- END FIX ---
 
-        if (!cloneResult.success) {
-          throw new Error("Fetching from git failed!");
-        }
+      consoleDotLog(`Cloning repository from ${url} to ${dir}`);
+      
+      const cloneResult = await this.workerThread.execute('doCloneAndStuff', { url });
+      
+      // ... (rest of the function remains the same)
+      
+      // FIX: Handle missing notes gracefully by catching the specific error
+      try {
+        await this.fetchNotes();
+      } catch (noteError) {
+         if (!noteError.message.includes('refs/notes')) {
+           throw noteError; // Re-throw if it's not a "notes missing" error
+         }
+         consoleDotLog('Notes not found on remote, continuing.');
+      }
+
+      if (!cloneResult.success) {
+        throw new Error("Fetching from git failed!");
       }
       
       // FIX: Use username as fallback for author name
@@ -439,21 +454,28 @@ async fetchFromGit() {
        * Optimized sync status check with minimal remote operations
        */
       async getSyncStatus(__url = null, ref = 'main') {
-        try {
-          consoleDotLog('Starting sync status check...');
-          const _url = __url || this?.fetchInfo?.url;
-          
-          // Get local head
-          consoleDotLog('Getting local head commit...');
-          const localHead = await this.workerThread.execute('getLastLocalCommit', { ref });
-          consoleDotLog('Local head commit:', localHead);
-          
-          // Get remote head
-          consoleDotLog('Getting remote head commit...');
-          const remoteResult = await this.workerThread.execute('getLatestRemoteCommit', { 
-            url: _url,
-            ref,
-          });
+          try {
+            consoleDotLog('Starting sync status check...');
+            
+            // FIX: Add fallback for URL
+            const _url = __url || this?.fetchInfo?.url;
+            
+            // If no URL, we can't check remote status
+            if (!_url) {
+              return { status: 'offline', error: 'No URL configured' };
+            }
+            
+            // Get local head
+            consoleDotLog('Getting local head commit...');
+            const localHead = await this.workerThread.execute('getLastLocalCommit', { ref });
+            consoleDotLog('Local head commit:', localHead);
+            
+            // Get remote head
+            consoleDotLog('Getting remote head commit...');
+            const remoteResult = await this.workerThread.execute('getLatestRemoteCommit', { 
+              url: _url,
+              ref,
+            });
           consoleDotLog('Remote head result:', remoteResult);
       
           if (!remoteResult.success) {
@@ -873,17 +895,20 @@ async handleDiverged(localHead, remoteHead, commonAncestor, onConflictStrategy, 
       }
 
       async updateFetchInfo(args) {
-        try {
-          const newFetchInfo = args || {};
-          if (!this.initialized) await this.initialize();
-          this.fetchInfo = { ...this.fetchInfo, ...newFetchInfo };
-          consoleDotLog('Fetch info updated:', this.fetchInfo);
-          return this.fetchInfo;
-        } catch(error) {
-          consoleDotError('Some error happened while using updateFetchInfo');
-          throw new Error('Some error happened while using updateFetchInfo');
+          try {
+            const newFetchInfo = args || {};
+            if (!this.initialized) await this.initialize();
+
+            // FIX: Handle case where this.fetchInfo might be undefined initially
+            this.fetchInfo = { ...(this.fetchInfo || {}), ...newFetchInfo };
+            
+            consoleDotLog('Fetch info updated:', this.fetchInfo);
+            return this.fetchInfo;
+          } catch(error) {
+            consoleDotError('Some error happened while using updateFetchInfo');
+            throw new Error('Some error happened while using updateFetchInfo');
+          }
         }
-      }
 
       // ------------------
       //  Helper functions

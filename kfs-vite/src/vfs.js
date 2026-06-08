@@ -540,19 +540,40 @@ export class VFS {
 
   // Filesystem Operations
   async fetchFS(fetchMethod, fsType, fsInstance, fsName, fetchInfo) {
-    consoleDotLog(`Fetching filesystem data - method: ${fetchMethod}, type: ${fsType}, name: ${fsName}`);
+    consoleDotLog(`Fetching filesystem data - method: ${fetchMethod}`);
     try {
-      // Check if we already have a VFSutils instance for this mount
+      // Cleanup previous instance logic...
       if (this.vfsUtilsInstances.has(this.currentMountPath)) {
-        consoleDotLog('Terminating existing VFSutils instance for this mount');
         await this.vfsUtilsInstances.get(this.currentMountPath).terminate();
         this.vfsUtilsInstances.delete(this.currentMountPath);
       }
+  
+      // ═══════════════════════════════════════════════════════
+      // ✅ GLOBAL FIX: Sanitize URL at the entry point
+      // ═══════════════════════════════════════════════════════
+      if (fetchInfo && fetchInfo.url) {
+        let url = fetchInfo.url;
+        
+        // 1. Fix Double Slash (//) caused by protocol stripping
+        if (url.startsWith('//')) {
+          url = 'http:' + url; 
+          consoleDotLog(`[VFS FIX] URL started with //, converted to: ${url}`);
+        }
+        
+        // 2. (Optional) Force HTTP if you are using a local HTTP proxy
+        // if (url.startsWith('https://')) {
+        //    url = url.replace('https://', 'http://');
+        // }
+        
+        fetchInfo.url = url;
+      }
+      // ═══════════════════════════════════════════════════════
   
       consoleDotLog('Creating new VFSutils instance for mount:', this.currentMountPath);
       const vfsUtils = new VFSutils(fsType, fsInstance, fsName, fetchInfo);
       this.vfsUtilsInstances.set(this.currentMountPath, vfsUtils);
       
+      // ... rest of the function remains the same
       const fetchStrategies = {
         git: () => vfsUtils.fetchFromGit(),
         disk: () => vfsUtils.fetchFromDisk(),
@@ -569,18 +590,17 @@ export class VFS {
       consoleDotLog(`Executing fetch strategy for ${fetchMethod}`);
       await strategy();
       
-      // Update last fetched time
+      // Update timestamps...
       if (this.mounts[this.currentMountPath]) {
         this.mounts[this.currentMountPath].fetchInfo.lastFetched = new Date().toISOString();
         this.mounts[this.currentMountPath].modified = new Date().toISOString();
         await this.persistMountData(this.currentMountPath, this.mounts[this.currentMountPath]);
       }
       
-      consoleDotLog(`Successfully fetched data using ${fetchMethod} method`);
     } catch (error) {
-      consoleDotError(`Fetch operation failed (method: ${fetchMethod}):`, error);
+      consoleDotError(`Fetch operation failed:`, error);
+      // Cleanup logic...
       if (this.vfsUtilsInstances.has(this.currentMountPath)) {
-        consoleDotLog('Cleaning up VFSutils after fetch failure');
         await this.vfsUtilsInstances.get(this.currentMountPath).terminate(fsName, fsType);
         this.vfsUtilsInstances.delete(this.currentMountPath);
       }
