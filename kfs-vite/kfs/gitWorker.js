@@ -1,4 +1,4 @@
-import { g as getConfig$2, L as Logger, M as MagicPortal, c as config$6 } from './assets/configES6-Ds9kj0h6.js';
+import { g as getConfig$2, L as Logger, M as MagicPortal, c as config$6 } from './assets/configES6-bU3v7xiC.js';
 import { a as getDefaultExportFromCjs, r as requireBuffer, b as bufferExports } from './assets/index-v4ZNQwfX.js';
 import { p as process } from './assets/browser-dgLw7JhW.js';
 import { L as LightningFS } from './assets/index-Da37s8Dj.js';
@@ -23666,7 +23666,7 @@ try {
     http = nodeHttp.default || nodeHttp;
   } else {
     selfObj = self;
-    const webHttp = await import('./assets/GitHttp-CuaJ3FqT.js');
+    const webHttp = await import('./assets/GitHttp-BuUKi4DY.js');
     http = webHttp.default || webHttp;
   }
   console.log("HTTP: ", http);
@@ -24683,7 +24683,7 @@ async function push(args) {
   args?.attempt || 0;
   let _ref = args?.ref || ref;
   const maxDeleteRetries = 1;
-  const force = args?.force || true;
+  args?.force || true;
   !url && await setUrl(args?.url);
   try {
     await setConfigs(args);
@@ -24692,16 +24692,12 @@ async function push(args) {
         ...args,
         fs,
         http,
-        // This uses the imported GitHttp
         dir,
         corsProxy,
-        // Ensure this is passed so GitHttp can use it
         remote,
         ref: _ref,
-        force,
-        // Pre-emptive auth header (Good for known private repos)
+        force: true,
         headers: buildHeaders(username, password),
-        // Challenge-response auth (Necessary if server requires negotiation)
         onAuth() {
           return authenticate.fill();
         },

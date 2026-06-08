@@ -4,6 +4,17 @@ import { getConfig } from './configES6.js';
 import { VersioningManager } from './libs/kfsUtils/versioningManager.js';
 import { MergingManager } from './libs/kfsUtils/mergingManager.js';
 
+const config = await getConfig();
+const logger = new Logger(config.logging.kfs);
+
+function consoleDotLog(...params) {
+  logger.consoleDotLog('[KFS]', ...params);
+}
+
+function consoleDotError(...params) {
+  logger.consoleDotError('[KFS]', ...params);
+}
+
 export class KFS {
   constructor() {
     this.vfs = new VFS();
@@ -13,52 +24,23 @@ export class KFS {
     this.commitCount = 0;
     this.mountPaths = null;
     this.mergingConfig = null;
-    this.initialized = false;
-    
-    // FIX: Initialize config and logger as null, load them in init()
-    this.config = null;
-    this.logger = null;
-
-    // FIX: Store the initialization promise so other methods can wait for it
-    this.ready = this.init();
-  }
-
-  // Internal logger wrapper to handle cases where logger isn't ready yet
-  _log(...params) {
-    if (this.logger) {
-      this.logger.consoleDotLog('[KFS]', ...params);
-    } else {
-      console.log('[KFS]', ...params);
-    }
-  }
-
-  _error(...params) {
-    if (this.logger) {
-      this.logger.consoleDotError('[KFS]', ...params);
-    } else {
-      console.error('[KFS]', ...params);
-    }
+    (async () => {
+      try {
+        await this.init();
+      } catch (error) {
+        consoleDotError('Initing Failed for KFS: ', error);
+      }
+    })();
+    consoleDotLog('KFS instance created');
   }
   
   async init() {
-    if (this.initialized) return;
-
-    // FIX: Load config here instead of top-level
-    this.config = await getConfig();
-    this.logger = new Logger(this.config.logging.kfs);
-
-    this._log('Initializing KFS instance...');
-    
-    this.mountPaths = await this.vfs.getMountPaths();
-    this.initialized = true;
-    
-    this._log('mountpaths: ', this.mountPaths);
+    if (!this.initialized) {
+      this.mountPaths = await this.vfs.getMountPaths();
+      this.initialized = true;
+    }
+    consoleDotLog('mountpaths: ', this.mountPaths)
     return this;
-  }
-
-  // FIX: Helper method to ensure initialization is complete before running logic
-  async _ensureReady() {
-    await this.ready;
   }
 
   // -------------------------------
@@ -92,18 +74,17 @@ export class KFS {
   
   async merge() {
     try {
-      await this._ensureReady(); // ENSURE READY
-      this._log('Merging...', this.mountPaths);
+      consoleDotLog('Merging...', this.mountPaths);
 
       const strategyMap = { remote: 'theirs', local: 'ours', combine: 'combine' };
       const userStrategy = this.mergingConfig?.onConflictStrategy || 'remote';
       const onConflictStrategy = strategyMap[userStrategy] || 'remote';
 
-      this._log('Merging...', this.mountPaths);
+      consoleDotLog('Merging...', this.mountPaths);
       await this.vfs.merger(onConflictStrategy);
-      this._log('Merge completed successfully.');
+      consoleDotLog('Merge completed successfully.');
     } catch(error) {
-      this._error('Merge failed:', error);
+      consoleDotError('Merge failed:', error);
       throw new Error(`Failed to merge: ${error.message}`);
     }
   }
@@ -114,8 +95,6 @@ export class KFS {
 
   async mount(path, fsType, fsName, fetchMethod, options = {}) {
     try {
-      await this._ensureReady(); // ENSURE READY
-      
       this._setupVersioningAndMerging(options);
       path = this._normalizePath(path);
       const versioningConfig = await this.versioningManager.getConfig();
@@ -131,18 +110,16 @@ export class KFS {
       this.fsInstance = mountData.fsInstance;
       const root = await this.read(`${path}/${fsName}`);
       this.mountPaths = await this.vfs.getMountPaths();
-      this._log('Mount successful, root:', root);
+      consoleDotLog('Mount successful, root:', root);
       return mountData;
     } catch (error) {
-      this._error(`Failed to mount filesystem at ${path}:`, error);
+      consoleDotError(`Failed to mount filesystem at ${path}:`, error);
       throw new Error(`Failed to mount filesystem: ${error.message}`);
     }
   }
 
   async unmount(path, fsName) {
     try {
-      await this._ensureReady(); // ENSURE READY
-      
       path = this._normalizePath(path);
       await this.vfs.unmount(path, fsName);
       this.fsInstance = null;
@@ -150,22 +127,20 @@ export class KFS {
       this.commitCount = 0;
       return { success: true };
     } catch (error) {
-      this._error(`Failed to unmount filesystem at ${path}:`, error);
+      consoleDotError(`Failed to unmount filesystem at ${path}:`, error);
       throw new Error(`Failed to unmount filesystem: ${error.message}`);
     }
   }
 
 
   async setMergingStrategy(mergingStrategy) {
-    await this._ensureReady();
     await this.vfs.setMergingStrategy(mergingStrategy);
-    this._log('Merging strategy set to:', mergingStrategy);
+    consoleDotLog('Merging strategy set to:', mergingStrategy);
   }
 
   async setVersioingStrategy(versioningStrategy) {
-    await this._ensureReady();
     await this.vfs.setVersioingStrategy(versioningStrategy);
-    this._log('Versioning strategy set to:', versioningStrategy);
+    consoleDotLog('Versioning strategy set to:', versioningStrategy);
   }
 
   /**
@@ -177,9 +152,6 @@ export class KFS {
     * @throws {Error} - Throws an error if the arguments are invalid or if the operation fails.
    */
   async setUserConfigs(args) {
-    // FIX: Wait for ready before validating or setting config
-    await this._ensureReady();
-
     if (!args || typeof args !== 'object') {
       throw new Error('Invalid arguments: must be an object');
     }
@@ -195,14 +167,12 @@ export class KFS {
       );
     }
     
-    args && await this.vfs.setUserConfigs(args);
+    args && this.vfs.setUserConfigs(args);
     return args;
   }
 
   async create(path, type = 'file', content = '', mode = 'w') {
     try {
-      await this._ensureReady(); // ENSURE READY
-
       if (!['file', 'dir'].includes(type)) {
         throw new Error(`Invalid type: ${type}. Must be 'file' or 'dir'`);
       }
@@ -293,20 +263,13 @@ export class KFS {
   
       return { success: true };
     } catch (error) {
-      this._error(`Failed to create ${type} at ${path}:`, error);
-      
-      const errorMessage = error?.message 
-        ? error.message 
-        : (typeof error === 'string' ? error : JSON.stringify(error));
-        
-      throw new Error(`Failed to create: ${errorMessage}`);
+      consoleDotError(`Failed to create ${type} at ${path}:`, error);
+      throw new Error(`Failed to create: ${error.message}`);
     }
   }
 
   async remove(path) {
     try {
-      await this._ensureReady(); // ENSURE READY
-
       path = this._normalizePath(path);
 
       if (this.mountPaths && this.mountPaths.includes(path)) {
@@ -333,15 +296,13 @@ export class KFS {
 
       return { success: true };
     } catch (error) {
-      this._error(`Failed to remove ${path}:`, error);
+      consoleDotError(`Failed to remove ${path}:`, error);
       throw new Error(`Failed to remove: ${error.message}`);
     }
   }
 
   async read(path) {
     try {
-      await this._ensureReady(); // ENSURE READY
-
       path = this._normalizePath(path);
       const { fs, relativePath } = await this.vfs.resolveFS(path);
       this.fsInstance = fs.fsInstance;
@@ -351,7 +312,7 @@ export class KFS {
 
       if (await stats.isDirectory()) {
         const result = await this.fsInstance.fs_readdir(relativePath);
-        this._log('result', result)
+        consoleDotLog('result', result)
         return result;
       } else {
         const fd = await this.fsInstance.fs_fopen(relativePath, 'r');
@@ -379,7 +340,7 @@ export class KFS {
             await fs.fsInstance.fs_mkdir(currentPath);
             await this.vfs.writeToFsTable(currentPath, 'dir');
         } catch (error) {
-            if (!error.message.includes('exists')) this._error(error);
+            if (!error.message.includes('exists')) consoleDotError(error);
         }
     }
   }
